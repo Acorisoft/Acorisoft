@@ -1,8 +1,8 @@
 # 项目计划
 
-## 软件
+## 项目
 
-| 软件名称                                                                      | 开发代号                     |        用途                    |
+| 项目名称                                                                      | 开发代号                     |        用途                    |
 |:----------------------------------------------------------------------------:|:---------------------------:|:-----------------------------:|
 | [灵感集](Documerntations/Developers/Acorisoft.Mori.Memo.md)                   | Acorisoft.Mori.Memo         | 提供灵感备忘速记功能             |
 | [轻设定集](Documerntations/Developers/Acorisoft.Mori.Lite.md)                 | Acorisoft.Mori.Lite         | 提供轻设定功能                  |
