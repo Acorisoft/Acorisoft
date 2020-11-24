@@ -6,8 +6,8 @@
 
 ## 部件
 ## 组合文档
-### [文档部件](IDocumentPart.md)
-### 元数据部件
+### [文档部件](DocumentPart.md)
+### [元数据部件](MetadataPart.md)
 ## 文档部件
 ### 灵感集文档部件
 ### 设定集文档部件
