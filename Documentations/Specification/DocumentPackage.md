@@ -54,7 +54,7 @@ collection :
 public interface IFileIndex
 {
     [BsonId]
-    Guid Id { get; set }
+    Guid Id { get; set; }
 
     bool IsDeleted { get; set; }
     
