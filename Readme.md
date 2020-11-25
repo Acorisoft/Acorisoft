@@ -1,5 +1,8 @@
 # 关于Acorisoft
 
+## 设定
+
+Acorisoft项目在开展的同时我们也在创作我们自己的[设定](/Acoris/Readme.md)
 ## 文件
 
 * 关于项目规范请阅读[规范文件](Documentation/Specification/Readme.md)
