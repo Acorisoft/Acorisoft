@@ -93,7 +93,7 @@ public interface IDocumentIndex
     string Summary { get; set; }
     string Topic { get; set; }
     IFile Thumbnail { get; set; }
-    IFIle Cover { get; set; }
+    IFile Cover { get; set; }
     ICollection<string> Tags { get; set; }
 }
 
