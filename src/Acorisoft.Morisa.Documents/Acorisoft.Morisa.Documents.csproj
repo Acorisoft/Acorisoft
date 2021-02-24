@@ -5,8 +5,4 @@
 		<RootNamespace>Acorisoft</RootNamespace>
 	</PropertyGroup>
 
-	<ItemGroup>
-	  <Folder Include="Morisa\Inspirations\" />
-	</ItemGroup>
-
 </Project>
