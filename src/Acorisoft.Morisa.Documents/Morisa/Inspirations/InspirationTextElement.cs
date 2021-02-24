@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Inspirations
 {
-    public interface IMusicElement : IInspirationElement
+    public class InspirationTextElement : InspirationElement, IInspirationTextElement
     {
     }
 }

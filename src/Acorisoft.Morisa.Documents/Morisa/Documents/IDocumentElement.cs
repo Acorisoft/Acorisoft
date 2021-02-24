@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa.Inspirations
+namespace Acorisoft.Morisa.Documents
 {
-    public interface IInspirationDocument : IInspirationElement
+    public interface IDocumentElement
     {
     }
 }

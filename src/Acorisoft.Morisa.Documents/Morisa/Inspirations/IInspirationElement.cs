@@ -15,6 +15,9 @@ namespace Acorisoft.Morisa.Inspirations
     /// </remarks>
     public interface IInspirationElement
     {
+        /// <summary>
+        /// 获取或设置应用于当前 <see cref="IInspirationElement"/> 灵感元素的标签内容。
+        /// </summary>
         ITagCollection Tags { get; }
     }
 }
