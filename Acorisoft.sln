@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Morisa.Documents", "src\Morisa\Acorisoft.Morisa.Documents.csproj", "{07D25CA3-29FA-4397-ACC7-8AB8D9E501FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.Documents", "src\Acorisoft.Morisa.Documents\Acorisoft.Morisa.Documents.csproj", "{51D319D8-46D8-48A7-8BD3-CDA4E3009D46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,17 +11,17 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{07D25CA3-29FA-4397-ACC7-8AB8D9E501FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{07D25CA3-29FA-4397-ACC7-8AB8D9E501FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{07D25CA3-29FA-4397-ACC7-8AB8D9E501FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{07D25CA3-29FA-4397-ACC7-8AB8D9E501FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51D319D8-46D8-48A7-8BD3-CDA4E3009D46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51D319D8-46D8-48A7-8BD3-CDA4E3009D46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51D319D8-46D8-48A7-8BD3-CDA4E3009D46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51D319D8-46D8-48A7-8BD3-CDA4E3009D46}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {3EE6B840-2DC2-4DF7-8922-192714C85F7B}
-		RESX_NeutralResourcesLanguage = zh-Hans
 		RESX_SortFileContentOnSave = True
+		RESX_NeutralResourcesLanguage = zh-Hans
+		SolutionGuid = {3EE6B840-2DC2-4DF7-8922-192714C85F7B}
 	EndGlobalSection
 EndGlobal
