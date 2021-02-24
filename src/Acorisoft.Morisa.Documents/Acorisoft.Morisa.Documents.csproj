@@ -6,7 +6,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Folder Include="Morisa\Documents\" />
+	  <Folder Include="Morisa\Inspirations\" />
 	</ItemGroup>
 
 </Project>
