@@ -10,6 +10,13 @@ namespace Acorisoft.Morisa.Inspirations
 {
     public abstract class InspirationElement : MorisaObject, IInspirationElement
     {
-        public ITagCollection Tags { get; }
+        private protected TagCollection _tagCollection;
+
+        public InspirationElement()
+        {
+            _tagCollection = new TagCollection(this);
+        }
+
+        public ITagCollection Tags => _tagCollection;
     }
 }

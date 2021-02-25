@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net5.0-Windows</TargetFramework>
 		<RootNamespace>Acorisoft.Morisa</RootNamespace>
-		<UseWpf>True</UseWpf>
+		<UseWPF>True</UseWPF>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="DryIoc.dll" Version="4.7.2" />
