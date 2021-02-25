@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.Documents", "src\Acorisoft.Morisa.Documents\Acorisoft.Morisa.Documents.csproj", "{51D319D8-46D8-48A7-8BD3-CDA4E3009D46}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Demos.NeteaseMusic", "demos\Acorisoft.Demos.NeteaseMusic\Acorisoft.Demos.NeteaseMusic.csproj", "{8DE40D9E-E157-4DE0-B15F-252EA9073A6D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa", "src\Acorisoft.Morisa\Acorisoft.Morisa.csproj", "{B3E97D47-2B2E-4EFA-9904-0F2726976FF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Morisa.UICore", "src\Acorisoft.Morisa.UICore\Acorisoft.Morisa.UICore.csproj", "{AE6B6B27-9D45-4900-9427-CC2F1EFDD3A0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{51D319D8-46D8-48A7-8BD3-CDA4E3009D46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51D319D8-46D8-48A7-8BD3-CDA4E3009D46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51D319D8-46D8-48A7-8BD3-CDA4E3009D46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51D319D8-46D8-48A7-8BD3-CDA4E3009D46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DE40D9E-E157-4DE0-B15F-252EA9073A6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DE40D9E-E157-4DE0-B15F-252EA9073A6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DE40D9E-E157-4DE0-B15F-252EA9073A6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DE40D9E-E157-4DE0-B15F-252EA9073A6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3E97D47-2B2E-4EFA-9904-0F2726976FF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3E97D47-2B2E-4EFA-9904-0F2726976FF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3E97D47-2B2E-4EFA-9904-0F2726976FF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3E97D47-2B2E-4EFA-9904-0F2726976FF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE6B6B27-9D45-4900-9427-CC2F1EFDD3A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE6B6B27-9D45-4900-9427-CC2F1EFDD3A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE6B6B27-9D45-4900-9427-CC2F1EFDD3A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE6B6B27-9D45-4900-9427-CC2F1EFDD3A0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3EE6B840-2DC2-4DF7-8922-192714C85F7B}
+		RESX_NeutralResourcesLanguage = zh-Hans
+		RESX_SortFileContentOnSave = True
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,16 @@
+﻿<Window x:Class="Acorisoft.Morisa.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Acorisoft.Morisa"
+        mc:Ignorable="d"
+        xmlns:rx="http://reactiveui.net"
+        xmlns:mo="https://github.com/Acorisoft/Morisa"
+        MinWidth="1152"
+        MinHeight="640">
+    <Grid>
+        <!-- View -->
+        <rx:RoutedViewHost Router="{Binding Source={x:Static mo:RouterExtensions.Router},Mode=OneWay}"/>
+    </Grid>
+</Window>
