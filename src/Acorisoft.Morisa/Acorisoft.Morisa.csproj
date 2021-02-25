@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
+		<OutputType>Exe</OutputType>
 		<TargetFramework>net5.0-Windows</TargetFramework>
 		<RootNamespace>Acorisoft.Morisa</RootNamespace>
-		<UseWpf>True</UseWpf>
+		<UseWPF>True</UseWPF>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="DryIoc.dll" Version="4.7.2" />
@@ -19,6 +20,10 @@
 		<PackageReference Include="Splat" Version="9.8.1" />
 		<PackageReference Include="Splat.DryIoc" Version="9.8.1" />
 		<PackageReference Include="Splat.NLog" Version="9.8.1" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Acorisoft.Morisa.Documents\Acorisoft.Morisa.Documents.csproj" />
+	  <ProjectReference Include="..\Acorisoft.Morisa.UICore\Acorisoft.Morisa.UICore.csproj" />
 	</ItemGroup>
 
 </Project>

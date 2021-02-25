@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Acorisoft.Morisa.Core;
+using Acorisoft.Morisa.Logs;
+using Acorisoft.Morisa.Routers;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +16,13 @@ namespace Acorisoft.Morisa
     /// </summary>
     public partial class App : Application
     {
+        private readonly IApplicationEnvironment _appEnv;
+
+        public App()
+        {
+            _appEnv = new ApplicationEnvironment();
+            _appEnv.UseLog()
+                   .UseRouter();
+        }
     }
 }

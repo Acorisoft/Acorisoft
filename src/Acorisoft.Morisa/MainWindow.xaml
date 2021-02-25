@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Acorisoft.Morisa"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        xmlns:rx="http://reactiveui.net"
+        xmlns:mo="https://github.com/Acorisoft/Morisa"
+        MinWidth="1152"
+        MinHeight="640">
     <Grid>
-
+        <!-- View -->
+        <rx:RoutedViewHost Router="{Binding Source={x:Static mo:RouterExtensions.Router},Mode=OneWay}"/>
     </Grid>
 </Window>
