@@ -17,8 +17,9 @@
                 <RowDefinition Height="48" />
             </Grid.RowDefinitions>
             <TextBlock Text="对话框测试" FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <UniformGrid Columns="2" Grid.Row="1">
+            <UniformGrid Columns="4" Grid.Row="1">
                 <Button Content="Ok" Command="{x:Static mo:DialogCommands.Ok}" />
+                <Button Content="New Dialog" Click="Button_Click"/>
                 <Button Content="Cancel" Command="{x:Static mo:DialogCommands.Cancel}"/>
             </UniformGrid>
         </Grid>

@@ -98,6 +98,16 @@ namespace Acorisoft.Morisa.Dialogs
 #if DEBUG
             _logger.Info("对话框返回，结果错误");
 #endif
+            ShowLastDialog();
+        }
+
+        private void ShowLastDialog()
+        {
+            if(_stack.Count > 0)
+            {
+                var context = _stack.Pop();
+                OnDialogShow(this, new DialogShowEventArgs(context.vm, context.result, context.tcs));
+            }
         }
 
         private void OnDialogCancel(object sender, ExecutedRoutedEventArgs e)
@@ -132,6 +142,7 @@ namespace Acorisoft.Morisa.Dialogs
 #if DEBUG
             _logger.Info("对话框返回，结果正确");
 #endif
+            ShowLastDialog();
         }
 
         public DialogManager Manager {

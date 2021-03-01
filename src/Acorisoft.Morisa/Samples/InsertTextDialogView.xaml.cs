@@ -1,4 +1,6 @@
-﻿using ReactiveUI;
+﻿using Acorisoft.Morisa.Dialogs;
+using ReactiveUI;
+using Splat;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +26,13 @@ namespace Acorisoft.Morisa.Samples
         public InsertTextDialogView()
         {
             InitializeComponent();
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var dialogMgr = Locator.Current.GetService<IDialogService>();
+            var vm = await dialogMgr.Dialog<InsertTextDialogViewModel>();
+            var result = vm.GetResult<InsertTextDialogViewModel>();
         }
     }
 }
