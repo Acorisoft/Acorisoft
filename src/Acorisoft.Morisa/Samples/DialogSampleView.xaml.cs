@@ -22,7 +22,7 @@ namespace Acorisoft.Morisa.Samples
     /// <summary>
     /// DialogSampleView.xaml 的交互逻辑
     /// </summary>
-    [HomePage]
+    /// 
     [ViewModel(typeof(DialogSampleViewModel))]
     public partial class DialogSampleView : ReactiveUserControl<DialogSampleViewModel>
     {

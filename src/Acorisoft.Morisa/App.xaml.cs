@@ -26,6 +26,10 @@ namespace Acorisoft.Morisa
         public App()
         {
             _appEnv = new ApplicationEnvironment();
+            _appEnv.Container.Register<IViewFor<DialogSampleViewModel>, DialogSampleView>();
+            //_appEnv.Container.Register<IViewFor<InsertTextDialogViewModel>, InsertTextDialogView>();
+            //_appEnv.Container.Register<DialogSampleViewModel>();
+            //_appEnv.Container.Register<InsertTextDialogViewModel>();
             _appEnv.UseLog()
                    .UseRouter()
                    .UseDialog()

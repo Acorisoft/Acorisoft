@@ -1,4 +1,5 @@
 ﻿using Acorisoft.Morisa.Dialogs;
+using Acorisoft.Morisa.Views;
 using ReactiveUI;
 using Splat;
 using System;
@@ -21,6 +22,7 @@ namespace Acorisoft.Morisa.Samples
     /// <summary>
     /// InsertTextDialogView.xaml 的交互逻辑
     /// </summary>
+    [ViewModel(typeof(InsertTextDialogViewModel))]
     public partial class InsertTextDialogView : ReactiveUserControl<InsertTextDialogViewModel>
     {
         public InsertTextDialogView()

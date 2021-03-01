@@ -17,7 +17,7 @@ namespace Acorisoft.Morisa.Views
     {
         private static Type HomePageType;
         private static Type IViewForType = typeof(IViewFor<>);
-        
+
         private class ViewBinder
         {
 
@@ -44,15 +44,40 @@ namespace Acorisoft.Morisa.Views
                     var vType = maybeView;
                     var viewForInterface = IViewForType.MakeGenericType(vmType);
                     var paramTypes = new Type[]{viewForInterface,vType};
-                    var register = typeof(Registrator).GetMethod(nameof(Registrator.Register),2,paramTypes);
-                    register.MakeGenericMethod(paramTypes).Invoke(container, new object[]
+                    var register = typeof(Registrator).GetMethod(
+                        "Register",
+                        2,
+                        BindingFlags.Public | BindingFlags.Static,
+                        null,
+                        CallingConventions.Standard,
+                        new Type[]
                         {
-                            (IReuse)null, (Made)null, (Setup) null, (IfAlreadyRegistered? ) null, null
+                            typeof(IRegistrator) ,
+                            typeof(IReuse),
+                            typeof(Made),
+                            typeof(Setup),
+                            typeof(IfAlreadyRegistered?),
+                            typeof(object)
+                        },
+                        new ParameterModifier[]
+                        {
+                            new ParameterModifier(2)
                         });
-                    container.Register(vType);
+                    register.MakeGenericMethod(paramTypes).Invoke(
+                        null,
+                        new object[]
+                        {
+                            container,
+                            (IReuse)null,
+                            (Made)null,
+                            (Setup) null,
+                            (IfAlreadyRegistered? ) null,
+                            null
+                        });
+                    container.Register(vmType);
                 }
 
-                if(maybeView.GetCustomAttribute<HomePageAttribute>() is HomePageAttribute)
+                if (maybeView.GetCustomAttribute<HomePageAttribute>() is HomePageAttribute)
                 {
                     HomePageType = maybeView;
                 }
@@ -65,7 +90,8 @@ namespace Acorisoft.Morisa.Views
 
         public static void NavigateToHomePage()
         {
-            var vm = (IRoutableViewModel)Locator.Current.GetService(HomePageType);
+            var uncastVM = Locator.Current.GetService(HomePageType);
+            var vm = (IRoutableViewModel)uncastVM;
             var screen = Locator.Current.GetService<IScreen>();
             screen.Router.Navigate.Execute(vm);
         }
