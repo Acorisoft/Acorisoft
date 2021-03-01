@@ -1,6 +1,7 @@
 ﻿using Acorisoft.Morisa.Dialogs;
 using Acorisoft.Morisa.Routers;
 using Acorisoft.Morisa.Samples;
+using Acorisoft.Morisa.Views;
 using ReactiveUI;
 using Splat;
 using System;
@@ -29,8 +30,7 @@ namespace Acorisoft.Morisa
         {
             InitializeComponent();
             PART_Dialog.Manager = (DialogManager)Locator.Current.GetService<IDialogService>();
-            var vm = Locator.Current.GetService<DialogSampleViewModel>();
-            var screen = Locator.Current.GetService<IScreen>().Router.Navigate.Execute(vm);
+            ViewExtensions.NavigateToHomePage();
         }
     }
 }

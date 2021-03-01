@@ -25,5 +25,9 @@
 	  <ProjectReference Include="..\Acorisoft.Morisa.Documents\Acorisoft.Morisa.Documents.csproj" />
 	  <ProjectReference Include="..\Acorisoft.Morisa.UICore\Acorisoft.Morisa.UICore.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Views\" />
+	  <Folder Include="ViewModels\" />
+	</ItemGroup>
 
 </Project>

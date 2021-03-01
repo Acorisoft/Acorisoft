@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using DryIoc;
 using ReactiveUI;
+using Acorisoft.Morisa.Views;
 
 namespace Acorisoft.Morisa
 {
@@ -25,13 +26,10 @@ namespace Acorisoft.Morisa
         public App()
         {
             _appEnv = new ApplicationEnvironment();
-            _appEnv.Container.Register<IViewFor<DialogSampleViewModel>, DialogSampleView>();
-            _appEnv.Container.Register<IViewFor<InsertTextDialogViewModel>, InsertTextDialogView>();
-            _appEnv.Container.Register<DialogSampleViewModel>();
-            _appEnv.Container.Register<InsertTextDialogViewModel>();
             _appEnv.UseLog()
                    .UseRouter()
-                   .UseDialog();
+                   .UseDialog()
+                   .UseViews(typeof(App).Assembly);
         }
     }
 }
