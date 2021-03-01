@@ -57,14 +57,23 @@ namespace Acorisoft.Morisa.Routers
 
         public static IApplicationEnvironment UseRouter(this IApplicationEnvironment appEnv)
         {
+            _logger = (new ViewManager()).GetLogger();
             _router = new RoutingState();
             _router.CurrentViewModel.Subscribe(OnViewModelChanged);
-            _logger = (new ViewManager()).GetLogger();
             return appEnv;
         }
 
         private static void OnViewModelChanged(IRoutableViewModel vm)
         {
+            //
+            // 当vm为空的时候直接跳过当前环节
+            if(vm == null)
+            {
+                return;
+            }
+
+            //
+            // 如果过滤管线不为空，则将当前视图模型进入管线过滤
             if(_pipeline.Filters.Count > 0)
             {
                 var e = new NavigationFilterEventArgs(_old, vm)
@@ -75,12 +84,14 @@ namespace Acorisoft.Morisa.Routers
                 _pipeline.OnNext(e);
 
                 //
-                // 导航到
+                // 导航到指定视图模型
                 _router.Navigate.Execute(e.Result);
                 _logger.Info($"导航到页面：{e.Result.GetType().Name}");
             }
             else
             {
+                //
+                // 如果不存在视图模型，则直接导航到视图模型。
                 _router.Navigate.Execute(vm);
                 _logger.Info($"导航到页面：{vm.GetType().Name}");
             }
