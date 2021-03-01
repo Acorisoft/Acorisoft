@@ -19,5 +19,7 @@ namespace Acorisoft.Morisa.Inspirations
         /// 获取或设置应用于当前 <see cref="IInspirationElement"/> 灵感元素的标签内容。
         /// </summary>
         ITagCollection Tags { get; }
+        DateTime CreationTime { get; set; }
+        DateTime LastModifiedBy { get; set; }
     }
 }

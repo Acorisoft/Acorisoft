@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 namespace Acorisoft.Morisa.Samples
 {
 
-    [HomePage]
     public class DialogSampleViewModel : ViewModelBase
     {
     }
