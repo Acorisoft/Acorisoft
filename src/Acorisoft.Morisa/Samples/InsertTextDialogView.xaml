@@ -19,7 +19,7 @@
             <TextBlock Text="对话框测试" FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <UniformGrid Columns="2" Grid.Row="1">
                 <Button Content="Ok" Command="{x:Static mo:DialogCommands.Ok}" />
-                <Button Content="Ok" Command="{x:Static mo:DialogCommands.Ok}" Grid.Row="1"/>
+                <Button Content="Cancel" Command="{x:Static mo:DialogCommands.Cancel}"/>
             </UniformGrid>
         </Grid>
     </Border>

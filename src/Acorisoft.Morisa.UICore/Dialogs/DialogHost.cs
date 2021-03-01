@@ -26,12 +26,6 @@ namespace Acorisoft.Morisa.Dialogs
         static DialogHost()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DialogHost), new FrameworkPropertyMetadata(typeof(DialogHost)));
-            DialogServicePropertyKey = DependencyProperty.RegisterReadOnly(
-                "DialogService",
-                typeof(IDialogService),
-                typeof(DialogHost),
-                null);
-            DialogServiceProperty = DialogServicePropertyKey.DependencyProperty;
             ViewModelPropertyKey = DependencyProperty.RegisterReadOnly(
                 "ViewModel",
                 typeof(object),
@@ -88,6 +82,12 @@ namespace Acorisoft.Morisa.Dialogs
             //
             // 完成任务。
             context.tcs.SetResult(context.result);
+
+            //
+            // fixed: issues #1
+            // 修复了对话框结果为空的错误。
+            context.result.Result = context.vm;
+
             //
             //
             RaiseEvent(new RoutedEventArgs
@@ -130,9 +130,6 @@ namespace Acorisoft.Morisa.Dialogs
             get => (DialogManager)GetValue(ManagerProperty);
             set => SetValue(ManagerProperty, value);
         }
-        public IDialogService DialogService {
-            get => (IDialogService)GetValue(DialogServiceProperty);
-        }
         public object ViewModel {
             get => (object)GetValue(DialogServiceProperty);
         }
@@ -170,8 +167,6 @@ namespace Acorisoft.Morisa.Dialogs
         {
             if (e.NewValue is DialogManager dialogMgr && d is DialogHost dialogHost)
             {
-                d.SetValue(DialogServicePropertyKey, dialogMgr);
-
                 //
                 // 监听
                 dialogMgr.DemandDialogShow += dialogHost.OnDialogShow;

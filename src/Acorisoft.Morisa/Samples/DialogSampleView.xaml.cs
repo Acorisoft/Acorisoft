@@ -32,10 +32,7 @@ namespace Acorisoft.Morisa.Samples
         {
             var dialogMgr = Locator.Current.GetService<IDialogService>();
             var vm = await dialogMgr.Dialog<InsertTextDialogViewModel>();
-            if(vm.IsCompleted)
-            {
-
-            }
+            var result = vm.GetResult<InsertTextDialogViewModel>();
         }
     }
 }
