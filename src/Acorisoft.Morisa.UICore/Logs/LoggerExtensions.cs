@@ -26,8 +26,10 @@ namespace Acorisoft.Morisa.Logs
 
             //
             // 创建文件日志目标。
-            var logFileTarget = new FileTarget("logFile");
-
+            var logFileTarget = new FileTarget("logFile")
+            {
+                FileName = "log.log"
+            };
             //
             // 创建控制台日志目标
             var logConsoleTarget = new ConsoleTarget("logConsole");

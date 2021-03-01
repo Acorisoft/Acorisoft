@@ -94,6 +94,10 @@ namespace Acorisoft.Morisa.Dialogs
             {
                 RoutedEvent = DialogCloseEvent
             });
+
+#if DEBUG
+            _logger.Info("对话框返回，结果错误");
+#endif
         }
 
         private void OnDialogCancel(object sender, ExecutedRoutedEventArgs e)
@@ -124,6 +128,10 @@ namespace Acorisoft.Morisa.Dialogs
             {
                 RoutedEvent = DialogCloseEvent
             });
+
+#if DEBUG
+            _logger.Info("对话框返回，结果正确");
+#endif
         }
 
         public DialogManager Manager {
