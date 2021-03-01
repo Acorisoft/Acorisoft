@@ -13,14 +13,20 @@ namespace Acorisoft.Morisa.Routers
 {
     public static class RouterExtensions
     {
-        private static RoutingState _router;
+        private static ViewManager _mgr;
         private static IFullLogger _logger;
         private static readonly NavigationPipeline _pipeline;
         private static IRoutableViewModel _old;
 
-        private class ViewManager
+        private class ViewManager : IScreen
         {
             // Mock ViewManager
+            public ViewManager()
+            {
+                Router = new RoutingState();
+            }
+
+            public RoutingState Router { get; }
         }
 
         private class NavigationPipeline : INavigationPipeline
@@ -53,13 +59,14 @@ namespace Acorisoft.Morisa.Routers
         static RouterExtensions()
         {
             _pipeline = new NavigationPipeline();
+            _mgr = new ViewManager();
         }
 
         public static IApplicationEnvironment UseRouter(this IApplicationEnvironment appEnv)
         {
             _logger = (new ViewManager()).GetLogger();
-            _router = new RoutingState();
-            _router.CurrentViewModel.Subscribe(OnViewModelChanged);
+            _mgr.Router.CurrentViewModel.Subscribe(OnViewModelChanged);
+            Locator.CurrentMutable.RegisterConstant<IScreen>(_mgr);
             return appEnv;
         }
 
@@ -85,14 +92,11 @@ namespace Acorisoft.Morisa.Routers
 
                 //
                 // 导航到指定视图模型
-                _router.Navigate.Execute(e.Result);
+                _mgr.Router.Navigate.Execute(e.Result);
                 _logger.Info($"导航到页面：{e.Result.GetType().Name}");
             }
             else
             {
-                //
-                // 如果不存在视图模型，则直接导航到视图模型。
-                _router.Navigate.Execute(vm);
                 _logger.Info($"导航到页面：{vm.GetType().Name}");
             }
 
@@ -109,6 +113,6 @@ namespace Acorisoft.Morisa.Routers
             _pipeline.InternalFilters.Remove(observer);
         }
 
-        public static RoutingState Router => _router;
+        public static RoutingState Router => _mgr.Router;
     }
 }
