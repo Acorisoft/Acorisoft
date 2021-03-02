@@ -33,20 +33,11 @@
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>Language.resx</DependentUpon>
 	  </Compile>
-	  <Compile Update="Properties\Language.zh-Hants.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>Language.zh-Hants.resx</DependentUpon>
-	  </Compile>
 	</ItemGroup>
 	<ItemGroup>
 	  <EmbeddedResource Update="Properties\Language.resx">
 	    <Generator>ResXFileCodeGenerator</Generator>
 	    <LastGenOutput>Language.Designer.cs</LastGenOutput>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Properties\Language.zh-Hants.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	    <LastGenOutput>Language.zh-Hants.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	</ItemGroup>
 

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LiteDB;
 using FASTER;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Acorisoft.Morisa.Core
 {
@@ -28,6 +29,7 @@ namespace Acorisoft.Morisa.Core
             _container.UseDryIocDependencyResolver();
         }
 
+        [SuppressMessage("Usage", "CA1816:Dispose 方法应调用 SuppressFinalize", Justification = "<挂起>")]
         public void Dispose()
         {
             if (!_container.IsDisposed)

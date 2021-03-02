@@ -26,6 +26,10 @@ namespace Acorisoft.Morisa.Views
         public InspirationGalleryView()
         {
             InitializeComponent();
+            this.WhenActivated(d =>
+            {
+                d(this.WhenAnyValue(x => x.ViewModel).BindTo(this, x => x.DataContext));
+            });
         }
     }
 }

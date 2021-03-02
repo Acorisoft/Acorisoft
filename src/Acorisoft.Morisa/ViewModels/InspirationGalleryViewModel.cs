@@ -22,8 +22,8 @@ namespace Acorisoft.Morisa.ViewModels
 
         public InspirationGalleryViewModel(IDialogService dialogSrv)
         {
-            _CollectionView = CollectionViewSource.GetDefaultView(Collection);
-            _CollectionView.Filter = OnElementFiltering;
+            //_CollectionView = CollectionViewSource.GetDefaultView(Collection);
+            //_CollectionView.Filter = OnElementFiltering;
 
             //
             // 初始化过滤器

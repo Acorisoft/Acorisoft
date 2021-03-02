@@ -25,19 +25,24 @@
             <mui:GalleryView.ToolInMainTitle>
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Right">
-                    <Button Content="Mode"/>
+                    <Button Content="{mo:Lang String1}"/>
                     <Button Content="Add"/>
                 </StackPanel>
             </mui:GalleryView.ToolInMainTitle>
             <!-- 画廊工具栏 -->
             <mui:GalleryView.ToolBar>
                 <DockPanel>
-                    <ItemsControl>
+                    <ItemsControl ItemsSource="{Binding FilterCollection}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type mo:CollectionFilter}">
-                                <mui:MuiRadioButton Content="{Binding Key}"/>
+                                <mui:MuiRadioButton Content="{mo:Lang Key}" GroupName="InspirationGroup"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
                     </ItemsControl>
                     <ComboBox HorizontalAlignment="Right"
                               VerticalAlignment="Top"
