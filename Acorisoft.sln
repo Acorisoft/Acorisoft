@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa", "src\Aco
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.UICore", "src\Acorisoft.Morisa.UICore\Acorisoft.Morisa.UICore.csproj", "{AE6B6B27-9D45-4900-9427-CC2F1EFDD3A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Morisa.UI", "src\Acorisoft.Morisa.UI\Acorisoft.Morisa.UI.csproj", "{83FD9501-42C9-49D2-A384-F5E9BBF5AA6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.UI", "src\Acorisoft.Morisa.UI\Acorisoft.Morisa.UI.csproj", "{83FD9501-42C9-49D2-A384-F5E9BBF5AA6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Demos.DataTemplateSelector", "demos\Acorisoft.Demos.DataTemplateSelector\Acorisoft.Demos.DataTemplateSelector.csproj", "{42D8E6EB-03E5-4680-82BF-CBA58C90B597}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,13 +41,17 @@ Global
 		{83FD9501-42C9-49D2-A384-F5E9BBF5AA6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83FD9501-42C9-49D2-A384-F5E9BBF5AA6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83FD9501-42C9-49D2-A384-F5E9BBF5AA6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42D8E6EB-03E5-4680-82BF-CBA58C90B597}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42D8E6EB-03E5-4680-82BF-CBA58C90B597}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42D8E6EB-03E5-4680-82BF-CBA58C90B597}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42D8E6EB-03E5-4680-82BF-CBA58C90B597}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_SortFileContentOnSave = True
-		RESX_NeutralResourcesLanguage = zh-Hans
 		SolutionGuid = {3EE6B840-2DC2-4DF7-8922-192714C85F7B}
+		RESX_NeutralResourcesLanguage = zh-Hans
+		RESX_SortFileContentOnSave = True
 	EndGlobalSection
 EndGlobal
