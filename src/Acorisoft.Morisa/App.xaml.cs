@@ -1,6 +1,8 @@
 ﻿using Acorisoft.Morisa.Core;
+using Acorisoft.Morisa.Dialogs;
 using Acorisoft.Morisa.Logs;
 using Acorisoft.Morisa.Routers;
+using Acorisoft.Morisa.Globalization;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -8,6 +10,10 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using DryIoc;
+using ReactiveUI;
+using Acorisoft.Morisa.Views;
+using Acorisoft.Morisa.Properties;
 
 namespace Acorisoft.Morisa
 {
@@ -21,8 +27,16 @@ namespace Acorisoft.Morisa
         public App()
         {
             _appEnv = new ApplicationEnvironment();
+            //_appEnv.Container.Register<IViewFor<DialogSampleViewModel>, DialogSampleView>();
+            //_appEnv.Container.Register<IViewFor<InsertTextDialogViewModel>, InsertTextDialogView>();
+            //_appEnv.Container.Register<DialogSampleViewModel>();
+            //_appEnv.Container.Register<InsertTextDialogViewModel>();
+            Language.Culture = new System.Globalization.CultureInfo("en-US");
             _appEnv.UseLog()
-                   .UseRouter();
+                   .UseRouter()
+                   .UseDialog()
+                   .UseViews(typeof(App).Assembly)
+                   .UseGlobalization(Language.ResourceManager,new System.Globalization.CultureInfo("en-US"));
         }
     }
 }

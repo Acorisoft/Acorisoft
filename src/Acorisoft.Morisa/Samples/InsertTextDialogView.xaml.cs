@@ -1,6 +1,4 @@
 ﻿using Acorisoft.Morisa.Dialogs;
-using Acorisoft.Morisa.Routers;
-using Acorisoft.Morisa.Samples;
 using Acorisoft.Morisa.Views;
 using ReactiveUI;
 using Splat;
@@ -19,18 +17,24 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Acorisoft.Morisa
+namespace Acorisoft.Morisa.Samples
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// InsertTextDialogView.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window
+    [ViewModel(typeof(InsertTextDialogViewModel))]
+    public partial class InsertTextDialogView : ReactiveUserControl<InsertTextDialogViewModel>
     {
-        public MainWindow()
+        public InsertTextDialogView()
         {
             InitializeComponent();
-            PART_Dialog.Manager = (DialogManager)Locator.Current.GetService<IDialogService>();
-            ViewExtensions.NavigateToHomePage();
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var dialogMgr = Locator.Current.GetService<IDialogService>();
+            var vm = await dialogMgr.Dialog<InsertTextDialogViewModel>();
+            var result = vm.GetResult<InsertTextDialogViewModel>();
         }
     }
 }

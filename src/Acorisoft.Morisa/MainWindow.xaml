@@ -12,5 +12,8 @@
     <Grid>
         <!-- View -->
         <rx:RoutedViewHost Router="{Binding Source={x:Static mo:RouterExtensions.Router},Mode=OneWay}"/>
+        
+        <!-- Dialog -->
+        <mo:DialogHost x:Name="PART_Dialog"/>
     </Grid>
 </Window>

@@ -11,5 +11,7 @@ namespace Acorisoft.Morisa.Inspirations
     /// </summary>
     public interface IInspirationTextElement : IInspirationElement
     {
+        string Color { get; set; }
+        string Text { get; set; }
     }
 }

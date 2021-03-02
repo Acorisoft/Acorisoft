@@ -4,6 +4,30 @@
              xmlns:local="clr-namespace:Acorisoft.Morisa"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <!-- 主题 -->
+            <ResourceDictionary.MergedDictionaries>
+
+                <!-- Morisa UI -->
+                <ResourceDictionary Source="pack://application:,,,/Acorisoft.Morisa.UICore;component/Themes/Generic.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Acorisoft.Morisa.UI;component/Themes/Generic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- 默认字体
+            
+                 思源黑体
+            
+                引用：
+                    https://source.typekit.com/source-han-serif/cn/#team
+            -->
+            <!-- 默认大小 -->
+            <!--<FontFamily x:Key="Morisa.Fonts.Main">pack://application:,,,/Acorisoft.Morisa;component/Fonts/SourceHanSansSC-Regular.otf#Source Han Sans SC</FontFamily>
+
+            --><!-- 细体 --><!--
+            <FontFamily x:Key="Morisa.Fonts.Light">pack://application:,,,/Acorisoft.Morisa;component/Fonts/SourceHanSansSC-Light.otf#思源黑体</FontFamily>
+
+            --><!-- 粗体 --><!--
+            <FontFamily x:Key="Morisa.Fonts.Bold">pack://application:,,,/Acorisoft.Morisa;component/Fonts/SourceHanSansSC-Bold.otf#思源黑体</FontFamily>-->
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

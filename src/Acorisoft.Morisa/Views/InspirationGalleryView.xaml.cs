@@ -1,9 +1,5 @@
-﻿using Acorisoft.Morisa.Dialogs;
-using Acorisoft.Morisa.Routers;
-using Acorisoft.Morisa.Samples;
-using Acorisoft.Morisa.Views;
+﻿using Acorisoft.Morisa.ViewModels;
 using ReactiveUI;
-using Splat;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,18 +15,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Acorisoft.Morisa
+namespace Acorisoft.Morisa.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// InspirationGalleryView.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window
+    [ViewModel(typeof(InspirationGalleryViewModel))]
+    public partial class InspirationGalleryView : ReactiveUserControl<InspirationGalleryViewModel>
     {
-        public MainWindow()
+        public InspirationGalleryView()
         {
             InitializeComponent();
-            PART_Dialog.Manager = (DialogManager)Locator.Current.GetService<IDialogService>();
-            ViewExtensions.NavigateToHomePage();
+            this.WhenActivated(d =>
+            {
+                d(this.WhenAnyValue(x => x.ViewModel).BindTo(this, x => x.DataContext));
+            });
         }
     }
 }

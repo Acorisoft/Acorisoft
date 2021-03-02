@@ -11,17 +11,25 @@ using Acorisoft.Morisa.Logs;
 
 namespace Acorisoft.Morisa.Routers
 {
+    class ViewManager : IScreen
+    {
+        // Mock ViewManager
+        public ViewManager()
+        {
+            Router = new RoutingState();
+        }
+
+        public RoutingState Router { get; }
+    }
+
     public static class RouterExtensions
     {
-        private static RoutingState _router;
+        private static ViewManager _mgr;
         private static IFullLogger _logger;
         private static readonly NavigationPipeline _pipeline;
         private static IRoutableViewModel _old;
 
-        private class ViewManager
-        {
-            // Mock ViewManager
-        }
+
 
         private class NavigationPipeline : INavigationPipeline
         {
@@ -53,18 +61,28 @@ namespace Acorisoft.Morisa.Routers
         static RouterExtensions()
         {
             _pipeline = new NavigationPipeline();
+            _mgr = new ViewManager();
         }
 
         public static IApplicationEnvironment UseRouter(this IApplicationEnvironment appEnv)
         {
-            _router = new RoutingState();
-            _router.CurrentViewModel.Subscribe(OnViewModelChanged);
             _logger = (new ViewManager()).GetLogger();
+            _mgr.Router.CurrentViewModel.Subscribe(OnViewModelChanged);
+            Locator.CurrentMutable.RegisterConstant<IScreen>(_mgr);
             return appEnv;
         }
 
         private static void OnViewModelChanged(IRoutableViewModel vm)
         {
+            //
+            // 当vm为空的时候直接跳过当前环节
+            if(vm == null)
+            {
+                return;
+            }
+
+            //
+            // 如果过滤管线不为空，则将当前视图模型进入管线过滤
             if(_pipeline.Filters.Count > 0)
             {
                 var e = new NavigationFilterEventArgs(_old, vm)
@@ -75,13 +93,12 @@ namespace Acorisoft.Morisa.Routers
                 _pipeline.OnNext(e);
 
                 //
-                // 导航到
-                _router.Navigate.Execute(e.Result);
+                // 导航到指定视图模型
+                _mgr.Router.Navigate.Execute(e.Result);
                 _logger.Info($"导航到页面：{e.Result.GetType().Name}");
             }
             else
             {
-                _router.Navigate.Execute(vm);
                 _logger.Info($"导航到页面：{vm.GetType().Name}");
             }
 
@@ -98,6 +115,6 @@ namespace Acorisoft.Morisa.Routers
             _pipeline.InternalFilters.Remove(observer);
         }
 
-        public static RoutingState Router => _router;
+        public static RoutingState Router => _mgr.Router;
     }
 }
