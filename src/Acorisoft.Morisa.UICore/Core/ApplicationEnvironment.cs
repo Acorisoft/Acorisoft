@@ -2,10 +2,13 @@
 using Splat.DryIoc;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LiteDB;
+using FASTER;
 
 namespace Acorisoft.Morisa.Core
 {
@@ -15,7 +18,6 @@ namespace Acorisoft.Morisa.Core
     public class ApplicationEnvironment : IApplicationEnvironment
     {
         private readonly IContainer _container;
-
         public ApplicationEnvironment()
         {
             // 使用最终可释放的瞬时对象规则初始化一个IOC容器。
@@ -128,5 +130,12 @@ namespace Acorisoft.Morisa.Core
         #endregion Directory Properties
 
         #endregion Directory Methods And Properties
+
+        public CultureInfo Culture {
+            get;
+            set;
+        }
+
+        public event EventHandler CultureChanged;
     }
 }

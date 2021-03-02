@@ -11,6 +11,17 @@ using Acorisoft.Morisa.Logs;
 
 namespace Acorisoft.Morisa.Routers
 {
+    class ViewManager : IScreen
+    {
+        // Mock ViewManager
+        public ViewManager()
+        {
+            Router = new RoutingState();
+        }
+
+        public RoutingState Router { get; }
+    }
+
     public static class RouterExtensions
     {
         private static ViewManager _mgr;
@@ -18,16 +29,7 @@ namespace Acorisoft.Morisa.Routers
         private static readonly NavigationPipeline _pipeline;
         private static IRoutableViewModel _old;
 
-        private class ViewManager : IScreen
-        {
-            // Mock ViewManager
-            public ViewManager()
-            {
-                Router = new RoutingState();
-            }
 
-            public RoutingState Router { get; }
-        }
 
         private class NavigationPipeline : INavigationPipeline
         {

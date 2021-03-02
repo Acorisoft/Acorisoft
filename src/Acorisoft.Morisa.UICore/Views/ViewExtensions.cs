@@ -13,15 +13,15 @@ using Splat;
 
 namespace Acorisoft.Morisa.Views
 {
+    class ViewBinder
+    {
+
+    }
     public static class ViewExtensions
     {
         private static Type HomePageType;
         private static Type IViewForType = typeof(IViewFor<>);
 
-        private class ViewBinder
-        {
-
-        }
 
         public static IApplicationEnvironment UseViews(this IApplicationEnvironment appEnv, Assembly assembly)
         {

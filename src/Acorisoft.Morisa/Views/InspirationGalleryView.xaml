@@ -7,28 +7,51 @@
                         xmlns:app="clr-namespace:Acorisoft.Morisa.Views"
                         xmlns:vm="clr-namespace:Acorisoft.Morisa.ViewModels"
                         xmlns:rx="http://reactiveui.net"
+                        xmlns:mo="https://github.com/Acorisoft/Morisa"
                         xmlns:mui="https://github.com/Acorisoft/Morisa/UI"
                         xmlns:docs="clr-namespace:Acorisoft.Morisa.Inspirations;assembly=Acorisoft.Morisa.Documents"
                         xmlns:tag="clr-namespace:Acorisoft.Morisa.Tags;assembly=Acorisoft.Morisa.Documents"
                         mc:Ignorable="d" 
                         d:DesignHeight="720" d:DesignWidth="1280">
     <Grid>
-        <mui:GalleryView>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="320" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="320" />
+        </Grid.ColumnDefinitions>
+        <mui:GalleryView Grid.Column="1"
+                         MainTitle="灵感"
+                         SubTitle="总计40个灵感">
             <mui:GalleryView.ToolInMainTitle>
-                <Border Background="Magenta"/>
-            </mui:GalleryView.ToolInMainTitle>
-            <mui:GalleryView.ToolInSubTitle>
-                <Border Background="Aqua"/>
-            </mui:GalleryView.ToolInSubTitle>
-            <mui:GalleryView.ToolBar>
-                <StackPanel Height="32"
-                            Background="Aquamarine">
-                    
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                    <Button Content="Mode"/>
+                    <Button Content="Add"/>
                 </StackPanel>
+            </mui:GalleryView.ToolInMainTitle>
+            <!-- 画廊工具栏 -->
+            <mui:GalleryView.ToolBar>
+                <DockPanel>
+                    <ItemsControl>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type mo:CollectionFilter}">
+                                <mui:MuiRadioButton Content="{Binding Key}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <ComboBox HorizontalAlignment="Right"
+                              VerticalAlignment="Top"
+                              MinWidth="100">
+                        <ComboBoxItem Content="创建时间"/>
+                        <ComboBoxItem Content="修改时间"/>
+                        <ComboBoxItem Content="名称"/>
+                        <ComboBoxItem Content="类型"/>
+                    </ComboBox>
+                </DockPanel>
             </mui:GalleryView.ToolBar>
-            <Border Background="CornflowerBlue">
-                
-            </Border>
+            
+            <!-- 画廊内容区域 -->
+            <ContentControl/>
         </mui:GalleryView>
     </Grid>
 </rx:ReactiveUserControl>
