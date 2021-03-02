@@ -1,3 +1,107 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="clr-namespace:Acorisoft.Morisa.Controls">
+
+    <Style TargetType="{x:Type c:GalleryView}">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="MainTitle" Value="MainTitle" />
+        <Setter Property="MainTitleForeground" Value="Black" />
+        <Setter Property="MainTitleFontSize" Value="32" />
+        <Setter Property="MainTitleFontWeight" Value="Bold" />
+        <Setter Property="SubTitle" Value="Subtitle" />
+        <Setter Property="SubTitleForeground" Value="Black" />
+        <Setter Property="SubTitleFontSize" Value="20" />
+        <Setter Property="Padding" Value="4" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type c:GalleryView}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="0">
+                        <c:GalleryViewLayout>
+                            <DockPanel x:Name="PART_MainTitlePanel"
+                                       Margin="{TemplateBinding Padding}">
+                                <ContentPresenter x:Name="PART_MainTitle"
+                                                  Content="{TemplateBinding MainTitle}"
+                                                  ContentTemplate="{TemplateBinding MainTitleTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding MainTitleTemplateSelector}"
+                                                  ContentStringFormat="{TemplateBinding MainTitleStringFormat}"
+                                                  TextElement.FontFamily="{TemplateBinding MainTitleFontFamily}"
+                                                  TextElement.FontSize="{TemplateBinding MainTitleFontSize}"
+                                                  TextElement.FontStretch="{TemplateBinding MainTitleFontStretch}"
+                                                  TextElement.FontStyle="{TemplateBinding MainTitleFontStyle}"
+                                                  TextElement.FontWeight="{TemplateBinding MainTitleFontWeight}"
+                                                  TextElement.Foreground="{TemplateBinding MainTitleForeground}"
+                                                  DockPanel.Dock="Left"/>
+                                <ContentPresenter x:Name="PART_ToolInMainTitle"
+                                                  Content="{TemplateBinding ToolInMainTitle}"
+                                                  ContentTemplate="{TemplateBinding ToolInMainTitleTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding ToolInMainTitleTemplateSelector}"
+                                                  ContentStringFormat="{TemplateBinding ToolInMainTitleStringFormat}"
+                                                  TextElement.FontFamily="{TemplateBinding MainTitleFontFamily}"
+                                                  TextElement.FontSize="{TemplateBinding MainTitleFontSize}"
+                                                  TextElement.FontStretch="{TemplateBinding MainTitleFontStretch}"
+                                                  TextElement.FontStyle="{TemplateBinding MainTitleFontStyle}"
+                                                  TextElement.FontWeight="{TemplateBinding MainTitleFontWeight}"
+                                                  TextElement.Foreground="{TemplateBinding MainTitleForeground}"
+                                                  DockPanel.Dock="Right"/>
+                            </DockPanel>
+                            <DockPanel x:Name="PART_SubTitlePanel"
+                                       Margin="{TemplateBinding Padding}">
+                                <ContentPresenter x:Name="PART_SubTitle"
+                                                  Content="{TemplateBinding SubTitle}"
+                                                  ContentTemplate="{TemplateBinding SubTitleTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding SubTitleTemplateSelector}"
+                                                  ContentStringFormat="{TemplateBinding SubTitleStringFormat}"
+                                                  TextElement.FontFamily="{TemplateBinding SubTitleFontFamily}"
+                                                  TextElement.FontSize="{TemplateBinding SubTitleFontSize}"
+                                                  TextElement.FontStretch="{TemplateBinding SubTitleFontStretch}"
+                                                  TextElement.FontStyle="{TemplateBinding SubTitleFontStyle}"
+                                                  TextElement.FontWeight="{TemplateBinding SubTitleFontWeight}"
+                                                  TextElement.Foreground="{TemplateBinding SubTitleForeground}"
+                                                  DockPanel.Dock="Left"/>
+                                <ContentPresenter x:Name="PART_ToolInSubTitle"
+                                                  Content="{TemplateBinding ToolInSubTitle}"
+                                                  ContentTemplate="{TemplateBinding ToolInSubTitleTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding ToolInSubTitleTemplateSelector}"
+                                                  ContentStringFormat="{TemplateBinding ToolInSubTitleStringFormat}"
+                                                  TextElement.FontFamily="{TemplateBinding SubTitleFontFamily}"
+                                                  TextElement.FontSize="{TemplateBinding SubTitleFontSize}"
+                                                  TextElement.FontStretch="{TemplateBinding SubTitleFontStretch}"
+                                                  TextElement.FontStyle="{TemplateBinding SubTitleFontStyle}"
+                                                  TextElement.FontWeight="{TemplateBinding SubTitleFontWeight}"
+                                                  TextElement.Foreground="{TemplateBinding SubTitleForeground}"
+                                                  DockPanel.Dock="Right"/>
+                            </DockPanel>
+                            <ContentPresenter Content="{TemplateBinding ToolBar}"
+                                              ContentTemplate="{TemplateBinding ToolBarTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ToolBarTemplateSelector}"
+                                              ContentStringFormat="{TemplateBinding ToolBarStringFormat}"
+                                              TextElement.FontFamily="{TemplateBinding FontFamily}"
+                                              TextElement.FontSize="{TemplateBinding FontSize}"
+                                              TextElement.FontStretch="{TemplateBinding FontStretch}"
+                                              TextElement.FontStyle="{TemplateBinding FontStyle}"
+                                              TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                              TextElement.Foreground="{TemplateBinding Foreground}"
+                                              Margin="{TemplateBinding Padding}"/>
+                            <ContentPresenter Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              TextElement.FontFamily="{TemplateBinding FontFamily}"
+                                              TextElement.FontSize="{TemplateBinding FontSize}"
+                                              TextElement.FontStretch="{TemplateBinding FontStretch}"
+                                              TextElement.FontStyle="{TemplateBinding FontStyle}"
+                                              TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                              TextElement.Foreground="{TemplateBinding Foreground}"
+                                              VerticalAlignment="Stretch"
+                                              HorizontalAlignment="Stretch"
+                                              Margin="{TemplateBinding Padding}"/>
+                        </c:GalleryViewLayout>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

@@ -13,85 +13,22 @@
                         mc:Ignorable="d" 
                         d:DesignHeight="720" d:DesignWidth="1280">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="384" />
-        </Grid.ColumnDefinitions>
-
-        <ItemsControl ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                      SnapsToDevicePixels="True">
-            <ItemsControl.Resources>
-                <DataTemplate DataType="{x:Type docs:InspirationTextElement}">
-                    <Grid x:Name="PART_Grid"
-                          MinWidth="100"
-                          MinHeight="42"
-                          Margin="4"
-                          Background="{Binding Color,Mode=OneWay}"
-                          SnapsToDevicePixels="True"
-                          UseLayoutRounding="True">
-                        <TextBlock Text="{Binding Text,Mode=OneWay}"
-                                   FontSize="16"
-                                   VerticalAlignment="Center"
-                                   SnapsToDevicePixels="True"/>
-                    </Grid>
-                    <DataTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True" SourceName="PART_Grid">
-                            <Setter Property="Background" Value="CornflowerBlue" TargetName="PART_Grid"/>
-                        </Trigger>
-                    </DataTemplate.Triggers>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type docs:InspirationMusicElement}">
-                    <Grid x:Name="PART_Grid"
-                          MinWidth="100"
-                          MinHeight="92"
-                          Margin="4"
-                          Background="Aquamarine">
-
-                    </Grid>
-                    <DataTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True" SourceName="PART_Grid">
-                            <Setter Property="Background" Value="Red" TargetName="PART_Grid"/>
-                        </Trigger>
-                    </DataTemplate.Triggers>
-                </DataTemplate>
-            </ItemsControl.Resources>
-            <docs:InspirationTextElement Text="样式文本" Color=""/>
-            <docs:InspirationTextElement Text="样式文本" Color="#FFAB12"/>
-            <docs:InspirationTextElement Text="样式文本" Color="#FFAB12"/>
-            <docs:InspirationTextElement Text="样式文本" Color="#FFAB12"/>
-            <docs:InspirationTextElement Text="样式文本" Color="#FFAB12"/>
-            <docs:InspirationTextElement Text="样式文本" Color="#FFAB12"/>
-            <docs:InspirationTextElement Text="样式文本" Color="#FFAB12"/>
-            <docs:InspirationTextElement Text="样式文本" Color="#FFAB12"/>
-            <docs:InspirationTextElement Text="样式文本" Color="#FFAB12"/>
-            <docs:InspirationTextElement Text="样式文本" Color="#FFAB12"/>
-            <docs:InspirationTextElement Text="样式文本" Color="#FFAB12"/>
-            <docs:InspirationTextElement Text="样式文本" Color="#FFAB12"/>
-            <docs:InspirationTextElement Text="样式文本" Color="#FFAB12"/>
-            <docs:InspirationTextElement Text="样式文本" Color="#FFAB12"/>
-            <docs:InspirationTextElement Text="样式文本" Color="#FFAB12"/>
-            <docs:InspirationTextElement Text="样式文本" Color="#FFAB12"/>
-            <docs:InspirationTextElement Text="样式文本" Color="#FFAB12"/>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <mui:WaterfallPanel ColumnCount="5" IsItemsHost="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
-        
-        <Grid Grid.Column="1"
-              Background="#F0F0F0">
-            <Grid.RowDefinitions>
-                <RowDefinition MinHeight="96" MaxHeight="192"/>
-                <RowDefinition Height="1*" />
-            </Grid.RowDefinitions>
-
-            <!-- 顶部文本添加栏 -->
-            <Border Padding="16">
-                <RichTextBox Padding="4"
-                             AcceptsReturn="True"
-                             AcceptsTab="True"/>
+        <mui:GalleryView>
+            <mui:GalleryView.ToolInMainTitle>
+                <Border Background="Magenta"/>
+            </mui:GalleryView.ToolInMainTitle>
+            <mui:GalleryView.ToolInSubTitle>
+                <Border Background="Aqua"/>
+            </mui:GalleryView.ToolInSubTitle>
+            <mui:GalleryView.ToolBar>
+                <StackPanel Height="32"
+                            Background="Aquamarine">
+                    
+                </StackPanel>
+            </mui:GalleryView.ToolBar>
+            <Border Background="CornflowerBlue">
+                
             </Border>
-        </Grid>
+        </mui:GalleryView>
     </Grid>
 </rx:ReactiveUserControl>
