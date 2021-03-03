@@ -5,10 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa.Dialogs
+namespace Acorisoft.Morisa.ViewModels
 {
-    public interface IDialogService
+    public interface IViewModel : IRoutableViewModel
     {
-        Task<DialogSession> Dialog<T>() where T : IRoutableViewModel;
     }
 }

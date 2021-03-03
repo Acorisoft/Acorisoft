@@ -41,7 +41,7 @@ namespace Acorisoft.Morisa.Controls
                 var h1 = MinMax(element1.DesiredSize.Height,24,96);
                 var h2 = MinMax(element2.DesiredSize.Height,24,96);
                 var h3 = MinMax(element3.DesiredSize.Height,24,96);
-                var h4 = finalSize.Height - h1 - h2 - h3;
+                var h4 = MinMax(finalSize.Height - h1 - h2 - h3,100,double.PositiveInfinity);
 
                 element1.Arrange(new Rect(Zero, new Size(finalSize.Width, h1)));
                 element2.Arrange(new Rect(new Point(0, h1), new Size(finalSize.Width, h2)));

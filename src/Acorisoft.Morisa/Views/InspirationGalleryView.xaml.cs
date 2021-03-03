@@ -1,4 +1,5 @@
-﻿using Acorisoft.Morisa.ViewModels;
+﻿using Acorisoft.Morisa.Dialogs;
+using Acorisoft.Morisa.ViewModels;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -23,13 +24,34 @@ namespace Acorisoft.Morisa.Views
     [ViewModel(typeof(InspirationGalleryViewModel))]
     public partial class InspirationGalleryView : ReactiveUserControl<InspirationGalleryViewModel>
     {
-        public InspirationGalleryView()
+        private readonly IDialogService _dialogSrv;
+
+        public InspirationGalleryView(IDialogService dialogService)
         {
             InitializeComponent();
+
             this.WhenActivated(d =>
             {
                 d(this.WhenAnyValue(x => x.ViewModel).BindTo(this, x => x.DataContext));
             });
+
+            _dialogSrv = dialogService;
+        }
+
+        private async void DoOpenInsertWizard(object sender, ExecutedRoutedEventArgs e)
+        {
+            var session = await _dialogSrv.Dialog<InspirationGalleryInsertWizardViewModel>();
+
+            if(session.IsCompleted)
+            {
+                var result = session.GetResult<InspirationGalleryInsertWizardViewModel>();
+                var insertSession = await session.NewSession<InspirationGalleryInsertWizardViewModel>();
+            }
+        }
+
+        private void CanOpenInsertWizard(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
         }
     }
 }

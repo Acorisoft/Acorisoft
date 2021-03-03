@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.ViewModels
 {
-    public abstract class ViewModelBase : ReactiveObject, IRoutableViewModel
+    public abstract class ViewModelBase : ReactiveObject, IViewModel
     {
         private IScreen _screen;
 

@@ -17,15 +17,19 @@ namespace Acorisoft.Morisa.Dialogs
             _router = new RoutingState();
         }
 
-        public Task<DialogResult> Dialog<T>() where T : IRoutableViewModel
+        public Task<DialogSession> Dialog<T>() where T : IRoutableViewModel
         {
             var vm = Locator.Current.GetService<T>();
-            var result = new DialogResult();
-            var tcs = new TaskCompletionSource<DialogResult>();
-            var e = new DialogShowEventArgs(vm,result,tcs);
+            var e = new DialogShowEventArgs(
+                vm, 
+                GetDialogSession(),
+                new TaskCompletionSource<DialogSession>());
             DemandDialogShow?.Invoke(this, e);
-            return tcs.Task;
+            return e.TCS.Task;
         }
+
+        public DialogSession GetDialogSession() => new DialogSession(this);
+
         public RoutingState Router => _router;
         internal event EventHandler<DialogShowEventArgs> DemandDialogShow;
     }
