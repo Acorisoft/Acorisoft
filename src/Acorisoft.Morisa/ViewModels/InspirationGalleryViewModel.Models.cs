@@ -16,6 +16,8 @@ namespace Acorisoft.Morisa.ViewModels
             set => SetValue(KeyProperty, GlobalizationExtension.GetString(value));
         }
 
+        public Type Type { get; set; }
+
         public static readonly DependencyProperty KeyProperty = DependencyProperty.Register(
             "Key",
             typeof(string),

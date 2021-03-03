@@ -45,7 +45,8 @@ namespace Acorisoft.Morisa.Views
             if(session.IsCompleted)
             {
                 var result = session.GetResult<InspirationGalleryInsertWizardViewModel>();
-                var insertSession = await session.NewSession<InspirationGalleryInsertWizardViewModel>();
+                var insertSession = await session.NewSession(result.Insertion.Type);
+                
             }
         }
 

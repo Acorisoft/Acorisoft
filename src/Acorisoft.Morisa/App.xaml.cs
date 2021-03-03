@@ -35,7 +35,7 @@ namespace Acorisoft.Morisa
                    .UseRouter()
                    .UseDialog()
                    .UseViews(typeof(App).Assembly)
-                   .UseGlobalization(Language.ResourceManager,new System.Globalization.CultureInfo("en-US"));
+                   .UseGlobalization(Language.ResourceManager,new System.Globalization.CultureInfo("zh"));
         }
     }
 }

@@ -30,6 +30,22 @@ namespace Acorisoft.Morisa.Dialogs
 
         public DialogSession GetDialogSession() => new DialogSession(this);
 
+        public Task<DialogSession> Dialog(Type dialogVM)
+        {
+            if (dialogVM.IsAssignableTo(dialogVM))
+            {
+                var vm = Locator.Current.GetService(dialogVM) as IRoutableViewModel;
+                var e = new DialogShowEventArgs(
+                vm,
+                GetDialogSession(),
+                new TaskCompletionSource<DialogSession>());
+                DemandDialogShow?.Invoke(this, e);
+                return e.TCS.Task;
+            }
+
+            return null;
+        }
+
         public RoutingState Router => _router;
         internal event EventHandler<DialogShowEventArgs> DemandDialogShow;
     }

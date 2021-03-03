@@ -24,6 +24,11 @@ namespace Acorisoft.Morisa.Dialogs
             return Service.Dialog<T>();
         }
 
+        public Task<DialogSession> NewSession(Type dialogType) 
+        {
+            return Service.Dialog(dialogType);
+        }
+
         internal IDialogService Service { get; private set; }
 
         public IRoutableViewModel Result { get; set; }

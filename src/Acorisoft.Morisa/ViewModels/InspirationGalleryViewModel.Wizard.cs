@@ -1,9 +1,13 @@
 ﻿using DynamicData.Binding;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using System.Reactive;
+using System.Reactive.Concurrency;
 
 namespace Acorisoft.Morisa.ViewModels
 {
@@ -27,8 +31,6 @@ namespace Acorisoft.Morisa.ViewModels
                 }
             };
         }
-
-
         public InspirationElementInsertion Insertion { get; set; }
         public ObservableCollectionExtended<InspirationElementInsertion> Collection { get; }
     }

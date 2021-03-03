@@ -31,5 +31,15 @@ namespace Acorisoft.Morisa.Views
                 d(this.WhenAnyValue(x => x.ViewModel).BindTo(this, x => x.DataContext));
             });
         }
+
+        private void CanPickInsertion(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = e.Parameter is InspirationElementInsertion;
+        }
+
+        private void DoPickInsertion(object sender, ExecutedRoutedEventArgs e)
+        {
+            ViewModel.Insertion = e.Parameter as InspirationElementInsertion;
+        }
     }
 }

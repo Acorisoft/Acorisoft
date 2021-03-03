@@ -255,10 +255,11 @@
     <Style TargetType="{x:Type b:MuiChooseButton}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="LightGray" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderThickness" Value="2" />
         <Setter Property="Margin" Value="4" />
         <Setter Property="MinWidth" Value="64" />
-        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="MinHeight" Value="64" />
+        <Setter Property="Padding" Value="8 0" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="UseLayoutRounding" Value="True" />
@@ -270,10 +271,9 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="16"
+                            CornerRadius="7"
                             Padding="{TemplateBinding Padding}">
-                        <DockPanel>
-                            <ContentPresenter x:Name="PART_Content"
+                        <ContentPresenter x:Name="PART_Content"
                                               Content="{TemplateBinding Content}"
                                               ContentTemplate="{TemplateBinding ContentTemplate}"
                                               ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
@@ -287,21 +287,6 @@
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               DockPanel.Dock="Top"/>
-                            <ContentPresenter x:Name="PART_Symbol"
-                                              Content="{TemplateBinding Symbol}"
-                                              ContentTemplate="{TemplateBinding SymbolTemplate}"
-                                              ContentTemplateSelector="{TemplateBinding SymbolTemplateSelector}"
-                                              ContentStringFormat="{TemplateBinding SymbolStringFormat}"
-                                              TextElement.FontFamily="{TemplateBinding FontFamily}"
-                                              TextElement.FontSize="{TemplateBinding FontSize}"
-                                              TextElement.FontStretch="{TemplateBinding FontStretch}"
-                                              TextElement.FontStyle="{TemplateBinding FontStyle}"
-                                              TextElement.FontWeight="{TemplateBinding FontWeight}"
-                                              TextElement.Foreground="{TemplateBinding Foreground}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              DockPanel.Dock="Bottom"/>
-                        </DockPanel>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -324,8 +309,8 @@
                     <Setter Property="Control.Template">
                         <Setter.Value>
                             <ControlTemplate>
-                                <Rectangle RadiusX="16"
-                                           RadiusY="16"
+                                <Rectangle RadiusX="7"
+                                           RadiusY="7"
                                            Margin="2"
                                            StrokeThickness="1"
                                            Stroke="Black"

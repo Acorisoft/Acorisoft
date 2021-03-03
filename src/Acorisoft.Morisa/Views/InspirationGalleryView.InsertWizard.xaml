@@ -16,6 +16,9 @@
                         Height="640" 
                         Width="800"
                         d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,Type={x:Type vm:InspirationGalleryInsertWizardViewModel}}">
+    <UserControl.CommandBindings>
+        <CommandBinding Command="{x:Static vm:InspirationGalleryCommands.PickInsertion}" CanExecute="CanPickInsertion" Executed="DoPickInsertion"/>
+    </UserControl.CommandBindings>
     <Border Background="White">
         <DockPanel>
             <UniformGrid Columns="2"
@@ -32,7 +35,10 @@
                               ItemsSource="{Binding Collection,Mode=OneWay}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type vm:InspirationElementInsertion}">
-                            <mui:MuiChooseButton Content="{Binding Key,Mode=OneWay}" GroupName="Inspiration"/>
+                            <mui:MuiChooseButton Content="{Binding Key,Mode=OneWay}"
+                                                 GroupName="Inspiration"
+                                                 Command="{x:Static vm:InspirationGalleryCommands.PickInsertion}"
+                                                 CommandParameter="{Binding}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                     <ItemsControl.ItemsPanel>
