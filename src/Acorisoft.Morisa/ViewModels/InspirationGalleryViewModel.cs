@@ -18,8 +18,6 @@ namespace Acorisoft.Morisa.ViewModels
     [HomePage]
     public partial class InspirationGalleryViewModel : ViewModelBase, IDropTarget
     {
-        private readonly ICollectionView _CollectionView;
-
         public InspirationGalleryViewModel(IDialogService dialogSrv)
         {
             //_CollectionView = CollectionViewSource.GetDefaultView(Collection);

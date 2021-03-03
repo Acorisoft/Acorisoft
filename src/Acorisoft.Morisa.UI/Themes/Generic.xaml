@@ -10,9 +10,20 @@
         <Setter Property="MainTitleFontSize" Value="32" />
         <Setter Property="MainTitleFontWeight" Value="Bold" />
         <Setter Property="SubTitle" Value="Subtitle" />
-        <Setter Property="SubTitleForeground" Value="Black" />
+        <Setter Property="SubTitleForeground" Value="#969696" />
         <Setter Property="SubTitleFontSize" Value="20" />
         <Setter Property="Padding" Value="4" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="MainTitleTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}"
+                               FontSize="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type c:GalleryView}},Path=MainTitleFontSize}"
+                               FontWeight="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type c:GalleryView}},Path=MainTitleFontWeight}"
+                               VerticalAlignment="Center"/>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type c:GalleryView}">
@@ -117,7 +128,6 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="RenderOptions.CachingHint" Value="Unspecified" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type b:MuiRadioButton}">
@@ -180,6 +190,81 @@
         </Setter>
     </Style>
 
+    <Style x:Key="UI.Button.Pill" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="LightGray" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Margin" Value="4" />
+        <Setter Property="MinWidth" Value="64" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="PART_Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="16"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="PART_Content"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                          ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                          TextElement.FontFamily="{TemplateBinding FontFamily}"
+                                          TextElement.FontSize="{TemplateBinding FontSize}"
+                                          TextElement.FontStretch="{TemplateBinding FontStretch}"
+                                          TextElement.FontStyle="{TemplateBinding FontStyle}"
+                                          TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                          TextElement.Foreground="{TemplateBinding Foreground}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#418DFF" TargetName="PART_Border"/>
+                            <Setter Property="Opacity" Value="0.8" TargetName="PART_Border"/>
+                            <Setter Property="TextElement.Foreground" Value="White" TargetName="PART_Content"/>
+                            <Setter Property="BorderThickness" Value="0" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#418DFF" TargetName="PART_Border"/>
+                            <Setter Property="TextElement.Foreground" Value="White" TargetName="PART_Content"/>
+                            <Setter Property="BorderThickness" Value="0" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5" TargetName="PART_Border"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="FocusVisualStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Control.Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Rectangle RadiusX="16"
+                                           RadiusY="16"
+                                           Margin="3"
+                                           StrokeThickness="1"
+                                           Stroke="Black"
+                                           StrokeDashArray="2 2 "
+                                           SnapsToDevicePixels="True"
+                                           UseLayoutRounding="True"/>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style x:Key="UI.RadioButton.Pill" TargetType="{x:Type RadioButton}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="LightGray" />
@@ -191,7 +276,6 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="RenderOptions.CachingHint" Value="Unspecified" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RadioButton}">
@@ -242,6 +326,77 @@
                             <ControlTemplate>
                                 <Rectangle RadiusX="16"
                                            RadiusY="16"
+                                           Margin="2"
+                                           StrokeThickness="1"
+                                           Stroke="Black"
+                                           StrokeDashArray="2 2 "/>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type b:MuiChooseButton}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="LightGray" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="Margin" Value="4" />
+        <Setter Property="MinWidth" Value="64" />
+        <Setter Property="MinHeight" Value="64" />
+        <Setter Property="Padding" Value="8 0" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type b:MuiRadioButton}">
+                    <Border x:Name="PART_Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="7"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="PART_Content"
+                                              Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              TextElement.FontFamily="{TemplateBinding FontFamily}"
+                                              TextElement.FontSize="{TemplateBinding FontSize}"
+                                              TextElement.FontStretch="{TemplateBinding FontStretch}"
+                                              TextElement.FontStyle="{TemplateBinding FontStyle}"
+                                              TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                              TextElement.Foreground="{TemplateBinding Foreground}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              DockPanel.Dock="Top"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="#418DFF" TargetName="PART_Border"/>
+                            <Setter Property="Opacity" Value="0.8" TargetName="PART_Border"/> 
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="BorderBrush" Value="#418DFF" TargetName="PART_Border"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5" TargetName="PART_Border"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="FocusVisualStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Control.Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Rectangle RadiusX="7"
+                                           RadiusY="7"
                                            Margin="2"
                                            StrokeThickness="1"
                                            Stroke="Black"

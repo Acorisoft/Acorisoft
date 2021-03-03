@@ -9,7 +9,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type d:DialogHost}">
                     <Grid x:Name="PART_Border"
-                          Background="#30000000"
+                          Background="#80000000"
                           Visibility="Collapsed"
                           HorizontalAlignment="Stretch"
                           VerticalAlignment="Stretch">

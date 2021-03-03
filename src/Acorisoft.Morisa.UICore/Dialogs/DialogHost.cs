@@ -36,8 +36,8 @@ namespace Acorisoft.Morisa.Dialogs
 
         private struct DialogResultContext
         {
-            internal TaskCompletionSource<DialogResult> tcs;
-            internal DialogResult result;
+            internal TaskCompletionSource<DialogSession> tcs;
+            internal DialogSession result;
             internal IRoutableViewModel vm;
         }
 

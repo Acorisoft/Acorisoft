@@ -31,12 +31,11 @@ namespace Acorisoft.Morisa
             //_appEnv.Container.Register<IViewFor<InsertTextDialogViewModel>, InsertTextDialogView>();
             //_appEnv.Container.Register<DialogSampleViewModel>();
             //_appEnv.Container.Register<InsertTextDialogViewModel>();
-            Language.Culture = new System.Globalization.CultureInfo("en-US");
             _appEnv.UseLog()
                    .UseRouter()
                    .UseDialog()
                    .UseViews(typeof(App).Assembly)
-                   .UseGlobalization(Language.ResourceManager,new System.Globalization.CultureInfo("en-US"));
+                   .UseGlobalization(Language.ResourceManager,new System.Globalization.CultureInfo("zh"));
         }
     }
 }

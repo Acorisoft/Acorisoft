@@ -61,6 +61,33 @@ namespace Acorisoft.Morisa.Properties {
         }
         
         /// <summary>
+        ///   查找类似 音乐元素 的本地化字符串。
+        /// </summary>
+        internal static string App_InspirationGalleryView_Insertion_Music {
+            get {
+                return ResourceManager.GetString("App.InspirationGalleryView.Insertion.Music", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 图片元素 的本地化字符串。
+        /// </summary>
+        internal static string App_InspirationGalleryView_Insertion_Picture {
+            get {
+                return ResourceManager.GetString("App.InspirationGalleryView.Insertion.Picture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 文本元素 的本地化字符串。
+        /// </summary>
+        internal static string App_InspirationGalleryView_Insertion_Text {
+            get {
+                return ResourceManager.GetString("App.InspirationGalleryView.Insertion.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 测试 的本地化字符串。
         /// </summary>
         internal static string String1 {

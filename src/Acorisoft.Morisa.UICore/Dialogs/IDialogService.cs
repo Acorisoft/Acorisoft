@@ -9,6 +9,7 @@ namespace Acorisoft.Morisa.Dialogs
 {
     public interface IDialogService
     {
-        Task<DialogResult> Dialog<T>() where T : IRoutableViewModel;
+        Task<DialogSession> Dialog<T>() where T : IRoutableViewModel;
+        Task<DialogSession> Dialog(Type dialogVM);
     }
 }
