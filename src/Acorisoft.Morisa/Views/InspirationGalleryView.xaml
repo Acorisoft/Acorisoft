@@ -30,46 +30,19 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="320" />
             <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="320" />
         </Grid.ColumnDefinitions>
         <mui:GalleryView Grid.Column="1"
                          MainTitle="灵感"
-                         SubTitle="总计40个灵感">
-            <mui:GalleryView.ToolInMainTitle>
+                         Margin="16">
+            <mui:GalleryView.ToolInSubTitle>
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Right">
-                    <Button Content="{mo:Lang String1}"/>
-                    <Button Content="Add" Command="{x:Static vm:InspirationGalleryCommands.InsertWizard}"/>
+                    <Button Style="{StaticResource UI.Button.Pill}"/>
+                    <Button Style="{StaticResource UI.Button.Pill}"/>
+                    <Button Style="{StaticResource UI.Button.Pill}"/>
+                    <Button Style="{StaticResource UI.Button.Pill}"/>
                 </StackPanel>
-            </mui:GalleryView.ToolInMainTitle>
-            <!-- 画廊工具栏 -->
-            <mui:GalleryView.ToolBar>
-                <DockPanel>
-                    <ItemsControl ItemsSource="{Binding FilterCollection}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type mo:CollectionFilter}">
-                                <mui:MuiRadioButton Content="{mo:Lang Key}" GroupName="InspirationGroup"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
-                    <ComboBox HorizontalAlignment="Right"
-                              VerticalAlignment="Top"
-                              MinWidth="100">
-                        <ComboBoxItem Content="创建时间"/>
-                        <ComboBoxItem Content="修改时间"/>
-                        <ComboBoxItem Content="名称"/>
-                        <ComboBoxItem Content="类型"/>
-                    </ComboBox>
-                </DockPanel>
-            </mui:GalleryView.ToolBar>
-            
-            <!-- 画廊内容区域 -->
-            <ContentControl/>
+            </mui:GalleryView.ToolInSubTitle>
         </mui:GalleryView>
     </Grid>
 </rx:ReactiveUserControl>
