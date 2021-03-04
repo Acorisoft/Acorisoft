@@ -40,7 +40,7 @@
                 <DockPanel>
                     <StackPanel Orientation="Horizontal"
                                 DockPanel.Dock="Right">
-                        <Button Content="Insert"/>
+                        <Button Content="Insert" Click="ShowNofication"/>
                         <Button Content="Clear"/>
                         <Button Content="SortBy"/>
                     </StackPanel>

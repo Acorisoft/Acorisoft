@@ -12,7 +12,7 @@ namespace Acorisoft.Morisa.Globalization
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return GlobalizationExtension.GetString(value?.ToString());
+            return GlobalizationExtension.GetString((parameter ?? value)?.ToString());
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

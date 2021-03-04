@@ -20,26 +20,16 @@ namespace Acorisoft.Morisa.Views
     /// <summary>
     /// InspirationGalleryView.xaml 的交互逻辑
     /// </summary>
-    [ViewModel(typeof(InspirationGalleryInsertWizardViewModel))]
-    public partial class InspirationGalleryInsertWizardView : ReactiveUserControl<InspirationGalleryInsertWizardViewModel>
+    [ViewModel(typeof(InspirationGalleryInsertViewModel))]
+    public partial class InspirationGalleryInsertView : ReactiveUserControl<InspirationGalleryInsertViewModel>
     {
-        public InspirationGalleryInsertWizardView()
+        public InspirationGalleryInsertView()
         {
             InitializeComponent();
             this.WhenActivated(d =>
             {
                 d(this.WhenAnyValue(x => x.ViewModel).BindTo(this, x => x.DataContext));
             });
-        }
-
-        private void CanPickInsertion(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = e.Parameter is InspirationElementInsertion;
-        }
-
-        private void DoPickInsertion(object sender, ExecutedRoutedEventArgs e)
-        {
-            ViewModel.Insertion = e.Parameter as InspirationElementInsertion;
         }
     }
 }

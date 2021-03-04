@@ -1,5 +1,5 @@
-﻿<rx:ReactiveUserControl x:Class="Acorisoft.Morisa.Views.InspirationGalleryInsertWizardView"
-                        x:TypeArguments="vm:InspirationGalleryInsertWizardViewModel"
+﻿<rx:ReactiveUserControl x:Class="Acorisoft.Morisa.Views.InspirationGalleryInsertView"
+                        x:TypeArguments="vm:InspirationGalleryInsertViewModel"
                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -15,7 +15,7 @@
                         d:DesignHeight="640" d:DesignWidth="480"
                         Height="640" 
                         Width="800"
-                        d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,Type={x:Type vm:InspirationGalleryInsertWizardViewModel}}">
+                        d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,Type={x:Type vm:InspirationGalleryInsertViewModel}}">
     <Border Background="White">
         <DockPanel>
             <UniformGrid Columns="2"
@@ -28,21 +28,8 @@
                              SubTitle="选择您需要添加的新灵感类型。"
                              Margin="16"
                              DockPanel.Dock="Top">
-                <ItemsControl ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                              ItemsSource="{Binding Collection,Mode=OneWay}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="{x:Type vm:InspirationElementInsertion}">
-                            <mui:MuiChooseButton Content="{Binding Key,Mode=OneWay}"
-                                                 GroupName="Inspiration"
-                                                 CommandParameter="{Binding}"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel IsItemsHost="True"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
+                <TabControl>
+                </TabControl>
             </mui:GalleryView>
         </DockPanel>
     </Border>

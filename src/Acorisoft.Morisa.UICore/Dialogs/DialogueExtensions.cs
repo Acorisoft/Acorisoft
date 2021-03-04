@@ -8,6 +8,7 @@ using DryIoc;
 using ReactiveUI;
 using Splat;
 using Acorisoft.Morisa.Logs;
+using Acorisoft.Morisa.Views;
 
 namespace Acorisoft.Morisa.Dialogs
 {
@@ -17,6 +18,7 @@ namespace Acorisoft.Morisa.Dialogs
         {
             var container = appEnv.Container;
             container.RegisterInstance<IDialogService>(new DialogManager());
+            appEnv.UseViews(typeof(DialogHost).Assembly);
             return appEnv;
         }
     }

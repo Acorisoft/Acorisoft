@@ -64,5 +64,10 @@ namespace Acorisoft.Morisa.Views
             predicator.Keyword = ViewModel.Keyword;
             ViewModel.Filter = predicator;
         }
+
+        private async void ShowNofication(object sender, RoutedEventArgs e)
+        {
+            await _dialogSrv.Dialog<Notification>();
+        }
     }
 }

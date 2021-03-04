@@ -61,6 +61,15 @@ namespace Acorisoft.Morisa.Properties {
         }
         
         /// <summary>
+        ///   查找类似 取消 的本地化字符串。
+        /// </summary>
+        internal static string App_Cancel {
+            get {
+                return ResourceManager.GetString("App.Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 全部 的本地化字符串。
         /// </summary>
         internal static string App_InspirationGalleryView_Filter_Default {
@@ -120,6 +129,24 @@ namespace Acorisoft.Morisa.Properties {
         internal static string App_InspirationGalleryView_Insertion_Text {
             get {
                 return ResourceManager.GetString("App.InspirationGalleryView.Insertion.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 确定 的本地化字符串。
+        /// </summary>
+        internal static string App_Ok {
+            get {
+                return ResourceManager.GetString("App.Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 确定 的本地化字符串。
+        /// </summary>
+        internal static string App_Yes {
+            get {
+                return ResourceManager.GetString("App.Yes", resourceCulture);
             }
         }
         
