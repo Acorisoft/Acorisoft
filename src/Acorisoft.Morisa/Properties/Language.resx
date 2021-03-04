@@ -120,6 +120,9 @@
   <data name="App.Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
+  <data name="App.InspirationGalleryView.DropHere" xml:space="preserve">
+    <value>拖拽到这里</value>
+  </data>
   <data name="App.InspirationGalleryView.Filter.Default" xml:space="preserve">
     <value>全部</value>
   </data>

@@ -11,24 +11,71 @@
                         xmlns:mui="https://github.com/Acorisoft/Morisa/UI"
                         xmlns:docs="clr-namespace:Acorisoft.Morisa.Inspirations;assembly=Acorisoft.Morisa.Documents"
                         xmlns:tag="clr-namespace:Acorisoft.Morisa.Tags;assembly=Acorisoft.Morisa.Documents"
+                        xmlns:sys="clr-namespace:System;assembly=System.Runtime"
                         mc:Ignorable="d" 
                         d:DesignHeight="640" d:DesignWidth="480"
                         Height="640" 
                         Width="800"
                         d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,Type={x:Type vm:InspirationGalleryInsertViewModel}}">
-    <Border Background="White">
+    <UserControl.Resources>
+        <sys:String x:Key="Element.Music">App.InspirationGalleryView.Insertion.Music</sys:String>
+        <sys:String x:Key="Element.Text">App.InspirationGalleryView.Insertion.Text</sys:String>
+        <sys:String x:Key="Element.Picture">App.InspirationGalleryView.Insertion.Picture</sys:String>
+    </UserControl.Resources>
+    <Border Background="White"
+            CornerRadius="8">
         <DockPanel>
             <UniformGrid Columns="2"
-                     DockPanel.Dock="Bottom"
-                     Height="42">
-                <Button Content="Ok" Command="{x:Static mo:DialogCommands.Ok}"/>
-                <Button Content="Cancel" Command="{x:Static mo:DialogCommands.Cancel}"/>
+                         DockPanel.Dock="Bottom"
+                         Height="42">
+                <mo:DialogOkButton/>
+                <mo:DialogCancelButton/>
             </UniformGrid>
             <mui:GalleryView MainTitle="添加新的灵感"
                              SubTitle="选择您需要添加的新灵感类型。"
                              Margin="16"
                              DockPanel.Dock="Top">
-                <TabControl>
+                <TabControl BorderThickness="0">
+                    <TabItem Header="{Binding Source={StaticResource Element.Music}, Converter={x:Static mo:LanguageConverter.Instance}}">
+                        <!--  -->
+                        <StackPanel Margin="16">
+                            <TextBlock Text="您可以添加来自于本地的音乐文件，也可以添加来自互联网的音乐源，目前只支持网易云音乐"/>
+
+                            <TextBox FontSize="16"
+                                     Text="输入音乐的地址"
+                                     Padding="8"/>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="{Binding Source={StaticResource Element.Text}, Converter={x:Static mo:LanguageConverter.Instance}}">
+                        <!--  -->
+                        <StackPanel Margin="16">
+                            <TextBlock Text="您可以添加来自于本地的音乐文件，也可以添加来自互联网的音乐源，目前只支持网易云音乐"/>
+
+                            <TextBox FontSize="16"
+                                     Text="输入音乐的地址"
+                                     Padding="8"/>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="{Binding Source={StaticResource Element.Picture}, Converter={x:Static mo:LanguageConverter.Instance}}">
+                        <!--  -->
+                        <StackPanel Margin="16">
+                            <Grid Height="256"
+                                  Width="256"
+                                  AllowDrop="True"
+                                  PreviewQueryContinueDrag="OnPreviewQueryContinueDrag"
+                                  Drop="OnDrop">
+                                <Rectangle Stroke="{StaticResource UI.Brushes.Accent}"
+                                           RadiusX="16"
+                                           RadiusY="16"
+                                           StrokeThickness="2"
+                                           StrokeDashArray="2 2"/>
+                                <TextBlock Text="{Binding Converter={x:Static mo:LanguageConverter.Instance},ConverterParameter='App.InspirationGalleryView.DropHere'}"
+                                           FontSize="24"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
+                            </Grid>
+                        </StackPanel>
+                    </TabItem>
                 </TabControl>
             </mui:GalleryView>
         </DockPanel>

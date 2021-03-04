@@ -13,5 +13,6 @@ namespace Acorisoft.Morisa.Dialogs
         Task<DialogSession> Dialog(Type dialogVM);
         Task<DialogSession> Notification();
         Task<DialogSession> Notification(Notification notification);
+        Task<DialogSession> MessageBox(string title, string content, string subTitle = "");
     }
 }

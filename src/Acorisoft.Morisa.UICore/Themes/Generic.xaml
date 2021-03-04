@@ -73,12 +73,12 @@
         <Setter Property="Padding" Value="8" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type d:DialogCofirmButton}">
+                <ControlTemplate TargetType="{x:Type d:DialogOkButton}">
                     <Border x:Name="PART_Border"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="8"
+                            CornerRadius="0 0 0 8"
                             Padding="{TemplateBinding Padding}">
                         <TextBlock x:Name="PART_Text"
                                    Text="{Binding Converter={x:Static g:LanguageConverter.Instance},ConverterParameter='App.Ok'}"
@@ -112,15 +112,15 @@
         <Setter Property="Padding" Value="8" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type d:DialogCofirmButton}">
+                <ControlTemplate TargetType="{x:Type d:DialogCancelButton}">
                     <Border x:Name="PART_Border"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="8"
+                            CornerRadius="0 0 8 0"
                             Padding="{TemplateBinding Padding}">
                         <TextBlock x:Name="PART_Text"
-                                   Text="{Binding Converter={x:Static g:LanguageConverter.Instance},ConverterParameter='App.Ok'}"
+                                   Text="{Binding Converter={x:Static g:LanguageConverter.Instance},ConverterParameter='App.Cancel'}"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Center"
                                    FontSize="16"/>

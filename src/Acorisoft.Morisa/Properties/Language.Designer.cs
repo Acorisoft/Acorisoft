@@ -70,6 +70,15 @@ namespace Acorisoft.Morisa.Properties {
         }
         
         /// <summary>
+        ///   查找类似 拖拽到这里 的本地化字符串。
+        /// </summary>
+        internal static string App_InspirationGalleryView_DropHere {
+            get {
+                return ResourceManager.GetString("App.InspirationGalleryView.DropHere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 全部 的本地化字符串。
         /// </summary>
         internal static string App_InspirationGalleryView_Filter_Default {

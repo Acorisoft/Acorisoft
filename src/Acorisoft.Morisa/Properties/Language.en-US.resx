@@ -120,6 +120,9 @@
   <data name="App.Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="App.InspirationGalleryView.DropHere" xml:space="preserve">
+    <value>Drop here</value>
+  </data>
   <data name="App.InspirationGalleryView.Filter.Default" xml:space="preserve">
     <value>All</value>
   </data>

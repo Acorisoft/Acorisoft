@@ -31,5 +31,17 @@ namespace Acorisoft.Morisa.Views
                 d(this.WhenAnyValue(x => x.ViewModel).BindTo(this, x => x.DataContext));
             });
         }
+
+        private void OnPreviewQueryContinueDrag(object sender, QueryContinueDragEventArgs e)
+        {
+
+        }
+
+        private void OnDrop(object sender, DragEventArgs e)
+        {
+            e.Effects = DragDropEffects.Copy;
+            var data = e.Data.GetData(DataFormats.UnicodeText);
+
+        }
     }
 }

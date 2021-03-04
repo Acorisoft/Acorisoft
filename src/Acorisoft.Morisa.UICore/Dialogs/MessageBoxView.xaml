@@ -1,5 +1,5 @@
-﻿<rx:ReactiveUserControl x:Class="Acorisoft.Morisa.Dialogs.NotificationView"
-                        x:TypeArguments="dialog:Notification"
+﻿<rx:ReactiveUserControl x:Class="Acorisoft.Morisa.Dialogs.MessageBoxView"
+                        x:TypeArguments="dialog:MessageBox"
                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -14,16 +14,19 @@
                         d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,Type={x:Type dialog:Notification}}">
     <Border CornerRadius="8"
             Background="White">
-        <DockPanel>
-            <dialog:DialogCofirmButton DockPanel.Dock="Bottom"/>
-            <mui:GalleryView MainTitle="{Binding Title,Mode=OneWay,TargetNullValue='标题'}"
-                             SubTitle="{Binding Subtitle,Mode=OneWay,TargetNullValue='副标题'}"
-                             DockPanel.Dock="Top"
-                             Margin="16">
+        <mui:GalleryView MainTitle="{Binding Title,Mode=OneWay,TargetNullValue='标题'}"
+                         SubTitle="{Binding Subtitle,Mode=OneWay,TargetNullValue='副标题'}">
+            <DockPanel>
+                <UniformGrid Columns="2"
+                             DockPanel.Dock="Bottom">
+                    <dialog:DialogOkButton/>
+                    <dialog:DialogCancelButton/>
+                </UniformGrid>
                 <ContentControl Content="{Binding Content,Mode=OneWay}"
                                 VerticalAlignment="Stretch"
-                                HorizontalAlignment="Stretch"/>
-            </mui:GalleryView>
-        </DockPanel>
+                                HorizontalAlignment="Stretch"
+                                DockPanel.Dock="Bottom"/>
+            </DockPanel>
+        </mui:GalleryView>
     </Border>
 </rx:ReactiveUserControl>

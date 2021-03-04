@@ -61,6 +61,21 @@ namespace Acorisoft.Morisa.Dialogs
             return e.TCS.Task;
         }
 
+        public Task<DialogSession> MessageBox(string title,string content,string subTitle = "")
+        {
+            var e = new DialogShowEventArgs(
+                new MessageBox
+                {
+                    Subtitle = subTitle,
+                    Title = title,
+                    Content = content
+                },
+                GetDialogSession(),
+                new TaskCompletionSource<DialogSession>());
+            DemandDialogShow?.Invoke(this, e);
+            return e.TCS.Task;
+        }
+
         public RoutingState Router => _router;
         internal event EventHandler<DialogShowEventArgs> DemandDialogShow;
     }
