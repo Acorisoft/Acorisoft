@@ -34,6 +34,15 @@ namespace Acorisoft.Morisa.Views
             var allClassTypes = assembly.GetTypes()
                                        .Where(x => x.IsClass && x.Name.Contains("View"));
 
+            var @params = new object[]
+                        {
+                            container,
+                            (IReuse)null,
+                            (Made)null,
+                            (Setup) null,
+                            (IfAlreadyRegistered? ) null,
+                            null
+                        };
             //
             // 遍历所有类型
             foreach (var maybeView in allClassTypes)
@@ -65,15 +74,7 @@ namespace Acorisoft.Morisa.Views
                         });
                     register.MakeGenericMethod(paramTypes).Invoke(
                         null,
-                        new object[]
-                        {
-                            container,
-                            (IReuse)null,
-                            (Made)null,
-                            (Setup) null,
-                            (IfAlreadyRegistered? ) null,
-                            null
-                        });
+                        @params);
                     container.Register(vmType);
                 }
 
