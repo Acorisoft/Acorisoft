@@ -17,7 +17,10 @@ namespace Acorisoft.Morisa.Inspirations
         public InspirationElement()
         {
             _tagCollection = new TagCollection(this);
+            Id = Guid.NewGuid();
         }
+
+        public Guid Id { get; set; }
 
         /// <summary>
         /// 获取当前灵感元素的标签集合。

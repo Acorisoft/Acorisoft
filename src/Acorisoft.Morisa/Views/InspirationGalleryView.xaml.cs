@@ -1,5 +1,6 @@
 ﻿using Acorisoft.Morisa.Collections;
 using Acorisoft.Morisa.Dialogs;
+using Acorisoft.Morisa.Inspirations;
 using Acorisoft.Morisa.ViewModels;
 using ReactiveUI;
 using System;
@@ -67,7 +68,7 @@ namespace Acorisoft.Morisa.Views
 
         private async void ShowNofication(object sender, RoutedEventArgs e)
         {
-            var session = await _dialogSrv.Dialog<InspirationGalleryInsertViewModel>();
+            ViewModel.Collection.List.Add(new InspirationMusicElement());
         }
     }
 }
