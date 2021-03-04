@@ -67,7 +67,7 @@ namespace Acorisoft.Morisa.Views
 
         private async void ShowNofication(object sender, RoutedEventArgs e)
         {
-            await _dialogSrv.Dialog<Notification>();
+            await _dialogSrv.Notification(new Notification { Content = "测试弹窗" });
         }
     }
 }
