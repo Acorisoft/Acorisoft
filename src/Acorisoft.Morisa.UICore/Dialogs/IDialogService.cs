@@ -11,5 +11,7 @@ namespace Acorisoft.Morisa.Dialogs
     {
         Task<DialogSession> Dialog<T>() where T : IRoutableViewModel;
         Task<DialogSession> Dialog(Type dialogVM);
+        Task<DialogSession> Notification();
+        Task<DialogSession> Notification(Notification notification);
     }
 }
