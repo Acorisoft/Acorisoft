@@ -1,4 +1,5 @@
-﻿using Acorisoft.Morisa.Dialogs;
+﻿using Acorisoft.Morisa.Collections;
+using Acorisoft.Morisa.Dialogs;
 using Acorisoft.Morisa.Inspirations;
 using Acorisoft.Morisa.Views;
 using DynamicData.Binding;
@@ -12,25 +13,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
+using InspirationCollection = DynamicData.Binding.ObservableCollectionExtended<Acorisoft.Morisa.Inspirations.InspirationElement>;
 
 namespace Acorisoft.Morisa.ViewModels
 {
     [HomePage]
     public partial class InspirationGalleryViewModel : ViewModelBase, IDropTarget
     {
+        private CollectionWrapper<InspirationElement,InspirationCollection> _Collection;
+
         public InspirationGalleryViewModel(IDialogService dialogSrv)
         {
             //_CollectionView = CollectionViewSource.GetDefaultView(Collection);
             //_CollectionView.Filter = OnElementFiltering;
+            _Collection = new CollectionWrapper<InspirationElement, InspirationCollection>(new InspirationCollection
+            {
+                new InspirationMusicElement{ CreationTime = DateTime.Now },
+                new InspirationMusicElement{ CreationTime = DateTime.Now },
+                new InspirationTextElement{ Text = "78465a4" , CreationTime = DateTime.Now }
+            });
 
             //
             // 初始化过滤器
             InitializeFilterCollection();
-        }
-
-        protected virtual bool OnElementFiltering(object element)
-        {
-            return true;
         }
 
         void IDropTarget.DragOver(IDropInfo dropInfo)
@@ -42,8 +47,16 @@ namespace Acorisoft.Morisa.ViewModels
         }
 
         public object SortBy { get; set; }
-        public CollectionFilter Filter { get; set; }
-        public ObservableCollectionExtended<InspirationElement> Collection { get; }
+
+        public string Keyword {
+            get => _Collection.Keyword;
+            set => _Collection.Keyword = value;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public CollectionWrapper<InspirationElement,InspirationCollection> Collection => _Collection;
         public ICommand ElementInsertCommand { get; }
         public ICommand ElementRemoveCommand { get; }
         public ICommand ElementClearCommand { get; }

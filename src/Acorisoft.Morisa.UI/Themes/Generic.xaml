@@ -20,6 +20,24 @@
                     <TextBlock Text="{Binding}"
                                FontSize="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type c:GalleryView}},Path=MainTitleFontSize}"
                                FontWeight="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type c:GalleryView}},Path=MainTitleFontWeight}"
+                               FontFamily="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type c:GalleryView}},Path=MainTitleFontFamily}"
+                               FontStretch="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type c:GalleryView}},Path=MainTitleFontStretch}"
+                               FontStyle="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type c:GalleryView}},Path=MainTitleFontStyle}"
+                               Foreground="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type c:GalleryView}},Path=MainTitleForeground}"
+                               VerticalAlignment="Center"/>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="SubTitleTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}"
+                               FontSize="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type c:GalleryView}},Path=SubTitleFontSize}"
+                               FontWeight="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type c:GalleryView}},Path=SubTitleFontWeight}"
+                               FontFamily="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type c:GalleryView}},Path=SubTitleFontFamily}"
+                               FontStretch="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type c:GalleryView}},Path=SubTitleFontStretch}"
+                               FontStyle="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type c:GalleryView}},Path=SubTitleFontStyle}"
+                               Foreground="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type c:GalleryView}},Path=SubTitleForeground}"
                                VerticalAlignment="Center"/>
                 </DataTemplate>
             </Setter.Value>

@@ -14,7 +14,6 @@ namespace Acorisoft.Morisa.ViewModels
             return new RoutedUICommand(name, name, typeof(InspirationGalleryCommands));
         }
 
-        public static RoutedUICommand InsertWizard { get; } = Create("Acorisoft.Morisa.Inspiration.Wizard");
-        public static RoutedUICommand PickInsertion { get; } = Create("Acorisoft.Morisa.Inspiration.PickInsertion");
+        public static RoutedUICommand Filter { get; } = Create("App.InspirationGalleryView.Filter");
     }
 }

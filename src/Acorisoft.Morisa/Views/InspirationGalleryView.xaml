@@ -14,17 +14,15 @@
                         mc:Ignorable="d"
                         d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,Type={x:Type vm:InspirationGalleryDesignTimeViewModel}}"
                         d:DesignHeight="720" d:DesignWidth="1280">
-    
+    <UserControl.Resources>
+        <mo:BindingProxy x:Key="ViewModel" Data="{Binding}"/>
+        <mo:LanguageConverter x:Key="Language"/>
+    </UserControl.Resources>
     <!-- 命令绑定 -->
     <UserControl.CommandBindings>
-        <CommandBinding Command="{x:Static vm:InspirationGalleryCommands.InsertWizard}" CanExecute="CanOpenInsertWizard" Executed="DoOpenInsertWizard"/>
+        <CommandBinding Command="{x:Static vm:InspirationGalleryCommands.Filter}" CanExecute="CanFilter" Executed="DoFilter"/>
     </UserControl.CommandBindings>
-    
-    <!-- 快捷键绑定 -->
-    <UserControl.InputBindings>
-        <KeyBinding Command="{x:Static vm:InspirationGalleryCommands.InsertWizard}" Key="N" Modifiers="Ctrl"/>
-    </UserControl.InputBindings>
-    
+
     <!-- 视图内容 -->
     <Grid>
         <Grid.ColumnDefinitions>
@@ -33,16 +31,40 @@
         </Grid.ColumnDefinitions>
         <mui:GalleryView Grid.Column="1"
                          MainTitle="灵感"
+                         SubTitle="灵感数量"
                          Margin="16">
             <mui:GalleryView.ToolInSubTitle>
-                <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Right">
-                    <Button Style="{StaticResource UI.Button.Pill}"/>
-                    <Button Style="{StaticResource UI.Button.Pill}"/>
-                    <Button Style="{StaticResource UI.Button.Pill}"/>
-                    <Button Style="{StaticResource UI.Button.Pill}"/>
-                </StackPanel>
+                <TextBox x:Name="PART_SearchBox" HorizontalAlignment="Right" Width="280"/>
             </mui:GalleryView.ToolInSubTitle>
+            <mui:GalleryView.ToolBar>
+                <DockPanel>
+                    <StackPanel Orientation="Horizontal"
+                                DockPanel.Dock="Right">
+                        <Button Content="Insert"/>
+                        <Button Content="Clear"/>
+                        <Button Content="SortBy"/>
+                    </StackPanel>
+                    
+                    <!-- 左侧类型过滤器 -->
+                    <ItemsControl ItemsSource="{Binding FilterCollection,Mode=OneWay}"
+                                  DockPanel.Dock="Left">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type vm:InspirationElementPredicator}">
+                                <mui:MuiRadioButton GroupName="IGViewFilter"
+                                                    Content="{Binding Key,Converter={StaticResource Language}}"
+                                                    Command="{x:Static vm:InspirationGalleryCommands.Filter}"
+                                                    CommandParameter="{Binding}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" IsItemsHost="True"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </DockPanel>
+            </mui:GalleryView.ToolBar>
+            <ItemsControl x:Name="InspirationCollectionView" ItemsSource="{Binding Collection,Mode=OneWay}"/>
         </mui:GalleryView>
     </Grid>
 </rx:ReactiveUserControl>

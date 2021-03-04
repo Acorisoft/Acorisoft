@@ -11,33 +11,6 @@ using System.Windows.Markup;
 
 namespace Acorisoft.Morisa.Globalization
 {
-    public class LangExtension : MarkupExtension
-    {
-        private const string Untitled= "Untitled";
-
-        public LangExtension()
-        {
-
-        }
-
-        public LangExtension(string key)
-        {
-            Key = key;
-        }
-
-        public override object ProvideValue(IServiceProvider serviceProvider)
-        {
-            if (string.IsNullOrEmpty(Key))
-            {
-                return Untitled;
-            }
-
-            return GlobalizationExtension.GetString(Key);
-        }
-
-        public string Key { get; set; }
-    }
-
     public static class GlobalizationExtension
     {
         private static ResourceManager _resMgr;

@@ -1,9 +1,14 @@
-﻿using Acorisoft.Morisa.Dialogs;
+﻿using Acorisoft.Morisa.Collections;
+using Acorisoft.Morisa.Dialogs;
 using Acorisoft.Morisa.ViewModels;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -25,6 +30,7 @@ namespace Acorisoft.Morisa.Views
     public partial class InspirationGalleryView : ReactiveUserControl<InspirationGalleryViewModel>
     {
         private readonly IDialogService _dialogSrv;
+        private ICollectionView _CollectionView;
 
         public InspirationGalleryView(IDialogService dialogService)
         {
@@ -35,24 +41,28 @@ namespace Acorisoft.Morisa.Views
                 d(this.WhenAnyValue(x => x.ViewModel).BindTo(this, x => x.DataContext));
             });
 
+            PART_SearchBox
+                .WhenAnyValue(x => x.Text)
+                .Throttle<string>(TimeSpan.FromMilliseconds(300),RxApp.MainThreadScheduler)
+                .Where(x => !string.IsNullOrEmpty(x))
+                .Subscribe(x =>
+                {
+                    ViewModel.Keyword = x;
+                });
+
             _dialogSrv = dialogService;
         }
 
-        private async void DoOpenInsertWizard(object sender, ExecutedRoutedEventArgs e)
+        private void CanFilter(object sender, CanExecuteRoutedEventArgs e)
         {
-            var session = await _dialogSrv.Dialog<InspirationGalleryInsertWizardViewModel>();
-
-            if(session.IsCompleted)
-            {
-                var result = session.GetResult<InspirationGalleryInsertWizardViewModel>();
-                var insertSession = await session.NewSession(result.Insertion.Type);
-                
-            }
+            e.CanExecute = e.Parameter is ICollectionPredicator;
         }
 
-        private void CanOpenInsertWizard(object sender, CanExecuteRoutedEventArgs e)
+        private void DoFilter(object sender, ExecutedRoutedEventArgs e)
         {
-            e.CanExecute = true;
+            var predicator = e.Parameter as ICollectionPredicator;
+            predicator.Keyword = ViewModel.Keyword;
+            ViewModel.Filter = predicator;
         }
     }
 }

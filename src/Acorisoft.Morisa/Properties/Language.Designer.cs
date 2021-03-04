@@ -61,7 +61,43 @@ namespace Acorisoft.Morisa.Properties {
         }
         
         /// <summary>
-        ///   查找类似 音乐元素 的本地化字符串。
+        ///   查找类似 全部 的本地化字符串。
+        /// </summary>
+        internal static string App_InspirationGalleryView_Filter_Default {
+            get {
+                return ResourceManager.GetString("App.InspirationGalleryView.Filter.Default", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 音乐 的本地化字符串。
+        /// </summary>
+        internal static string App_InspirationGalleryView_Filter_Music {
+            get {
+                return ResourceManager.GetString("App.InspirationGalleryView.Filter.Music", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 图片 的本地化字符串。
+        /// </summary>
+        internal static string App_InspirationGalleryView_Filter_Picture {
+            get {
+                return ResourceManager.GetString("App.InspirationGalleryView.Filter.Picture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 文本 的本地化字符串。
+        /// </summary>
+        internal static string App_InspirationGalleryView_Filter_Text {
+            get {
+                return ResourceManager.GetString("App.InspirationGalleryView.Filter.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 音乐 的本地化字符串。
         /// </summary>
         internal static string App_InspirationGalleryView_Insertion_Music {
             get {
@@ -70,7 +106,7 @@ namespace Acorisoft.Morisa.Properties {
         }
         
         /// <summary>
-        ///   查找类似 图片元素 的本地化字符串。
+        ///   查找类似 图片 的本地化字符串。
         /// </summary>
         internal static string App_InspirationGalleryView_Insertion_Picture {
             get {
@@ -79,7 +115,7 @@ namespace Acorisoft.Morisa.Properties {
         }
         
         /// <summary>
-        ///   查找类似 文本元素 的本地化字符串。
+        ///   查找类似 文本 的本地化字符串。
         /// </summary>
         internal static string App_InspirationGalleryView_Insertion_Text {
             get {
