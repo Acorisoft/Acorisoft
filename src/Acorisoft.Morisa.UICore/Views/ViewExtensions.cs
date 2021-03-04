@@ -32,7 +32,7 @@ namespace Acorisoft.Morisa.Views
             //
             // 反射所有类类型
             var allClassTypes = assembly.GetTypes()
-                                       .Where(x => x.IsClass && x.Name.Contains("View"));
+                                        .Where(x => x.IsClass && x.Name.Contains("View"));
 
             var @params = new object[]
                         {
@@ -43,6 +43,18 @@ namespace Acorisoft.Morisa.Views
                             (IfAlreadyRegistered? ) null,
                             null
                         };
+
+            var genericParams = new Type[]
+                        {
+                            typeof(IRegistrator) ,
+                            typeof(IReuse),
+                            typeof(Made),
+                            typeof(Setup),
+                            typeof(IfAlreadyRegistered?),
+                            typeof(object)
+                        };
+
+            var genericModifiers = new ParameterModifier[]{ new ParameterModifier(2) };
             //
             // 遍历所有类型
             foreach (var maybeView in allClassTypes)
@@ -59,19 +71,8 @@ namespace Acorisoft.Morisa.Views
                         BindingFlags.Public | BindingFlags.Static,
                         null,
                         CallingConventions.Standard,
-                        new Type[]
-                        {
-                            typeof(IRegistrator) ,
-                            typeof(IReuse),
-                            typeof(Made),
-                            typeof(Setup),
-                            typeof(IfAlreadyRegistered?),
-                            typeof(object)
-                        },
-                        new ParameterModifier[]
-                        {
-                            new ParameterModifier(2)
-                        });
+                        genericParams,
+                        genericModifiers);
                     register.MakeGenericMethod(paramTypes).Invoke(
                         null,
                         @params);
