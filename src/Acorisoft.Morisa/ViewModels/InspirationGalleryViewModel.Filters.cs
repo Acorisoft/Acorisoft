@@ -49,7 +49,7 @@ namespace Acorisoft.Morisa.ViewModels
 
         public override sealed bool Predicate(object element)
         {
-            return (element is TClass || element is TInterface) && ContainsKeywordCore(element);
+            return (element is TClass || element is TInterface) && ContainsKeyword(element);
         }
     }
 

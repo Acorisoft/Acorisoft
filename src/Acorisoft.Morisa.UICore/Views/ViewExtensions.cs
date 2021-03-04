@@ -32,7 +32,7 @@ namespace Acorisoft.Morisa.Views
             //
             // 反射所有类类型
             var allClassTypes = assembly.GetTypes()
-                                       .Where(x => x.IsClass);
+                                       .Where(x => x.IsClass && x.Name.Contains("View"));
 
             //
             // 遍历所有类型
