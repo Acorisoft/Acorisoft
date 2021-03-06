@@ -1,11 +1,8 @@
-﻿using ReactiveUI;
+﻿using Acorisoft.Morisa.Views;
+using ReactiveUI;
 using Splat;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.ViewModels
 {
@@ -28,6 +25,16 @@ namespace Acorisoft.Morisa.ViewModels
                 source = value;
                 this.RaisePropertyChanged(name);
             }
+        }
+
+        internal void Initialize(NavigationParameter param)
+        {
+            OnInitialize(param);
+        }
+
+        protected virtual void OnInitialize(NavigationParameter @params)
+        {
+
         }
 
 
@@ -57,6 +64,7 @@ namespace Acorisoft.Morisa.ViewModels
                 {
                     _screen = Locator.Current.GetService<IScreen>();
                 }
+
                 return _screen;
             }
         }

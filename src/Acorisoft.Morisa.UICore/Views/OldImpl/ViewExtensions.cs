@@ -23,7 +23,7 @@ namespace Acorisoft.Morisa.Views
         private static Type IViewForType = typeof(IViewFor<>);
 
 
-        public static IApplicationEnvironment UseViews(this IApplicationEnvironment appEnv, Assembly assembly)
+        public static IApplicationEnvironment UseViews2(this IApplicationEnvironment appEnv, Assembly assembly)
         {
             var container = appEnv.Container;
             var counter = new Stopwatch();

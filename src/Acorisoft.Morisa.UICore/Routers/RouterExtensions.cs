@@ -11,10 +11,10 @@ using Acorisoft.Morisa.Logs;
 
 namespace Acorisoft.Morisa.Routers
 {
-    class ViewManager : IScreen
+    class InternalViewManager : IScreen
     {
         // Mock ViewManager
-        public ViewManager()
+        public InternalViewManager()
         {
             Router = new RoutingState();
         }
@@ -24,7 +24,7 @@ namespace Acorisoft.Morisa.Routers
 
     public static class RouterExtensions
     {
-        private static ViewManager _mgr;
+        private static InternalViewManager _mgr;
         private static IFullLogger _logger;
         private static readonly NavigationPipeline _pipeline;
         private static IRoutableViewModel _old;
@@ -61,12 +61,12 @@ namespace Acorisoft.Morisa.Routers
         static RouterExtensions()
         {
             _pipeline = new NavigationPipeline();
-            _mgr = new ViewManager();
+            _mgr = new InternalViewManager();
         }
 
         public static IApplicationEnvironment UseRouter(this IApplicationEnvironment appEnv)
         {
-            _logger = (new ViewManager()).GetLogger();
+            _logger = (new InternalViewManager()).GetLogger();
             _mgr.Router.CurrentViewModel.Subscribe(OnViewModelChanged);
             Locator.CurrentMutable.RegisterConstant<IScreen>(_mgr);
             return appEnv;
@@ -115,6 +115,6 @@ namespace Acorisoft.Morisa.Routers
             _pipeline.InternalFilters.Remove(observer);
         }
 
-        public static RoutingState Router => _mgr.Router;
+        // public static RoutingState Router => _mgr.Router;
     }
 }

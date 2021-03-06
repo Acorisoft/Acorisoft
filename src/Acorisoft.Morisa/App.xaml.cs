@@ -3,6 +3,7 @@ using Acorisoft.Morisa.Dialogs;
 using Acorisoft.Morisa.Logs;
 using Acorisoft.Morisa.Routers;
 using Acorisoft.Morisa.Globalization;
+using Acorisoft.Morisa.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -34,7 +35,7 @@ namespace Acorisoft.Morisa
             _appEnv.UseLog()
                    .UseRouter()
                    .UseDialog()
-                   .UseViews(typeof(App).Assembly)
+                   .UseViews(typeof(App).Assembly, typeof(Notification).Assembly)
                    .UseGlobalization(Language.ResourceManager,new System.Globalization.CultureInfo("zh"));
         }
     }

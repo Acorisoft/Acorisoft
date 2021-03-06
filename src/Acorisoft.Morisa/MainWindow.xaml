@@ -11,7 +11,7 @@
         MinHeight="640">
     <Grid>
         <!-- View -->
-        <rx:RoutedViewHost Router="{Binding Source={x:Static mo:RouterExtensions.Router},Mode=OneWay}" IsTabStop="False"/>
+        <rx:RoutedViewHost Router="{Binding Source={x:Static mo:ViewMixins.Router},Mode=OneWay}" IsTabStop="False"/>
         
         <!-- Dialog -->
         <mo:DialogHost x:Name="PART_Dialog"/>
