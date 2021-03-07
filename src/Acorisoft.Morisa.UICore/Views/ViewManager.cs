@@ -33,7 +33,9 @@ namespace Acorisoft.Morisa.Views
 
         protected void OnViewModelChanged(IRoutableViewModel vm)
         {
-            if(vm is ViewModelBase vmBase && _instanceStack.Count > 0 && ReferenceEquals( _instanceStack.Peek(),vm))
+            if(vm is ViewModelBase vmBase &&
+                _instanceStack.Count > 0 &&
+                ReferenceEquals( _instanceStack.Peek(),vm))
             {
                 _instanceStack.Pop();
                 vmBase.Initialize(_paramStack.Pop());

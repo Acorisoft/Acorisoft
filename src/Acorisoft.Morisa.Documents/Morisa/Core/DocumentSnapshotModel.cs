@@ -7,9 +7,10 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Acorisoft.Morisa.Core
 {
-    public abstract class MorisaObject : IMorisaObject
+    public abstract class DocumentSnapshotModel : ISnapshotObject, IModelObject
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private protected PropertyChangedEventHandler ChangedHandler;
@@ -46,5 +47,15 @@ namespace Acorisoft.Morisa.Core
             add => ChangingHandler += value;
             remove => ChangingHandler -= value;
         }
+
+        /// <summary>
+        /// 获取或设置当前对象的唯一标识符。
+        /// </summary>
+        public Guid Id { get; set; }
+
+        /// <summary>
+        /// 获取或设置文档的唯一标识符。
+        /// </summary>
+        public Guid DocumentId { get; set; }
     }
 }

@@ -10,4 +10,9 @@ namespace Acorisoft.Morisa.ViewModels
     public class DialogFunction : ViewModelBase
     {
     }
+
+    public class DialogFunction<T> : DialogFunction
+    {
+
+    }
 }

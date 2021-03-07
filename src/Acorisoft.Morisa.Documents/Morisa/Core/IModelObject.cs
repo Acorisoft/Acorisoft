@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Core
 {
-    public interface IMorisaObject : INotifyPropertyChanging, INotifyPropertyChanged
+    public interface IModelObject : IUnique, INotifyPropertyChanging, INotifyPropertyChanged
     {
     }
 }

@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa.Inspirations
+namespace Acorisoft.Morisa.Core
 {
-    public class InspirationPictureElement : InspirationElement, IInspirationPictureElement
+    public interface IUnique
     {
+        Guid Id { get; set; }
     }
 }

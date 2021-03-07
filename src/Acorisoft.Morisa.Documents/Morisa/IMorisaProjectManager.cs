@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa
 {
-    public interface IDocumentPackage
+    public interface IMorisaProjectManager
     {
+
     }
 }

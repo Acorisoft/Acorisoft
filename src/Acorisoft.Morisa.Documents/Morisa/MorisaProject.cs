@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa.Tags
+namespace Acorisoft.Morisa
 {
-    public interface ITag
+    public class MorisaProject : IMorisaProject
     {
     }
 }
