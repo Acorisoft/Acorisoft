@@ -10,7 +10,6 @@
                         xmlns:mo="https://github.com/Acorisoft/Morisa"
                         xmlns:mui="https://github.com/Acorisoft/Morisa/UI"
                         xmlns:docs="clr-namespace:Acorisoft.Morisa.Inspirations;assembly=Acorisoft.Morisa.Documents"
-                        xmlns:tag="clr-namespace:Acorisoft.Morisa.Tags;assembly=Acorisoft.Morisa.Documents"
                         xmlns:sys="clr-namespace:System;assembly=System.Runtime"
                         mc:Ignorable="d" 
                         d:DesignHeight="640" d:DesignWidth="480"

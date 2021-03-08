@@ -10,7 +10,6 @@
                         xmlns:mo="https://github.com/Acorisoft/Morisa"
                         xmlns:mui="https://github.com/Acorisoft/Morisa/UI"
                         xmlns:docs="clr-namespace:Acorisoft.Morisa.Inspirations;assembly=Acorisoft.Morisa.Documents"
-                        xmlns:tag="clr-namespace:Acorisoft.Morisa.Tags;assembly=Acorisoft.Morisa.Documents"
                         mc:Ignorable="d"
                         d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,Type={x:Type vm:InspirationGalleryDesignTimeViewModel}}"
                         d:DesignHeight="720" d:DesignWidth="1280">

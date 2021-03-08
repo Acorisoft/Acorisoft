@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Views
 {
+    [Obsolete]
     [System.AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = true)]
     public sealed class ViewModelAttribute : Attribute
     {

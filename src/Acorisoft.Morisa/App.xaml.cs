@@ -33,9 +33,8 @@ namespace Acorisoft.Morisa
             //_appEnv.Container.Register<DialogSampleViewModel>();
             //_appEnv.Container.Register<InsertTextDialogViewModel>();
             _appEnv.UseLog()
-                   .UseRouter()
                    .UseDialog()
-                   .UseViews(typeof(App).Assembly, typeof(Notification).Assembly)
+                   .UseViews(typeof(App).Assembly)
                    .UseGlobalization(Language.ResourceManager,new System.Globalization.CultureInfo("zh"));
         }
     }

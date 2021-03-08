@@ -1,4 +1,5 @@
 ﻿using ReactiveUI;
+using Splat;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,5 +31,7 @@ namespace Acorisoft.Morisa.Views
         /// 跳转到指定类型的视图。
         /// </summary>
         void View(IRoutableViewModel vm, NavigationParameter @params);
+
+        IFullLogger Logger { get; }
     }
 }

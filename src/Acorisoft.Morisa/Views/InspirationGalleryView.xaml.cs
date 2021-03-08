@@ -68,7 +68,6 @@ namespace Acorisoft.Morisa.Views
 
         private async void ShowNofication(object sender, RoutedEventArgs e)
         {
-            ViewModel.Collection.List.Add(new InspirationMusicElement());
         }
     }
 }

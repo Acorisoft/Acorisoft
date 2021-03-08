@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.UICore", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.UI", "src\Acorisoft.Morisa.UI\Acorisoft.Morisa.UI.csproj", "{83FD9501-42C9-49D2-A384-F5E9BBF5AA6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Demos.DataTemplateSelector", "demos\Acorisoft.Demos.DataTemplateSelector\Acorisoft.Demos.DataTemplateSelector.csproj", "{42D8E6EB-03E5-4680-82BF-CBA58C90B597}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Demos.DataTemplateSelector", "demos\Acorisoft.Demos.DataTemplateSelector\Acorisoft.Demos.DataTemplateSelector.csproj", "{42D8E6EB-03E5-4680-82BF-CBA58C90B597}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Morisa.Tests", "src\Acorisoft.Morisa.Tests\Acorisoft.Morisa.Tests.csproj", "{54BABD90-D8B4-4B21-9D88-74FDBCF3331D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,13 +47,17 @@ Global
 		{42D8E6EB-03E5-4680-82BF-CBA58C90B597}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42D8E6EB-03E5-4680-82BF-CBA58C90B597}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42D8E6EB-03E5-4680-82BF-CBA58C90B597}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54BABD90-D8B4-4B21-9D88-74FDBCF3331D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54BABD90-D8B4-4B21-9D88-74FDBCF3331D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54BABD90-D8B4-4B21-9D88-74FDBCF3331D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54BABD90-D8B4-4B21-9D88-74FDBCF3331D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {3EE6B840-2DC2-4DF7-8922-192714C85F7B}
-		RESX_NeutralResourcesLanguage = zh-Hans
 		RESX_SortFileContentOnSave = True
+		RESX_NeutralResourcesLanguage = zh-Hans
+		SolutionGuid = {3EE6B840-2DC2-4DF7-8922-192714C85F7B}
 	EndGlobalSection
 EndGlobal

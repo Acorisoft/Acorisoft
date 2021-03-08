@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using DryIoc;
 using ReactiveUI;
@@ -26,6 +26,9 @@ namespace Acorisoft.Morisa.Views
 
         private static void OnWireViewModel(IContainer container, params Assembly[] assemblies)
         {
+            var counter = new Stopwatch();
+            counter.Start();
+
             if (assemblies != null)
             {
                 var allTypes = new Dictionary<string, Type>(256);
@@ -91,6 +94,8 @@ namespace Acorisoft.Morisa.Views
                     
                 }
             }
+            counter.Stop();
+            _vMgr.Logger.Info($"视图关联花费了:{counter.ElapsedMilliseconds}ms,总计:{counter.ElapsedTicks}ticks");
         }
 
         public static RoutingState Router

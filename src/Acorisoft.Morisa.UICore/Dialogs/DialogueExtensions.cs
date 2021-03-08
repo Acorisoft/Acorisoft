@@ -18,7 +18,8 @@ namespace Acorisoft.Morisa.Dialogs
         {
             var container = appEnv.Container;
             container.RegisterInstance<IDialogService>(new DialogManager());
-            appEnv.UseViews(typeof(DialogHost).Assembly);
+            container.Register<IViewFor<Notification>, NotificationView>();
+            container.Register<IViewFor<MessageBox>, MessageBoxView>();
             return appEnv;
         }
     }

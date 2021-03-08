@@ -24,18 +24,6 @@ namespace Acorisoft.Morisa.ViewModels
 
         protected virtual bool ContainsKeywordCore(InspirationElement element)
         {
-            if(element is IInspirationMusicElement)
-            {
-                return !string.IsNullOrEmpty(Keyword) && nameof(IInspirationMusicElement).Contains(Keyword);
-            }
-            else if(element is IInspirationPictureElement)
-            {
-                return !string.IsNullOrEmpty(Keyword) && nameof(IInspirationPictureElement).Contains(Keyword);
-            }
-            else if (element is IInspirationTextElement)
-            {
-                return !string.IsNullOrEmpty(Keyword) && nameof(IInspirationTextElement).Contains(Keyword);
-            }
             return true;
         }
     }
@@ -76,9 +64,6 @@ namespace Acorisoft.Morisa.ViewModels
             _FilterCollection = new ObservableCollectionExtended<ICollectionPredicator>
             {
                 Default,
-                new InspirationElementPredicator<InspirationMusicElement,IInspirationMusicElement>(Filter_Music),
-                new InspirationElementPredicator<InspirationPictureElement,IInspirationPictureElement>(Filter_Picture),
-                new InspirationElementPredicator<InspirationTextElement,IInspirationTextElement>(Filter_Text),
             };
             Filter = _FilterCollection[0];
         }

@@ -28,9 +28,6 @@ namespace Acorisoft.Morisa.ViewModels
             //_CollectionView.Filter = OnElementFiltering;
             _Collection = new CollectionWrapper<InspirationElement, InspirationCollection>(new InspirationCollection
             {
-                new InspirationMusicElement{ CreationTime = DateTime.Now },
-                new InspirationMusicElement{ CreationTime = DateTime.Now },
-                new InspirationTextElement{ Text = "78465a4" , CreationTime = DateTime.Now }
             });
 
             //

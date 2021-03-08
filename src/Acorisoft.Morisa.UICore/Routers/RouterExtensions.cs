@@ -11,6 +11,7 @@ using Acorisoft.Morisa.Logs;
 
 namespace Acorisoft.Morisa.Routers
 {
+    [Obsolete]
     class InternalViewManager : IScreen
     {
         // Mock ViewManager
@@ -22,6 +23,7 @@ namespace Acorisoft.Morisa.Routers
         public RoutingState Router { get; }
     }
 
+    [Obsolete]
     public static class RouterExtensions
     {
         private static InternalViewManager _mgr;

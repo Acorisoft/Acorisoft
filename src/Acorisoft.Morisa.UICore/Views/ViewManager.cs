@@ -95,5 +95,6 @@ namespace Acorisoft.Morisa.Views
         }
 
         public RoutingState Router => _router;
+        public IFullLogger Logger => _logger;
     }
 }
