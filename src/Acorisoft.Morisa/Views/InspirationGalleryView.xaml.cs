@@ -45,6 +45,7 @@ namespace Acorisoft.Morisa.Views
             PART_SearchBox
                 .WhenAnyValue(x => x.Text)
                 .Throttle<string>(TimeSpan.FromMilliseconds(300),RxApp.MainThreadScheduler)
+                .SubscribeOn()
                 .Where(x => !string.IsNullOrEmpty(x))
                 .Subscribe(x =>
                 {
