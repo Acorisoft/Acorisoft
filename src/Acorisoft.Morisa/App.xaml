@@ -3,6 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Acorisoft.Morisa"
              StartupUri="MainWindow.xaml">
+    <JumpList.JumpList>
+        <JumpList ShowRecentCategory="True"
+                  ShowFrequentCategory="True"
+                  JumpItemsRejected="JumpList_JumpItemsRejected"
+                  JumpItemsRemovedByUser="JumpList_JumpItemsRemovedByUser">
+            <JumpPath Path="D:\Repo\Acorisoft\docs\low level io.md"/>
+            <JumpTask Title="JumpTask"
+                      Description="This is the JumpTask sample"
+                      IconResourcePath="C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
+                      IconResourceIndex="1"
+                      ApplicationPath="C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"/>
+            
+        </JumpList>
+    </JumpList.JumpList>
     <Application.Resources>
          
     </Application.Resources>

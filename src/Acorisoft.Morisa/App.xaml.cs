@@ -1,5 +1,4 @@
-﻿using Acorisoft.Morisa.ViewModels;
-using DryIoc;
+﻿using DryIoc;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -7,8 +6,10 @@ using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Reactive.Concurrency;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Shell;
 
 namespace Acorisoft.Morisa
 {
@@ -23,20 +24,14 @@ namespace Acorisoft.Morisa
         public App()
         {
             _container = new Container(Rules.Default.WithTrackingDisposableTransients());
-            _container.Register<AppViewModel>();
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
             //
-            // 应用级别的视图模型。
-            AppViewModel = _container.Resolve<AppViewModel>();
-
-            //
             // 启动应用
             base.OnStartup(e);
         }
 
-        public AppViewModel AppViewModel { get; private set; }
     }
 }

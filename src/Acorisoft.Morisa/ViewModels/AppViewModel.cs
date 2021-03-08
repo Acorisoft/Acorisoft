@@ -1,90 +1,49 @@
-﻿using Acorisoft.Morisa.Models;
-using LiteDB;
+﻿using ReactiveUI;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reactive;
+using System.Reactive.Linq;
+using System.Reactive.Concurrency;
+using System.Reactive.Subjects;
+using System.Reactive.Disposables;
+using System.Reactive.Threading;
+using Acorisoft.Morisa.Core;
 
 namespace Acorisoft.Morisa.ViewModels
 {
-    public class AppViewModel : ViewModelBase
+    public class AppViewModel : ReactiveObject
     {
-        public const string ApplicationDatabaseName = "AppSetting.Morisa-Setting";
-        public const int ApplicationDatabaseSize = 4 * 1024 * 1024;
-        public const string ConnectString = "FileName=AppSetting.Morisa-Setting;Initial Size = 4MB;Connection=Shared";
+        private readonly CompositeDisposable _disposable;
 
-        [NonSerialized]
-        private LiteDatabase _appDB;
-
-        [NonSerialized]
-        private SettingViewModel _settingVM;
-
-        public AppViewModel()
+        public AppViewModel(IMorisaProjectManager projectMgr,IEnumerable<IEntityService> entitySrves)
         {
             //
-            // 初始化设定部分
-            OnInitializeSetting();
-        }
+            // when project manager load an new project 
+            // it will return the project info back to the vm
+            // and we can set the current project to database
+            projectMgr.ProjectInfo
+                      .Subscribe(x => CurrentProject = x)
+                      .DisposeWith(_disposable);
 
-
-        #region Setting Properties / Methods
-
-
-        protected void OnInitializeSetting()
-        {
             //
-            // 创建视图模型
-            //
-            // 注意，这里可能会引发异常错误。
-            try
-            {
-                _appDB = new LiteDatabase(ConnectString);
-
-                //
-                // 初始化设置视图模型
-                _settingVM = new SettingViewModel(_appDB);
-            }
-            catch(Exception)
-            {
-
-            }
+            // when project manager load an new project
+            // it will update all entity service
+            projectMgr.Project
+                      .SubscribeOn(RxApp.TaskpoolScheduler)
+                      .Subscribe(x =>
+                      {
+                          foreach(var srv in entitySrves)
+                          {
+                              srv.OnNext(x);
+                              srv.OnCompleted();
+                          }
+                      })
+                      .DisposeWith(_disposable);
         }
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public SettingViewModel Setting => _settingVM;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool IsFirstTime {
-            get {
-                return _settingVM.IsFirstTime;
-            }
-            set {
-                _settingVM.IsFirstTime = value;
-                RaiseUpdated(nameof(IsFirstTime));
-            }
-        }
-
-        /// <summary>
-        /// 获取或设置当前应用所打开的项目信息。
-        /// </summary>
-        public ProjectInfo CurrentProject {
-            get => _settingVM.CurrentProject;
-            set {
-                _settingVM.CurrentProject = value;
-            }
-        }
-
-        #endregion Setting Properties / Methods
-
-
-        protected internal ILiteDatabase ApplicationDatabase => _appDB;
-
+        public IMorisaProjectInfo CurrentProject { get; set; }
     }
 }

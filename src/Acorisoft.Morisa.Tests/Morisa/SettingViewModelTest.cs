@@ -12,7 +12,6 @@ using System.Reactive.Linq;
 using System.Reactive.Threading;
 using System.Reactive.Disposables;
 using DynamicData.Binding;
-using Acorisoft.Morisa.Models;
 using ReactiveUI;
 
 namespace Acorisoft.Morisa.Tests.Morisa
@@ -23,17 +22,6 @@ namespace Acorisoft.Morisa.Tests.Morisa
         [TestMethod]
         public void TestProjectCollectionChanged()
         {
-            var db = new LiteDatabase(new MemoryStream());
-            var vm = new SettingViewModel(db);
-            vm.Projects
-              .WhenAnyPropertyChanged()
-              .ObserveOn(RxApp.MainThreadScheduler)
-              .SubscribeOn(RxApp.MainThreadScheduler)
-              .Subscribe(x =>
-              {
-                  Assert.IsTrue(x != null);
-              });
-            vm.Projects.Add(new ProjectInfo { });
         }
     }
 }

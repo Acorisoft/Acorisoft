@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa", "src\Aco
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.Tests", "src\Acorisoft.Morisa.Tests\Acorisoft.Morisa.Tests.csproj", "{9B31D456-1D53-48FB-B5AD-9CAA8B68B847}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Morisa.Documents", "src\Acorisoft.Morisa.Documents\Acorisoft.Morisa.Documents.csproj", "{E1308C06-F25B-4CCA-910D-1E45702F08C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.Documents", "src\Acorisoft.Morisa.Documents\Acorisoft.Morisa.Documents.csproj", "{E1308C06-F25B-4CCA-910D-1E45702F08C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Demos.RxSamples", "demos\Acorisoft.Demos.RxSamples\Acorisoft.Demos.RxSamples.csproj", "{BE8F35AC-31A2-4E0D-B922-EAAB0B5B74A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,13 +29,17 @@ Global
 		{E1308C06-F25B-4CCA-910D-1E45702F08C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1308C06-F25B-4CCA-910D-1E45702F08C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1308C06-F25B-4CCA-910D-1E45702F08C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE8F35AC-31A2-4E0D-B922-EAAB0B5B74A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE8F35AC-31A2-4E0D-B922-EAAB0B5B74A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE8F35AC-31A2-4E0D-B922-EAAB0B5B74A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE8F35AC-31A2-4E0D-B922-EAAB0B5B74A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {3EE6B840-2DC2-4DF7-8922-192714C85F7B}
-		RESX_NeutralResourcesLanguage = zh-Hans
 		RESX_SortFileContentOnSave = True
+		RESX_NeutralResourcesLanguage = zh-Hans
+		SolutionGuid = {3EE6B840-2DC2-4DF7-8922-192714C85F7B}
 	EndGlobalSection
 EndGlobal
