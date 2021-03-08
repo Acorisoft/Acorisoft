@@ -33,7 +33,7 @@ namespace Acorisoft.Morisa.Tests.Morisa
               {
                   Assert.IsTrue(x != null);
               });
-            vm.Projects.Add(new ProjectModel { });
+            vm.Projects.Add(new ProjectInfo { });
         }
     }
 }

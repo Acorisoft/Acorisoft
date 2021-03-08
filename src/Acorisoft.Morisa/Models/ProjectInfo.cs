@@ -1,4 +1,5 @@
-﻿using ReactiveUI.Fody.Helpers;
+﻿using LiteDB;
+using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Models
 {
-    public class ProjectModel
+    public class ProjectInfo
     {
-
+        [BsonId]
         [Reactive]public string Name { get; set; }
         [Reactive]public string Path { get; set; }
         [Reactive]public string FileName { get; set; }
