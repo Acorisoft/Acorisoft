@@ -1,4 +1,5 @@
-﻿using DryIoc;
+﻿using Acorisoft.Morisa.ViewModels;
+using DryIoc;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -24,10 +25,13 @@ namespace Acorisoft.Morisa
         public App()
         {
             _container = new Container(Rules.Default.WithTrackingDisposableTransients());
+            _container.Register<AppViewModel>();
+            _container.UseMorisa();
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            _container.Resolve<AppViewModel>();
             //
             // 启动应用
             base.OnStartup(e);

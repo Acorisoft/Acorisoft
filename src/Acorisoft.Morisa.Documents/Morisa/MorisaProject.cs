@@ -1,4 +1,5 @@
-﻿using LiteDB;
+﻿using Acorisoft.Morisa.Core;
+using LiteDB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,27 +9,31 @@ using BsonDocumentCollection = LiteDB.ILiteCollection<LiteDB.BsonDocument>;
 namespace Acorisoft.Morisa
 {
 #pragma warning disable CA1816
-    public class MorisaProject : IMorisaProject,IDisposable
+    public class MorisaProject : IMorisaProject, IDisposable
     {
         //-------------------------------------------------------------------------------------------------
         //
         //  Constants
         //
         //-------------------------------------------------------------------------------------------------
-        
+
         public const string SettingObjectName = "MorisaProject.Setting";
+        public const string BinariesCollectionName = "Binaries";
 
         //-------------------------------------------------------------------------------------------------
         //
         //  Internal Classes
         //
         //-------------------------------------------------------------------------------------------------
-        
+
         protected class Setting
         {
             public string Name { get; set; }
             public string Summary { get; set; }
             public string Topic { get; set; }
+
+            [BsonRef(BinariesCollectionName)]
+            public ImageObject Cover { get; set; }
         }
 
         //-------------------------------------------------------------------------------------------------
@@ -36,21 +41,21 @@ namespace Acorisoft.Morisa
         //  Variables
         //
         //-------------------------------------------------------------------------------------------------
-       
+
         private readonly ILiteDatabase              _Database;
         private readonly BsonDocumentCollection     _Externals;
         private readonly bool                       _IsNeedInitialize;
         private readonly Setting                    _Setting;
-       
+
         //-------------------------------------------------------------------------------------------------
         //
         //  Constructors
         //
         //-------------------------------------------------------------------------------------------------
-       
+
         internal MorisaProject(ILiteDatabase db)
         {
-            _Database = db ?? throw new ArgumentNullException(nameof(db));            
+            _Database = db ?? throw new ArgumentNullException(nameof(db));
             _IsNeedInitialize = !Database.CollectionExists(MorisaProjectManager.ExternalCollectionName);
             _Externals = _Database.GetCollection(MorisaProjectManager.ExternalCollectionName);
             if (_IsNeedInitialize)
@@ -139,6 +144,16 @@ namespace Acorisoft.Morisa
             get => _Setting.Topic;
             set {
                 _Setting.Topic = value;
+                UpdateSetting();
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public ImageObject Cover {
+            get => _Setting.Cover;
+            set {
+                _Setting.Cover = value;
                 UpdateSetting();
             }
         }
