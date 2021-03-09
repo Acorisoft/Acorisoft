@@ -13,12 +13,19 @@ using System.Reactive.Threading;
 using Acorisoft.Morisa.Core;
 using LiteDB;
 using ProjectInfoCollection = DynamicData.Binding.ObservableCollectionExtended<Acorisoft.Morisa.IMorisaProjectInfo>;
-using BsonDocumentCollection = LiteDB.ILiteCollection<LiteDB.BsonDocument>;
+using BsonDocumentDBCollection = LiteDB.ILiteCollection<LiteDB.BsonDocument>;
+using ProjectInfoDBCollection = LiteDB.ILiteCollection<Acorisoft.Morisa.IMorisaProjectInfo>;
 
 namespace Acorisoft.Morisa.ViewModels
 {
+#pragma warning disable CA1816,CA1822
     public class AppViewModel : ReactiveObject
     {
+        //-------------------------------------------------------------------------------------------------
+        //
+        //  Constants
+        //
+        //-------------------------------------------------------------------------------------------------
         public const string ExternalsCollectionName                 = "Externals";
         public const string ProjectInfoCollectionName               = "Projects";
         public const string SettingObjectName                       = "Morisa.Setting";
@@ -42,12 +49,20 @@ namespace Acorisoft.Morisa.ViewModels
         //
         //-------------------------------------------------------------------------------------------------
 
-        private readonly CompositeDisposable    _Disposable;
-        private readonly LiteDatabase           _AppDB;
-        private ProjectInfoCollection           _ProjectCollection;
-        private Setting                         _Setting;
-        private BsonDocumentCollection          _DB_Externals;
-        private ILiteCollection<IMorisaProjectInfo> _DB_Projects;
+        private readonly CompositeDisposable        _Disposable;
+        private readonly LiteDatabase               _AppDB;
+
+        //
+        // Collection
+        private ProjectInfoCollection               _ProjectCollection;
+        private Setting                             _Setting;
+
+        //
+        // DB Collection
+        private BsonDocumentDBCollection            _DB_Externals;
+        private ProjectInfoDBCollection             _DB_Projects;
+
+
         //-------------------------------------------------------------------------------------------------
         //
         //  Constructors
@@ -58,13 +73,14 @@ namespace Acorisoft.Morisa.ViewModels
         {
 
             _Disposable = new CompositeDisposable();
-            ////
-            //// when project manager load an new project 
-            //// it will return the project info back to the vm
-            //// and we can set the current project to database
-            //projectMgr.ProjectInfo
-            //          .Subscribe(x => CurrentProject = x)
-            //          .DisposeWith(_Disposable);
+
+            //
+            // when project manager load an new project 
+            // it will return the project info back to the vm
+            // and we can set the current project to database
+            projectMgr.ProjectInfo
+                      .Subscribe(x => CurrentProject = x)
+                      .DisposeWith(_Disposable);
 
             ////
             //// when project manager load an new project
@@ -143,6 +159,16 @@ namespace Acorisoft.Morisa.ViewModels
         //  Properties
         //
         //-------------------------------------------------------------------------------------------------
+
+        public bool IsFirstTime {
+            get => _Setting.IsFirstTime;
+            set {
+                _Setting.IsFirstTime = value;
+                this.RaisePropertyChanged(nameof(IsFirstTime));
+                UpdateSetting();
+            }
+        }
+
         public IMorisaProjectInfo CurrentProject { get; set; }
     }
 }
