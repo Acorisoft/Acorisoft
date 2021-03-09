@@ -14,6 +14,7 @@ using Acorisoft.Morisa.Core;
 using LiteDB;
 using ProjectInfoCollection = DynamicData.Binding.ObservableCollectionExtended<Acorisoft.Morisa.IMorisaProjectInfo>;
 using BsonDocumentCollection = LiteDB.ILiteCollection<LiteDB.BsonDocument>;
+
 namespace Acorisoft.Morisa.ViewModels
 {
     public class AppViewModel : ReactiveObject
@@ -21,6 +22,7 @@ namespace Acorisoft.Morisa.ViewModels
         public const string ExternalsCollectionName                 = "Externals";
         public const string ProjectInfoCollectionName               = "Projects";
         public const string SettingObjectName                       = "Morisa.Setting";
+        public const string AppDBConnectionString                   = "FileName=App.Morisa-Setting;Initial Size= 4MB;mode=share";
 
         //-------------------------------------------------------------------------------------------------
         //
@@ -83,7 +85,7 @@ namespace Acorisoft.Morisa.ViewModels
 
             //
             // 初始化应用数据库
-            _AppDB = new LiteDatabase(@"FileName=App.Morisa-Setting;Initial Size= 4MB;mode=share");
+            _AppDB = new LiteDatabase(AppDBConnectionString);
 
             //
             // 
@@ -94,27 +96,32 @@ namespace Acorisoft.Morisa.ViewModels
 
         protected void OnInitialize()
         {
-            _DB_Externals = _AppDB.GetCollection<BsonDocument>(ExternalsCollectionName);
-            _DB_Projects = _AppDB.GetCollection<IMorisaProjectInfo>(ProjectInfoCollectionName);
+            _AppDB.Exists(ExternalsCollectionName)
 
-            if (!_AppDB.CollectionExists(ExternalsCollectionName))
+                  //
+                  // Initialize Setting
+                  .ToFactory<Setting , BsonDocument>(x => CreateInstanceCore())
+                  .WithCollectionName(ExternalsCollectionName)
+                  .WithFieldName(SettingObjectName)
+                  .ToField(ref _Setting)
+                  .ToLiteCollection(ref _DB_Externals)
+
+                  //
+                  // Initialize ProjectCollection
+
+                  .ToFactory<IMorisaProjectInfo , ProjectInfoCollection>(x => new ProjectInfoCollection() , x => new ProjectInfoCollection(x.FindAll().ToArray()))
+                  .WithCollectionName(ProjectInfoCollectionName)
+                  .ToCollection(ref _ProjectCollection)
+                  .ToLiteCollection(ref _DB_Projects);
+        }
+
+        protected Setting CreateInstanceCore()
+        {
+            return new Setting
             {
-                _Setting = new Setting
-                {
-                    IsFirstTime = false ,
-                    CurrentProject = null
-                };
-                _ProjectCollection = new ProjectInfoCollection();
-                UpdateProjectCollection();
-                UpdateSetting();
-            }
-            else
-            {
-                _ProjectCollection = new ProjectInfoCollection(
-                    _DB_Projects.FindAll()
-                                .ToArray());
-                _Setting = _DB_Externals.FindOne<Setting>(SettingObjectName);
-            }
+                IsFirstTime = false ,
+                CurrentProject = null
+            };
         }
 
         void UpdateProjectCollection()

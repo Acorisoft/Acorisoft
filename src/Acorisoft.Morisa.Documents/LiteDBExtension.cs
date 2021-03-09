@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft
 {
-    public static class LiteCollectionExtension
+    static class LiteDBExtension
     {
         public static T FindOne<T>(this ILiteCollection<BsonDocument> collection , BsonValue Id)
         {
