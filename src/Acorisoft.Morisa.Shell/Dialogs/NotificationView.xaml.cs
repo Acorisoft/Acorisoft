@@ -1,6 +1,4 @@
-﻿using Acorisoft.Morisa.Dialogs;
-using Acorisoft.Morisa.Windows;
-using Splat;
+﻿using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,21 +14,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Acorisoft.Morisa
+namespace Acorisoft.Morisa.Dialogs
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// NotificationView.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : ShellWindow
+    public partial class NotificationView : ReactiveUserControl<Notification>
     {
-        public MainWindow()
+        public NotificationView()
         {
             InitializeComponent();
-        }
-
-        private async void DialogShow(object sender, RoutedEventArgs e)
-        {
-            var session = Locator.Current.GetService<IDialogManager>().Dialog<Notification>();
+            this.WhenActivated(d =>
+            {
+                d(this.WhenAnyValue(x => x.ViewModel).BindTo(this, x => x.DataContext));
+            });
         }
     }
 }

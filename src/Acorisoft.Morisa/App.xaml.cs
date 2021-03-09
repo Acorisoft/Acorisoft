@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Shell;
+using Acorisoft.Morisa;
 
 namespace Acorisoft.Morisa
 {
@@ -26,7 +27,9 @@ namespace Acorisoft.Morisa
         {
             _container = new Container(Rules.Default.WithTrackingDisposableTransients());
             _container.Register<AppViewModel>();
-            _container.UseMorisa();
+            _container.Init()
+                      .UseMorisa()
+                      .UseDialog();
         }
 
         protected override void OnStartup(StartupEventArgs e)

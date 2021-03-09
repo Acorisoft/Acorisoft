@@ -20,6 +20,7 @@
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Acorisoft.Morisa.Documents\Acorisoft.Morisa.Documents.csproj" />
+      <ProjectReference Include="..\Acorisoft.Morisa.Shell\Acorisoft.Morisa.Shell.csproj" />
     </ItemGroup>
 
 </Project>
