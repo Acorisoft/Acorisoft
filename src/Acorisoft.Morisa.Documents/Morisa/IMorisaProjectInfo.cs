@@ -8,5 +8,8 @@ namespace Acorisoft.Morisa
 {
     public interface IMorisaProjectInfo
     {
+        string Name { get; set; }
+        string FileName { get; set; }
+        string Directory { get; set; }
     }
 }

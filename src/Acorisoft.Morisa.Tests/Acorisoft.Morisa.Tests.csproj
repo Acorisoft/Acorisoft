@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0-Windows</TargetFramework>
-
+        <RootNamespace>Acorisoft</RootNamespace>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
@@ -25,7 +25,12 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\Acorisoft.Morisa.Documents\Acorisoft.Morisa.Documents.csproj" />
         <ProjectReference Include="..\Acorisoft.Morisa\Acorisoft.Morisa.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Morisa\" />
     </ItemGroup>
 
 </Project>

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Core
 {
-    public interface IEntityService : IObserver<IMorisaProject>
+    public interface IEntityService 
     {
-        
+        IObserver<IMorisaProject> ProjectObserver { get; }
     }
 }

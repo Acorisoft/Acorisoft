@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ using System.Reactive.Threading;
 using DryIoc;
 using System.Threading;
 using DynamicData.Binding;
+using System.Collections.ObjectModel;
 
 namespace Acorisoft.Demos.RxSamples
 {
@@ -56,13 +58,13 @@ namespace Acorisoft.Demos.RxSamples
 
     }
 
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ObservableAsPropertyHelper<Model1> OAPH_Model;
-        private ObservableCollectionExtended<Model> Collection;
+        private ObservableCollection<Model> Collection;
         private Container _container;
 
         public MainWindow()
@@ -81,11 +83,15 @@ namespace Acorisoft.Demos.RxSamples
 
             //
             // it test can subscribeOn method work on thread pool scheduler
-            Collection = new ObservableCollectionExtended<Model>();
-            Collection.WhenAnyPropertyChanged()
-                      .SubscribeOn(RxApp.TaskpoolScheduler)
-                      .Subscribe(x =>RxApp.TaskpoolScheduler.Schedule(()=> Debug.WriteLine($"collection work on thread:{Thread.CurrentThread.ManagedThreadId}")));
+            Collection = new ObservableCollection<Model>();
+            Observable.FromEventPattern<NotifyCollectionChangedEventArgs>(Collection, "CollectionChanged")
+                      .ObserveOn(NewThreadScheduler.Default)
+                      .Select(x => x!)
+                      .Subscribe(x => Debug.WriteLine($"collection work on thread:{Thread.CurrentThread.ManagedThreadId}"));
             Collection.Add(new Model());
+
+            
+
             //
             // it test can container return an enumerator for service
             _container = new Container();
@@ -96,9 +102,5 @@ namespace Acorisoft.Demos.RxSamples
 
         public Model Model { get; set; }
         public Model1 Model1 { get; set; }
-        public Model1 OAPHModel
-        { 
-            get => OAPH_Model.Value;
-        }
     }
 }

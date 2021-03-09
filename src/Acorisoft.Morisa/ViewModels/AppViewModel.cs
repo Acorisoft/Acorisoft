@@ -11,14 +11,40 @@ using System.Reactive.Subjects;
 using System.Reactive.Disposables;
 using System.Reactive.Threading;
 using Acorisoft.Morisa.Core;
+using LiteDB;
 
 namespace Acorisoft.Morisa.ViewModels
 {
     public class AppViewModel : ReactiveObject
     {
-        private readonly CompositeDisposable _disposable;
+        //-------------------------------------------------------------------------------------------------
+        //
+        //  Internal Classes
+        //
+        //-------------------------------------------------------------------------------------------------
 
-        public AppViewModel(IMorisaProjectManager projectMgr,IEnumerable<IEntityService> entitySrves)
+        protected class Setting
+        {
+
+        }
+
+        //-------------------------------------------------------------------------------------------------
+        //
+        //  Variables
+        //
+        //-------------------------------------------------------------------------------------------------
+
+        private readonly CompositeDisposable    _Disposable;
+        private readonly LiteDatabase           _AppDB;
+
+        //-------------------------------------------------------------------------------------------------
+        //
+        //  Constructors
+        //
+        //-------------------------------------------------------------------------------------------------
+
+
+        public AppViewModel(IMorisaProjectManager projectMgr , IEnumerable<IEntityService> entitySrves)
         {
             //
             // when project manager load an new project 
@@ -26,7 +52,7 @@ namespace Acorisoft.Morisa.ViewModels
             // and we can set the current project to database
             projectMgr.ProjectInfo
                       .Subscribe(x => CurrentProject = x)
-                      .DisposeWith(_disposable);
+                      .DisposeWith(_Disposable);
 
             //
             // when project manager load an new project
@@ -35,15 +61,21 @@ namespace Acorisoft.Morisa.ViewModels
                       .SubscribeOn(RxApp.TaskpoolScheduler)
                       .Subscribe(x =>
                       {
-                          foreach(var srv in entitySrves)
+                          foreach (var srv in entitySrves)
                           {
-                              srv.OnNext(x);
-                              srv.OnCompleted();
+                              var observer = srv.ProjectObserver;
+                              observer.OnNext(x);
+                              observer.OnCompleted();
                           }
                       })
-                      .DisposeWith(_disposable);
+                      .DisposeWith(_Disposable);
         }
 
+        //-------------------------------------------------------------------------------------------------
+        //
+        //  Properties
+        //
+        //-------------------------------------------------------------------------------------------------
         public IMorisaProjectInfo CurrentProject { get; set; }
     }
 }
