@@ -25,7 +25,6 @@ namespace Acorisoft.Morisa
         public App()
         {
             _container = new Container(Rules.Default.WithTrackingDisposableTransients());
-            _container.Register<AppViewModel>();
             _container.Init()
                       .UseLog()
                       .UseViews(typeof(App).Assembly)

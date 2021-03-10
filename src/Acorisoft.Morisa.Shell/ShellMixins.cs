@@ -19,6 +19,7 @@ using Acorisoft.Morisa.ViewModels;
 
 namespace Acorisoft.Morisa
 {
+#pragma warning disable CA1822,IDE0060
     public interface IViewManager : IScreen
     {
         /// <summary>
@@ -41,7 +42,7 @@ namespace Acorisoft.Morisa
         /// <summary>
         /// 跳转到指定类型的视图。
         /// </summary>
-        void View(IRoutableViewModel vm , NavigationParameter @params);
+        void View(IRoutableViewModel vm, NavigationParameter @params);
 
         IFullLogger Logger { get; }
     }
@@ -52,9 +53,7 @@ namespace Acorisoft.Morisa
 
     public class NavigationEventArgs : EventArgs
     {
-        private IRoutableViewModel _result;
-
-        public NavigationEventArgs(IRoutableViewModel oldVM , IRoutableViewModel newVM , IFullLogger logger)
+        public NavigationEventArgs(IRoutableViewModel oldVM, IRoutableViewModel newVM, IFullLogger logger)
         {
             Old = oldVM;
             New = newVM ?? throw new ArgumentNullException(nameof(newVM));
@@ -81,7 +80,7 @@ namespace Acorisoft.Morisa
         /// 获取或设置当前导航过滤事件的最终导航结果，该属性由管线过滤器设置。
         /// </summary>
         public IRoutableViewModel Result { get; set; }
-    }      
+    }
 
     class ViewManager : IViewManager, IScreen
     {
@@ -106,13 +105,13 @@ namespace Acorisoft.Morisa
 
         protected void OnViewModelChanged(IRoutableViewModel vm)
         {
-            if (vm is ViewModelBase vmBase &&
-                _instanceStack.Count > 0 &&
-                ReferenceEquals(_instanceStack.Peek() , vm))
-            {
-                _instanceStack.Pop();
-                // vmBase.Initialize(_paramStack.Pop());
-            }
+            //if (vm is ViewModelBase vmBase &&
+            //    _instanceStack.Count > 0 &&
+            //    ReferenceEquals(_instanceStack.Peek(), vm))
+            //{
+            //    _instanceStack.Pop();
+            //    vmBase.Initialize(_paramStack.Pop());
+            //}
         }
 
         protected void OnPreExecute(NavigationEventArgs e)
@@ -156,7 +155,7 @@ namespace Acorisoft.Morisa
             _oldVM = vm;
         }
 
-        public void View(IRoutableViewModel vm , NavigationParameter @params)
+        public void View(IRoutableViewModel vm, NavigationParameter @params)
         {
             var e = new NavigationEventArgs(_oldVM, vm, this.GetLogger());
             _instanceStack.Push(vm);
@@ -183,7 +182,7 @@ namespace Acorisoft.Morisa
         //-------------------------------------------------------------------------------------------------
 
         private static IViewManager _vMgr;
-        private static Type IViewForType = typeof(IViewFor<>);
+        private static readonly Type IViewForType = typeof(IViewFor<>);
         private static ILogManager _manager;
 
         //-------------------------------------------------------------------------------------------------
@@ -213,8 +212,8 @@ namespace Acorisoft.Morisa
 
             //
             // 添加过滤规则
-            config.AddRule(LogLevel.Info , LogLevel.Fatal , logFileTarget);
-            config.AddRule(LogLevel.Debug , LogLevel.Fatal , logConsoleTarget);
+            config.AddRule(LogLevel.Info, LogLevel.Fatal, logFileTarget);
+            config.AddRule(LogLevel.Debug, LogLevel.Fatal, logConsoleTarget);
 
             //
             // 应用设置
@@ -241,69 +240,54 @@ namespace Acorisoft.Morisa
             return _manager.GetLogger(instance?.GetType() ?? typeof(ShellMixins));
         }
 
-        public static IContainer UseViews(this IContainer container , params Assembly[] assemblies)
+        public static IContainer UseViews(this IContainer container, params Assembly[] assemblies)
         {
             _vMgr = new ViewManager();
             container.RegisterInstance(_vMgr);
-            OnWireViewModel(container , assemblies);
+            OnWireViewModel(container, assemblies);
             return container;
         }
 
-        private static void OnWireViewModel(IContainer container , params Assembly[] assemblies)
+        private static void OnWireViewModel(IContainer container, params Assembly[] assemblies)
         {
             var counter = new Stopwatch();
             counter.Start();
 
             if (assemblies != null)
             {
-                var allTypes = new Dictionary<string, Type>(256);
-                var viewTypes = new List<Type>();
+                List<Type> viewTypes = new List<Type>();
+                Dictionary<string,Type> vmTypes = new Dictionary<string, Type>(256);
+
                 foreach (var assembly in assemblies)
                 {
-                    var typesInAssembly = assembly.GetTypes().Where(x => x.IsClass && x.Name.Contains("View"));
+                    var allTypes = assembly.GetTypes();
+                    var vTypeInAssembly = new List<Type>(); 
+                    var vmTypeInAssembly = new List<Type>();
 
-                    foreach (var type in typesInAssembly)
+                    foreach(var target in allTypes)
                     {
-                        if (type.Name.EndsWith("View" , StringComparison.OrdinalIgnoreCase))
+                        if (target.IsPublic && target.IsClass && !target.IsNested)
                         {
-                            viewTypes.Add(type);
-                        }
-                        else
-                        {
-                            allTypes.Add(type.Name , type);
+                            if (target.Name.EndsWith("ViewModel"))
+                            {
+                                vmTypes.Add(target.Name, target);
+                                container.Register(target);
+                            }
+                            else if (target.Name.EndsWith("View"))
+                            {
+                                viewTypes.Add(target);
+                            }
                         }
                     }
+
                 }
 
-                var @params = new object[]
-                        {
-                            container,
-                            (IReuse)null,
-                            (Made)null,
-                            (Setup) null,
-                            (IfAlreadyRegistered? ) null,
-                            null
-                        };
-
-                var genericParams = new Type[]
-                            {
-                            typeof(IRegistrator) ,
-                            typeof(IReuse),
-                            typeof(Made),
-                            typeof(Setup),
-                            typeof(IfAlreadyRegistered?),
-                            typeof(object)
-                            };
-
+                //
+                // Define Constants
+                var @params = new object[] { container, null, null, null, null, null };
+                var genericParams = new Type[] { typeof(IRegistrator) , typeof(IReuse), typeof(Made), typeof(Setup), typeof(IfAlreadyRegistered?), typeof(object) };
                 var genericModifiers = new ParameterModifier[] { new ParameterModifier(2) };
-
-                foreach (var vType in viewTypes)
-                {
-                    if (allTypes.TryGetValue(vType.Name + "Model" , out var vmType))
-                    {
-                        var viewForInterface = IViewForType.MakeGenericType(vmType);
-                        var paramTypes = new Type[] { viewForInterface, vType };
-                        var register = typeof(Registrator).GetMethod(
+                var register = typeof(Registrator).GetMethod(
                             "Register",
                             2,
                             BindingFlags.Public | BindingFlags.Static,
@@ -311,20 +295,27 @@ namespace Acorisoft.Morisa
                             CallingConventions.Standard,
                             genericParams,
                             genericModifiers);
-                        register.MakeGenericMethod(paramTypes).Invoke(
-                            null ,
-                            @params);
-                        container.Register(vmType);
-                    }
 
+                foreach (var vType in viewTypes)
+                {
+                    if (vmTypes.TryGetValue(vType.Name + "Model", out var vmType))
+                    {
+                        var viewForInterface = IViewForType.MakeGenericType(vmType);
+                        var paramTypes = new Type[] { viewForInterface, vType };
+                        register.MakeGenericMethod(paramTypes).Invoke(
+                            null,
+                            @params);
+                    }
                 }
             }
             counter.Stop();
             _vMgr.Logger.Info($"视图关联花费了:{counter.ElapsedMilliseconds}ms,总计:{counter.ElapsedTicks}ticks");
         }
 
-        public static RoutingState Router {
-            get {
+        public static RoutingState Router
+        {
+            get
+            {
                 return _vMgr.Router;
             }
         }
