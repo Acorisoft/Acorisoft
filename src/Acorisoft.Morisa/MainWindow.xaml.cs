@@ -14,7 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.IO;
 using ReactiveUI;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -48,10 +48,34 @@ namespace Acorisoft.Morisa
             if (ViewModel is AppViewModel vm && vm.IsFirstTime)
             {
                 var manager = vm.DialogManager;
-                var session = await manager.Dialog<GenerateProjectViewModel>();
-                if (session.IsCompleted)
-                {
+                var session = await manager.Dialog<SelectProjectFolderViewModel>();
+                var appVM = ViewModel as AppViewModel;
 
+                if (session.IsCompleted && session.GetResult<string>() is string projectFolder)
+                {
+                    appVM.ProjectFolder = projectFolder;
+                }
+
+                session = await manager.Dialog<GenerateProjectViewModel>();
+
+                if (session.IsCompleted && session.GetResult<IMorisaProjectTargetInfo>() is IMorisaProjectTargetInfo targetInfo)
+                {
+                    //
+                    // 合成新的项目名
+                    targetInfo.Directory = Path.Combine(appVM.ProjectFolder , Guid.NewGuid().ToString("N"));
+                    targetInfo.FileName = Path.Combine(targetInfo.Directory , MorisaProjectManager.ProjectMainDatabaseName);
+
+                    //
+                    // 确保文件夹存在
+                    if (!Directory.Exists(targetInfo.Directory))
+                    {
+                        Directory.CreateDirectory(targetInfo.Directory);
+                    }
+
+                    //
+                    //
+                    appVM.ProjectManager.LoadOrCreateProject(targetInfo);
+                    appVM.IsFirstTime = false;
                 }
             }
         }
@@ -59,11 +83,6 @@ namespace Acorisoft.Morisa
         protected override void OnLoaded(object sender , RoutedEventArgs e)
         {
             ViewModel = Locator.Current.GetService<AppViewModel>();
-        }
-
-        private async void DialogShow(object sender, RoutedEventArgs e)
-        {
-            var session = Locator.Current.GetService<IDialogManager>().Dialog<Notification>();
         }
     }
 }

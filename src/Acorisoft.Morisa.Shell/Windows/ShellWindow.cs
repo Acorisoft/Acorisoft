@@ -59,6 +59,10 @@ namespace Acorisoft.Morisa.Windows
 
             public T GetResult<T>() where T : class
             {
+                if(ViewModel is IResultable resultable)
+                {
+                    return resultable.GetResult() as T;
+                }
                 return ViewModel as T;
             }
 
@@ -264,11 +268,36 @@ namespace Acorisoft.Morisa.Windows
 
         protected void CanDialogOk(object sender , CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = _ContextStack.Count > 0;
+            if(_ContextStack.Count > 0)
+            {
+                e.CanExecute = true;
+
+                if (_ContextStack.Peek().Content is IResultable resultable)
+                {
+                    e.CanExecute = resultable.VerifyAccess();
+                }
+            }
+            else
+            {
+                e.CanExecute = false;
+            }
+            
         }
         protected void CanDialogCancel(object sender , CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = _ContextStack.Count > 0;
+            if (_ContextStack.Count > 0)
+            {
+                e.CanExecute = true;
+
+                if (_ContextStack.Peek().Content is IResultable resultable)
+                {
+                    e.CanExecute = resultable.VerifyAccess();
+                }
+            }
+            else
+            {
+                e.CanExecute = false;
+            }
         }
 
         protected void CanWindowRestore(object sender , CanExecuteRoutedEventArgs e)

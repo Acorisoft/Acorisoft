@@ -239,7 +239,11 @@ namespace Acorisoft.Morisa
 
                 //
                 // 创建项目。
-                _Current = new MorisaProject(db);
+                _Current = new MorisaProject(db)
+                {
+                    Directory = directory ,
+                    FileName = fileName
+                };
 
 
                 if (!_Current.IsNeedInitialize)
@@ -359,7 +363,11 @@ namespace Acorisoft.Morisa
 
                     //
                     // 创建项目。
-                    _Current = new MorisaProject(db);
+                    _Current = new MorisaProject(db)
+                    {
+                        FileName = target.FileName ,
+                        Directory = target.Directory
+                    };
 
                     //
                     // 推送消息
@@ -386,6 +394,68 @@ namespace Acorisoft.Morisa
                 //
                 // 推送错误通知
                 _ProjectStream.Error(ex);
+            }
+        }
+
+        /// <summary>
+        /// 加载或创建指定的项目
+        /// </summary>
+        /// <param name="target">指定要加载或者创建的项目类型。</param>
+        public void LoadOrCreateProject(IMorisaProjectTargetInfo target)
+        {
+            //
+            // 检测参数是否为空字符串，如果是空字符串则直接抛出异常错误。
+            if (target == null || string.IsNullOrEmpty(target.FileName))
+            {
+                var ex = new InvalidOperationException(
+                    SR.ResourceManager
+                    .GetString(
+                        CannotOpenEmptyString,CultureInfo.CurrentCulture));
+                //
+                // 推送错误通知
+                _ProjectStream.Error(ex);
+            }
+
+            try
+            {
+                //
+                // 打开项目
+                var db = new LiteDatabase(new ConnectionString
+                {
+                    Filename = target.FileName,
+                    InitialSize = ProjectMainDatabaseSize,
+                    Connection = ConnectionType.Direct,
+                });
+
+                if (_Current != null)
+                {
+                    _Current.Dispose();
+                    _Current = null;
+                }
+
+                //
+                // 创建项目。
+                _Current = new MorisaProject(db , target)
+                {
+                    Directory = target.Directory ,
+                    FileName = target.FileName
+                };
+
+                //
+                // 推送消息
+                _ProjectStream.Notification(_Current);
+                _ProjectInfoStream.Notification((MorisaProjectInfo)target);
+            }
+            catch (Exception ex)
+            {
+
+                //
+                // 推送错误
+                _ProjectStream.Error(ex);
+            }
+            finally
+            {
+
             }
         }
 

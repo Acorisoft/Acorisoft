@@ -21,14 +21,18 @@ namespace Acorisoft.Morisa.ViewModels
         /// <param name="source">原始字段。</param>
         /// <param name="value">要设置的值。</param>
         /// <param name="name">设置新值的属性名，缺省。</param>
-        protected void Set<T>(ref T source , T value , [CallerMemberName] string name = "")
+        protected bool Set<T>(ref T source , T value , [CallerMemberName] string name = "")
         {
             if (!EqualityComparer<T>.Default.Equals(source , value))
             {
                 this.RaisePropertyChanging(name);
                 source = value;
                 this.RaisePropertyChanged(name);
+
+                return true;
             }
+
+            return false;
         }
 
 

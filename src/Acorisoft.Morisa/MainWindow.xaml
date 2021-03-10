@@ -4,10 +4,14 @@
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:app="clr-namespace:Acorisoft.Morisa"
+                 xmlns:vm="clr-namespace:Acorisoft.Morisa.ViewModels"
                  xmlns:mui="https://github.com/Acorisoft/Morisa/UI"
                  xmlns:rx="http://reactiveui.net"
                  mc:Ignorable="d"
-                 Title="MainWindow" Height="450" Width="800">
+                 Title="{Binding Title,Mode=OneWay}"
+                 MinWidth="1152"
+                 MinHeight="640"
+                 Height="450" Width="800">
     <Grid>
         <rx:RoutedViewHost Router="{Binding Source={x:Static mui:ShellMixins.Router},Mode=OneWay}"/>
     </Grid>

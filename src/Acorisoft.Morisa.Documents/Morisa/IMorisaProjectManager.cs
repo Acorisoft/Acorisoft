@@ -20,6 +20,11 @@ namespace Acorisoft.Morisa
         /// </summary>
         /// <param name="target">指定要打开的项目类型。</param>
         void LoadOrCreateProject(IMorisaProjectInfo target);
+        /// <summary>
+        /// 创建或者打开一个项目。
+        /// </summary>
+        /// <param name="target">指定要打开的项目类型。</param>
+        void LoadOrCreateProject(IMorisaProjectTargetInfo target);
 
         /// <summary>
         /// 获取一个可观测的项目信息流。

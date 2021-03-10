@@ -318,9 +318,10 @@
                                               VerticalAlignment="Stretch"
                                               HorizontalAlignment="Stretch"/>
                         </AdornerDecorator>
-                        <Border x:Name="PART_Dialog"
+                        <Border x:Name="PART_Dialog"                                
                                 Grid.Row="1"
                                 Background="#90000000"
+                                DataContext="{x:Null}"
                                 Visibility="Collapsed">
                             <rx:ViewModelViewHost Duration="0:0:0"
                                                   ViewModel="{TemplateBinding Dialog}"
@@ -383,6 +384,7 @@
         <Setter Property="HeaderFontStretch" Value="Normal" />
         <Setter Property="HeaderFontStyle" Value="Normal" />
         <Setter Property="HeaderForeground" Value="{StaticResource UI.Brushes.Black}" />
+        <Setter Property="Margin" Value="0 8" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type c:TextBoxGroup}">

@@ -74,6 +74,28 @@ namespace Acorisoft.Morisa
             }
         }
 
+        internal MorisaProject(ILiteDatabase db , IMorisaProjectTargetInfo info)
+        {
+            _Database = db ?? throw new ArgumentNullException(nameof(db));
+            _IsNeedInitialize = !Database.CollectionExists(MorisaProjectManager.ExternalCollectionName);
+            _Externals = _Database.GetCollection(MorisaProjectManager.ExternalCollectionName);
+            if (_IsNeedInitialize)
+            {
+                _Setting = new Setting
+                {
+                    Name = info.Name ,
+                    Summary = info.Summary,
+                    Topic = info.Topic,
+                    Cover = info.Cover
+                };
+                UpdateSetting();
+            }
+            else
+            {
+                _Setting = _Externals.FindOne<Setting>(SettingObjectName);
+            }
+        }
+
         //-------------------------------------------------------------------------------------------------
         //
         //  Private Methods
@@ -118,9 +140,11 @@ namespace Acorisoft.Morisa
         /// <summary>
         /// 
         /// </summary>
-        public string Name {
+        public string Name
+        {
             get => _Setting.Name;
-            set {
+            set
+            {
                 _Setting.Name = value;
                 UpdateSetting();
             }
@@ -129,9 +153,11 @@ namespace Acorisoft.Morisa
         /// <summary>
         /// 
         /// </summary>
-        public string Summary {
+        public string Summary
+        {
             get => _Setting.Summary;
-            set {
+            set
+            {
                 _Setting.Summary = value;
                 UpdateSetting();
             }
@@ -140,9 +166,11 @@ namespace Acorisoft.Morisa
         /// <summary>
         /// 
         /// </summary>
-        public string Topic {
+        public string Topic
+        {
             get => _Setting.Topic;
-            set {
+            set
+            {
                 _Setting.Topic = value;
                 UpdateSetting();
             }
@@ -150,12 +178,17 @@ namespace Acorisoft.Morisa
         /// <summary>
         /// 
         /// </summary>
-        public ImageObject Cover {
+        public ImageObject Cover
+        {
             get => _Setting.Cover;
-            set {
+            set
+            {
                 _Setting.Cover = value;
                 UpdateSetting();
             }
         }
+
+        public string FileName { get; set; }
+        public string Directory { get; set; }
     }
 }
