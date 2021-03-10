@@ -296,9 +296,9 @@
                                             Orientation="Horizontal"
                                             WindowChrome.IsHitTestVisibleInChrome="True"
                                             VerticalAlignment="Top">
-                                    <b:WindowMinButton Height="48" Width="48" Command="{x:Static SystemCommands.MinimizeWindowCommand}"/>
-                                    <b:WindowMaxButton Height="48" Width="48" Command="{x:Static SystemCommands.MaximizeWindowCommand}" WindowState="{TemplateBinding WindowState}"/>
-                                    <b:WindowCloseButton Height="48" Width="48" Command="{x:Static SystemCommands.CloseWindowCommand}"/>
+                                    <b:WindowMinButton Height="29" Width="48" Command="{x:Static SystemCommands.MinimizeWindowCommand}"/>
+                                    <b:WindowMaxButton Height="29" Width="48" Command="{x:Static SystemCommands.MaximizeWindowCommand}" WindowState="{TemplateBinding WindowState}"/>
+                                    <b:WindowCloseButton Height="29" Width="48" Command="{x:Static SystemCommands.CloseWindowCommand}"/>
                                 </StackPanel>
                             </Grid>
                         </Border>
@@ -327,6 +327,9 @@
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="WindowState" Value="Maximized">
+                            <Setter Property="Padding" Value="7 7 7 0" TargetName="PART_TitleBar"/>
+                        </Trigger>
                         <EventTrigger RoutedEvent="DialogShow">
                             <BeginStoryboard>
                                 <Storyboard>

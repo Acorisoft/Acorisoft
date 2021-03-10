@@ -21,13 +21,14 @@ namespace Acorisoft.Morisa
     public partial class App : Application
     {
         private readonly IContainer _container;
-        private readonly object _appEnv;
 
         public App()
         {
             _container = new Container(Rules.Default.WithTrackingDisposableTransients());
             _container.Register<AppViewModel>();
             _container.Init()
+                      .UseLog()
+                      .UseViews(typeof(App).Assembly)
                       .UseMorisa()
                       .UseDialog();
         }

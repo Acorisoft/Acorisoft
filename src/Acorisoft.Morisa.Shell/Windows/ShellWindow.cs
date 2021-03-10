@@ -30,6 +30,9 @@ namespace Acorisoft.Morisa.Windows
         //
         //-------------------------------------------------------------------------------------------------
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected class DialogSession : IDialogSession
         {
             //-------------------------------------------------------------------------------------------------
@@ -72,6 +75,9 @@ namespace Acorisoft.Morisa.Windows
             public IRoutableViewModel ViewModel { get; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected class DialogDisplayContext
         {
             //-------------------------------------------------------------------------------------------------
@@ -128,15 +134,28 @@ namespace Acorisoft.Morisa.Windows
         //-------------------------------------------------------------------------------------------------
         public ShellWindow()
         {
+            //
+            // 
             _ContextStack = new Stack<DialogDisplayContext>();
 
+            //
+            //
             CommandBindings.Add(new CommandBinding(DialogCommands.Ok, DoDialogOk, CanDialogOk));
             CommandBindings.Add(new CommandBinding(DialogCommands.Cancel, DoDialogCancel, CanDialogCancel));
             CommandBindings.Add(new CommandBinding(SystemCommands.CloseWindowCommand, DoWindowClose, CanWindowClose));
             CommandBindings.Add(new CommandBinding(SystemCommands.MinimizeWindowCommand, DoWindowMinimum, CanWindowMinimum));
             CommandBindings.Add(new CommandBinding(SystemCommands.MaximizeWindowCommand, DoWindowRestore, CanWindowRestore));
 
+            //
+            //
             Locator.CurrentMutable.RegisterConstant<IDialogManager>(this);
+
+            this.Loaded += OnLoaded;
+        }
+
+        protected void OnLoaded(object sender , RoutedEventArgs e)
+        {
+            
         }
 
         //-------------------------------------------------------------------------------------------------
