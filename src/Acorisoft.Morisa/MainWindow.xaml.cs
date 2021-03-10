@@ -48,7 +48,11 @@ namespace Acorisoft.Morisa
             if (ViewModel is AppViewModel vm && vm.IsFirstTime)
             {
                 var manager = vm.DialogManager;
-                var session = await manager.Dialog<Notification>();
+                var session = await manager.Dialog<GenerateProjectViewModel>();
+                if (session.IsCompleted)
+                {
+
+                }
             }
         }
 

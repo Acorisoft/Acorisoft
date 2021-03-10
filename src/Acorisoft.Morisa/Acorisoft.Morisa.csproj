@@ -6,6 +6,13 @@
         <RootNamespace>Acorisoft.Morisa</RootNamespace>
         <UseWPF>True</UseWPF>
     </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="新文件夹\**" />
+      <EmbeddedResource Remove="新文件夹\**" />
+      <None Remove="新文件夹\**" />
+      <Page Remove="新文件夹\**" />
+    </ItemGroup>
     <ItemGroup>
         <PackageReference Include="DryIoc.dll" Version="4.7.2" />
         <PackageReference Include="gong-wpf-dragdrop" Version="2.3.2" />
@@ -22,9 +29,6 @@
     <ItemGroup>
       <ProjectReference Include="..\Acorisoft.Morisa.Documents\Acorisoft.Morisa.Documents.csproj" />
       <ProjectReference Include="..\Acorisoft.Morisa.Shell\Acorisoft.Morisa.Shell.csproj" />
-    </ItemGroup>
-    <ItemGroup>
-      <Folder Include="Views\" />
     </ItemGroup>
 
 </Project>
