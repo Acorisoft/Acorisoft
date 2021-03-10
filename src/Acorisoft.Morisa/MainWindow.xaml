@@ -5,8 +5,10 @@
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:app="clr-namespace:Acorisoft.Morisa"
                  xmlns:mui="https://github.com/Acorisoft/Morisa/UI"
+                 xmlns:rx="http://reactiveui.net"
                  mc:Ignorable="d"
                  Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <rx:RoutedViewHost Router="{Binding Source={x:Static mui:ShellMixins.Router},Mode=OneWay}"/>
     </Grid>
 </mui:ShellWindow>

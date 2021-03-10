@@ -12,7 +12,8 @@
                         Height="256"
                         d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,Type={x:Type dialog:Notification}}">
     <Border CornerRadius="8"
-            Background="White">
+            Background="White"
+            Padding="8">
         <DockPanel>
             <Button Content="Ok" Command="{x:Static dialog:DialogCommands.Ok}"/>
         </DockPanel>

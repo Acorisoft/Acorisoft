@@ -81,102 +81,116 @@ namespace Acorisoft.Morisa
         /// 获取或设置当前导航过滤事件的最终导航结果，该属性由管线过滤器设置。
         /// </summary>
         public IRoutableViewModel Result { get; set; }
+    }      
+
+    class ViewManager : IViewManager, IScreen
+    {
+        private readonly RoutingState                   _router;
+        private IRoutableViewModel                      _oldVM;
+        private static IFullLogger                      _logger;
+        private readonly Stack<object>                  _instanceStack;
+        private readonly Stack<NavigationParameter>     _paramStack;
+
+
+        public ViewManager()
+        {
+            _router = new RoutingState();
+            _instanceStack = new Stack<object>();
+            _paramStack = new Stack<NavigationParameter>();
+            _router.CurrentViewModel.Subscribe(OnViewModelChanged);
+            if (_logger == null)
+            {
+                _logger = this.GetLogger();
+            }
+        }
+
+        protected void OnViewModelChanged(IRoutableViewModel vm)
+        {
+            if (vm is ViewModelBase vmBase &&
+                _instanceStack.Count > 0 &&
+                ReferenceEquals(_instanceStack.Peek() , vm))
+            {
+                _instanceStack.Pop();
+                // vmBase.Initialize(_paramStack.Pop());
+            }
+        }
+
+        protected void OnPreExecute(NavigationEventArgs e)
+        {
+
+        }
+
+        protected void OnPostExecute(NavigationEventArgs e)
+        {
+
+        }
+
+        public void View<TViewModel>() where TViewModel : IRoutableViewModel
+        {
+            var vm = (IRoutableViewModel)Locator.Current.GetService<TViewModel>();
+            var e = new NavigationEventArgs(_oldVM, vm, this.GetLogger());
+            OnPreExecute(e);
+            _router.Navigate.Execute(e.Result);
+            OnPostExecute(e);
+            _oldVM = vm;
+        }
+
+        public void View<TViewModel>(NavigationParameter @params) where TViewModel : IRoutableViewModel
+        {
+            var vm = (IRoutableViewModel)Locator.Current.GetService<TViewModel>();
+            var e = new NavigationEventArgs(_oldVM, vm, this.GetLogger());
+            _instanceStack.Push(vm);
+            _paramStack.Push(@params);
+            OnPreExecute(e);
+            _router.Navigate.Execute(e.Result);
+            OnPostExecute(e);
+            _oldVM = vm;
+        }
+
+        public void View(IRoutableViewModel vm)
+        {
+            var e = new NavigationEventArgs(_oldVM, vm, this.GetLogger());
+            OnPreExecute(e);
+            _router.Navigate.Execute(e.Result);
+            OnPostExecute(e);
+            _oldVM = vm;
+        }
+
+        public void View(IRoutableViewModel vm , NavigationParameter @params)
+        {
+            var e = new NavigationEventArgs(_oldVM, vm, this.GetLogger());
+            _instanceStack.Push(vm);
+            _paramStack.Push(@params);
+            OnPreExecute(e);
+            _router.Navigate.Execute(e.Result);
+            OnPostExecute(e);
+            _oldVM = vm;
+        }
+
+        public RoutingState Router => _router;
+        public IFullLogger Logger => _logger;
     }
 
     public static class ShellMixins
     {
-        class ViewManager : IViewManager, IScreen
-        {
-            private readonly RoutingState                   _router;
-            private IRoutableViewModel                      _oldVM;
-            private static IFullLogger                      _logger;
-            private readonly Stack<object>                  _instanceStack;
-            private readonly Stack<NavigationParameter>     _paramStack;
 
 
-            public ViewManager()
-            {
-                _router = new RoutingState();
-                _instanceStack = new Stack<object>();
-                _paramStack = new Stack<NavigationParameter>();
-                _router.CurrentViewModel.Subscribe(OnViewModelChanged);
-                if (_logger == null)
-                {
-                    _logger = this.GetLogger();
-                }
-            }
 
-            protected void OnViewModelChanged(IRoutableViewModel vm)
-            {
-                if (vm is ViewModelBase vmBase &&
-                    _instanceStack.Count > 0 &&
-                    ReferenceEquals(_instanceStack.Peek() , vm))
-                {
-                    _instanceStack.Pop();
-                    // vmBase.Initialize(_paramStack.Pop());
-                }
-            }
-
-            protected void OnPreExecute(NavigationEventArgs e)
-            {
-
-            }
-
-            protected void OnPostExecute(NavigationEventArgs e)
-            {
-
-            }
-
-            public void View<TViewModel>() where TViewModel : IRoutableViewModel
-            {
-                var vm = (IRoutableViewModel)Locator.Current.GetService<TViewModel>();
-                var e = new NavigationEventArgs(_oldVM, vm, this.GetLogger());
-                OnPreExecute(e);
-                _router.Navigate.Execute(e.Result);
-                OnPostExecute(e);
-                _oldVM = vm;
-            }
-
-            public void View<TViewModel>(NavigationParameter @params) where TViewModel : IRoutableViewModel
-            {
-                var vm = (IRoutableViewModel)Locator.Current.GetService<TViewModel>();
-                var e = new NavigationEventArgs(_oldVM, vm, this.GetLogger());
-                _instanceStack.Push(vm);
-                _paramStack.Push(@params);
-                OnPreExecute(e);
-                _router.Navigate.Execute(e.Result);
-                OnPostExecute(e);
-                _oldVM = vm;
-            }
-
-            public void View(IRoutableViewModel vm)
-            {
-                var e = new NavigationEventArgs(_oldVM, vm, this.GetLogger());
-                OnPreExecute(e);
-                _router.Navigate.Execute(e.Result);
-                OnPostExecute(e);
-                _oldVM = vm;
-            }
-
-            public void View(IRoutableViewModel vm , NavigationParameter @params)
-            {
-                var e = new NavigationEventArgs(_oldVM, vm, this.GetLogger());
-                _instanceStack.Push(vm);
-                _paramStack.Push(@params);
-                OnPreExecute(e);
-                _router.Navigate.Execute(e.Result);
-                OnPostExecute(e);
-                _oldVM = vm;
-            }
-
-            public RoutingState Router => _router;
-            public IFullLogger Logger => _logger;
-        }
+        //-------------------------------------------------------------------------------------------------
+        //
+        //  Constructors
+        //
+        //-------------------------------------------------------------------------------------------------
 
         private static IViewManager _vMgr;
         private static Type IViewForType = typeof(IViewFor<>);
         private static ILogManager _manager;
 
+        //-------------------------------------------------------------------------------------------------
+        //
+        //  Constructors
+        //
+        //-------------------------------------------------------------------------------------------------
         /// <summary>
         /// 启用日志工具
         /// </summary>
@@ -228,7 +242,7 @@ namespace Acorisoft.Morisa
         }
 
         public static IContainer UseViews(this IContainer container , params Assembly[] assemblies)
-        { 
+        {
             _vMgr = new ViewManager();
             container.RegisterInstance(_vMgr);
             OnWireViewModel(container , assemblies);

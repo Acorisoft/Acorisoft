@@ -1,4 +1,5 @@
 ﻿using ReactiveUI;
+using Splat;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,8 +31,8 @@ namespace Acorisoft.Morisa.Dialogs
             set => this.RaiseAndSetIfChanged(ref _content, value);
         }
 
-        public string UrlPathSegment => throw new NotImplementedException();
+        public string UrlPathSegment => "notification";
 
-        public IScreen HostScreen => throw new NotImplementedException();
+        public IScreen HostScreen => Locator.Current.GetService<IScreen>();
     }
 }

@@ -221,6 +221,7 @@
         <Setter Property="PressBackgroundBrush" Value="#20FFFFFF" />
         <Setter Property="PressForegroundBrush" Value="{StaticResource UI.Brushes.White}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type b:WindowGoBackButton}">
@@ -304,17 +305,17 @@
                         </Border>
                         <AdornerDecorator Grid.Row="1">
                             <ContentPresenter Content="{TemplateBinding Content}"
-                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                  ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                  TextElement.FontFamily="{TemplateBinding FontFamily}"
-                                                  TextElement.FontSize="{TemplateBinding FontSize}"
-                                                  TextElement.FontStretch="{TemplateBinding FontStretch}"
-                                                  TextElement.FontStyle="{TemplateBinding FontStyle}"
-                                                  TextElement.FontWeight="{TemplateBinding FontWeight}"
-                                                  TextElement.Foreground="{TemplateBinding Foreground}"
-                                                  VerticalAlignment="Stretch"
-                                                  HorizontalAlignment="Stretch"/>
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              TextElement.FontFamily="{TemplateBinding FontFamily}"
+                                              TextElement.FontSize="{TemplateBinding FontSize}"
+                                              TextElement.FontStretch="{TemplateBinding FontStretch}"
+                                              TextElement.FontStyle="{TemplateBinding FontStyle}"
+                                              TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                              TextElement.Foreground="{TemplateBinding Foreground}"
+                                              VerticalAlignment="Stretch"
+                                              HorizontalAlignment="Stretch"/>
                         </AdornerDecorator>
                         <Border x:Name="PART_Dialog"
                                 Grid.Row="1"

@@ -15,11 +15,13 @@ using LiteDB;
 using ProjectInfoCollection = DynamicData.Binding.ObservableCollectionExtended<Acorisoft.Morisa.IMorisaProjectInfo>;
 using BsonDocumentDBCollection = LiteDB.ILiteCollection<LiteDB.BsonDocument>;
 using ProjectInfoDBCollection = LiteDB.ILiteCollection<Acorisoft.Morisa.IMorisaProjectInfo>;
+using Splat;
+using Acorisoft.Morisa.Dialogs;
 
 namespace Acorisoft.Morisa.ViewModels
 {
 #pragma warning disable CA1816,CA1822
-    public class AppViewModel : ReactiveObject
+    public class AppViewModel : ReactiveObject,IRoutableViewModel
     {
         //-------------------------------------------------------------------------------------------------
         //
@@ -29,7 +31,7 @@ namespace Acorisoft.Morisa.ViewModels
         public const string ExternalsCollectionName                 = "Externals";
         public const string ProjectInfoCollectionName               = "Projects";
         public const string SettingObjectName                       = "Morisa.Setting";
-        public const string AppDBConnectionString                   = "FileName=App.Morisa-Setting;Initial Size= 4MB;mode=share";
+        public const string AppDBConnectionString                   = "FileName=Acorisoft.Morisa.Morisa-Setting;Initial Size= 4MB;mode=share";
 
         //-------------------------------------------------------------------------------------------------
         //
@@ -51,6 +53,7 @@ namespace Acorisoft.Morisa.ViewModels
 
         private readonly CompositeDisposable        _Disposable;
         private readonly LiteDatabase               _AppDB;
+        private readonly IDialogManager             _DialogManager;
 
         //
         // Collection
@@ -69,10 +72,11 @@ namespace Acorisoft.Morisa.ViewModels
         //
         //-------------------------------------------------------------------------------------------------
 
-        public AppViewModel(IMorisaProjectManager projectMgr , IEnumerable<IEntityService> entitySrves)
+        public AppViewModel(IMorisaProjectManager projectMgr , IEnumerable<IEntityService> entitySrves,IDialogManager dialogMgr)
         {
 
             _Disposable = new CompositeDisposable();
+            _DialogManager = dialogMgr;
 
             //
             // when project manager load an new project 
@@ -135,7 +139,7 @@ namespace Acorisoft.Morisa.ViewModels
         {
             return new Setting
             {
-                IsFirstTime = false ,
+                IsFirstTime = true ,
                 CurrentProject = null
             };
         }
@@ -170,5 +174,12 @@ namespace Acorisoft.Morisa.ViewModels
         }
 
         public IMorisaProjectInfo CurrentProject { get; set; }
+        public string UrlPathSegment { get => "app"; }
+        public IScreen HostScreen {
+            get {
+                return Locator.Current.GetService<IScreen>();
+            }
+        }
+        public IDialogManager DialogManager => _DialogManager;
     }
 }

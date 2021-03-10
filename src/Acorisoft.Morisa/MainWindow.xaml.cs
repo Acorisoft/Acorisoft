@@ -15,6 +15,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ReactiveUI;
+using System.Reactive;
+using System.Reactive.Linq;
+using System.Reactive.Threading;
+using Notification = Acorisoft.Morisa.Dialogs.Notification;
+using System.Reactive.Disposables;
+using Acorisoft.Morisa.ViewModels;
 
 namespace Acorisoft.Morisa
 {
@@ -26,6 +33,28 @@ namespace Acorisoft.Morisa
         public MainWindow()
         {
             InitializeComponent();
+
+            this.WhenActivated(d =>
+            {
+                this.WhenAnyValue(x => x.ViewModel)
+                    .BindTo(this , x => x.DataContext)
+                    .DisposeWith(d);
+
+            });
+        }
+
+        protected override async void OnDataContextChanged(object sender , DependencyPropertyChangedEventArgs e)
+        {
+            if (ViewModel is AppViewModel vm && vm.IsFirstTime)
+            {
+                var manager = vm.DialogManager;
+                var session = await manager.Dialog<Notification>();
+            }
+        }
+
+        protected override void OnLoaded(object sender , RoutedEventArgs e)
+        {
+            ViewModel = Locator.Current.GetService<AppViewModel>();
         }
 
         private async void DialogShow(object sender, RoutedEventArgs e)

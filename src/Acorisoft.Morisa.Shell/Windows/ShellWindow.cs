@@ -40,9 +40,8 @@ namespace Acorisoft.Morisa.Windows
             //  Constructors
             //
             //-------------------------------------------------------------------------------------------------
-            public DialogSession(bool result, IRoutableViewModel viewModel,IDialogManager manager)
+            public DialogSession(IRoutableViewModel viewModel , IDialogManager manager)
             {
-                IsCompleted = result;
                 ViewModel = viewModel;
                 Manager = manager;
             }
@@ -71,7 +70,7 @@ namespace Acorisoft.Morisa.Windows
 
             protected internal IDialogManager Manager { get; }
 
-            public bool IsCompleted { get; }
+            public bool IsCompleted { get; set; }
             public IRoutableViewModel ViewModel { get; }
         }
 
@@ -85,11 +84,12 @@ namespace Acorisoft.Morisa.Windows
             //  Constructors
             //
             //-------------------------------------------------------------------------------------------------
-            public DialogDisplayContext(TaskCompletionSource<IDialogSession> tcs, IRoutableViewModel content)
+            public DialogDisplayContext(TaskCompletionSource<IDialogSession> tcs , IRoutableViewModel content , IDialogManager manager)
             {
                 TaskCompletionSource = tcs;
                 Task = tcs.Task;
                 Content = content;
+                Session = new DialogSession(content , manager);
             }
             //-------------------------------------------------------------------------------------------------
             //
@@ -99,6 +99,7 @@ namespace Acorisoft.Morisa.Windows
             public TaskCompletionSource<IDialogSession> TaskCompletionSource { get; }
             public Task<IDialogSession> Task { get; }
             public IRoutableViewModel Content { get; }
+            public DialogSession Session { get; }
 
         }
 
@@ -109,12 +110,12 @@ namespace Acorisoft.Morisa.Windows
         //-------------------------------------------------------------------------------------------------
         static ShellWindow()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(ShellWindow), new FrameworkPropertyMetadata(typeof(ShellWindow)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ShellWindow) , new FrameworkPropertyMetadata(typeof(ShellWindow)));
             DialogPropertyKey = DependencyProperty.RegisterReadOnly(
-                "Dialog",
-                typeof(object),
-                typeof(ShellWindow),
-                new PropertyMetadata(null, OnDialogChanged));
+                "Dialog" ,
+                typeof(object) ,
+                typeof(ShellWindow) ,
+                new PropertyMetadata(null , OnDialogChanged));
             DialogProperty = DialogPropertyKey.DependencyProperty;
         }
 
@@ -140,22 +141,28 @@ namespace Acorisoft.Morisa.Windows
 
             //
             //
-            CommandBindings.Add(new CommandBinding(DialogCommands.Ok, DoDialogOk, CanDialogOk));
-            CommandBindings.Add(new CommandBinding(DialogCommands.Cancel, DoDialogCancel, CanDialogCancel));
-            CommandBindings.Add(new CommandBinding(SystemCommands.CloseWindowCommand, DoWindowClose, CanWindowClose));
-            CommandBindings.Add(new CommandBinding(SystemCommands.MinimizeWindowCommand, DoWindowMinimum, CanWindowMinimum));
-            CommandBindings.Add(new CommandBinding(SystemCommands.MaximizeWindowCommand, DoWindowRestore, CanWindowRestore));
+            CommandBindings.Add(new CommandBinding(DialogCommands.Ok , DoDialogOk , CanDialogOk));
+            CommandBindings.Add(new CommandBinding(DialogCommands.Cancel , DoDialogCancel , CanDialogCancel));
+            CommandBindings.Add(new CommandBinding(SystemCommands.CloseWindowCommand , DoWindowClose , CanWindowClose));
+            CommandBindings.Add(new CommandBinding(SystemCommands.MinimizeWindowCommand , DoWindowMinimum , CanWindowMinimum));
+            CommandBindings.Add(new CommandBinding(SystemCommands.MaximizeWindowCommand , DoWindowRestore , CanWindowRestore));
 
             //
             //
             Locator.CurrentMutable.RegisterConstant<IDialogManager>(this);
 
             this.Loaded += OnLoaded;
+            this.DataContextChanged += OnDataContextChanged;
         }
 
-        protected void OnLoaded(object sender , RoutedEventArgs e)
+        protected virtual void OnDataContextChanged(object sender , DependencyPropertyChangedEventArgs e)
         {
-            
+
+        }
+
+        protected virtual void OnLoaded(object sender , RoutedEventArgs e)
+        {
+
         }
 
         //-------------------------------------------------------------------------------------------------
@@ -164,41 +171,7 @@ namespace Acorisoft.Morisa.Windows
         //
         //-------------------------------------------------------------------------------------------------
 
-        protected void DoDialogOk(object sender, RoutedEventArgs e)
-        {
-            if (_ContextStack.Count == 0)
-            {                
-                //
-                // 错误前返回。
-                return;
-            }
-
-            var Context = _ContextStack.Pop();
-
-            //
-            //
-            Context.TaskCompletionSource.SetResult(new DialogSession(true, Context.Content, this));
-
-            //
-            // Fire Event
-            RaiseEvent(new RoutedEventArgs
-            {
-                RoutedEvent = DialogCloseEvent
-            });
-
-            //
-            //
-            if(_ContextStack.Count > 0)
-            {
-                Context = _ContextStack.Pop();
-
-                //
-                // Set New Dialog Content To Property Dialog
-                SetValue(DialogPropertyKey, Context.Content);
-            }
-        }
-
-        protected void DoDialogCancel(object sender, RoutedEventArgs e)
+        protected void DoDialogOk(object sender , RoutedEventArgs e)
         {
             if (_ContextStack.Count == 0)
             {
@@ -211,7 +184,11 @@ namespace Acorisoft.Morisa.Windows
 
             //
             //
-            Context.TaskCompletionSource.SetResult(new DialogSession(false, Context.Content, this));
+            Context.Session.IsCompleted = true;
+
+            //
+            //
+            Context.TaskCompletionSource.SetResult(Context.Session);
 
             //
             // Fire Event
@@ -228,45 +205,83 @@ namespace Acorisoft.Morisa.Windows
 
                 //
                 // Set New Dialog Content To Property Dialog
-                SetValue(DialogPropertyKey, Context.Content);
+                SetValue(DialogPropertyKey , Context.Content);
             }
         }
 
-        protected void DoWindowClose(object sender, RoutedEventArgs e)
+        protected void DoDialogCancel(object sender , RoutedEventArgs e)
+        {
+            if (_ContextStack.Count == 0)
+            {
+                //
+                // 错误前返回。
+                return;
+            }
+
+            var Context = _ContextStack.Pop();
+
+            //
+            //
+            Context.Session.IsCompleted = false;
+
+            //
+            //
+            Context.TaskCompletionSource.SetResult(Context.Session);
+
+            //
+            // Fire Event
+            RaiseEvent(new RoutedEventArgs
+            {
+                RoutedEvent = DialogCloseEvent
+            });
+
+            //
+            //
+            if (_ContextStack.Count > 0)
+            {
+                Context = _ContextStack.Pop();
+
+                //
+                // Set New Dialog Content To Property Dialog
+                SetValue(DialogPropertyKey , Context.Content);
+            }
+        }
+
+        protected void DoWindowClose(object sender , RoutedEventArgs e)
         {
             this.Close();
         }
 
-        protected void DoWindowMinimum(object sender, RoutedEventArgs e)
+        protected void DoWindowMinimum(object sender , RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
         }
 
-        protected void DoWindowRestore(object sender, RoutedEventArgs e)
+        protected void DoWindowRestore(object sender , RoutedEventArgs e)
         {
             this.WindowState = WindowState == WindowState.Normal ? WindowState.Maximized : WindowState.Normal;
         }
 
-        protected void CanDialogOk(object sender, CanExecuteRoutedEventArgs e)
+        protected void CanDialogOk(object sender , CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = _ContextStack.Count > 0;
         }
-        protected void CanDialogCancel(object sender, CanExecuteRoutedEventArgs e)
+        protected void CanDialogCancel(object sender , CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = _ContextStack.Count > 0;
         }
 
-        protected void CanWindowRestore(object sender, CanExecuteRoutedEventArgs e)
+        protected void CanWindowRestore(object sender , CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
         }
 
-        protected void CanWindowClose(object sender, CanExecuteRoutedEventArgs e)
+        protected void CanWindowClose(object sender , CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
         }
 
-        protected void CanWindowMinimum(object sender, CanExecuteRoutedEventArgs e)
+        protected void CanWindowMinimum(object sender , CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
         }
@@ -280,20 +295,23 @@ namespace Acorisoft.Morisa.Windows
         {
             if (Locator.Current.GetService<TViewModel>() is TViewModel DialogContent)
             {
+                var Context = new DialogDisplayContext(new TaskCompletionSource<IDialogSession>(), DialogContent, this);
+
                 //
                 // Push DialogContext Stack
-                _ContextStack.Push(new DialogDisplayContext(new TaskCompletionSource<IDialogSession>(), DialogContent));
+                _ContextStack.Push(Context);
 
                 //
                 // Set New Dialog Content To Property Dialog
-                SetValue(DialogPropertyKey, DialogContent);
+                SetValue(DialogPropertyKey , DialogContent);
 
+                return Context.Task;
             }
 
             return null;
         }
 
-        Task<bool> IDialogManager.MessageBox(string title, string content)
+        Task<bool> IDialogManager.MessageBox(string title , string content)
         {
             return null;
         }
@@ -303,34 +321,29 @@ namespace Acorisoft.Morisa.Windows
         //  Dependency Properties
         //
         //-------------------------------------------------------------------------------------------------
-        public object TitleBar
-        {
+        public object TitleBar {
             get => (object)GetValue(TitleBarProperty);
-            set => SetValue(TitleBarProperty, value);
+            set => SetValue(TitleBarProperty , value);
         }
 
-        public DataTemplate TitleBarTemplate
-        {
+        public DataTemplate TitleBarTemplate {
             get => (DataTemplate)GetValue(TitleBarTemplateProperty);
-            set => SetValue(TitleBarTemplateProperty, value);
+            set => SetValue(TitleBarTemplateProperty , value);
         }
 
-        public DataTemplateSelector TitleBarTemplateSelector
-        {
+        public DataTemplateSelector TitleBarTemplateSelector {
             get => (DataTemplateSelector)GetValue(TitleBarTemplateSelectorProperty);
-            set => SetValue(TitleBarTemplateSelectorProperty, value);
+            set => SetValue(TitleBarTemplateSelectorProperty , value);
         }
 
-        public string TitleBarStringFormat
-        {
+        public string TitleBarStringFormat {
             get => (string)GetValue(TitleBarStringFormatProperty);
-            set => SetValue(TitleBarStringFormatProperty, value);
+            set => SetValue(TitleBarStringFormatProperty , value);
         }
 
-        public Brush Color
-        {
+        public Brush Color {
             get => (Brush)GetValue(ColorProperty);
-            set => SetValue(ColorProperty, value);
+            set => SetValue(ColorProperty , value);
         }
 
         /// <summary>
@@ -339,24 +352,21 @@ namespace Acorisoft.Morisa.Windows
         public IRoutableViewModel? BindingRoot => ViewModel;
 
         /// <inheritdoc/>
-        public IRoutableViewModel? ViewModel
-        {
+        public IRoutableViewModel? ViewModel {
             get => (IRoutableViewModel)GetValue(ViewModelProperty);
-            set => SetValue(ViewModelProperty, value);
+            set => SetValue(ViewModelProperty , value);
         }
 
         /// <inheritdoc/>
-        object? IViewFor.ViewModel
-        {
+        object? IViewFor.ViewModel {
             get => ViewModel;
             set => ViewModel = (IRoutableViewModel?)value;
         }
 
 
-        public object Dialog
-        {
+        public object Dialog {
             get => (object)GetValue(DialogProperty);
-            private set => SetValue(DialogPropertyKey, value);
+            private set => SetValue(DialogPropertyKey , value);
         }
 
         //-------------------------------------------------------------------------------------------------
@@ -416,7 +426,7 @@ namespace Acorisoft.Morisa.Windows
         //
         //-------------------------------------------------------------------------------------------------
 
-        private static void OnDialogChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnDialogChanged(DependencyObject d , DependencyPropertyChangedEventArgs e)
         {
             if (d is ShellWindow window)
             {

@@ -35,7 +35,6 @@ namespace Acorisoft.Morisa
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            _container.Resolve<AppViewModel>();
             //
             // 启动应用
             base.OnStartup(e);
