@@ -175,6 +175,15 @@ namespace Acorisoft.Morisa.ViewModels
         protected void OnProjectInfoChanged(IMorisaProjectInfo value)
         {
             CurrentProjectInfo = value;
+            UpdateSetting();
+
+            //
+            //
+            if (!_ProjectCollection.Contains(value))
+            {
+                _ProjectCollection.Add(value);
+                UpdateProjectCollection();
+            }
         }
 
         protected Setting CreateInstanceCore()
@@ -256,14 +265,7 @@ namespace Acorisoft.Morisa.ViewModels
                     //
                     //
                     _CurrentProjectInfo = value;
-
-                    //
-                    //
-                    if(!_ProjectCollection.Contains(value))
-                    {
-                        _ProjectCollection.Add(value);
-                        UpdateProjectCollection();
-                    }
+                    _Setting.CurrentProjectInfo = value;
 
                     //
                     //
