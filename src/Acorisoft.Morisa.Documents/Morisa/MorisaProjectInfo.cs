@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Acorisoft.Morisa
 {
     [DebuggerDisplay("{Name}")]
-    public class MorisaProjectInfo : ReactiveObject, IMorisaProjectInfo, IMorisaProjectTargetInfo, IEquatable<MorisaProjectInfo>
+    public class MorisaProjectInfo : ModelObject, IMorisaProjectInfo, IMorisaProjectTargetInfo, IEquatable<MorisaProjectInfo>
     {
         public bool Equals(MorisaProjectInfo y)
         {

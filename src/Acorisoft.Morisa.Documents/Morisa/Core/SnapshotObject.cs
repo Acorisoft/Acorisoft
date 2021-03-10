@@ -11,12 +11,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Core
 {
-    public enum BinaryObjectType
-    {
-        Image,
-        Binary
-    }
-    public abstract class BinaryObject : IBinaryObject
+    public abstract class SnapshotObject : ISnapshotObject
     {
         [BsonIgnore]
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -55,21 +50,14 @@ namespace Acorisoft.Morisa.Core
             add => ChangingHandler += value;
             remove => ChangingHandler -= value;
         }
-
-        [BsonId]
         /// <summary>
         /// 获取或设置当前对象的唯一标识符。
         /// </summary>
         public Guid Id { get; set; }
-        public string Md5 { get; set; }
-        public string Name { get; set; }
 
-        [BsonIgnore]
-        public string FileName { get; set; }
-        public abstract BinaryObjectType Type { get; }
-    }
-    public sealed class ImageObject : BinaryObject
-    {
-        public override sealed BinaryObjectType Type => BinaryObjectType.Image;
+        /// <summary>
+        /// 获取或设置文档的唯一标识符。
+        /// </summary>
+        public Guid DocumentId { get; set; }
     }
 }
