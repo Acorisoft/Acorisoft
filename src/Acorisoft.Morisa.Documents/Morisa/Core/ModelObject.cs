@@ -21,6 +21,11 @@ namespace Acorisoft.Morisa.Core
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private protected PropertyChangingEventHandler ChangingHandler;
 
+        public ModelObject()
+        {
+            Id = Guid.NewGuid();
+        }
+
         protected bool SetValueAndRaiseUpdate<T>(ref T backendField, T value, [CallerMemberName] string name = "")
         {
             if (!EqualityComparer<T>.Default.Equals(backendField, value))
@@ -50,9 +55,12 @@ namespace Acorisoft.Morisa.Core
             add => ChangingHandler += value;
             remove => ChangingHandler -= value;
         }
+
+        
         /// <summary>
         /// 获取或设置当前对象的唯一标识符。
         /// </summary>
+        [BsonId]
         public Guid Id { get; set; }
     }
 }

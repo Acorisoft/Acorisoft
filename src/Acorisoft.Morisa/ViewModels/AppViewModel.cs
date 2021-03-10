@@ -32,7 +32,7 @@ namespace Acorisoft.Morisa.ViewModels
         public const string ExternalsCollectionName                 = "Externals";
         public const string ProjectInfoCollectionName               = "Projects";
         public const string SettingObjectName                       = "Morisa.Setting";
-        public const string AppDBConnectionString                   = "FileName=Acorisoft.Morisa.Morisa-Setting;Initial Size= 4MB;mode=share";
+        public const string AppDBConnectionString                   = "FileName=Acorisoft.Morisa.Morisa-Setting;Initial Size= 4MB;Connection=Shared";
 
         //-------------------------------------------------------------------------------------------------
         //
@@ -107,8 +107,9 @@ namespace Acorisoft.Morisa.ViewModels
 
 
             try
-            { //
-              // 初始化应用数据库
+            { 
+                //
+                // 初始化应用数据库
                 _AppDB = new LiteDatabase(AppDBConnectionString);
             }
             catch(Exception ex)
@@ -168,7 +169,7 @@ namespace Acorisoft.Morisa.ViewModels
 
         protected void OnProjectChanged(IMorisaProject value)
         {
-            this.RaisePropertyChanged(nameof(CurrentProject));
+            CurrentProject = value;
         }
 
         protected void OnProjectInfoChanged(IMorisaProjectInfo value)
@@ -238,7 +239,7 @@ namespace Acorisoft.Morisa.ViewModels
             get => _CurrentProject;
             set
             {
-
+                _CurrentProject = value;
             }
         }
 

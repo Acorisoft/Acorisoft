@@ -25,7 +25,10 @@ namespace Acorisoft.Morisa.Core
         [BsonIgnore]
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private protected PropertyChangingEventHandler ChangingHandler;
-
+        public BinaryObject()
+        {
+            Id = Guid.NewGuid();
+        }
         protected bool SetValueAndRaiseUpdate<T>(ref T backendField, T value, [CallerMemberName] string name = "")
         {
             if (!EqualityComparer<T>.Default.Equals(backendField, value))
