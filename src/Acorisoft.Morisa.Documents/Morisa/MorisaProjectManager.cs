@@ -228,7 +228,7 @@ namespace Acorisoft.Morisa
                 {
                     Filename = fileName,
                     InitialSize = ProjectMainDatabaseSize,
-                    Connection = ConnectionType.Direct,
+                    Connection = ConnectionType.Direct,                    
                 });
 
                 if (_Current != null)

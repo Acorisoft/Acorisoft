@@ -8,6 +8,6 @@ namespace Acorisoft.Morisa.Core
 {
     public interface IUnique
     {
-        Guid Id { get; set; }
+        string Id { get; set; }
     }
 }

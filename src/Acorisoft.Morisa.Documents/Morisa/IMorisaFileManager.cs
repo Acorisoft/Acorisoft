@@ -1,0 +1,17 @@
+﻿using Acorisoft.Morisa.Core;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Acorisoft.Morisa
+{
+    public interface IMorisaFileManager
+    {
+        IObserver<IMorisaProject> Project { get; }
+        IObservable<BinaryObject> Completed { get; }
+        bool IgnoreFileDuplicate { get; set; }
+        void WriteImage(string fileName);
+    }
+}

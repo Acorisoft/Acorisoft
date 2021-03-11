@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
@@ -15,15 +16,27 @@ using System.Windows.Input;
 
 namespace Acorisoft.Morisa.ViewModels
 {
-    public partial class GenerateProjectViewModel : ViewModelBase,IResultable
+    public partial class GenerateProjectViewModel : ViewModelBase, IResultable
     {
         private string _Name;
         private string _Summary;
         private string _Topic;
-        private ImageObject _Image;
+        private string _CoverFileName;
+        private ImageObject _Cover;
+        private readonly IMorisaFileManager _FileManager;
 
-        public GenerateProjectViewModel()
+
+        public GenerateProjectViewModel(IMorisaFileManager fileMgr)
         {
+            _FileManager = fileMgr;
+
+            this.WhenAnyValue(x => x.CoverFileName)
+                .Where(x => x != null)
+                .Subscribe(x => _FileManager.WriteImage(x));
+
+            _FileManager.Completed
+                        .ObserveOn(RxApp.MainThreadScheduler)
+                        .Subscribe(x => Cover = x as ImageObject);
         }
 
         object IResultable.GetResult()
@@ -32,8 +45,8 @@ namespace Acorisoft.Morisa.ViewModels
             {
                 Name = _Name ,
                 Summary = _Summary ,
-                Topic = _Topic,
-                Cover = _Image
+                Topic = _Topic ,
+                Cover = _Cover
             };
         }
 
@@ -60,8 +73,13 @@ namespace Acorisoft.Morisa.ViewModels
 
         public ImageObject Cover
         {
-            get => _Image;
-            set => Set(ref _Image , value);
+            get => _Cover;
+            set => Set(ref _Cover , value);
+        }
+        public string CoverFileName
+        {
+            get => _CoverFileName;
+            set => Set(ref _CoverFileName , value);
         }
     }
 }

@@ -22,6 +22,7 @@ using System.Reactive.Threading;
 using Notification = Acorisoft.Morisa.Dialogs.Notification;
 using System.Reactive.Disposables;
 using Acorisoft.Morisa.ViewModels;
+using System.Diagnostics;
 
 namespace Acorisoft.Morisa
 {
@@ -83,6 +84,15 @@ namespace Acorisoft.Morisa
         protected override void OnLoaded(object sender , RoutedEventArgs e)
         {
             ViewModel = Locator.Current.GetService<AppViewModel>();
+        }
+
+        private void Button_Click(object sender , RoutedEventArgs e)
+        {
+            var appVM = ViewModel as AppViewModel;
+            var db = (appVM.CurrentProject as MorisaProject).Database;
+            db.BeginTrans();
+            db.FileStorage.Upload(Guid.NewGuid().ToString("N") , @"C:\Users\zhongxin013\Documents\HZSG\Assets\ico_512x512.ico");
+            Debug.WriteLine(db.Commit());
         }
     }
 }

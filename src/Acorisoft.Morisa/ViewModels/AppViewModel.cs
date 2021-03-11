@@ -12,16 +12,20 @@ using System.Reactive.Disposables;
 using System.Reactive.Threading;
 using Acorisoft.Morisa.Core;
 using LiteDB;
-using ProjectInfoCollection = DynamicData.Binding.ObservableCollectionExtended<Acorisoft.Morisa.IMorisaProjectInfo>;
-using BsonDocumentDBCollection = LiteDB.ILiteCollection<LiteDB.BsonDocument>;
-using ProjectInfoDBCollection = LiteDB.ILiteCollection<Acorisoft.Morisa.IMorisaProjectInfo>;
 using Splat;
 using Acorisoft.Morisa.Dialogs;
 using System.Windows;
 
+using ProjectInfoCollection = DynamicData.Binding.ObservableCollectionExtended<Acorisoft.Morisa.IMorisaProjectInfo>;
+using BsonDocumentDBCollection = LiteDB.ILiteCollection<LiteDB.BsonDocument>;
+using ProjectInfoDBCollection = LiteDB.ILiteCollection<Acorisoft.Morisa.IMorisaProjectInfo>;
+using EntityServices = System.Collections.Generic.IEnumerable<Acorisoft.Morisa.Core.IEntityService>;
+
 namespace Acorisoft.Morisa.ViewModels
 {
+
 #pragma warning disable CA1816,CA1822
+
     public class AppViewModel : ReactiveObject, IRoutableViewModel
     {
         //-------------------------------------------------------------------------------------------------
@@ -47,6 +51,7 @@ namespace Acorisoft.Morisa.ViewModels
             [BsonField("info")]
             public IMorisaProjectInfo CurrentProjectInfo { get; set; }
             public string ProjectFolder { get; set; }
+            public bool IgnoreFileDuplicate { get; set; }
         }
 
         //-------------------------------------------------------------------------------------------------
@@ -59,6 +64,8 @@ namespace Acorisoft.Morisa.ViewModels
         private readonly LiteDatabase               _AppDB;
         private readonly IDialogManager             _DialogManager;
         private readonly IMorisaProjectManager      _ProjectManager;
+        private readonly EntityServices             _EntityServices;
+        private readonly IMorisaFileManager         _FileManager;
 
         //
         // Collection
@@ -82,12 +89,14 @@ namespace Acorisoft.Morisa.ViewModels
         //
         //-------------------------------------------------------------------------------------------------
 
-        public AppViewModel(IMorisaProjectManager projectMgr , IEnumerable<IEntityService> entitySrves , IDialogManager dialogMgr)
+        public AppViewModel(IMorisaProjectManager projectMgr , EntityServices entitySrves , IDialogManager dialogMgr,IMorisaFileManager fileMgr)
         {
 
             _Disposable = new CompositeDisposable();
             _DialogManager = dialogMgr;
             _ProjectManager = projectMgr;
+            _EntityServices = entitySrves;
+            _FileManager = fileMgr;
 
             //
             // when project manager load an new project 
@@ -170,6 +179,30 @@ namespace Acorisoft.Morisa.ViewModels
         protected void OnProjectChanged(IMorisaProject value)
         {
             CurrentProject = value;
+
+            //
+            // 通知新的项目
+            //
+            // IMorisaFileManager 用于为项目提供文件写入支持，但是项目之间是解耦合的
+            // 我们要针对性的为它赋值
+            _FileManager.Project.OnNext(value);
+            _FileManager.Project.OnCompleted();
+
+            //
+            // 通知实体服务
+            if(_EntityServices != null)
+            {
+                foreach(var service in _EntityServices)
+                {
+                    if(service.Project == null)
+                    {
+                        continue;
+                    }
+
+                    service.Project.OnNext(value);
+                    service.Project.OnCompleted();
+                }
+            }
         }
 
         protected void OnProjectInfoChanged(IMorisaProjectInfo value)
@@ -200,7 +233,7 @@ namespace Acorisoft.Morisa.ViewModels
             _DB_Projects.Upsert(_ProjectCollection);
         }
 
-        void UpdateSetting()
+        public void UpdateSetting()
         {
             //
             var document = BsonMapper.Global.Serialize(_Setting).AsDocument;
@@ -216,7 +249,7 @@ namespace Acorisoft.Morisa.ViewModels
         //-------------------------------------------------------------------------------------------------
 
         /// <summary>
-        /// 
+        /// 获取或设置当前的第一次运行证据。
         /// </summary>
         public bool IsFirstTime
         {
@@ -230,7 +263,7 @@ namespace Acorisoft.Morisa.ViewModels
         }
 
         /// <summary>
-        /// 
+        /// 获取或设置当前的项目目录.
         /// </summary>
         public string ProjectFolder
         {
@@ -243,12 +276,29 @@ namespace Acorisoft.Morisa.ViewModels
             }
         }
 
+        /// <summary>
+        /// 获取或设置当前的项目.
+        /// </summary>
         public IMorisaProject CurrentProject
         {
             get => _CurrentProject;
             set
             {
                 _CurrentProject = value;
+            }
+        }
+
+        /// <summary>
+        /// 是否忽略文件冲突
+        /// </summary>
+        public bool IgnoreFileDuplicate
+        {
+            get => _Setting.IgnoreFileDuplicate;
+            set
+            {
+                _Setting.IgnoreFileDuplicate = value;
+                _FileManager.IgnoreFileDuplicate = value;
+                this.RaisePropertyChanged(nameof(IgnoreFileDuplicate));
             }
         }
 
@@ -313,5 +363,10 @@ namespace Acorisoft.Morisa.ViewModels
         /// 
         /// </summary>
         public IMorisaProjectManager ProjectManager => _ProjectManager;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public IMorisaFileManager FileManager => _FileManager;
     }
 }

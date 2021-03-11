@@ -130,7 +130,7 @@ namespace Acorisoft.Morisa
         /// <summary>
         /// 
         /// </summary>
-        protected internal ILiteDatabase Database => _Database;
+        public ILiteDatabase Database => _Database;
 
         /// <summary>
         /// 

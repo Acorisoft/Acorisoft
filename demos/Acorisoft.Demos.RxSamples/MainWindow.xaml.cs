@@ -25,6 +25,7 @@ using DryIoc;
 using System.Threading;
 using DynamicData.Binding;
 using System.Collections.ObjectModel;
+using LiteDB;
 
 namespace Acorisoft.Demos.RxSamples
 {
@@ -98,6 +99,11 @@ namespace Acorisoft.Demos.RxSamples
             _container.Register<IService, ServiceA>();
             _container.Register<IService, ServiceB>();
             var services = _container.Resolve<IEnumerable<IService>>();
+
+            var db = new LiteDatabase("FileName=Test.Morisa-Setting");
+            var strogate = db.GetStorage<string>("Image","ImageChunk");
+            strogate.Upload(Guid.NewGuid().ToString("N") , @"C:\Users\zhongxin013\Documents\HZSG\Assets\ico_512x512.ico");
+            db.Dispose();
         }
 
         public Model Model { get; set; }

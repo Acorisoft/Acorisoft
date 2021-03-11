@@ -42,9 +42,21 @@ namespace Acorisoft.Morisa
             var mgr = new MorisaProjectManager();
             mgr.Project.Subscribe(x => Assert.IsNotNull(x));
             mgr.ProjectInfo.Subscribe(x => Assert.IsNotNull(x));
-            mgr.LoadOrCreateProject(new MorisaProjectInfo
+            mgr.LoadOrCreateProject((IMorisaProjectInfo)new MorisaProjectInfo
             {
                 FileName = "E:\\Workbook\\Main.Morisa-Project" ,
+                Directory = "E:\\Workbook\\"
+            });
+        }
+        [TestMethod]
+        public void LoadOrCreateProject_ProjectTargetInfo_Create_Test()
+        {
+            var mgr = new MorisaProjectManager();
+            mgr.Project.Subscribe(x => Assert.IsNotNull(x));
+            mgr.ProjectInfo.Subscribe(x => Assert.IsNotNull(x));
+            mgr.LoadOrCreateProject((IMorisaProjectTargetInfo)new MorisaProjectInfo
+            {
+                FileName = "E:\\Workbook\\Main3.Morisa-Project" ,
                 Directory = "E:\\Workbook\\"
             });
         }

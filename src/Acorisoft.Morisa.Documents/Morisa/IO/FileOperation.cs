@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa.Core
+namespace Acorisoft.Morisa.IO
 {
-    public interface IEntityService 
+    public class FileOperation
     {
-        IObserver<IMorisaProject> Project { get; }
+
     }
 }

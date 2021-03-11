@@ -18,6 +18,11 @@ namespace Acorisoft.Morisa.Core
     }
     public abstract class BinaryObject : IBinaryObject
     {
+        //-------------------------------------------------------------------------------------------------
+        //
+        //  Internal Classes
+        //
+        //-------------------------------------------------------------------------------------------------
         [BsonIgnore]
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private protected PropertyChangedEventHandler ChangedHandler;
@@ -25,10 +30,22 @@ namespace Acorisoft.Morisa.Core
         [BsonIgnore]
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private protected PropertyChangingEventHandler ChangingHandler;
+
+        //-------------------------------------------------------------------------------------------------
+        //
+        //  Internal Classes
+        //
+        //-------------------------------------------------------------------------------------------------
         public BinaryObject()
         {
-            Id = Guid.NewGuid();
+            Id = Guid.NewGuid().ToString("N");
         }
+
+        //-------------------------------------------------------------------------------------------------
+        //
+        //  Internal Classes
+        //
+        //-------------------------------------------------------------------------------------------------
         protected bool SetValueAndRaiseUpdate<T>(ref T backendField, T value, [CallerMemberName] string name = "")
         {
             if (!EqualityComparer<T>.Default.Equals(backendField, value))
@@ -47,6 +64,12 @@ namespace Acorisoft.Morisa.Core
             ChangedHandler?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
+        //-------------------------------------------------------------------------------------------------
+        //
+        //  Internal Classes
+        //
+        //-------------------------------------------------------------------------------------------------
+
         event PropertyChangedEventHandler INotifyPropertyChanged.PropertyChanged
         {
             add => ChangedHandler += value;
@@ -63,12 +86,11 @@ namespace Acorisoft.Morisa.Core
         /// <summary>
         /// 获取或设置当前对象的唯一标识符。
         /// </summary>
-        public Guid Id { get; set; }
-        public string Md5 { get; set; }
-        public string Name { get; set; }
+        public string Id { get; set; }
 
-        [BsonIgnore]
-        public string FileName { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public abstract BinaryObjectType Type { get; }
     }
     public sealed class ImageObject : BinaryObject

@@ -23,7 +23,7 @@ namespace Acorisoft.Morisa.Core
 
         public ModelObject()
         {
-            Id = Guid.NewGuid();
+            Id = Guid.NewGuid().ToString("N");
         }
 
         protected bool SetValueAndRaiseUpdate<T>(ref T backendField, T value, [CallerMemberName] string name = "")
@@ -61,6 +61,6 @@ namespace Acorisoft.Morisa.Core
         /// 获取或设置当前对象的唯一标识符。
         /// </summary>
         [BsonId]
-        public Guid Id { get; set; }
+        public string Id { get; set; }
     }
 }
