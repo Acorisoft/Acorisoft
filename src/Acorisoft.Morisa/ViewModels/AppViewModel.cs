@@ -213,5 +213,14 @@ namespace Acorisoft.Morisa.ViewModels
         /// 
         /// </summary>
         public IDialogManager DialogManager => _DialogManager;
+
+        public bool IgnoreFileDuplicate
+        {
+            get => _Setting.IgnoreFileDuplicate;
+            set {
+                _Setting.IgnoreFileDuplicate = value;
+                this.RaisePropertyChanged(nameof(IgnoreFileDuplicate));
+            }
+        }
     }
 }

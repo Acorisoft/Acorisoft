@@ -23,31 +23,15 @@ namespace Acorisoft.Morisa.ViewModels
         private string _Topic;
         private string _CoverFileName;
         private ImageObject _Cover;
-        private readonly IMorisaFileManager _FileManager;
 
 
-        public GenerateProjectViewModel(IMorisaFileManager fileMgr)
+        public GenerateProjectViewModel()
         {
-            _FileManager = fileMgr;
-
-            this.WhenAnyValue(x => x.CoverFileName)
-                .Where(x => x != null)
-                .Subscribe(x => _FileManager.WriteImage(x));
-
-            _FileManager.Completed
-                        .ObserveOn(RxApp.MainThreadScheduler)
-                        .Subscribe(x => Cover = x as ImageObject);
         }
 
         object IResultable.GetResult()
         {
-            return new MorisaProjectInfo
-            {
-                Name = _Name ,
-                Summary = _Summary ,
-                Topic = _Topic ,
-                Cover = _Cover
-            };
+            return null;
         }
 
         bool IResultable.VerifyAccess()

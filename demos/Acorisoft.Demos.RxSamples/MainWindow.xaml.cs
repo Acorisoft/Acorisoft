@@ -1,112 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using LiteDB;
 using System.Diagnostics;
-using ReactiveUI;
-using System.Reactive;
-using System.Reactive.Linq;
-using System.Reactive.Concurrency;
-using System.Reactive.Subjects;
-using System.Reactive.Disposables;
-using System.Reactive.Threading;
-using DryIoc;
-using System.Threading;
-using DynamicData.Binding;
-using System.Collections.ObjectModel;
-using LiteDB;
+using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace Acorisoft.Demos.RxSamples
 {
-    public class Model
-    {
-        public string Text { get; set; }
-    }
-
-    public class Model1 : ReactiveObject
-    {
-        private string _text;
-        public string Text
-        {
-            get => _text;
-            set => this.RaiseAndSetIfChanged(ref _text, value);
-        }
-    }
-
-    public interface IService
-    {
-
-    }
-
-    public class ServiceA : IService
-    {
-
-    }
-
-    public class ServiceB : IService
-    {
-
-    }
-
-
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ObservableCollection<Model> Collection;
-        private Container _container;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            //
-            // it test subscribeOn method
-            Debug.WriteLine($"main thread is : {Thread.CurrentThread.ManagedThreadId}");
-            Model1 = new Model1();
-            Model1.WhenAnyValue(x => x.Text)
-                  .SubscribeOn(RxApp.TaskpoolScheduler)
-                  .Subscribe(x => Debug.WriteLine($"work on thread:{Thread.CurrentThread.ManagedThreadId}"));
-            Model1.Text = "A1";
-            Model1.Text = "B1";
 
-            //
-            // it test can subscribeOn method work on thread pool scheduler
-            Collection = new ObservableCollection<Model>();
-            Observable.FromEventPattern<NotifyCollectionChangedEventArgs>(Collection, "CollectionChanged")
-                      .ObserveOn(NewThreadScheduler.Default)
-                      .Select(x => x!)
-                      .Subscribe(x => Debug.WriteLine($"collection work on thread:{Thread.CurrentThread.ManagedThreadId}"));
-            Collection.Add(new Model());
-
-            
-
-            //
-            // it test can container return an enumerator for service
-            _container = new Container();
-            _container.Register<IService, ServiceA>();
-            _container.Register<IService, ServiceB>();
-            var services = _container.Resolve<IEnumerable<IService>>();
-
-            var db = new LiteDatabase("FileName=Test.Morisa-Setting");
-            var strogate = db.GetStorage<string>("Image","ImageChunk");
-            strogate.Upload(Guid.NewGuid().ToString("N") , @"C:\Users\zhongxin013\Documents\HZSG\Assets\ico_512x512.ico");
-            db.Dispose();
+            var db = new LiteDatabase(new ConnectionString
+            {
+                Filename = "Test.MORISA-SETTING",
+                Collation = new Collation(1033, System.Globalization.CompareOptions.IgnoreCase),
+            });
+            var id = "{10F9CA2E-BCE3-4A48-93F6-A138D749A74C}";
+            var names = db.GetCollectionNames();
+            foreach(var name in names)
+            {
+                Debug.WriteLine(name);
+            }
+            var stream = db.FileStorage.OpenRead(id);
+            var bi = new BitmapImage();
+            bi.BeginInit();
+            bi.StreamSource = stream;
+            bi.EndInit();
+            PART_Image.Source = bi;
         }
-
-        public Model Model { get; set; }
-        public Model1 Model1 { get; set; }
     }
 }
