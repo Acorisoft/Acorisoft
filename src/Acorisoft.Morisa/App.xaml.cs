@@ -28,7 +28,6 @@ namespace Acorisoft.Morisa
             _container.Init()
                       .UseLog()
                       .UseViews(typeof(App).Assembly)
-                      .UseMorisa()
                       .UseDialog();
         }
 
