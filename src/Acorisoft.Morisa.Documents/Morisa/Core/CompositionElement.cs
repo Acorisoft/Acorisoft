@@ -7,13 +7,12 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using SQLite;
 
 
 
 namespace Acorisoft.Morisa.Core
 {
-    public abstract class ElementBase : INotifyPropertyChanged, INotifyPropertyChanging
+    public abstract class CompositionElement : INotifyPropertyChanged, INotifyPropertyChanging
     {//-------------------------------------------------------------------------------------------------
         //
         //  Internal Classes
@@ -32,7 +31,7 @@ namespace Acorisoft.Morisa.Core
         //  Internal Classes
         //
         //-------------------------------------------------------------------------------------------------
-        public ElementBase()
+        public CompositionElement()
         {
         }
 
@@ -77,8 +76,7 @@ namespace Acorisoft.Morisa.Core
             remove => ChangingHandler -= value;
         }
 
-        [Column("id")]
-        [PrimaryKey]
+        [BsonId]
         public string Id { get; set; }
 
     }

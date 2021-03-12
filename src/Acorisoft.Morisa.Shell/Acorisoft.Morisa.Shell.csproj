@@ -18,6 +18,5 @@
 		<PackageReference Include="Splat" Version="9.8.1" />
 		<PackageReference Include="Splat.DryIoc" Version="9.8.1" />
 		<PackageReference Include="Splat.NLog" Version="9.8.1" />
-		<PackageReference Include="sqlite-net-pcl" Version="1.8.0-beta" />
 	</ItemGroup>
 </Project>

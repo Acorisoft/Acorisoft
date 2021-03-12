@@ -6,6 +6,6 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 	<ItemGroup>
-        <PackageReference Include="LiteDB" Version="5.0.10" />
+        <PackageReference Include="LiteDB" Version="4.1.4" />
 	</ItemGroup>
 </Project>
