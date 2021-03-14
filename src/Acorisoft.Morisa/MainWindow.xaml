@@ -1,19 +1,19 @@
-﻿<Window x:Class="Acorisoft.Morisa.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Acorisoft.Morisa"
-        mc:Ignorable="d"
-        xmlns:rx="http://reactiveui.net"
-        xmlns:mo="https://github.com/Acorisoft/Morisa"
-        MinWidth="1152"
-        MinHeight="640">
+﻿<mui:ShellWindow x:Class="Acorisoft.Morisa.MainWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:app="clr-namespace:Acorisoft.Morisa"
+                 xmlns:vm="clr-namespace:Acorisoft.Morisa.ViewModels"
+                 xmlns:mui="https://github.com/Acorisoft/Morisa/UI"
+                 xmlns:rx="http://reactiveui.net"
+                 mc:Ignorable="d"
+                 Title="{Binding Title,Mode=OneWay}"
+                 MinWidth="1152"
+                 MinHeight="640"
+                 Height="450" Width="800">
     <Grid>
-        <!-- View -->
-        <rx:RoutedViewHost Router="{Binding Source={x:Static mo:ViewMixins.Router},Mode=OneWay}" IsTabStop="False"/>
-        
-        <!-- Dialog -->
-        <mo:DialogHost x:Name="PART_Dialog"/>
+        <rx:RoutedViewHost Router="{Binding Source={x:Static mui:ShellMixins.Router},Mode=OneWay}"/>
+        <Button Content="Test" Click="Button_Click" VerticalAlignment="Center" Padding="16"/>
     </Grid>
-</Window>
+</mui:ShellWindow>

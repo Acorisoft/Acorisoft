@@ -3,19 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.Documents", "src\Acorisoft.Morisa.Documents\Acorisoft.Morisa.Documents.csproj", "{51D319D8-46D8-48A7-8BD3-CDA4E3009D46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa", "src\Acorisoft.Morisa\Acorisoft.Morisa.csproj", "{2AE1C8AA-B9CB-4151-BEA1-0DBB19ADF0A2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Demos.NeteaseMusic", "demos\Acorisoft.Demos.NeteaseMusic\Acorisoft.Demos.NeteaseMusic.csproj", "{8DE40D9E-E157-4DE0-B15F-252EA9073A6D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.Tests", "src\Acorisoft.Morisa.Tests\Acorisoft.Morisa.Tests.csproj", "{9B31D456-1D53-48FB-B5AD-9CAA8B68B847}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa", "src\Acorisoft.Morisa\Acorisoft.Morisa.csproj", "{B3E97D47-2B2E-4EFA-9904-0F2726976FF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.Documents", "src\Acorisoft.Morisa.Documents\Acorisoft.Morisa.Documents.csproj", "{E1308C06-F25B-4CCA-910D-1E45702F08C2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.UICore", "src\Acorisoft.Morisa.UICore\Acorisoft.Morisa.UICore.csproj", "{AE6B6B27-9D45-4900-9427-CC2F1EFDD3A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Demos.RxSamples", "demos\Acorisoft.Demos.RxSamples\Acorisoft.Demos.RxSamples.csproj", "{BE8F35AC-31A2-4E0D-B922-EAAB0B5B74A0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.UI", "src\Acorisoft.Morisa.UI\Acorisoft.Morisa.UI.csproj", "{83FD9501-42C9-49D2-A384-F5E9BBF5AA6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.Shell", "src\Acorisoft.Morisa.Shell\Acorisoft.Morisa.Shell.csproj", "{605F1C84-BD3A-43E9-BCAB-B275E1799D09}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Demos.DataTemplateSelector", "demos\Acorisoft.Demos.DataTemplateSelector\Acorisoft.Demos.DataTemplateSelector.csproj", "{42D8E6EB-03E5-4680-82BF-CBA58C90B597}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Morisa.Tests", "src\Acorisoft.Morisa.Tests\Acorisoft.Morisa.Tests.csproj", "{54BABD90-D8B4-4B21-9D88-74FDBCF3331D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Morisa.Core", "src\Acorisoft.Morisa.Core\Acorisoft.Morisa.Core.csproj", "{8CC1A86F-7986-46D6-8655-9BAEBD7B3BF4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,41 +21,37 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{51D319D8-46D8-48A7-8BD3-CDA4E3009D46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{51D319D8-46D8-48A7-8BD3-CDA4E3009D46}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{51D319D8-46D8-48A7-8BD3-CDA4E3009D46}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{51D319D8-46D8-48A7-8BD3-CDA4E3009D46}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8DE40D9E-E157-4DE0-B15F-252EA9073A6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8DE40D9E-E157-4DE0-B15F-252EA9073A6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8DE40D9E-E157-4DE0-B15F-252EA9073A6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8DE40D9E-E157-4DE0-B15F-252EA9073A6D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B3E97D47-2B2E-4EFA-9904-0F2726976FF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B3E97D47-2B2E-4EFA-9904-0F2726976FF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B3E97D47-2B2E-4EFA-9904-0F2726976FF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B3E97D47-2B2E-4EFA-9904-0F2726976FF2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AE6B6B27-9D45-4900-9427-CC2F1EFDD3A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE6B6B27-9D45-4900-9427-CC2F1EFDD3A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE6B6B27-9D45-4900-9427-CC2F1EFDD3A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE6B6B27-9D45-4900-9427-CC2F1EFDD3A0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{83FD9501-42C9-49D2-A384-F5E9BBF5AA6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{83FD9501-42C9-49D2-A384-F5E9BBF5AA6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{83FD9501-42C9-49D2-A384-F5E9BBF5AA6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{83FD9501-42C9-49D2-A384-F5E9BBF5AA6B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{42D8E6EB-03E5-4680-82BF-CBA58C90B597}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{42D8E6EB-03E5-4680-82BF-CBA58C90B597}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{42D8E6EB-03E5-4680-82BF-CBA58C90B597}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{42D8E6EB-03E5-4680-82BF-CBA58C90B597}.Release|Any CPU.Build.0 = Release|Any CPU
-		{54BABD90-D8B4-4B21-9D88-74FDBCF3331D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{54BABD90-D8B4-4B21-9D88-74FDBCF3331D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{54BABD90-D8B4-4B21-9D88-74FDBCF3331D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{54BABD90-D8B4-4B21-9D88-74FDBCF3331D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AE1C8AA-B9CB-4151-BEA1-0DBB19ADF0A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AE1C8AA-B9CB-4151-BEA1-0DBB19ADF0A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AE1C8AA-B9CB-4151-BEA1-0DBB19ADF0A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AE1C8AA-B9CB-4151-BEA1-0DBB19ADF0A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B31D456-1D53-48FB-B5AD-9CAA8B68B847}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B31D456-1D53-48FB-B5AD-9CAA8B68B847}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B31D456-1D53-48FB-B5AD-9CAA8B68B847}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B31D456-1D53-48FB-B5AD-9CAA8B68B847}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1308C06-F25B-4CCA-910D-1E45702F08C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1308C06-F25B-4CCA-910D-1E45702F08C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1308C06-F25B-4CCA-910D-1E45702F08C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1308C06-F25B-4CCA-910D-1E45702F08C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE8F35AC-31A2-4E0D-B922-EAAB0B5B74A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE8F35AC-31A2-4E0D-B922-EAAB0B5B74A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE8F35AC-31A2-4E0D-B922-EAAB0B5B74A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE8F35AC-31A2-4E0D-B922-EAAB0B5B74A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{605F1C84-BD3A-43E9-BCAB-B275E1799D09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{605F1C84-BD3A-43E9-BCAB-B275E1799D09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{605F1C84-BD3A-43E9-BCAB-B275E1799D09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{605F1C84-BD3A-43E9-BCAB-B275E1799D09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CC1A86F-7986-46D6-8655-9BAEBD7B3BF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CC1A86F-7986-46D6-8655-9BAEBD7B3BF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CC1A86F-7986-46D6-8655-9BAEBD7B3BF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CC1A86F-7986-46D6-8655-9BAEBD7B3BF4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_SortFileContentOnSave = True
-		RESX_NeutralResourcesLanguage = zh-Hans
 		SolutionGuid = {3EE6B840-2DC2-4DF7-8922-192714C85F7B}
+		RESX_NeutralResourcesLanguage = zh-Hans
+		RESX_SortFileContentOnSave = True
 	EndGlobalSection
 EndGlobal

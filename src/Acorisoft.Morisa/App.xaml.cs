@@ -1,20 +1,17 @@
-﻿using Acorisoft.Morisa.Core;
-using Acorisoft.Morisa.Dialogs;
-using Acorisoft.Morisa.Logs;
-using Acorisoft.Morisa.Routers;
-using Acorisoft.Morisa.Globalization;
-using Acorisoft.Morisa.ViewModels;
+﻿using Acorisoft.Morisa.ViewModels;
+using DryIoc;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Reactive.Concurrency;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using DryIoc;
-using ReactiveUI;
-using Acorisoft.Morisa.Views;
-using Acorisoft.Morisa.Properties;
+using System.Windows.Shell;
+using Acorisoft.Morisa;
 
 namespace Acorisoft.Morisa
 {
@@ -23,19 +20,23 @@ namespace Acorisoft.Morisa
     /// </summary>
     public partial class App : Application
     {
-        private readonly IApplicationEnvironment _appEnv;
+        private readonly IContainer _container;
 
         public App()
         {
-            _appEnv = new ApplicationEnvironment();
-            //_appEnv.Container.Register<IViewFor<DialogSampleViewModel>, DialogSampleView>();
-            //_appEnv.Container.Register<IViewFor<InsertTextDialogViewModel>, InsertTextDialogView>();
-            //_appEnv.Container.Register<DialogSampleViewModel>();
-            //_appEnv.Container.Register<InsertTextDialogViewModel>();
-            _appEnv.UseLog()
-                   .UseDialog()
-                   .UseViews(typeof(App).Assembly)
-                   .UseGlobalization(Language.ResourceManager,new System.Globalization.CultureInfo("zh"));
+            _container = new Container(Rules.Default.WithTrackingDisposableTransients());
+            _container.Init()
+                      .UseLog()
+                      .UseViews(typeof(App).Assembly)
+                      .UseDialog();
         }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            //
+            // 启动应用
+            base.OnStartup(e);
+        }
+
     }
 }
