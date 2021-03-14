@@ -38,9 +38,8 @@ namespace Acorisoft.Morisa.ViewModels
         //  GenereateGuid
         //
         //-------------------------------------------------------------------------------------------------
-        public AppViewModel(IApplicationEnvironment appEnv, ICompositionSetManager csMgr, IEnumerable<IMechanismCore> mechanisms)
+        public AppViewModel(ICompositionSetManager csMgr, IEnumerable<IMechanismCore> mechanisms)
         {
-            _AppEnv = appEnv;
             _CompositionSetManager = csMgr;
 
             Observable.FromEventPattern<CompositionSetChangedEventArgs>(_CompositionSetManager, "Changed")
