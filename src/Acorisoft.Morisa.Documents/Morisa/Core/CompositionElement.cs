@@ -13,7 +13,8 @@ using System.Threading.Tasks;
 namespace Acorisoft.Morisa.Core
 {
     public abstract class CompositionElement : INotifyPropertyChanged, INotifyPropertyChanging
-    {//-------------------------------------------------------------------------------------------------
+    {
+        //-------------------------------------------------------------------------------------------------
         //
         //  Internal Classes
         //

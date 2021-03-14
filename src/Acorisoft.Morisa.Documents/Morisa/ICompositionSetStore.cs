@@ -11,5 +11,8 @@ namespace Acorisoft.Morisa
     /// </summary>
     public interface ICompositionSetStore
     {
+        string Name { get; set; }
+        string Directory { get; set; }
+        string FileName { get; set; }
     }
 }

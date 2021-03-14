@@ -9,7 +9,7 @@ namespace Acorisoft.Morisa
     /// <summary>
     /// <see cref="ICompositionSet"/> 表示一个设定集。
     /// </summary>
-    public interface ICompositionSet
+    public interface ICompositionSet : IDisposable
     {
     }
 }

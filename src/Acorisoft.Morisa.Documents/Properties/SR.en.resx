@@ -97,7 +97,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CannotLoadAnEmptyFileOrDirectory" xml:space="preserve">
+    <value>Cannot open a not exists directory or not exists file</value>
+  </data>
   <data name="FileNotFound" xml:space="preserve">
     <value>File not found</value>
+  </data>
+  <data name="MottoEmotionSampleMotto" xml:space="preserve">
+    <value>Test Motto</value>
+  </data>
+  <data name="MottoEmotionSampleSig" xml:space="preserve">
+    <value>Test Signature</value>
   </data>
 </root>

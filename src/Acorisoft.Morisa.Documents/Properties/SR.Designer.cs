@@ -61,11 +61,38 @@ namespace Acorisoft.Properties {
         }
         
         /// <summary>
+        ///   查找类似 无法打开一个不存在的文件夹或者不存在的文件名 的本地化字符串。
+        /// </summary>
+        internal static string CannotLoadAnEmptyFileOrDirectory {
+            get {
+                return ResourceManager.GetString("CannotLoadAnEmptyFileOrDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 未找到文件 的本地化字符串。
         /// </summary>
         internal static string FileNotFound {
             get {
                 return ResourceManager.GetString("FileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 测试格言元素 的本地化字符串。
+        /// </summary>
+        internal static string MottoEmotionSampleMotto {
+            get {
+                return ResourceManager.GetString("MottoEmotionSampleMotto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 测试署名 的本地化字符串。
+        /// </summary>
+        internal static string MottoEmotionSampleSig {
+            get {
+                return ResourceManager.GetString("MottoEmotionSampleSig", resourceCulture);
             }
         }
     }
