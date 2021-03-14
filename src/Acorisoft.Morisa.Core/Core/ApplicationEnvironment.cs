@@ -16,5 +16,6 @@ namespace Acorisoft.Morisa.Core
         public string WorkingDirectory { get; set; }
         public List<ICompositionSetStore> Projects { get; set; }
         public ICompositionSetStore CurrentProject { get; set; }
+        public bool IsFirstTime { get; set; }
     }
 }

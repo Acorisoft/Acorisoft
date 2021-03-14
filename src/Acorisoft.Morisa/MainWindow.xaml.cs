@@ -44,18 +44,33 @@ namespace Acorisoft.Morisa
             });
         }
 
-        protected override void OnDataContextChanged(object sender , DependencyPropertyChangedEventArgs e)
+        protected override async void OnDataContextChanged(object sender , DependencyPropertyChangedEventArgs e)
         {
-            
+            var vm = ViewModelLocator.AppViewModel;
+            if (vm.IsFirstTime)
+            {
+                var session = await vm.DialogManager.Dialog<SelectProjectDirectoryViewModel>();
+
+                if(session.IsCompleted && session.GetResult<string>() is string targetDirectory)
+                {
+                    vm.WorkingDirectory = targetDirectory;
+                    vm.IsFirstTime = false;
+                }
+
+                session = await vm.DialogManager.Dialog<GenerateCompositionSetViewModel>();
+
+                if (session.IsCompleted && session.GetResult<ICompositionSetInfo>() is ICompositionSetInfo info)
+                {
+                    info.Directory = Path.Combine(vm.WorkingDirectory, CompositionElementFactory.GenereateGuid());
+                    info.FileName = Path.Combine(info.Directory, CompositionSet.MainDatabaseName);
+                    vm.CompositionSetManager.Load(info);
+                }
+            }
         }
 
         protected override void OnLoaded(object sender , RoutedEventArgs e)
         {
-        }
-
-        private void Button_Click(object sender , RoutedEventArgs e)
-        {
-
+            ViewModel = ViewModelLocator.AppViewModel;
         }
     }
 }

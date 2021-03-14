@@ -87,6 +87,8 @@ namespace Acorisoft.Morisa
         [NonSerialized]
         private bool _DisposedValue;
 
+        private LiteCollection<BsonDocument> _DB_Externals;
+
         //-------------------------------------------------------------------------------------------------
         //
         //  Constructors
@@ -129,7 +131,7 @@ namespace Acorisoft.Morisa
 
         //-------------------------------------------------------------------------------------------------
         //
-        //  GenereateGuid
+        //  Methods
         //
         //-------------------------------------------------------------------------------------------------
 
@@ -137,15 +139,15 @@ namespace Acorisoft.Morisa
         {
             if (Database.CollectionExists(MainDatabaseSettingName))
             {
-                _Setting = Database.GetCollection(ExternalCollectionName)
-                                   .FindById(MainDatabaseSettingName)
-                                   .Deserialize<Setting>();
+                _DB_Externals = Database.GetCollection(ExternalCollectionName);
+                _DB_Externals.FindById(MainDatabaseSettingName)
+                             .Deserialize<Setting>();
             }
             else
             {
+                _DB_Externals = Database.GetCollection(ExternalCollectionName);
                 _Setting = CreateInstanceCore();
-                Database.GetCollection(ExternalCollectionName)
-                        .Upsert(MainDatabaseSettingName, DatabaseMixins.Serialize(_Setting));
+                _DB_Externals.Upsert(MainDatabaseSettingName, DatabaseMixins.Serialize(_Setting));
             }
 
             RaiseUpdate(nameof(Name));
@@ -153,6 +155,11 @@ namespace Acorisoft.Morisa
             RaiseUpdate(nameof(Topic));
             RaiseUpdate(nameof(Tags));
             RaiseUpdate(nameof(Cover));
+        }
+
+        public void Update()
+        {
+            _DB_Externals.Upsert(MainDatabaseSettingName, DatabaseMixins.Serialize(_Setting));
         }
 
         protected virtual void OnInitialize(ICompositionSetInfo css)

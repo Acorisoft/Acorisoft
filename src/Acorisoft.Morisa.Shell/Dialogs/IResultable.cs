@@ -9,6 +9,6 @@ namespace Acorisoft.Morisa.Dialogs
     public interface IResultable
     {
         object GetResult();
-        bool VerifyAccess();
+        bool VerifyModel();
     }
 }

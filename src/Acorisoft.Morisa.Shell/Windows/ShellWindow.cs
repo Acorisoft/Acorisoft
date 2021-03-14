@@ -274,7 +274,7 @@ namespace Acorisoft.Morisa.Windows
 
                 if (_ContextStack.Peek().Content is IResultable resultable)
                 {
-                    e.CanExecute = resultable.VerifyAccess();
+                    e.CanExecute = resultable.VerifyModel();
                 }
             }
             else
@@ -291,7 +291,7 @@ namespace Acorisoft.Morisa.Windows
 
                 if (_ContextStack.Peek().Content is IResultable resultable)
                 {
-                    e.CanExecute = resultable.VerifyAccess();
+                    e.CanExecute = resultable.VerifyModel();
                 }
             }
             else

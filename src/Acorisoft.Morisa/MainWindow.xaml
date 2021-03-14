@@ -14,6 +14,5 @@
                  Height="450" Width="800">
     <Grid>
         <rx:RoutedViewHost Router="{Binding Source={x:Static mui:ShellMixins.Router},Mode=OneWay}"/>
-        <Button Content="Test" Click="Button_Click" VerticalAlignment="Center" Padding="16"/>
     </Grid>
 </mui:ShellWindow>

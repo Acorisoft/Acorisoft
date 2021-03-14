@@ -8,6 +8,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <None Remove="Assets\Default_CS_Cover.jpg" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="DryIoc.dll" Version="4.7.2" />
         <PackageReference Include="gong-wpf-dragdrop" Version="2.3.2" />
         <PackageReference Include="LiteDB" Version="4.1.4" />
@@ -25,6 +29,9 @@
       <ProjectReference Include="..\Acorisoft.Morisa.Core\Acorisoft.Morisa.Core.csproj" />
       <ProjectReference Include="..\Acorisoft.Morisa.Documents\Acorisoft.Morisa.Documents.csproj" />
       <ProjectReference Include="..\Acorisoft.Morisa.Shell\Acorisoft.Morisa.Shell.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Resource Include="Assets\Default_CS_Cover.jpg" />
     </ItemGroup>
 
 </Project>

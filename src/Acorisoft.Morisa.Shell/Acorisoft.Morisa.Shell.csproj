@@ -19,4 +19,7 @@
 		<PackageReference Include="Splat.DryIoc" Version="9.8.1" />
 		<PackageReference Include="Splat.NLog" Version="9.8.1" />
 	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Acorisoft.Morisa.Core\Acorisoft.Morisa.Core.csproj" />
+	</ItemGroup>
 </Project>

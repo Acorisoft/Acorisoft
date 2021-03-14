@@ -16,6 +16,8 @@ using LogLevel = NLog.LogLevel;
 using NLog.Config;
 using NLog.Targets;
 using Acorisoft.Morisa.ViewModels;
+using System.ComponentModel;
+using IContainer = DryIoc.IContainer;
 
 namespace Acorisoft.Morisa
 {
@@ -316,6 +318,10 @@ namespace Acorisoft.Morisa
         {
             get
             {
+                if(DesignerProperties.GetIsInDesignMode(new System.Windows.DependencyObject()))
+                {
+                    return new RoutingState();
+                }
                 return _vMgr.Router;
             }
         }
@@ -324,6 +330,7 @@ namespace Acorisoft.Morisa
         {
             _vMgr.View<TViewModel>();
         }
+
         public static IContainer Init(this IContainer container)
         {
             container.UseDryIocDependencyResolver();
