@@ -229,8 +229,8 @@
                     <Border x:Name="PART_Border" Background="{TemplateBinding Background}">
                         <Path x:Name="PART_Icon" 
                               Data="F1 M1024,1024z M0,0z M512,96C741.76,96 928,282.24 928,512 928,741.76 741.76,928 512,928 282.24,928 96,741.76 96,512 96,282.24 282.24,96 512,96z M512,160A352,352,0,1,0,512,864A352,352,0,0,0,512,160z M467.370667,340.864A17.066667,17.066667,0,0,1,491.52,340.864L512.64,361.984A17.066667,17.066667,0,0,1,512.64,386.090667L420.48,478.250667 706.645333,478.250667C716.032,478.250667,723.712,485.888,723.712,495.317333L723.712,525.184A17.066667,17.066667,0,0,1,706.645333,542.250667L418.432,542.250667 512.64,636.544A17.066667,17.066667,0,0,1,512.64,660.650667L491.52,681.770667A17.066667,17.066667,0,0,1,467.370667,681.770667L310.485333,524.885333A17.066667,17.066667,0,0,1,305.536,511.317333A17.066667,17.066667,0,0,1,310.485333,497.749333z"
-                              Width="32"
-                              Height="32"
+                              Width="24"
+                              Height="24"
                               SnapsToDevicePixels="True"
                               Stretch="Uniform"
                               Fill="{TemplateBinding Foreground}"/>
@@ -304,7 +304,8 @@
                                 </StackPanel>
                             </Grid>
                         </Border>
-                        <AdornerDecorator Grid.Row="1">
+                        <AdornerDecorator x:Name="PART_Content"
+                                          Grid.Row="1">
                             <ContentPresenter Content="{TemplateBinding Content}"
                                               ContentTemplate="{TemplateBinding ContentTemplate}"
                                               ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
@@ -322,7 +323,10 @@
                                 Grid.Row="1"
                                 Background="#90000000"
                                 DataContext="{x:Null}"
-                                Visibility="Collapsed">
+                                Visibility="Collapsed"
+                                KeyboardNavigation.TabNavigation="Cycle"
+                                KeyboardNavigation.ControlTabNavigation="Cycle"
+                                KeyboardNavigation.DirectionalNavigation="Cycle">
                             <rx:ViewModelViewHost Duration="0:0:0"
                                                   ViewModel="{TemplateBinding Dialog}"
                                                   HorizontalContentAlignment="Center"
@@ -332,6 +336,8 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="WindowState" Value="Maximized">
                             <Setter Property="Padding" Value="7 7 7 0" TargetName="PART_TitleBar"/>
+                            <Setter Property="Margin" Value="7 0 7 7" TargetName="PART_Content"/>
+                            <Setter Property="Padding" Value="7 0 7 7" TargetName="PART_Dialog"/>
                         </Trigger>
                         <EventTrigger RoutedEvent="DialogShow">
                             <BeginStoryboard>

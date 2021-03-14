@@ -12,6 +12,11 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Core
 {
+    public interface ICompositionElement : INotifyPropertyChanged, INotifyPropertyChanging
+    {
+        string Id { get; set; }
+        DateTime Creation { get; set; }
+    }
     public abstract class CompositionElement : INotifyPropertyChanged, INotifyPropertyChanging
     {
         //-------------------------------------------------------------------------------------------------
@@ -77,8 +82,16 @@ namespace Acorisoft.Morisa.Core
             remove => ChangingHandler -= value;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [BsonId]
         public string Id { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime Creation { get; set; }
 
     }
 }

@@ -10,5 +10,9 @@ namespace Acorisoft.Morisa.Emotions
 {
     public interface IEmotionMechanism : IMechanismCore<IEmotionElement>
     {
+        void Add(IEmotionElement emotion);
+        void Remove(IEmotionElement emotion);
+        void Clear();
+        void Save();
     }
 }

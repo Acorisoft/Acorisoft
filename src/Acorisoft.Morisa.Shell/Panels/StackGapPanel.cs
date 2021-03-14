@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace Acorisoft.Morisa.Panels
 {
-    public class StackGapPanel : Panel
+    public class StackGapPanel : StackPanel
     {
         protected override Size MeasureOverride(Size constraint)
         {
@@ -19,20 +19,7 @@ namespace Acorisoft.Morisa.Panels
             var rect = new Rect(new Point(0, 0), arrangeSize);
             var flag = Orientation == Orientation.Horizontal;
 
-            foreach (FrameworkElement element in Children)
-            {
-                if (flag)
-                {
-                    rect.Height = IfLessThen(element.ActualHeight, 10, arrangeSize.Height);
-                    rect.Width = MathMixins.MinMax(element.ActualWidth, 32, arrangeSize.Width);
-                }
-                else
-                {
-                    rect.Height = MathMixins.MinMax(element.ActualHeight, 32, arrangeSize.Height);
-                    rect.Width = IfLessThen(element.ActualWidth, 10, arrangeSize.Width);
-                }
-                element.Arrange(rect);
-            }
+            base.ArrangeOverride(arrangeSize);
 
             foreach (FrameworkElement element in Children)
             {
@@ -74,20 +61,6 @@ namespace Acorisoft.Morisa.Panels
             get => (double)GetValue(GapProperty);
             set => SetValue(GapProperty, value);
         }
-
-
-        public Orientation Orientation
-        {
-            get => (Orientation)GetValue(OrientationProperty);
-            set => SetValue(OrientationProperty, value);
-        }
-
-        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(
-            "Orientation",
-            typeof(Orientation),
-            typeof(StackGapPanel),
-            new FrameworkPropertyMetadata(Orientation.Vertical, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
-
 
         public static readonly DependencyProperty GapProperty = DependencyProperty.Register(
             "Gap",

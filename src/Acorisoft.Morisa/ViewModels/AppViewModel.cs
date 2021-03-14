@@ -25,6 +25,7 @@ using ObservableProjectCollection = Acorisoft.Morisa.Collections.ObservableUniqu
 using Acorisoft.Morisa.Dialogs;
 using Splat;
 using System.Windows;
+using DryIoc;
 
 namespace Acorisoft.Morisa.ViewModels
 {
@@ -45,39 +46,45 @@ namespace Acorisoft.Morisa.ViewModels
         //  Variables
         //
         //-------------------------------------------------------------------------------------------------
-
+        private string _Title;
         private IApplicationEnvironment             _AppEnv;
         private LiteCollection<BsonDocument>        _DB_Externals;
         private ObservableProjectCollection         _Projects;
         private IDialogManager                      _DialogManager;
+
         private readonly ICompositionSetManager     _CompositionSetManager;
         private readonly LiteDatabase               _AppDB;
+        private readonly IEmotionMechanism          _EmotionMechanism;
         //-------------------------------------------------------------------------------------------------
         //
         //  Constructors
         //
         //-------------------------------------------------------------------------------------------------
-        public AppViewModel(ICompositionSetManager csMgr, IEnumerable<IMechanismCore> mechanisms)
+        public AppViewModel(ICompositionSetManager csMgr, IContainer container)
         {
             _AppDB = new LiteDatabase(ConnectionString);
             _CompositionSetManager = csMgr;
-            
-            OnInitialize();
+            _EmotionMechanism = container.Resolve<IEmotionMechanism>();
+            _Title = "设定集";
+
+            var Mechanism = new IMechanismCore[]
+            {
+                _EmotionMechanism
+            };
+
             Observable.FromEventPattern<CompositionSetChangedEventArgs>(_CompositionSetManager, "Changed")
-                      .ObserveOn(RxApp.MainThreadScheduler)
+                      .ObserveOn(ImmediateScheduler.Instance)
+                      .Throttle(TimeSpan.FromMilliseconds(300))
                       .Subscribe(x =>
                       {
                           var cs = x.EventArgs.NewValue;
-                          if(mechanisms != null)
-                          {
-                              foreach(var mechanism in mechanisms)
-                              {
-                                  mechanism.Input.OnNext(cs);
-                                  mechanism.Input.OnCompleted();
-                              }
-                          }
-
                           CurrentProject = cs;
+
+                          foreach (var mechanism in Mechanism)
+                          {
+                              mechanism.Input.OnNext(cs);
+                              mechanism.Input.OnCompleted();
+                          }
                       });
 
             Observable.FromEventPattern<CompositionSetOpenedEventArgs>(_CompositionSetManager, "Opened")
@@ -89,6 +96,8 @@ namespace Acorisoft.Morisa.ViewModels
                           _Projects.Add(store);
                           UpdateSetting();
                       });
+
+            OnInitialize();
         }
 
         //-------------------------------------------------------------------------------------------------
@@ -200,6 +209,11 @@ namespace Acorisoft.Morisa.ViewModels
                 _AppEnv.WorkingDirectory = value;
                 RaiseUpdated(nameof(WorkingDirectory));
             }
+        }
+        public string Title
+        {
+            get => _Title;
+            set => Set(ref _Title, value);
         }
 
         public ICompositionSet CurrentProject

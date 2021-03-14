@@ -147,6 +147,8 @@ namespace Acorisoft.Morisa.Windows
             //
             CommandBindings.Add(new CommandBinding(DialogCommands.Ok , DoDialogOk , CanDialogOk));
             CommandBindings.Add(new CommandBinding(DialogCommands.Cancel , DoDialogCancel , CanDialogCancel));
+            CommandBindings.Add(new CommandBinding(WindowCommands.Goto, DoGoto, CanGoto));
+            CommandBindings.Add(new CommandBinding(WindowCommands.Goback, DoGoback, CanGoback));
             CommandBindings.Add(new CommandBinding(SystemCommands.CloseWindowCommand , DoWindowClose , CanWindowClose));
             CommandBindings.Add(new CommandBinding(SystemCommands.MinimizeWindowCommand , DoWindowMinimum , CanWindowMinimum));
             CommandBindings.Add(new CommandBinding(SystemCommands.MaximizeWindowCommand , DoWindowRestore , CanWindowRestore));
@@ -175,7 +177,7 @@ namespace Acorisoft.Morisa.Windows
         //
         //-------------------------------------------------------------------------------------------------
 
-        protected void DoDialogOk(object sender , RoutedEventArgs e)
+        protected void DoDialogOk(object sender , ExecutedRoutedEventArgs e)
         {
             if (_ContextStack.Count == 0)
             {
@@ -211,9 +213,13 @@ namespace Acorisoft.Morisa.Windows
                 // Set New Dialog Content To Property Dialog
                 SetValue(DialogPropertyKey , Context.Content);
             }
+            else
+            {
+                ClearValue(DialogPropertyKey);
+            }
         }
 
-        protected void DoDialogCancel(object sender , RoutedEventArgs e)
+        protected void DoDialogCancel(object sender , ExecutedRoutedEventArgs e)
         {
             if (_ContextStack.Count == 0)
             {
@@ -249,21 +255,36 @@ namespace Acorisoft.Morisa.Windows
                 // Set New Dialog Content To Property Dialog
                 SetValue(DialogPropertyKey , Context.Content);
             }
+            else
+            {
+                ClearValue(DialogPropertyKey);
+            }
         }
 
-        protected void DoWindowClose(object sender , RoutedEventArgs e)
+        protected void DoWindowClose(object sender , ExecutedRoutedEventArgs e)
         {
             this.Close();
         }
 
-        protected void DoWindowMinimum(object sender , RoutedEventArgs e)
+        protected void DoWindowMinimum(object sender , ExecutedRoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
         }
 
-        protected void DoWindowRestore(object sender , RoutedEventArgs e)
+        protected void DoWindowRestore(object sender , ExecutedRoutedEventArgs e)
         {
             this.WindowState = WindowState == WindowState.Normal ? WindowState.Maximized : WindowState.Normal;
+        }
+        protected void DoGoto(object sender, ExecutedRoutedEventArgs e)
+        {
+            if(e.Parameter is Type vmType)
+            {
+                ShellMixins.View(vmType);
+            }
+        }
+        protected void DoGoback(object sender, ExecutedRoutedEventArgs e)
+        {
+            ShellMixins.Router.NavigateBack.Execute();
         }
 
         protected void CanDialogOk(object sender , CanExecuteRoutedEventArgs e)
@@ -314,6 +335,16 @@ namespace Acorisoft.Morisa.Windows
         {
             e.CanExecute = true;
         }
+
+        protected void CanGoto(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = e.Parameter != null;
+        }
+        protected void CanGoback(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = ((ICommand)ShellMixins.Router.NavigateBack).CanExecute(e.Parameter);
+        }
+
         //-------------------------------------------------------------------------------------------------
         //
         //  Public Methods

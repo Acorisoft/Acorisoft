@@ -40,6 +40,7 @@ namespace Acorisoft.Morisa
         /// 跳转到指定类型的视图。
         /// </summary>
         void View(IRoutableViewModel vm);
+        void View(Type vmType);
 
         /// <summary>
         /// 跳转到指定类型的视图。
@@ -134,6 +135,23 @@ namespace Acorisoft.Morisa
             _router.Navigate.Execute(e.Result);
             OnPostExecute(e);
             _oldVM = vm;
+        }
+
+        public void View(Type vmType)
+        {
+            try
+            {
+                var vm = (IRoutableViewModel)Locator.Current.GetService(vmType);
+                var e = new NavigationEventArgs(_oldVM, vm, this.GetLogger());
+                OnPreExecute(e);
+                _router.Navigate.Execute(e.Result);
+                OnPostExecute(e);
+                _oldVM = vm;
+            }
+            catch
+            {
+                _logger.Error($"导航失败:{vmType}");
+            }
         }
 
         public void View<TViewModel>(NavigationParameter @params) where TViewModel : IRoutableViewModel
@@ -330,7 +348,10 @@ namespace Acorisoft.Morisa
         {
             _vMgr.View<TViewModel>();
         }
-
+        public static void View(Type vmType)
+        {
+            _vMgr.View(vmType);
+        }
         public static IContainer Init(this IContainer container)
         {
             container.UseDryIocDependencyResolver();

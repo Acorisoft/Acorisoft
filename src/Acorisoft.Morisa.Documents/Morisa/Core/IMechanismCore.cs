@@ -10,6 +10,8 @@ namespace Acorisoft.Morisa.Core
     public interface IMechanismCore
     {
         IObserver<ICompositionSet> Input { get; }
+        int Page { get; set; }
+        int PageSize { get; set; }
     }
 
     public interface IMechanismCore<T> : IMechanismCore

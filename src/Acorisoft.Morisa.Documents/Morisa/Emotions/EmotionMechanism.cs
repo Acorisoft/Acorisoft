@@ -2,6 +2,7 @@
 using Acorisoft.Morisa.Internal;
 using DynamicData;
 using DynamicData.Binding;
+using DynamicData.Operators;
 using LiteDB;
 using System;
 using System.Collections.Generic;
@@ -26,36 +27,51 @@ namespace Acorisoft.Morisa.Emotions
     {
         //-------------------------------------------------------------------------------------------------
         //
-        //  GenereateGuid
+        //  Constants
         //
         //-------------------------------------------------------------------------------------------------
         public const string MaintainCollectionName = "Emotion";
         //-------------------------------------------------------------------------------------------------
         //
-        //  GenereateGuid
+        //  Variables
         //
         //-------------------------------------------------------------------------------------------------
         private LiteCollection<IEmotionElement>                 _DatabaseCollection;
         private ReadOnlyObservableCollection<IEmotionElement>   _BindableCollection;
         private SourceList<IEmotionElement>                     _EditableCollection;
+
         //-------------------------------------------------------------------------------------------------
         //
-        //  GenereateGuid
+        //  Contructors
         //
         //-------------------------------------------------------------------------------------------------
         public EmotionMechanism() : base()
         {
             _EditableCollection = new SourceList<IEmotionElement>();
             _EditableCollection.Connect()
+                               .Sort(SortExpressionComparer<IEmotionElement>.Descending(x => x.Creation))
+                               .Page(Paginator)
                                .Bind(out _BindableCollection)
                                .SubscribeOn(TaskPoolScheduler.Default)
-                               .Subscribe(x => Save());
+                               .Subscribe(x =>
+                               {
+                                   Save();
+                               });
         }
+
         //-------------------------------------------------------------------------------------------------
         //
-        //  GenereateGuid
+        //  Public Methods
         //
         //-------------------------------------------------------------------------------------------------
+
+        public void Paginating()
+        {
+            Paginator.OnNext(new PageRequest(Page, PageSize));
+            Paginator.OnCompleted();
+
+        }
+
         public void Add(IEmotionElement emotion)
         {
             if(emotion == null)
@@ -85,11 +101,19 @@ namespace Acorisoft.Morisa.Emotions
 
         public void Save()
         {
-            _DatabaseCollection.Upsert(_BindableCollection);
+            if (_BindableCollection.Count == 0)
+            {
+                _DatabaseCollection.Delete(Query.All());
+            }
+            else
+            {
+                _DatabaseCollection.Upsert(_BindableCollection);
+            }
         }
+
         //-------------------------------------------------------------------------------------------------
         //
-        //  GenereateGuid
+        //  Protected Methods
         //
         //-------------------------------------------------------------------------------------------------
 
@@ -119,7 +143,7 @@ namespace Acorisoft.Morisa.Emotions
 
         //-------------------------------------------------------------------------------------------------
         //
-        //  GenereateGuid
+        //  Properties
         //
         //-------------------------------------------------------------------------------------------------
         public ReadOnlyObservableCollection<IEmotionElement> Collection => _BindableCollection;

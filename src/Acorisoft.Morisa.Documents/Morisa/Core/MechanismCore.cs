@@ -1,4 +1,5 @@
 ﻿using Acorisoft.Morisa.Internal;
+using DynamicData;
 using LiteDB;
 using System;
 using System.Collections.Generic;
@@ -18,12 +19,18 @@ namespace Acorisoft.Morisa.Core
 {
     public abstract class MechanismCore : IMechanismCore
     {
+        public const int FirstPage = 1;
         //-------------------------------------------------------------------------------------------------
         //
         //  GenereateGuid
         //
         //-------------------------------------------------------------------------------------------------
+
+        private int _Page;
+        private int _PageSize;
+
         private readonly DelegateRecipient<ICompositionSet> _CompositionSet;
+        protected readonly ISubject<IPageRequest> Paginator;
 
         //-------------------------------------------------------------------------------------------------
         //
@@ -33,6 +40,9 @@ namespace Acorisoft.Morisa.Core
         protected MechanismCore()
         {
             _CompositionSet = new DelegateRecipient<ICompositionSet>(OnCompositionSetChanged);
+            _PageSize = 12;
+            _Page = FirstPage;
+            Paginator = new BehaviorSubject<IPageRequest>(new PageRequest(FirstPage, PageSize));
         }
 
         //-------------------------------------------------------------------------------------------------
@@ -83,5 +93,25 @@ namespace Acorisoft.Morisa.Core
         //
         //-------------------------------------------------------------------------------------------------
         public IObserver<ICompositionSet> Input => _CompositionSet;
+
+        public int PageSize
+        {
+            get => _PageSize;
+            set
+            {
+                _PageSize = value;
+                Paginator.OnNext(new PageRequest(_Page, _PageSize));
+            }
+        }
+
+        public int Page
+        {
+            get => _Page;
+            set
+            {
+                _Page = value;
+                Paginator.OnNext(new PageRequest(_Page, _PageSize));
+            }
+        }
     }
 }
