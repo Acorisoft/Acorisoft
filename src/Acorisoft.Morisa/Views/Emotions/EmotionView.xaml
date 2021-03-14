@@ -26,7 +26,7 @@
             <mui:StackGapPanel Orientation="Horizontal" DockPanel.Dock="Left">
                 <Button Content="Insert" Command="{Binding AddOperator}"/>
                 <Button Content="Remove" Command="{Binding RemoveOperator}"/>
-                <Button Content="Clear" Command="{Binding ClearOperator}"/>
+                <Button Content="Clear" Click="Button_Click"/>
             </mui:StackGapPanel>
         </DockPanel>
 

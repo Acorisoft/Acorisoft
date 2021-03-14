@@ -39,5 +39,10 @@ namespace Acorisoft.Morisa.Views
                 d(this.WhenAnyValue(x => x.ViewModel).BindTo(this, x => x.DataContext));
             });
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.Page = 2;
+        }
     }
 }

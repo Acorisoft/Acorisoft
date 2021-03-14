@@ -1,10 +1,9 @@
-[English](README.en.md) [日本語](README.jp.md) [En français](README.fr.md)
-
 # Morisa
 
 **“让你的梦想再次伟大！”**
 
 # 🎤 介绍
+
 Morisa是我们团队专门为设定爱好者创建的App项目，我们的初衷是让大家能够更愉快的创作属于你的世界观。
 
 ## 🎉免费！！！
