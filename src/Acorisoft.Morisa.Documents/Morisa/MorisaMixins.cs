@@ -1,4 +1,5 @@
-﻿using Acorisoft.Morisa.IO;
+﻿using Acorisoft.Morisa.Emotions;
+using Acorisoft.Morisa.Persistants;
 using DryIoc;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,8 @@ namespace Acorisoft.Morisa
     {
         public static IContainer UseMorisa(this IContainer container)
         {
-            container.RegisterInstance<IMorisaProjectManager>(new MorisaProjectManager() , IfAlreadyRegistered.Keep);
-            container.RegisterInstance<IMorisaFileManager>(new MorisaFileManager() , IfAlreadyRegistered.Keep);
+            container.RegisterInstance<ICompositionSetManager>(new CompositionSetManager());
+            container.RegisterInstance<IEmotionMechanism>(new EmotionMechanism());
             return container;
         }
     }

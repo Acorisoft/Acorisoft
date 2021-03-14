@@ -1,112 +1,62 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using LiteDB;
+using System;
 using System.Diagnostics;
-using ReactiveUI;
-using System.Reactive;
-using System.Reactive.Linq;
-using System.Reactive.Concurrency;
-using System.Reactive.Subjects;
-using System.Reactive.Disposables;
-using System.Reactive.Threading;
-using DryIoc;
-using System.Threading;
-using DynamicData.Binding;
-using System.Collections.ObjectModel;
-using LiteDB;
+using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace Acorisoft.Demos.RxSamples
 {
-    public class Model
+    public class ClassA
     {
-        public string Text { get; set; }
+        public string Id { get; set; } = Guid.NewGuid().ToString("N");
     }
-
-    public class Model1 : ReactiveObject
+    public class Tester
     {
-        private string _text;
-        public string Text
+        private string _double;
+        public Tester(ref string value)
         {
-            get => _text;
-            set => this.RaiseAndSetIfChanged(ref _text, value);
+            _double = value;
         }
+
+        public string Value { get => _double; set => _double = value; }
     }
-
-    public interface IService
-    {
-
-    }
-
-    public class ServiceA : IService
-    {
-
-    }
-
-    public class ServiceB : IService
-    {
-
-    }
-
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ObservableCollection<Model> Collection;
-        private Container _container;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            //
-            // it test subscribeOn method
-            Debug.WriteLine($"main thread is : {Thread.CurrentThread.ManagedThreadId}");
-            Model1 = new Model1();
-            Model1.WhenAnyValue(x => x.Text)
-                  .SubscribeOn(RxApp.TaskpoolScheduler)
-                  .Subscribe(x => Debug.WriteLine($"work on thread:{Thread.CurrentThread.ManagedThreadId}"));
-            Model1.Text = "A1";
-            Model1.Text = "B1";
 
-            //
-            // it test can subscribeOn method work on thread pool scheduler
-            Collection = new ObservableCollection<Model>();
-            Observable.FromEventPattern<NotifyCollectionChangedEventArgs>(Collection, "CollectionChanged")
-                      .ObserveOn(NewThreadScheduler.Default)
-                      .Select(x => x!)
-                      .Subscribe(x => Debug.WriteLine($"collection work on thread:{Thread.CurrentThread.ManagedThreadId}"));
-            Collection.Add(new Model());
+            //var db = new LiteDatabase("FILENAME=Test.MORISA-SETTING;Journal=False");
+            //var col = db.GetCollection<ClassA>("Hello");
+            //col.Insert(new ClassA());
+            //var id = "10F9CA2E";
+            //var names = db.GetCollectionNames();
+            //Debug.WriteLine(db.FileStorage.Exists(id));
+            //Debug.WriteLine(db.CollectionExists("Hello"));
+            //db.FileStorage.Upload(id , @"D:\ico_512x512.ico");
+            //var stream = db.FileStorage.OpenRead(id);
+            //foreach (var name in names)
+            //{
+            //    Debug.WriteLine(name);
+            //}
+            //var bi = new BitmapImage();
+            //bi.BeginInit();
+            //bi.StreamSource = stream;
+            //bi.EndInit();
+            //PART_Image.Source = bi;
 
-            
-
-            //
-            // it test can container return an enumerator for service
-            _container = new Container();
-            _container.Register<IService, ServiceA>();
-            _container.Register<IService, ServiceB>();
-            var services = _container.Resolve<IEnumerable<IService>>();
-
-            var db = new LiteDatabase("FileName=Test.Morisa-Setting");
-            var strogate = db.GetStorage<string>("Image","ImageChunk");
-            strogate.Upload(Guid.NewGuid().ToString("N") , @"C:\Users\zhongxin013\Documents\HZSG\Assets\ico_512x512.ico");
-            db.Dispose();
+            _tester = new Tester(ref _val);
+            _tester.Value = "122";
+            Debug.WriteLine(_val);
         }
 
-        public Model Model { get; set; }
-        public Model1 Model1 { get; set; }
+        private string _val;
+        private readonly Tester _tester;
     }
 }
