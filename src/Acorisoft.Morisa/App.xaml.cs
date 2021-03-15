@@ -1,5 +1,5 @@
-﻿using Acorisoft.Morisa.Tool.Views;
-using Acorisoft.Morisa.Tool.ViewModels;
+﻿using Acorisoft.Morisa.Views;
+using Acorisoft.Morisa.ViewModels;
 using DryIoc;
 using ReactiveUI;
 using System;
