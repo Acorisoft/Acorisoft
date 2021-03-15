@@ -17,6 +17,7 @@ namespace Acorisoft.Morisa.Core
         string Id { get; set; }
         DateTime Creation { get; set; }
     }
+
     public abstract class CompositionElement : INotifyPropertyChanged, INotifyPropertyChanging
     {
         //-------------------------------------------------------------------------------------------------

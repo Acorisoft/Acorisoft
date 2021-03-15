@@ -1,4 +1,4 @@
-﻿using Acorisoft.Morisa.ViewModels;
+﻿using Acorisoft.Morisa.Tools.ViewModels;
 using DryIoc;
 using ReactiveUI;
 using Splat;
@@ -24,25 +24,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Acorisoft.Morisa.Views
+namespace Acorisoft.Morisa.Tools.Views
 {
     /// <summary>
     /// NotificationView.xaml 的交互逻辑
     /// </summary>
-    public partial class EmotionView : ReactiveUserControl<EmotionViewModel>
+    public partial class HomeView : ReactiveUserControl<HomeViewModel>
     {
-        public EmotionView()
+        public HomeView()
         {
             InitializeComponent();
             this.WhenActivated(d =>
             {
                 d(this.WhenAnyValue(x => x.ViewModel).BindTo(this, x => x.DataContext));
             });
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel.Page = 2;
         }
     }
 }

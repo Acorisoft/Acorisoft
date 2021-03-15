@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Core
 {
-    public class InDatabaseResource : Resource
+    public abstract class Resource
     {
-
-        [BsonIgnore]
-        public string FileName { get; set; }
+        [BsonId]
+        public string Id { get; set; }
     }
 }

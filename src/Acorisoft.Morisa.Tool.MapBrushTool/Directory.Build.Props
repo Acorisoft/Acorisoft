@@ -1,0 +1,5 @@
+<Project>
+	<PropertyGroup>
+		<OutDir>..\Bin\tool</OutDir>
+	</PropertyGroup>
+</Project>

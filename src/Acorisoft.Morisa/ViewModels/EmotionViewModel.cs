@@ -56,5 +56,15 @@ namespace Acorisoft.Morisa.ViewModels
         public ICommand RemoveOperator => _RemoveOperator;
         public ICommand ClearOperator => _ClearOperator;
         public ReadOnlyObservableCollection<IEmotionElement> Collection => _Mechanism.Collection;
+        public int Page
+        {
+            get => _Mechanism.Page;
+            set => _Mechanism.Page = value;
+        }
+        public int PageSize
+        {
+            get => _Mechanism.PageSize;
+            set => _Mechanism.PageSize = value;
+        }
     }
 }

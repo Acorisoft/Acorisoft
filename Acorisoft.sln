@@ -13,7 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Demos.RxSamples",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.Shell", "src\Acorisoft.Morisa.Shell\Acorisoft.Morisa.Shell.csproj", "{605F1C84-BD3A-43E9-BCAB-B275E1799D09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Morisa.Core", "src\Acorisoft.Morisa.Core\Acorisoft.Morisa.Core.csproj", "{8CC1A86F-7986-46D6-8655-9BAEBD7B3BF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.Core", "src\Acorisoft.Morisa.Core\Acorisoft.Morisa.Core.csproj", "{8CC1A86F-7986-46D6-8655-9BAEBD7B3BF4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.Tools.MapBrushTool", "src\Acorisoft.Morisa.Tool.MapBrushTool\Acorisoft.Morisa.Tools.MapBrushTool.csproj", "{F2D3B863-E2CB-4A42-A656-762D0FB0A1FB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.Tool.ViewModelGenerator", "src\Acorisoft.Morisa.Tool.ViewModelGenerator\Acorisoft.Morisa.Tool.ViewModelGenerator.csproj", "{F6E25566-4271-48CB-9E86-4133BFBA2C51}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,14 @@ Global
 		{8CC1A86F-7986-46D6-8655-9BAEBD7B3BF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CC1A86F-7986-46D6-8655-9BAEBD7B3BF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CC1A86F-7986-46D6-8655-9BAEBD7B3BF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2D3B863-E2CB-4A42-A656-762D0FB0A1FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2D3B863-E2CB-4A42-A656-762D0FB0A1FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2D3B863-E2CB-4A42-A656-762D0FB0A1FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2D3B863-E2CB-4A42-A656-762D0FB0A1FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6E25566-4271-48CB-9E86-4133BFBA2C51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6E25566-4271-48CB-9E86-4133BFBA2C51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6E25566-4271-48CB-9E86-4133BFBA2C51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6E25566-4271-48CB-9E86-4133BFBA2C51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

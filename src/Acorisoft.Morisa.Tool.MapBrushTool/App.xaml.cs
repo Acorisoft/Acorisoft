@@ -1,5 +1,5 @@
-﻿using Acorisoft.Morisa.Tool.Views;
-using Acorisoft.Morisa.Tool.ViewModels;
+﻿using Acorisoft.Morisa.Views;
+using Acorisoft.Morisa.ViewModels;
 using DryIoc;
 using ReactiveUI;
 using System;
@@ -27,7 +27,7 @@ namespace Acorisoft.Morisa
 
         public App()
         {
-            _container = new Container(Rules.Default.WithTrackingDisposableTransients());            
+            _container = new Container(Rules.Default.WithTrackingDisposableTransients());
             _container.Init()
                       .UseMorisa()
                       .UseLog()
@@ -48,36 +48,20 @@ namespace Acorisoft.Morisa
 
         protected virtual void RegisterDialogs(IContainer container)
         {
-            container.Register<GenerateCompositionSetViewModel>();
-            container.Register<SelectProjectDirectoryViewModel>();
+            //container.Register<GenerateCompositionSetViewModel>();
+            //container.Register<SelectProjectDirectoryViewModel>();
 
-            container.Register<IViewFor<GenerateCompositionSetViewModel>, GenerateCompositionSetView>();
-            container.Register<IViewFor<SelectProjectDirectoryViewModel>, SelectProjectDirectoryView>();
+            //container.Register<IViewFor<GenerateCompositionSetViewModel>, GenerateCompositionSetView>();
+            //container.Register<IViewFor<SelectProjectDirectoryViewModel>, SelectProjectDirectoryView>();
         }
 
         protected virtual void RegisterViews(IContainer container)
         {
             container.Register<HomeViewModel>();
-            container.Register<EmotionViewModel>();
+            //container.Register<EmotionViewModel>();
 
             container.Register<IViewFor<HomeViewModel>, HomeView>();
-            container.Register<IViewFor<EmotionViewModel>, EmotionView>();
-        }
-
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            if(e.Args.Length > 0)
-            {
-                
-            }
-            else
-            {
-                ShellMixins.View<HomeViewModel>();
-            }
-
-            //
-            // 启动应用
-            base.OnStartup(e);
+            //container.Register<IViewFor<EmotionViewModel>, EmotionView>();
         }
 
         public AppViewModel AppViewModel { get; }

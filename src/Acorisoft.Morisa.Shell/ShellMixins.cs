@@ -264,7 +264,7 @@ namespace Acorisoft.Morisa
         {
             _vMgr = new ViewManager();
             container.RegisterInstance(_vMgr);
-            OnWireViewModel(container, assemblies);
+            // OnWireViewModel(container, assemblies);
             return container;
         }
 

@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Core
 {
-    public class InDatabaseResource : Resource
+    public class OutstandResource : Resource
     {
+        public string FileName { get; set; }
 
         [BsonIgnore]
-        public string FileName { get; set; }
+        public bool IsShadowCopy { get; set; }
     }
 }

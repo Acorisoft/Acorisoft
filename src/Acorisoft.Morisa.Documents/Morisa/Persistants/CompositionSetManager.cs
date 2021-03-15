@@ -156,15 +156,17 @@ namespace Acorisoft.Morisa.Persistants
 
             var cs = new CompositionSet(info.Directory, info.FileName, info);
             
-            if(cs.Cover != null &&!string.IsNullOrEmpty(cs.Cover.FileName) && File.Exists(cs.Cover.FileName))
-            {
-                if (string.IsNullOrEmpty(cs.Cover.Id))
-                {
-                    var id = CompositionElementFactory.GenereateGuid();
-                    cs.Cover.Id = id;
-                }
-                cs.Database.FileStorage.Upload(cs.Cover.Id, cs.Cover.FileName);
-            }
+            //
+            // TODO: 处理设定集封面
+            //if(cs.Cover != null &&!string.IsNullOrEmpty(cs.Cover.FileName) && File.Exists(cs.Cover.FileName))
+            //{
+            //    if (string.IsNullOrEmpty(cs.Cover.Id))
+            //    {
+            //        var id = CompositionElementFactory.GenereateGuid();
+            //        cs.Cover.Id = id;
+            //    }
+            //    cs.Database.FileStorage.Upload(cs.Cover.Id, cs.Cover.FileName);
+            //}
 
             Changed?.Invoke(this, new CompositionSetChangedEventArgs(_CurrentCompositionSet, cs));
             Opened?.Invoke(this, new CompositionSetOpenedEventArgs(css));
@@ -174,6 +176,7 @@ namespace Acorisoft.Morisa.Persistants
                 _CurrentCompositionSet.Dispose();
                 _CurrentCompositionSet = null;
             }
+
             _CurrentCompositionSet = cs;
         }
 

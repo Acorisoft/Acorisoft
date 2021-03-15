@@ -1,8 +1,7 @@
-﻿<Application x:Class="Acorisoft.Morisa.App"
+﻿<Application x:Class="Acorisoft.Morisa.Tools.MapBrushTools.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Acorisoft.Morisa"
-             xmlns:converters="clr-namespace:Acorisoft.Morisa.Converters"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
@@ -12,9 +11,7 @@
                 <!-- Morisa UI -->
                 <ResourceDictionary Source="pack://application:,,,/Acorisoft.Morisa.Shell;component/Themes/Generic.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <!-- Converters -->
-            <converters:IDRImageConverter x:Key="IDRImage"/>
-            <converters:IDROfflineImageConverter x:Key="IDROfflineImage"/>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>
