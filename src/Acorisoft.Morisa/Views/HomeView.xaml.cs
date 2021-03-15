@@ -1,4 +1,5 @@
 ﻿using Acorisoft.Morisa.ViewModels;
+using Acorisoft.Pandora.Inputs;
 using DryIoc;
 using ReactiveUI;
 using Splat;
@@ -26,6 +27,13 @@ using System.Windows.Shapes;
 
 namespace Acorisoft.Morisa.Views
 {
+    public class TestContent : Border
+    {
+        public TestContent()
+        {
+            StylusPlugIns.Add(new MapInputHandler());
+        }
+    }
     /// <summary>
     /// NotificationView.xaml 的交互逻辑
     /// </summary>
@@ -38,6 +46,11 @@ namespace Acorisoft.Morisa.Views
             {
                 d(this.WhenAnyValue(x => x.ViewModel).BindTo(this, x => x.DataContext));
             });
+            this.Loaded += OnLoaded;
+        }
+
+        protected virtual void OnLoaded(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

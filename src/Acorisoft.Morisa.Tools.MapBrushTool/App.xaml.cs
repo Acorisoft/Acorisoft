@@ -17,7 +17,7 @@ using Acorisoft.Morisa;
 using Splat;
 using System.Diagnostics;
 
-namespace Acorisoft.Morisa
+namespace Acorisoft.Morisa.Tools
 {
     /// <summary>
     /// Interaction logic for App.xaml

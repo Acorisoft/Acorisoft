@@ -1,7 +1,7 @@
-﻿<Application x:Class="Acorisoft.Morisa.Tools.MapBrushTools.App"
+﻿<Application x:Class="Acorisoft.Morisa.Tools.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Acorisoft.Morisa"
+             xmlns:local="clr-namespace:Acorisoft.Morisa.Tools"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
