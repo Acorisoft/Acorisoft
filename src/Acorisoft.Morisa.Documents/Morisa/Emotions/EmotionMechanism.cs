@@ -51,7 +51,7 @@ namespace Acorisoft.Morisa.Emotions
             _EditableCollection.Connect()
                                .Sort(SortExpressionComparer<IEmotionElement>.Descending(x => x.Creation))
                                .Page(Paginator)
-                               .Filter(x=> true)
+                               .Filter(x => true)
                                .Bind(out _BindableCollection)
                                .SubscribeOn(TaskPoolScheduler.Default)
                                .Subscribe(x =>

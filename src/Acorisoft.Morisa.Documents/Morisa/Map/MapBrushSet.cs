@@ -8,7 +8,7 @@ using LiteDB;
 
 namespace Acorisoft.Morisa.Map
 {
-    public class MapBrushSet : IDisposable
+    public class MapBrushSet : IDisposable,IMapBrushSet
     {
         //-------------------------------------------------------------------------------------------------
         //
@@ -16,7 +16,6 @@ namespace Acorisoft.Morisa.Map
         //
         //-------------------------------------------------------------------------------------------------
 
-        public const string MaintainCoverCollectionName = "Covers";
         public const string MaintainBrushCollectionName = "Brushes";
         public const string MaintainGroupCollectionName = "Group";
         public const string MaintainSettingName = "Setting";
@@ -28,7 +27,7 @@ namespace Acorisoft.Morisa.Map
         //
         //-------------------------------------------------------------------------------------------------
 
-        protected class Setting
+        public class Setting
         {
             /// <summary>
             /// 获取或设置当前画刷集的名字。
@@ -53,15 +52,7 @@ namespace Acorisoft.Morisa.Map
             /// <summary>
             /// 获取或设置当前画刷集的封面。
             /// </summary>
-            public InDatabaseResource Cover { get; }
-        }
-
-        protected class ResourceUsage
-        {
-            [BsonId]
-            public string Id { get; set; }
-            public InDatabaseResource Resource { get; set; }
-            public bool Usage { get; set; }
+            public InDatabaseResource Cover { get; set; }
         }
 
         //-------------------------------------------------------------------------------------------------
@@ -70,11 +61,10 @@ namespace Acorisoft.Morisa.Map
         //
         //-------------------------------------------------------------------------------------------------
 
-        private readonly LiteDatabase                   _DB;
-        private readonly LiteCollection<BsonDocument>   _DB_External;
-        private readonly LiteCollection<IMapBrush>      _DB_Brushes;
-        private readonly LiteCollection<IMapGroup>      _DB_Groups;
-        private readonly LiteCollection<ResourceUsage>  _DB_Covers;
+        private readonly LiteDatabase          _DB;
+        private LiteCollection<BsonDocument>   _DB_External;
+        private LiteCollection<IMapBrush>      _DB_Brushes;
+        private LiteCollection<IMapGroup>      _DB_Groups;
 
         private bool            _DisposedValue;
         private Setting         _Setting;
@@ -83,27 +73,16 @@ namespace Acorisoft.Morisa.Map
         //  Contructors
         //
         //-------------------------------------------------------------------------------------------------
-        public MapBrushSet(string fileName, string name, string summary, string author, IEnumerable<string> tags, InDatabaseResource cover)
+
+        internal MapBrushSet(LiteDatabase database)
         {
-
+            _DB = database;
         }
-
-        public MapBrushSet(LiteDatabase db, string name, string summary, string author, IEnumerable<string> tags, InDatabaseResource cover)
-        {
-
-        }
-
         //-------------------------------------------------------------------------------------------------
         //
         //  Public Methods
         //
         //-------------------------------------------------------------------------------------------------
-        public void UpdateSetting()
-        {
-            //
-            // Update
-            _DB_External.Upsert(BsonMapper.Global.ToDocument(_Setting));
-        }
 
         public void Dispose()
         {
@@ -139,6 +118,99 @@ namespace Acorisoft.Morisa.Map
         //
         //-------------------------------------------------------------------------------------------------
 
+        /// <summary>
+        /// 
+        /// </summary>
+        protected internal LiteDatabase Database => _DB;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected internal LiteCollection<BsonDocument> DB_ExternalCollection
+        {
+            get => _DB_External;
+            internal set => _DB_External = value;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected internal LiteCollection<IMapBrush> DB_BrushCollection
+        {
+            get => _DB_Brushes;
+            internal set => _DB_Brushes = value;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected internal LiteCollection<IMapGroup> DB_GroupCollection
+        {
+            get => _DB_Groups;
+            internal set => _DB_Groups = value;
+        }
+
+        protected internal Setting Properties
+        {
+            get => _Setting;
+            internal set => _Setting = value;
+        }
+
+        /// <summary>
+        /// 获取或设置当前画刷集的名字。
+        /// </summary>
+        public string Name
+        {
+            get => _Setting.Name;
+        }
+
+        /// <summary>
+        /// 获取或设置当前画刷集的作者。
+        /// </summary>
+        public string Author
+        {
+            get => _Setting.Author;
+        }
+
+        /// <summary>
+        /// 获取或设置当前画刷集的简介。
+        /// </summary>
+        public string Summary
+        {
+            get => _Setting.Summary;
+        }
+
+        /// <summary>
+        /// 获取或设置当前画刷集的标签。
+        /// </summary>
+        public List<string> Tags
+        {
+            get => _Setting.Tags;
+        }
+
+        /// <summary>
+        /// 获取或设置当前画刷集的封面。
+        /// </summary>
+        public InDatabaseResource Cover
+        {
+            get => _Setting.Cover;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public IGroupCollection BrushGroups { get; internal set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public IMapBrushCollection Brushes { get; internal set; }
+
+        //-------------------------------------------------------------------------------------------------
+        //
+        //  Finalizer
+        //
+        //-------------------------------------------------------------------------------------------------
 
         // TODO: 仅当“Dispose(bool disposing)”拥有用于释放未托管资源的代码时才替代终结器
         ~MapBrushSet()
