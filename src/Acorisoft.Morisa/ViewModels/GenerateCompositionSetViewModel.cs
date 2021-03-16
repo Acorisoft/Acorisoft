@@ -94,7 +94,7 @@ namespace Acorisoft.Morisa.ViewModels
                 RaiseUpdated(nameof(Tags));
             }
         }
-        public InDatabaseResource Cover
+        public Resource Cover
         {
             get => _Info.Cover;
             set

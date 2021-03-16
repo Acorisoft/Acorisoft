@@ -15,6 +15,7 @@
             <!-- Converters -->
             <converters:IDRImageConverter x:Key="IDRImage"/>
             <converters:IDROfflineImageConverter x:Key="IDROfflineImage"/>
+            <converters:ResourceConverter x:Key="ResourceConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

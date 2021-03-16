@@ -6,6 +6,7 @@ using Splat;
 using Splat.DryIoc;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Concurrency;
@@ -15,6 +16,7 @@ using System.Reactive.Subjects;
 using System.Reactive.Threading;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -24,16 +26,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Acorisoft.Morisa.Views
 {
-    public class TestContent : Border
-    {
-        public TestContent()
-        {
-            StylusPlugIns.Add(new MapInputHandler());
-        }
-    }
     /// <summary>
     /// NotificationView.xaml 的交互逻辑
     /// </summary>

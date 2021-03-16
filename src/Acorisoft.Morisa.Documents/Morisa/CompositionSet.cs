@@ -21,6 +21,7 @@ namespace Acorisoft.Morisa
         //-------------------------------------------------------------------------------------------------
         public const string ImageDirectoryName = "Images";
         public const string VideoDirectoryName = "Videos";
+        public const string BrushesDirectoryName = "Brushes";
         public const string MainDatabaseName = "Main.Morisa-Project";
         public const string MainDatabaseSettingName = "Morisa.Setting";
         public const string ExternalCollectionName = "Externals";
@@ -251,8 +252,18 @@ namespace Acorisoft.Morisa
         {
             get
             {
-                return Path.Combine(Directory, ImageDirectoryName);
+                return EnsureDirectoryExists(Path.Combine(Directory, ImageDirectoryName));
             }
+        }
+
+        protected string EnsureDirectoryExists(string directory)
+        {
+            if (!System.IO.Directory.Exists(directory))
+            {
+                System.IO.Directory.CreateDirectory(directory);
+            }
+
+            return directory;
         }
 
         /// <summary>
@@ -262,7 +273,15 @@ namespace Acorisoft.Morisa
         {
             get
             {
-                return Path.Combine(Directory, VideoDirectoryName);
+                return EnsureDirectoryExists(Path.Combine(Directory, VideoDirectoryName));
+            }
+        }
+
+        protected internal string BrushesDirectory
+        {
+            get
+            {
+                return EnsureDirectoryExists(Path.Combine(Directory, BrushesDirectoryName));
             }
         }
 

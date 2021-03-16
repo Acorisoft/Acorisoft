@@ -47,7 +47,7 @@ namespace Acorisoft.Morisa.Views
             };
             if(opendlg.ShowDialog() == true)
             {
-                ViewModel.Cover = new InDatabaseResource
+                ViewModel.Cover = new OutsideResource
                 {
                     FileName = opendlg.FileName
                 };

@@ -27,42 +27,5 @@ namespace Acorisoft.Pandora.Map
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MapEditor), new FrameworkPropertyMetadata(typeof(MapEditor)));
         }
-
-        protected class InternalStylusPointObserver : IObserver<StylusPoint>
-        {
-            public void OnCompleted()
-            {
-            }
-
-            public void OnError(Exception error)
-            {
-            }
-
-            public void OnNext(StylusPoint value)
-            {
-            }
-
-            public ISubject<StylusPoint, IMapSemantic> Output { get; set; }
-        }
-
-        private readonly InternalStylusPointObserver _PointObserver;
-        private readonly MapInputHandler _InputHandler;
-
-        public MapEditor()
-        {
-            //
-            // Initialize Variables
-            _PointObserver = new InternalStylusPointObserver();
-            _InputHandler = new MapInputHandler();
-            _InputHandler.Subscribe(_PointObserver);
-
-            //
-            // Set Variables
-            StylusPlugIns.Add(_InputHandler);
-        }
-
-        //
-        // StylusPoint -> IMapSemantic
-        // IMapSemantic -> IMapEditOperation
     }
 }

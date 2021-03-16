@@ -15,6 +15,6 @@ namespace Acorisoft.Morisa
         public string Summary { get; set; }
         public string Topic { get; set; }
         public List<string> Tags { get; set; }
-        public InDatabaseResource Cover { get; set; }
+        public Resource Cover { get; set; }
     }
 }

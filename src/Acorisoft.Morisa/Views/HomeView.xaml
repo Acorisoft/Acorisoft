@@ -21,7 +21,5 @@
                     Command="{x:Static mui:WindowCommands.Goto}"
                     CommandParameter="{x:Type vm:EmotionViewModel}"/>
         </StackPanel>
-
-        <v:TestContent x:Name="PART_Test" Grid.Column="1" Background="{StaticResource UI.Brushes.MaterialDesign.Yellow}"/>
     </Grid>
 </rx:ReactiveUserControl>

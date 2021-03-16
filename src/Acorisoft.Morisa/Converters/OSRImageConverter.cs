@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa.Map
+namespace Acorisoft.Morisa.Converters
 {
-    public interface ICompositionLayer
+    public class OSRImageConverter
     {
     }
 }

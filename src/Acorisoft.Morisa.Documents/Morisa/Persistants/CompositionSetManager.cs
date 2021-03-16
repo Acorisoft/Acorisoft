@@ -8,6 +8,7 @@ using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
 using Acorisoft.Properties;
+using Acorisoft.Morisa.Core;
 
 namespace Acorisoft.Morisa.Persistants
 {
@@ -155,18 +156,33 @@ namespace Acorisoft.Morisa.Persistants
             };
 
             var cs = new CompositionSet(info.Directory, info.FileName, info);
-            
+
             //
             // TODO: 处理设定集封面
-            //if(cs.Cover != null &&!string.IsNullOrEmpty(cs.Cover.FileName) && File.Exists(cs.Cover.FileName))
-            //{
-            //    if (string.IsNullOrEmpty(cs.Cover.Id))
-            //    {
-            //        var id = CompositionElementFactory.GenereateGuid();
-            //        cs.Cover.Id = id;
-            //    }
-            //    cs.Database.FileStorage.Upload(cs.Cover.Id, cs.Cover.FileName);
-            //}
+            if (cs.Cover != null)
+            {
+                if (cs.Cover is InDatabaseResource idr && !string.IsNullOrEmpty(idr.FileName) && File.Exists(idr.FileName))
+                {
+                    if (string.IsNullOrEmpty(idr.Id))
+                    {
+                        idr.Id = CompositionElementFactory.GenereateGuid();
+                    }
+                    cs.Database.FileStorage.Upload(idr.Id, idr.FileName);
+                }
+                else if(cs.Cover is OutsideResource osr)
+                {
+                    if (string.IsNullOrEmpty(osr.Id))
+                    {
+                        osr.Id = CompositionElementFactory.GenereateGuid();
+                    }
+
+                    //
+                    // Copy To Images Folder
+                    // That image Rename
+                    var extension = new FileInfo(osr.FileName).Extension;
+                    File.Copy(osr.FileName, Path.Combine(cs.ImageDirectory, osr.Id + extension));
+                }
+            }
 
             Changed?.Invoke(this, new CompositionSetChangedEventArgs(_CurrentCompositionSet, cs));
             Opened?.Invoke(this, new CompositionSetOpenedEventArgs(css));

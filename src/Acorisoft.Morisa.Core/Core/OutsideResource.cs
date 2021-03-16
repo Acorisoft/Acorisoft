@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Core
 {
-    public class OutstandResource : Resource
+    public class OutsideResource : Resource
     {
         public string FileName { get; set; }
 

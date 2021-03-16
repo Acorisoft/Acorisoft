@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Map
 {
-    public interface IMapBrushGroup
+    class MRUCache<T>
     {
     }
 }
