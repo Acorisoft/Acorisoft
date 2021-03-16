@@ -1,24 +1,30 @@
-﻿using LiteDB;
+﻿using DynamicData;
+using DynamicData.Binding;
+using LiteDB;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Reactive;
+using System.Reactive.Concurrency;
+using System.Reactive.Disposables;
+using System.Reactive.Joins;
+using System.Reactive.Linq;
+using System.Reactive.PlatformServices;
+using System.Reactive.Subjects;
+using System.Reactive.Threading;
+using System.Text;
+using System.Threading.Tasks;
+using ReactiveUI;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace Acorisoft.Demos.RxSamples
 {
-    public class ClassA
+    public class StringAdapter
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString("N");
-    }
-    public class Tester
-    {
-        private string _double;
-        public Tester(ref string value)
-        {
-            _double = value;
-        }
-
-        public string Value { get => _double; set => _double = value; }
+        public string Text { get; set; }
     }
 
     /// <summary>
@@ -26,37 +32,58 @@ namespace Acorisoft.Demos.RxSamples
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        private ISubject<IPageRequest> Paginator;
+        private ISubject<Func<StringAdapter,bool>> Filter;
+        private ISubject<IComparer<StringAdapter>> Sorter;
+        private SourceList<string> _EditableCollection;
+        private ReadOnlyObservableCollection<StringAdapter> _BindableCollection;
+        private int _Page = 1;
         public MainWindow()
         {
             InitializeComponent();
+            Sorter = new BehaviorSubject<IComparer<StringAdapter>>(Comparer<StringAdapter>.Default);
+            Filter = new BehaviorSubject<Func<StringAdapter, bool>>(x => true);
+            Paginator = new BehaviorSubject<IPageRequest>(new PageRequest(1,12));
+            _EditableCollection = new SourceList<string>();
+            _EditableCollection.Connect()
+                               .Transform(x => new StringAdapter { Text = x })
+                               .Filter(Filter)
+                               .Page(Paginator)
+                               .Bind(out _BindableCollection)
+                               .SubscribeOn(Dispatcher)
+                               .Subscribe(x =>
+                               {
 
-
-            //var db = new LiteDatabase("FILENAME=Test.MORISA-SETTING;Journal=False");
-            //var col = db.GetCollection<ClassA>("Hello");
-            //col.Insert(new ClassA());
-            //var id = "10F9CA2E";
-            //var names = db.GetCollectionNames();
-            //Debug.WriteLine(db.FileStorage.Exists(id));
-            //Debug.WriteLine(db.CollectionExists("Hello"));
-            //db.FileStorage.Upload(id , @"D:\ico_512x512.ico");
-            //var stream = db.FileStorage.OpenRead(id);
-            //foreach (var name in names)
-            //{
-            //    Debug.WriteLine(name);
-            //}
-            //var bi = new BitmapImage();
-            //bi.BeginInit();
-            //bi.StreamSource = stream;
-            //bi.EndInit();
-            //PART_Image.Source = bi;
-
-            _tester = new Tester(ref _val);
-            _tester.Value = "122";
-            Debug.WriteLine(_val);
+                               });
+            _EditableCollection.AddRange(CreateDataCore());
         }
 
-        private string _val;
-        private readonly Tester _tester;
+        protected IEnumerable<string> CreateDataCore()
+        {
+            var list = new List<string>();
+            for(int i = 0; i < 100; i++)
+            {
+                list.Add(i.ToString());
+            }
+            return list;
+        }
+
+        public ReadOnlyObservableCollection<StringAdapter> Collection => _BindableCollection;
+
+        private void Last(object sender, RoutedEventArgs e)
+        {
+            Paginator.OnNext(new PageRequest(_Page > 1 ? --_Page : 1, 12));
+        }
+
+        private void Next(object sender, RoutedEventArgs e)
+        {
+            Paginator.OnNext(new PageRequest(_Page <9 ? ++_Page : 8, 12));
+        }
+
+
+        private void Search(object sender, RoutedEventArgs e)
+        {
+            Filter.OnNext(x => x.Text.Length > 1);
+        }
     }
 }

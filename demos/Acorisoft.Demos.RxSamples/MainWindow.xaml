@@ -7,6 +7,16 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Image x:Name="PART_Image"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="48" />
+        </Grid.RowDefinitions>
+
+        <ItemsControl DisplayMemberPath="Text" ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=Collection,Mode=OneWay}"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Button Content="《" Click="Last"/>
+            <Button Content="》" Click="Next"/>
+            <Button Content="Search" Click="Search"/>
+        </StackPanel>
     </Grid>
 </Window>
