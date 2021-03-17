@@ -33,21 +33,15 @@ namespace Acorisoft.Morisa
                       .UseLog()
                       .UseViews(typeof(App).Assembly)
                       .UseDialog();
-
-            var counter = new Stopwatch();
-            var vmgr = _container.Resolve<IViewManager>();
-            counter.Start();
-
             RegisterServices(_container);
             RegisterViews(_container);
-
-            counter.Stop();
-            vmgr.Logger.Info($"视图注册花费了:{counter.ElapsedMilliseconds}ms,总计:{counter.ElapsedTicks}ticks");
             AppViewModel = Locator.Current.GetService<AppViewModel>();
         }
 
         protected virtual void RegisterServices(IContainer container)
         {
+            container.RegisterInstance<IDisposableCollector>(new DisposableCollector());
+
             container.Register<AppViewModel>();
 
             //
