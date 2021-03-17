@@ -12,7 +12,8 @@ using Acorisoft.Morisa.Core;
 
 namespace Acorisoft.Morisa.Persistants
 {
-    public class CompositionSetManager : ICompositionSetManager
+    [Obsolete]
+    public partial class CompositionSetManager : ICompositionSetManager
     {
         //-------------------------------------------------------------------------------------------------
         //

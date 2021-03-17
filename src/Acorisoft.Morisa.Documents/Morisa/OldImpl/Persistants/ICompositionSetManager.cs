@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Persistants
 {
+    [Obsolete]
     public class CompositionSetChangedEventArgs : EventArgs
     {
         public CompositionSetChangedEventArgs(ICompositionSet oldCs, ICompositionSet newCs)

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Emotions
 {
+    [Obsolete]
     public interface IEmotionMechanism : IMechanismCore<IEmotionElement>
     {
         void Add(IEmotionElement emotion);

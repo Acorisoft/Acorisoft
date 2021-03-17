@@ -17,7 +17,7 @@ namespace Acorisoft.Morisa
         //-------------------------------------------------------------------------------------------------
         public static string GenereateGuid() => Guid.NewGuid().ToString("N");
 
-
+        [Obsolete]
         //-------------------------------------------------------------------------------------------------
         //
         //  CreateMottoEmotion
@@ -27,7 +27,7 @@ namespace Acorisoft.Morisa
         {
             return CreateMottoEmotion(SR.MottoEmotionSampleMotto, SR.MottoEmotionSampleSig, MottoEmotionPresentation.Default);
         }
-
+        [Obsolete]
         public static MottoEmotion CreateMottoEmotion(string motto, string sig)
         {
             return new MottoEmotion
@@ -38,7 +38,7 @@ namespace Acorisoft.Morisa
                 Presentation = MottoEmotionPresentation.Default
             };
         }
-
+        [Obsolete]
         public static MottoEmotion CreateMottoEmotion(string motto, string sig, MottoEmotionPresentation presentation)
         {
             return new MottoEmotion

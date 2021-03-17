@@ -8,6 +8,7 @@ using Acorisoft.Morisa.Core;
 
 namespace Acorisoft.Morisa.Emotions
 {
+    [Obsolete]
     public abstract class EmotionElement : CompositionElement, IEmotionElement
     {
 

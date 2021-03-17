@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Emotions
 {
-
+    [Obsolete]
     public enum MottoEmotionPresentation
     {
         Default,
@@ -20,6 +20,7 @@ namespace Acorisoft.Morisa.Emotions
     /// <para>例如：在爱情萌芽的时候，只要悄悄的有点希望就足够了。</para>
     /// <para>——绝望先生</para>
     /// </remarks>
+    [Obsolete]
     public interface IMottoEmotion : IEmotionElement
     {
         /// <summary>

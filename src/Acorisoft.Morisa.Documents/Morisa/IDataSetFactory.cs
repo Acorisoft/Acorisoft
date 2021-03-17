@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa.Emotions
-{    
-
-    public interface IConversationEmotion : IEmotionElement
+namespace Acorisoft.Morisa
+{
+    public interface IDataSetFactory
     {
     }
 }

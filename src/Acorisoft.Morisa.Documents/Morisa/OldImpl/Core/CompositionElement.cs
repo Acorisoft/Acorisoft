@@ -12,12 +12,14 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Core
 {
+    [Obsolete]
     public interface ICompositionElement : INotifyPropertyChanged, INotifyPropertyChanging
     {
         string Id { get; set; }
         DateTime Creation { get; set; }
     }
 
+    [Obsolete]
     public abstract class CompositionElement : INotifyPropertyChanged, INotifyPropertyChanging
     {
         //-------------------------------------------------------------------------------------------------

@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa
 {
-    partial class CompositionSet : DataSet
+    public interface ICompositionSetContext
     {
+        string Directory { get; }
+        string FileName { get; }
+        ICompositionSet CompositionSet { get; }
     }
 }

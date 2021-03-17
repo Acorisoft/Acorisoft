@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa
 {
+    [Obsolete]
     public class CompositionSetInfo : ICompositionSetInfo
     {
         public string Directory { get; set; }

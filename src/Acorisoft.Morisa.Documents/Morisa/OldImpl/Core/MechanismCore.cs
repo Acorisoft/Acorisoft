@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Core
 {
+    [Obsolete]
     public abstract class MechanismCore : IMechanismCore
     {
         public const int FirstPage = 1;

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa
 {
+    [Obsolete]
     [DebuggerDisplay("{FileName}")]
     public class CompositionSetStore : ICompositionSetStore,IEquatable<CompositionSetStore>
     {

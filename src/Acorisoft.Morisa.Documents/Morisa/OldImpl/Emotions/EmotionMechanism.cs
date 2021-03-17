@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 namespace Acorisoft.Morisa.Emotions
 {
 #pragma warning disable IDE0044
-
+    [Obsolete]
     public class EmotionMechanism : MechanismCore, IEmotionMechanism
     {
         //-------------------------------------------------------------------------------------------------

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Emotions
 {
+    [Obsolete]
     public class MottoEmotion : EmotionElement, IMottoEmotion
     {
         private string _Motto;
