@@ -6,16 +6,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Core
 {
-    public class ApplicationEnvironment : IApplicationEnvironment
+    public class ApplicationEnvironment 
     {
-        public ApplicationEnvironment()
-        {
-            Projects = new List<ICompositionSetStore>();
-        }
-
-        public string WorkingDirectory { get; set; }
-        public List<ICompositionSetStore> Projects { get; set; }
-        public ICompositionSetStore CurrentProject { get; set; }
-        public bool IsFirstTime { get; set; }
     }
 }
