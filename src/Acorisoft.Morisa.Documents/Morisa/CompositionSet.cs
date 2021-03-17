@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa
 {
-    partial class CompositionSet : DataSet
+    partial class CompositionSet 
     {
     }
 }

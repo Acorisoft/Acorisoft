@@ -35,9 +35,13 @@ namespace Acorisoft.Demos.RxSamples
         private ISubject<IPageRequest> Paginator;
         private ISubject<Func<StringAdapter,bool>> Filter;
         private ISubject<IComparer<StringAdapter>> Sorter;
+        private ISubject<Func<StringAdapter,DateTime>> Grouper;
         private SourceList<string> _EditableCollection;
         private ReadOnlyObservableCollection<StringAdapter> _BindableCollection;
         private int _Page = 1;
+        private int _Temp;
+        private ObservableAsPropertyHelper<int> _TempOAPH;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -49,6 +53,7 @@ namespace Acorisoft.Demos.RxSamples
                                .Transform(x => new StringAdapter { Text = x })
                                .Filter(Filter)
                                .Page(Paginator)
+                               .Sort(SortExpressionComparer<StringAdapter>.Ascending(x => x.Text))
                                .Bind(out _BindableCollection)
                                .SubscribeOn(Dispatcher)
                                .Subscribe(x =>
@@ -84,6 +89,13 @@ namespace Acorisoft.Demos.RxSamples
         private void Search(object sender, RoutedEventArgs e)
         {
             Filter.OnNext(x => x.Text.Length > 1);
+        }
+
+        public int Value {
+            get
+            {
+                return _TempOAPH.Value;
+            } 
         }
     }
 }

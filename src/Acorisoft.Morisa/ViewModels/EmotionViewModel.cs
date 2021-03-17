@@ -50,6 +50,8 @@ namespace Acorisoft.Morisa.ViewModels
             {
                 _Mechanism.Clear();
             });
+
+            
         }
 
         public ICommand AddOperator => _AddOperator;

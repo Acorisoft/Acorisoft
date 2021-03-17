@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa
+namespace Acorisoft.Morisa.Collection
 {
-    public interface IDataSetFactory
+    public interface IDataSelector<T>
     {
+        bool Filter(T data);
+        IComparer<T> Sort();
     }
 }
