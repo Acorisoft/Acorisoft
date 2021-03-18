@@ -1,4 +1,5 @@
-﻿using Acorisoft.Morisa.ViewModels;
+﻿using Acorisoft.Morisa.Map;
+using Acorisoft.Morisa.ViewModels;
 using DynamicData.Binding;
 using GongSolutions.Wpf.DragDrop;
 using ReactiveUI;
@@ -16,13 +17,9 @@ namespace Acorisoft.Morisa.Tools.ViewModels
     public partial class HomeViewModel : ViewModelBase
     {
 
-        public HomeViewModel()
+        public HomeViewModel(IMapBrushSetFactory factory)
         {
-            OnInitialize();
         }
 
-        protected void OnInitialize()
-        {
-        }
     }
 }

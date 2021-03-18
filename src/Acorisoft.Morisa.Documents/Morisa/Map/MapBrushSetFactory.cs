@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Map
 {
-    public class MapBrushSetFactory : DataSetManager<MapBrushSet, MapBrushSetInformation>
+    public class MapBrushSetFactory : DataSetManager<MapBrushSet, MapBrushSetInformation>, IMapBrushSetFactory
     {
         public const string BrushCollectionName = "Brushes";
         public const string GroupCollectionName = "Groups";
@@ -61,22 +61,22 @@ namespace Acorisoft.Morisa.Map
             // 收集需要释放的实例。
             _Collector.Collect(ProfileDisposable);
             _Collector.Collect(ResourceDisposable);
-            
+
         }
 
         public void Generate(IGenerateContext<MapBrushSetInformation> context)
         {
-            if(context == null)
+            if (context == null)
             {
 
             }
 
-            if(context.Context == null)
+            if (context.Context == null)
             {
 
             }
 
-            if(string.IsNullOrEmpty(context.FileName))
+            if (string.IsNullOrEmpty(context.FileName))
             {
 
             }
@@ -110,7 +110,7 @@ namespace Acorisoft.Morisa.Map
             var database = Factory.CreateDatabase(context.FileName);
 
             var mbs = new MapBrushSet
-            {                
+            {
                 Database = database,
                 DB_External = database.GetCollection(ExternalCollectionName)
             };
@@ -121,7 +121,7 @@ namespace Acorisoft.Morisa.Map
 
         protected override sealed MapBrushSetInformation CreateProfileCore()
         {
-            if(_InformationStack != null && _InformationStack.Count > 0)
+            if (_InformationStack != null && _InformationStack.Count > 0)
             {
                 //
                 // 退栈。

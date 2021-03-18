@@ -21,7 +21,9 @@ using System.Diagnostics.Contracts;
 
 namespace Acorisoft.Morisa
 {
-    public abstract class DataSetManager<TDataSet, TProfile> : DataSetManager<TDataSet> where TDataSet : DataSet<TProfile> where TProfile : class,IProfile
+    public abstract class DataSetManager<TDataSet, TProfile> : DataSetManager<TDataSet>, IDataSetManager<TDataSet, TProfile> 
+        where TDataSet : DataSet<TProfile>
+        where TProfile : class, IProfile
     {
         private protected readonly DelegateObserver<TProfile> ProfileStream;
         private protected readonly IDisposable ProfileDisposable;
@@ -33,7 +35,7 @@ namespace Acorisoft.Morisa
                                           .SubscribeOn(ThreadPoolScheduler.Instance)
                                           .Subscribe(x =>
                                           {
-                                              if(x.Cover != null)
+                                              if (x.Cover != null)
                                               {
                                                   Resource.OnNext(x.Cover);
                                               }
@@ -55,7 +57,7 @@ namespace Acorisoft.Morisa
         {
             var key = typeof(T).FullName;
             T instance;
-            if(DataSet.DB_External.Exists(Query.EQ("_id",key)))
+            if (DataSet.DB_External.Exists(Query.EQ("_id", key)))
             {
                 instance = DatabaseMixins.Deserialize<T>(DataSet.DB_External.FindById(key));
             }
@@ -73,7 +75,7 @@ namespace Acorisoft.Morisa
         /// <typeparam name="T">要查询的单例对象类型。</typeparam>
         /// <param name="database">数据库</param>
         /// <returns>返回一个已经存在于数据库中的单例实例或者创建一个新的单例实例并保存于数据库当中。</returns>
-        protected internal static  T Singleton<T>(LiteDatabase database)
+        protected internal static T Singleton<T>(LiteDatabase database)
         {
             var key = typeof(T).FullName;
             var collection = database.GetCollection(ExternalCollectionName);
@@ -97,14 +99,14 @@ namespace Acorisoft.Morisa
         /// <param name="profile">新的配置信息。</param>
         protected void ProfileChanged(TProfile profile)
         {
-            if(profile.Cover != null)
+            if (profile.Cover != null)
             {
                 Contract.Assert(DataSet != null);
                 Contract.Assert(DataSet.Setting != null);
 
                 //
                 // Determined previous version
-                if(DataSet.Setting.Cover is InDatabaseResource)
+                if (DataSet.Setting.Cover is InDatabaseResource)
                 {
                     DataSet.Database.FileStorage.Delete(DataSet.Setting.Cover.Id);
                 }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa.Map
+namespace Acorisoft.Morisa
 {
     public class GenerateContext<T> : IGenerateContext<T> where T : class, IProfile
     {

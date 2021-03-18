@@ -20,9 +20,17 @@ using System.Threading.Tasks;
 namespace Acorisoft.Morisa
 {
     public interface IDataSetManager<TDataSet> where TDataSet : DataSet
-    {
-        void Load();
-        void Load(string target);
-        void Load(IStoreContext context);
+    {        
+
+        /// <summary>
+        /// 获取当前的输入流。当前输入流是一个数据集。
+        /// </summary>
+        public IObserver<TDataSet> Input { get; }
+
+
+        /// <summary>
+        /// 获取一个资源流。
+        /// </summary>
+        public IObserver<Resource> Resource { get; }
     }
 }

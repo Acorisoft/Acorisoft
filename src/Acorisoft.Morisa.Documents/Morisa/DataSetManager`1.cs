@@ -26,7 +26,7 @@ namespace Acorisoft.Morisa
     /// 
     /// </summary>
     /// <typeparam name="TDataSet"></typeparam>
-    public abstract class DataSetManager<TDataSet> where TDataSet : DataSet
+    public abstract class DataSetManager<TDataSet> : IDataSetManager<TDataSet> where TDataSet : DataSet
     {
         public const string ExternalCollectionName = "Externals";
 
@@ -184,6 +184,10 @@ namespace Acorisoft.Morisa
         /// 获取一个资源流。
         /// </summary>
         public IObserver<Resource> Resource => ResourceStream;
+
+        /// <summary>
+        /// 由事件转为可观测序列。
+        /// </summary>
         internal event Action<Resource> ResourceChangedEvent;
     }
 }
