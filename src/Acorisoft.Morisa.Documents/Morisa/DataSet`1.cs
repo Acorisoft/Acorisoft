@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa
 {
-    public abstract class DataSet<TProfile> : DataSet
+    public abstract class DataSet<TProfile> : DataSet where TProfile : class
     {
         protected internal TProfile Setting { get; internal set; }
     }

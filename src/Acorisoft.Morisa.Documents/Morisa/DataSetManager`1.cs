@@ -28,6 +28,8 @@ namespace Acorisoft.Morisa
     /// <typeparam name="TDataSet"></typeparam>
     public abstract class DataSetManager<TDataSet> where TDataSet : DataSet
     {
+        public const string ExternalCollectionName = "Externals";
+
         private protected readonly DelegateObserver<TDataSet>   DataSetStream;
         private protected readonly DelegateObserver<Resource>   ResourceStream;
         private protected readonly IDisposable                  ResourceDisposable;
@@ -36,10 +38,11 @@ namespace Acorisoft.Morisa
         protected DataSetManager()
         {
             DataSetStream = new DelegateObserver<TDataSet>(DataSetChanged);
+            ResourceStream = new DelegateObserver<Resource>(ResourceChanged);
             ResourceDisposable = Observable.FromEvent<Resource>(x => ResourceChangedEvent += x, x => ResourceChangedEvent -= x)
                                            .SubscribeOn(ThreadPoolScheduler.Instance)
                                            .Subscribe(x =>
-                                           {
+                                           {                                               
                                                ResourceChanged(x);
                                                OnResourceChanged(x);
                                            });
@@ -58,14 +61,14 @@ namespace Acorisoft.Morisa
                     InitializeFromPattern(set);
                 }
 
-                OnCompositionSetChanged(set);
+                OnDataSetChanged(set);
             }
         }
 
         protected void ResourceChanged(Resource resource)
         {
             if(resource is InDatabaseResource idr)
-            {
+            {                
                 PerformanceInDatabaseResource(idr);
             }
             else if(resource is OutsideResource osr)
@@ -155,7 +158,7 @@ namespace Acorisoft.Morisa
         /// 当设定集发生改变时调用该方法。这是一个PostProcess操作。
         /// </summary>
         /// <param name="set">当前的设定集上下文。</param>
-        protected virtual void OnCompositionSetChanged(TDataSet set)
+        protected virtual void OnDataSetChanged(TDataSet set)
         {
 
         }

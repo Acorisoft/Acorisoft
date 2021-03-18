@@ -8,5 +8,9 @@ namespace Acorisoft.Morisa.Map
 {
     public interface IMapGroup
     {
+        Guid Id { get; set; }
+        Guid? OwnerId { get; set; }
+        string Name { get; set; }
+
     }
 }

@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa
+namespace Acorisoft.Morisa.Map
 {
-    public class CompositionSetFactory : DataSetManager<CompositionSet, CompositionSetInformation>
+    partial interface IMapGroup
     {
-
     }
 }

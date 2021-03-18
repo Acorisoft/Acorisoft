@@ -8,7 +8,15 @@ using LiteDB;
 
 namespace Acorisoft.Morisa.Map
 {
-    public class MapBrushSet : DataSet<IMapBrushSetInformation>
+    public partial class MapBrushSet : DataSet<MapBrushSetInformation>
+    {
+        protected internal LiteCollection<IMapBrush> DB_BrushCollection { get; internal set; }
+        protected internal LiteCollection<IMapGroup> DB_GroupCollection { get; internal set; }
+    }
+
+    #region OldImpl
+
+    public partial class MapBrushSet 
     {
         ////-------------------------------------------------------------------------------------------------
         ////
@@ -220,4 +228,6 @@ namespace Acorisoft.Morisa.Map
         //}
 
     }
+
+    #endregion OldImpl
 }

@@ -12,6 +12,8 @@ namespace Acorisoft.Morisa
         private readonly CompositeDisposable _Disposable = new CompositeDisposable();
         private bool _DisposedValue;
 
+        public CompositeDisposable Disposable => _Disposable;
+
         public void Collect(IDisposable disposable)
         {
             if(disposable != null)

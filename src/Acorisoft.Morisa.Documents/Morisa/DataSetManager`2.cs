@@ -16,10 +16,12 @@ using System.Reactive.Subjects;
 using System.Reactive.Threading;
 using System.Text;
 using System.Threading.Tasks;
+using Acorisoft.Morisa.Core;
+using System.Diagnostics.Contracts;
 
 namespace Acorisoft.Morisa
 {
-    public abstract class DataSetManager<TDataSet, TProfile> : DataSetManager<TDataSet> where TDataSet : DataSet<TProfile>
+    public abstract class DataSetManager<TDataSet, TProfile> : DataSetManager<TDataSet> where TDataSet : DataSet<TProfile> where TProfile : class,IProfile
     {
         private protected readonly DelegateObserver<TProfile> ProfileStream;
         private protected readonly IDisposable ProfileDisposable;
@@ -67,6 +69,24 @@ namespace Acorisoft.Morisa
         /// <param name="profile">新的配置信息。</param>
         protected void ProfileChanged(TProfile profile)
         {
+            if(profile.Cover != null)
+            {
+                Contract.Assert(DataSet != null);
+                Contract.Assert(DataSet.Setting != null);
+
+                //
+                // Determined previous version
+                if(DataSet.Setting.Cover is InDatabaseResource)
+                {
+                    DataSet.Database.FileStorage.Delete(DataSet.Setting.Cover.Id);
+                }
+
+                if (profile.Cover != null)
+                {
+                    Resource.OnNext(profile.Cover);
+                }
+            }
+
             ProfileChangedEvent?.Invoke(profile);
         }
 
@@ -87,11 +107,7 @@ namespace Acorisoft.Morisa
         {
             //
             // 创建新的配置信息。
-            set.Setting = CreateProfileCore();
-
-            //
-            // 保存配置信息
-            DataSet.DB_External.Upsert(typeof(TProfile).FullName, DatabaseMixins.Serialize(set.Setting));
+            set.Setting = Singleton<TProfile>();
 
         }
 

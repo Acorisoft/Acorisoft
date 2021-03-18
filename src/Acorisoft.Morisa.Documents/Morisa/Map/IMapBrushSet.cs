@@ -12,39 +12,6 @@ namespace Acorisoft.Morisa.Map
     /// </summary>
     public interface IMapBrushSet : IDisposable
     {
-        /// <summary>
-        /// 获取或设置当前画刷集的分组。
-        /// </summary>
-        IGroupCollection BrushGroups { get; }
 
-        /// <summary>
-        /// 获取或设置当前画刷集的画刷集合。
-        /// </summary>
-        IMapBrushCollection Brushes { get; }
-
-        /// <summary>
-        /// 获取或设置当前画刷集的名字。
-        /// </summary>
-        string Name { get;  }
-
-        /// <summary>
-        /// 获取或设置当前画刷集的作者。
-        /// </summary>
-        string Author { get;  }
-
-        /// <summary>
-        /// 获取或设置当前画刷集的简介。
-        /// </summary>
-        string Summary { get;  }
-
-        /// <summary>
-        /// 获取或设置当前画刷集的标签。
-        /// </summary>
-        List<string> Tags { get;  }
-
-        /// <summary>
-        /// 获取或设置当前画刷集的封面。
-        /// </summary>
-        InDatabaseResource Cover { get; }
     }
 }

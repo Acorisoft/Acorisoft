@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Acorisoft.Morisa.Emotions;
 using Acorisoft.Properties;
+using LiteDB;
 
 namespace Acorisoft.Morisa
 {
@@ -16,6 +17,17 @@ namespace Acorisoft.Morisa
         //
         //-------------------------------------------------------------------------------------------------
         public static string GenereateGuid() => Guid.NewGuid().ToString("N");
+
+        public static LiteDatabase CreateDatabase(string fileName, long initSize = 4 * 1024 * 1024)
+        {
+            var database = new LiteDatabase(new ConnectionString
+            {
+                Filename = fileName,
+                InitialSize = initSize,
+
+            });
+            return database;
+        }
 
         [Obsolete]
         //-------------------------------------------------------------------------------------------------

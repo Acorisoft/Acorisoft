@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Map
 {
-    public class MapGroupAdapter : IMapGroup
+    public class MapGroupAdapter : IMapGroupAdapter
     {
         public MapGroupAdapter(IMapGroup group)
         {
