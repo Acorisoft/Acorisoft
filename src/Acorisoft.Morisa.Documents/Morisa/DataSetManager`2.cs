@@ -29,12 +29,17 @@ namespace Acorisoft.Morisa
         public DataSetManager() : base()
         {
             ProfileStream = new DelegateObserver<TProfile>(ProfileChanged);
-            ProfileDisposable = Observable.FromEvent<TProfile>(x => ProfileChangedEvent += x, x => ProfileChangedEvent -= x)
+            ProfileDisposable = Observable.FromEvent<TProfile>(x => OnProfileChanged += x, x => OnProfileChanged -= x)
                                           .SubscribeOn(ThreadPoolScheduler.Instance)
                                           .Subscribe(x =>
                                           {
+                                              if(x.Cover != null)
+                                              {
+                                                  Resource.OnNext(x.Cover);
+                                              }
+
                                               DataSet.DB_External.Upsert(typeof(TProfile).FullName, DatabaseMixins.Serialize(x));
-                                              OnProfileChanged(x);
+                                              ProfileChangedCore(x);
                                           });
         }
 
@@ -87,14 +92,14 @@ namespace Acorisoft.Morisa
                 }
             }
 
-            ProfileChangedEvent?.Invoke(profile);
+            OnProfileChanged?.Invoke(profile);
         }
 
         /// <summary>
         /// 当配置信息改变的时候。
         /// </summary>
         /// <param name="profile">新的配置信息。</param>
-        protected virtual void OnProfileChanged(TProfile profile)
+        protected virtual void ProfileChangedCore(TProfile profile)
         {
 
         }
@@ -130,7 +135,6 @@ namespace Acorisoft.Morisa
         }
 
         public IObserver<TProfile> Profile => ProfileStream;
-
-        internal event Action<TProfile> ProfileChangedEvent;
+        public event Action<TProfile> OnProfileChanged;
     }
 }

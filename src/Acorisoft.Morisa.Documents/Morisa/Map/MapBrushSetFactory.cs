@@ -94,6 +94,28 @@ namespace Acorisoft.Morisa.Map
             Input.OnNext(new MapBrushSet { Database = database, DB_External = database.GetCollection(ExternalCollectionName) });
         }
 
+        public void Load(IStoreContext context)
+        {
+            if (context == null)
+            {
+
+            }
+
+            if (string.IsNullOrEmpty(context.FileName))
+            {
+
+            }
+            //
+            // 创建数据库
+            var database = Factory.CreateDatabase(context.FileName);
+
+            
+
+            //
+            // 提示更新。
+            Input.OnNext(new MapBrushSet { Database = database, DB_External = database.GetCollection(ExternalCollectionName) });
+        }
+
         protected override sealed MapBrushSetInformation CreateProfileCore()
         {
             if(_InformationStack != null && _InformationStack.Count > 0)
@@ -111,7 +133,7 @@ namespace Acorisoft.Morisa.Map
             };
         }
 
-        protected override void InitializeFromDatabase(MapBrushSet set)
+        protected override sealed void InitializeFromDatabase(MapBrushSet set)
         {
             //
             // 基类操作初始化。
@@ -134,14 +156,39 @@ namespace Acorisoft.Morisa.Map
             //
             // 通知视图模型改变已经发生。
             OnLoaded?.Invoke(this, new EventArgs());
-        }        
+        }
+
+        protected override sealed void OnPerformanceOutsideResource(OutsideResource resource)
+        {
+            throw new NotSupportedException();
+        }
+
+        protected override void InitializeFromPattern(MapBrushSet set)
+        {
+
+            //
+            // 获取数据库
+            var database = set.Database;
+
+            //
+            // 获取集合
+            set.DB_BrushCollection = database.GetCollection<IMapBrush>(BrushCollectionName);
+            set.DB_GroupCollection = database.GetCollection<IMapGroup>(GroupCollectionName);
+
+            //
+            // 注册信息。避免集合未创建。
+            set.DB_BrushCollection.Upsert(new List<IMapBrush>());
+            set.DB_GroupCollection.Upsert(new List<IMapGroup>());
+
+            //
+            // 通知视图模型改变已经发生。
+            OnLoaded?.Invoke(this, new EventArgs());
+        }
 
         protected override sealed bool DetermineDataSetInitialization(MapBrushSet cs)
         {
             return cs.Database.CollectionExists(BrushCollectionName);
         }
-
-        public event EventHandler OnLoaded;
 
         /// <summary>
         /// 
@@ -152,5 +199,21 @@ namespace Acorisoft.Morisa.Map
         /// 
         /// </summary>
         public SourceList<IMapBrush> MapBrushSource => _EditableBrushCollection;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ReadOnlyObservableCollection<MapGroupAdapter> GroupCollection => _BindableGroupCollection;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ReadOnlyObservableCollection<IMapBrush> BrushCollection => _BindableBrushCollection;
+
+        /// <summary>
+        /// 用于指示视图模型当前已经加载了数据
+        /// </summary>
+        public event EventHandler OnLoaded;
+
     }
 }
