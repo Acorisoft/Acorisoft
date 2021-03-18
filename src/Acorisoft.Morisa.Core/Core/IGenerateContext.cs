@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Core
 {
-    public interface IGenerateContext<T>
+    public interface IGenerateContext<T> where T : class
     {
         string Id { get; set; }
         string FileName { get; set; }

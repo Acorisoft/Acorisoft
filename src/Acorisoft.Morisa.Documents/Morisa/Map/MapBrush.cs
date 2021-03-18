@@ -7,18 +7,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Map
 {
-    /// <summary>
-    /// <see cref=""/> 表示连接处的内容占比。
-    /// </summary>
-    public enum FillMode
-    {
-        Thin,
-        Half,
-        Extra,
-        Large
-    }
-
-    public interface IMapBrush
+    public class MapBrush : IMapBrush
     {
         /// <summary>
         /// 
