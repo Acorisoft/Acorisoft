@@ -211,7 +211,7 @@ namespace Acorisoft.Morisa.Map
         public ReadOnlyObservableCollection<IMapBrush> BrushCollection => _BindableBrushCollection;
 
         /// <summary>
-        /// 用于指示视图模型当前已经加载了数据
+        /// 用于指示视图模型当前已经加载了数据，通知重建结构
         /// </summary>
         public event EventHandler OnLoaded;
 

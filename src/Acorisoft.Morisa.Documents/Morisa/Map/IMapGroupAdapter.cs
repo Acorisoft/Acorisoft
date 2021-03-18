@@ -8,8 +8,8 @@ namespace Acorisoft.Morisa.Map
 {
     public interface IMapGroupAdapter : IMapGroup
     {
-        ICollection<IMapGroup> Children { get; set; } 
-        ICollection<IMapBrush> Brushes { get; set; }
-        IMapGroup Source { get; set; }
+        ICollection<IMapGroup> Children { get; } 
+        ICollection<IMapBrush> Brushes { get; }
+        IMapGroup Source { get; }
     }
 }
