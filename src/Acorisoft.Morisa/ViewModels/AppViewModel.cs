@@ -29,7 +29,7 @@ using DryIoc;
 
 namespace Acorisoft.Morisa.ViewModels
 {
-    public class AppViewModel : ViewModelBase
+    public class AppViewModel : ViewModelBase, IDisposable
     {
         //-------------------------------------------------------------------------------------------------
         //
@@ -55,6 +55,8 @@ namespace Acorisoft.Morisa.ViewModels
         private readonly ICompositionSetManager     _CompositionSetManager;
         private readonly LiteDatabase               _AppDB;
         private readonly IEmotionMechanism          _EmotionMechanism;
+        private readonly CompositeDisposable        _Disposable;
+
         //-------------------------------------------------------------------------------------------------
         //
         //  Constructors
@@ -64,6 +66,7 @@ namespace Acorisoft.Morisa.ViewModels
         {
             _AppDB = new LiteDatabase(ConnectionString);
             _CompositionSetManager = csMgr;
+            _Disposable = new CompositeDisposable();
             _EmotionMechanism = container.Resolve<IEmotionMechanism>();
             _Title = "设定集";
 
@@ -73,8 +76,7 @@ namespace Acorisoft.Morisa.ViewModels
             };
 
             Observable.FromEventPattern<CompositionSetChangedEventArgs>(_CompositionSetManager, "Changed")
-                      .ObserveOn(ImmediateScheduler.Instance)
-                      .Throttle(TimeSpan.FromMilliseconds(300))
+                      .ObserveOn(ThreadPoolScheduler.Instance)
                       .Subscribe(x =>
                       {
                           var cs = x.EventArgs.NewValue;
@@ -88,14 +90,15 @@ namespace Acorisoft.Morisa.ViewModels
                       });
 
             Observable.FromEventPattern<CompositionSetOpenedEventArgs>(_CompositionSetManager, "Opened")
-                      .ObserveOn(RxApp.MainThreadScheduler)
+                      .ObserveOn(ThreadPoolScheduler.Instance)
                       .Subscribe(x =>
                       {
                           var store = x.EventArgs.NewValue;
                           _AppEnv.CurrentProject = store;
                           _Projects.Add(store);
                           UpdateSetting();
-                      });
+                      })
+                      .DisposeWith(_Disposable);
 
             OnInitialize();
         }
@@ -153,6 +156,11 @@ namespace Acorisoft.Morisa.ViewModels
             {
                 IsFirstTime = true
             };
+        }
+
+        public void Dispose()
+        {
+            ((IDisposable)_Disposable).Dispose();
         }
 
         //-------------------------------------------------------------------------------------------------

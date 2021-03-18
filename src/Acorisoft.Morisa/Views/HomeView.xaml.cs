@@ -1,10 +1,12 @@
 ﻿using Acorisoft.Morisa.ViewModels;
+using Acorisoft.Pandora.Inputs;
 using DryIoc;
 using ReactiveUI;
 using Splat;
 using Splat.DryIoc;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Concurrency;
@@ -14,6 +16,7 @@ using System.Reactive.Subjects;
 using System.Reactive.Threading;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -23,6 +26,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Acorisoft.Morisa.Views
 {
@@ -38,6 +42,11 @@ namespace Acorisoft.Morisa.Views
             {
                 d(this.WhenAnyValue(x => x.ViewModel).BindTo(this, x => x.DataContext));
             });
+            this.Loaded += OnLoaded;
+        }
+
+        protected virtual void OnLoaded(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

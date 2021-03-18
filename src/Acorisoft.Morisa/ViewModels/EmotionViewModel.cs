@@ -32,8 +32,8 @@ namespace Acorisoft.Morisa.ViewModels
                 var count = new Random().Next(0,12);
                 var elements = new[]
                 {
-                    CompositionElementFactory.CreateMottoEmotion(),
-                    CompositionElementFactory.CreateMottoEmotion("当爱情萌芽的时候，只需要悄悄地给点希望就可以了","新房昭之")
+                    Factory.CreateMottoEmotion(),
+                    Factory.CreateMottoEmotion("当爱情萌芽的时候，只需要悄悄地给点希望就可以了","新房昭之")
                 };
                 var element = elements[count % 2];
                 element.Creation = DateTime.Now;
@@ -50,6 +50,8 @@ namespace Acorisoft.Morisa.ViewModels
             {
                 _Mechanism.Clear();
             });
+
+            
         }
 
         public ICommand AddOperator => _AddOperator;

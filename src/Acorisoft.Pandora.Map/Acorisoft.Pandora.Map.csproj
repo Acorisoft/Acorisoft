@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+	  <RootNamespace>Acorisoft.Pandora</RootNamespace>
+  </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="System.Reactive" Version="5.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+    <ProjectReference Include="..\Acorisoft.Morisa.Documents\Acorisoft.Morisa.Documents.csproj" />
+    <ProjectReference Include="..\Acorisoft.Pandora\Acorisoft.Pandora.csproj" />
+  </ItemGroup>
+
+</Project>

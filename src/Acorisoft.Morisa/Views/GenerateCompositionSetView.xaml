@@ -30,7 +30,7 @@
                     <TextBlock Text="封面" FontSize="16" FontWeight="Bold"/>
                     <Button Width="256" Height="256" Click="ShowFileDialog">
                         <Button.Background>
-                            <ImageBrush ImageSource="{Binding Cover,Converter={StaticResource IDROfflineImage},Mode=OneWay}"/>
+                            <ImageBrush ImageSource="{Binding Cover,Converter={StaticResource ResourceConverter},Mode=OneWay}"/>
                         </Button.Background>
                     </Button>
                 </StackPanel>

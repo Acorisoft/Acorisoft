@@ -40,7 +40,7 @@ namespace Acorisoft.Morisa.Windows
             //  Constructors
             //
             //-------------------------------------------------------------------------------------------------
-            public DialogSession(IRoutableViewModel viewModel , IDialogManager manager)
+            public DialogSession(IRoutableViewModel viewModel, IDialogManager manager)
             {
                 ViewModel = viewModel;
                 Manager = manager;
@@ -59,7 +59,7 @@ namespace Acorisoft.Morisa.Windows
 
             public T GetResult<T>() where T : class
             {
-                if(ViewModel is IResultable resultable)
+                if (ViewModel is IResultable resultable)
                 {
                     return resultable.GetResult() as T;
                 }
@@ -88,12 +88,12 @@ namespace Acorisoft.Morisa.Windows
             //  Constructors
             //
             //-------------------------------------------------------------------------------------------------
-            public DialogDisplayContext(TaskCompletionSource<IDialogSession> tcs , IRoutableViewModel content , IDialogManager manager)
+            public DialogDisplayContext(TaskCompletionSource<IDialogSession> tcs, IRoutableViewModel content, IDialogManager manager)
             {
                 TaskCompletionSource = tcs;
                 Task = tcs.Task;
                 Content = content;
-                Session = new DialogSession(content , manager);
+                Session = new DialogSession(content, manager);
             }
             //-------------------------------------------------------------------------------------------------
             //
@@ -114,12 +114,12 @@ namespace Acorisoft.Morisa.Windows
         //-------------------------------------------------------------------------------------------------
         static ShellWindow()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(ShellWindow) , new FrameworkPropertyMetadata(typeof(ShellWindow)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ShellWindow), new FrameworkPropertyMetadata(typeof(ShellWindow)));
             DialogPropertyKey = DependencyProperty.RegisterReadOnly(
-                "Dialog" ,
-                typeof(object) ,
-                typeof(ShellWindow) ,
-                new PropertyMetadata(null , OnDialogChanged));
+                "Dialog",
+                typeof(object),
+                typeof(ShellWindow),
+                new PropertyMetadata(null, OnDialogChanged));
             DialogProperty = DialogPropertyKey.DependencyProperty;
         }
 
@@ -145,13 +145,13 @@ namespace Acorisoft.Morisa.Windows
 
             //
             //
-            CommandBindings.Add(new CommandBinding(DialogCommands.Ok , DoDialogOk , CanDialogOk));
-            CommandBindings.Add(new CommandBinding(DialogCommands.Cancel , DoDialogCancel , CanDialogCancel));
+            CommandBindings.Add(new CommandBinding(DialogCommands.Ok, DoDialogOk, CanDialogOk));
+            CommandBindings.Add(new CommandBinding(DialogCommands.Cancel, DoDialogCancel, CanDialogCancel));
             CommandBindings.Add(new CommandBinding(WindowCommands.Goto, DoGoto, CanGoto));
             CommandBindings.Add(new CommandBinding(WindowCommands.Goback, DoGoback, CanGoback));
-            CommandBindings.Add(new CommandBinding(SystemCommands.CloseWindowCommand , DoWindowClose , CanWindowClose));
-            CommandBindings.Add(new CommandBinding(SystemCommands.MinimizeWindowCommand , DoWindowMinimum , CanWindowMinimum));
-            CommandBindings.Add(new CommandBinding(SystemCommands.MaximizeWindowCommand , DoWindowRestore , CanWindowRestore));
+            CommandBindings.Add(new CommandBinding(SystemCommands.CloseWindowCommand, DoWindowClose, CanWindowClose));
+            CommandBindings.Add(new CommandBinding(SystemCommands.MinimizeWindowCommand, DoWindowMinimum, CanWindowMinimum));
+            CommandBindings.Add(new CommandBinding(SystemCommands.MaximizeWindowCommand, DoWindowRestore, CanWindowRestore));
 
             //
             //
@@ -161,12 +161,12 @@ namespace Acorisoft.Morisa.Windows
             this.DataContextChanged += OnDataContextChanged;
         }
 
-        protected virtual void OnDataContextChanged(object sender , DependencyPropertyChangedEventArgs e)
+        protected virtual void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
 
         }
 
-        protected virtual void OnLoaded(object sender , RoutedEventArgs e)
+        protected virtual void OnLoaded(object sender, RoutedEventArgs e)
         {
 
         }
@@ -177,7 +177,7 @@ namespace Acorisoft.Morisa.Windows
         //
         //-------------------------------------------------------------------------------------------------
 
-        protected void DoDialogOk(object sender , ExecutedRoutedEventArgs e)
+        protected void DoDialogOk(object sender, ExecutedRoutedEventArgs e)
         {
             if (_ContextStack.Count == 0)
             {
@@ -211,7 +211,7 @@ namespace Acorisoft.Morisa.Windows
 
                 //
                 // Set New Dialog Content To Property Dialog
-                SetValue(DialogPropertyKey , Context.Content);
+                SetValue(DialogPropertyKey, Context.Content);
             }
             else
             {
@@ -219,7 +219,7 @@ namespace Acorisoft.Morisa.Windows
             }
         }
 
-        protected void DoDialogCancel(object sender , ExecutedRoutedEventArgs e)
+        protected void DoDialogCancel(object sender, ExecutedRoutedEventArgs e)
         {
             if (_ContextStack.Count == 0)
             {
@@ -253,7 +253,7 @@ namespace Acorisoft.Morisa.Windows
 
                 //
                 // Set New Dialog Content To Property Dialog
-                SetValue(DialogPropertyKey , Context.Content);
+                SetValue(DialogPropertyKey, Context.Content);
             }
             else
             {
@@ -261,23 +261,23 @@ namespace Acorisoft.Morisa.Windows
             }
         }
 
-        protected void DoWindowClose(object sender , ExecutedRoutedEventArgs e)
+        protected void DoWindowClose(object sender, ExecutedRoutedEventArgs e)
         {
             this.Close();
         }
 
-        protected void DoWindowMinimum(object sender , ExecutedRoutedEventArgs e)
+        protected void DoWindowMinimum(object sender, ExecutedRoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
         }
 
-        protected void DoWindowRestore(object sender , ExecutedRoutedEventArgs e)
+        protected void DoWindowRestore(object sender, ExecutedRoutedEventArgs e)
         {
             this.WindowState = WindowState == WindowState.Normal ? WindowState.Maximized : WindowState.Normal;
         }
         protected void DoGoto(object sender, ExecutedRoutedEventArgs e)
         {
-            if(e.Parameter is Type vmType)
+            if (e.Parameter is Type vmType)
             {
                 ShellMixins.View(vmType);
             }
@@ -287,9 +287,9 @@ namespace Acorisoft.Morisa.Windows
             ShellMixins.Router.NavigateBack.Execute();
         }
 
-        protected void CanDialogOk(object sender , CanExecuteRoutedEventArgs e)
+        protected void CanDialogOk(object sender, CanExecuteRoutedEventArgs e)
         {
-            if(_ContextStack.Count > 0)
+            if (_ContextStack.Count > 0)
             {
                 e.CanExecute = true;
 
@@ -302,9 +302,9 @@ namespace Acorisoft.Morisa.Windows
             {
                 e.CanExecute = false;
             }
-            
+
         }
-        protected void CanDialogCancel(object sender , CanExecuteRoutedEventArgs e)
+        protected void CanDialogCancel(object sender, CanExecuteRoutedEventArgs e)
         {
             if (_ContextStack.Count > 0)
             {
@@ -321,17 +321,17 @@ namespace Acorisoft.Morisa.Windows
             }
         }
 
-        protected void CanWindowRestore(object sender , CanExecuteRoutedEventArgs e)
+        protected void CanWindowRestore(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
         }
 
-        protected void CanWindowClose(object sender , CanExecuteRoutedEventArgs e)
+        protected void CanWindowClose(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
         }
 
-        protected void CanWindowMinimum(object sender , CanExecuteRoutedEventArgs e)
+        protected void CanWindowMinimum(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
         }
@@ -363,7 +363,7 @@ namespace Acorisoft.Morisa.Windows
 
                 //
                 // Set New Dialog Content To Property Dialog
-                SetValue(DialogPropertyKey , DialogContent);
+                SetValue(DialogPropertyKey, DialogContent);
 
                 return Context.Task;
             }
@@ -371,7 +371,7 @@ namespace Acorisoft.Morisa.Windows
             return null;
         }
 
-        Task<bool> IDialogManager.MessageBox(string title , string content)
+        Task<bool> IDialogManager.MessageBox(string title, string content)
         {
             return null;
         }
@@ -381,29 +381,34 @@ namespace Acorisoft.Morisa.Windows
         //  Dependency Properties
         //
         //-------------------------------------------------------------------------------------------------
-        public object TitleBar {
+        public object TitleBar
+        {
             get => (object)GetValue(TitleBarProperty);
-            set => SetValue(TitleBarProperty , value);
+            set => SetValue(TitleBarProperty, value);
         }
 
-        public DataTemplate TitleBarTemplate {
+        public DataTemplate TitleBarTemplate
+        {
             get => (DataTemplate)GetValue(TitleBarTemplateProperty);
-            set => SetValue(TitleBarTemplateProperty , value);
+            set => SetValue(TitleBarTemplateProperty, value);
         }
 
-        public DataTemplateSelector TitleBarTemplateSelector {
+        public DataTemplateSelector TitleBarTemplateSelector
+        {
             get => (DataTemplateSelector)GetValue(TitleBarTemplateSelectorProperty);
-            set => SetValue(TitleBarTemplateSelectorProperty , value);
+            set => SetValue(TitleBarTemplateSelectorProperty, value);
         }
 
-        public string TitleBarStringFormat {
+        public string TitleBarStringFormat
+        {
             get => (string)GetValue(TitleBarStringFormatProperty);
-            set => SetValue(TitleBarStringFormatProperty , value);
+            set => SetValue(TitleBarStringFormatProperty, value);
         }
 
-        public Brush Color {
+        public Brush Color
+        {
             get => (Brush)GetValue(ColorProperty);
-            set => SetValue(ColorProperty , value);
+            set => SetValue(ColorProperty, value);
         }
 
         /// <summary>
@@ -412,21 +417,24 @@ namespace Acorisoft.Morisa.Windows
         public IRoutableViewModel? BindingRoot => ViewModel;
 
         /// <inheritdoc/>
-        public IRoutableViewModel? ViewModel {
+        public IRoutableViewModel? ViewModel
+        {
             get => (IRoutableViewModel)GetValue(ViewModelProperty);
-            set => SetValue(ViewModelProperty , value);
+            set => SetValue(ViewModelProperty, value);
         }
 
         /// <inheritdoc/>
-        object? IViewFor.ViewModel {
+        object? IViewFor.ViewModel
+        {
             get => ViewModel;
             set => ViewModel = (IRoutableViewModel?)value;
         }
 
 
-        public object Dialog {
+        public object Dialog
+        {
             get => (object)GetValue(DialogProperty);
-            private set => SetValue(DialogPropertyKey , value);
+            private set => SetValue(DialogPropertyKey, value);
         }
 
         //-------------------------------------------------------------------------------------------------
@@ -486,9 +494,9 @@ namespace Acorisoft.Morisa.Windows
         //
         //-------------------------------------------------------------------------------------------------
 
-        private static void OnDialogChanged(DependencyObject d , DependencyPropertyChangedEventArgs e)
+        private static void OnDialogChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is ShellWindow window)
+            if (d is ShellWindow window && e.NewValue != null)
             {
                 //
                 // Fire DialogShow Event

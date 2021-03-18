@@ -33,35 +33,37 @@ namespace Acorisoft.Morisa
                       .UseLog()
                       .UseViews(typeof(App).Assembly)
                       .UseDialog();
-
-            var counter = new Stopwatch();
-            var vmgr = _container.Resolve<IViewManager>();
-            counter.Start();
-
-            RegisterDialogs(_container);
+            RegisterServices(_container);
             RegisterViews(_container);
-
-            counter.Stop();
-            vmgr.Logger.Info($"视图注册花费了:{counter.ElapsedMilliseconds}ms,总计:{counter.ElapsedTicks}ticks");
             AppViewModel = Locator.Current.GetService<AppViewModel>();
         }
 
-        protected virtual void RegisterDialogs(IContainer container)
+        protected virtual void RegisterServices(IContainer container)
         {
+            container.RegisterInstance<IDisposableCollector>(new DisposableCollector());
+
+            container.Register<AppViewModel>();
+
+            //
+            // Register Dialog View And ViewModel
             container.Register<GenerateCompositionSetViewModel>();
             container.Register<SelectProjectDirectoryViewModel>();
 
             container.Register<IViewFor<GenerateCompositionSetViewModel>, GenerateCompositionSetView>();
             container.Register<IViewFor<SelectProjectDirectoryViewModel>, SelectProjectDirectoryView>();
-        }
 
-        protected virtual void RegisterViews(IContainer container)
-        {
+            //
+            // Register View And ViewModels
             container.Register<HomeViewModel>();
             container.Register<EmotionViewModel>();
 
             container.Register<IViewFor<HomeViewModel>, HomeView>();
             container.Register<IViewFor<EmotionViewModel>, EmotionView>();
+        }
+
+        protected virtual void RegisterViews(IContainer container)
+        {
+
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -78,6 +80,12 @@ namespace Acorisoft.Morisa
             //
             // 启动应用
             base.OnStartup(e);
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            AppViewModel.Dispose();
+            base.OnExit(e);
         }
 
         public AppViewModel AppViewModel { get; }
