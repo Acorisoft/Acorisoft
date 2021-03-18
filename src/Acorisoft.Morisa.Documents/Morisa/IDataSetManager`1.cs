@@ -1,4 +1,4 @@
-﻿using LiteDB;
+﻿using Acorisoft.Morisa.Core;
 using DynamicData;
 using DynamicData.Binding;
 using LiteDB;
@@ -16,13 +16,13 @@ using System.Reactive.Subjects;
 using System.Reactive.Threading;
 using System.Text;
 using System.Threading.Tasks;
-using ExternalCollection = LiteDB.LiteCollection<LiteDB.BsonDocument>;
 
 namespace Acorisoft.Morisa
 {
-    public abstract class DataSet
+    public interface IDataSetManager<TDataSet> where TDataSet : DataSet
     {
-        protected internal LiteDatabase Database { get; internal set; }
-        protected internal ExternalCollection DB_External { get; internal set; }
+        void Load();
+        void Load(string target);
+        void Load(IStoreContext context);
     }
 }

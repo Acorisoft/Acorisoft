@@ -159,7 +159,7 @@ namespace Acorisoft.Morisa.Map
 
                     try
                     {
-                        idr.Id = CompositionElementFactory.GenereateGuid();
+                        idr.Id = Factory.GenereateGuid();
 
                         mbs.Database
                            .FileStorage
@@ -215,7 +215,7 @@ namespace Acorisoft.Morisa.Map
 
                 try
                 {
-                    idr.Id = CompositionElementFactory.GenereateGuid();
+                    idr.Id = Factory.GenereateGuid();
 
                     mbs.Database
                        .FileStorage

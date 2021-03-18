@@ -24,7 +24,7 @@ namespace Acorisoft.Documents.Emotions
             var compositionSet = new CompositionSet(@"D:\Repo\Acorisoft\Bin\test");
             mechanism.Input.OnNext(compositionSet);
             mechanism.Input.OnCompleted();
-            mechanism.Add(CompositionElementFactory.CreateMottoEmotion());
+            mechanism.Add(Factory.CreateMottoEmotion());
         }
 
         [TestMethod]

@@ -30,7 +30,7 @@ namespace Acorisoft.Morisa.Core
         private int _Page;
         private int _PageSize;
 
-        private readonly DelegateRecipient<ICompositionSet> _CompositionSet;
+        private readonly DelegateObserver<ICompositionSet> _CompositionSet;
         protected readonly ISubject<IPageRequest> Paginator;
 
         //-------------------------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ namespace Acorisoft.Morisa.Core
         //-------------------------------------------------------------------------------------------------
         protected MechanismCore()
         {
-            _CompositionSet = new DelegateRecipient<ICompositionSet>(OnCompositionSetChanged);
+            _CompositionSet = new DelegateObserver<ICompositionSet>(OnCompositionSetChanged);
             _PageSize = 12;
             _Page = FirstPage;
             Paginator = new BehaviorSubject<IPageRequest>(new PageRequest(FirstPage, PageSize));

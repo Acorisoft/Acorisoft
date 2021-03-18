@@ -15,9 +15,6 @@ using System.Reactive.Subjects;
 using System.Reactive.Threading;
 using System.Text;
 using System.Threading.Tasks;
-using ReactiveUI;
-using Splat;
-using DryIoc;
 
 namespace Acorisoft.Morisa
 {

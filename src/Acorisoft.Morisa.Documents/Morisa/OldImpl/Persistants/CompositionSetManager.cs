@@ -166,7 +166,7 @@ namespace Acorisoft.Morisa.Persistants
                 {
                     if (string.IsNullOrEmpty(idr.Id))
                     {
-                        idr.Id = CompositionElementFactory.GenereateGuid();
+                        idr.Id = Factory.GenereateGuid();
                     }
                     cs.Database.FileStorage.Upload(idr.Id, idr.FileName);
                 }
@@ -174,7 +174,7 @@ namespace Acorisoft.Morisa.Persistants
                 {
                     if (string.IsNullOrEmpty(osr.Id))
                     {
-                        osr.Id = CompositionElementFactory.GenereateGuid();
+                        osr.Id = Factory.GenereateGuid();
                     }
 
                     //

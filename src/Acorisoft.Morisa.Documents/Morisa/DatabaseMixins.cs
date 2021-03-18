@@ -20,5 +20,22 @@ namespace Acorisoft.Morisa
         {
             return Mapper.ToDocument<T>(value);
         }
+
+        public static T Singleton<T>(this DataSet set)
+        {
+            var key = typeof(T).FullName;
+            T instance;
+            if (set.DB_External.Exists(Query.EQ("_id", key)))
+            {
+                instance = DatabaseMixins.Deserialize<T>(set.DB_External.FindById(key));
+            }
+            else
+            {
+                instance = ClassActivator.CreateInstance<T>();
+                set.DB_External.Upsert(key, DatabaseMixins.Serialize(instance));
+            }
+
+            return instance;
+        }
     }
 }

@@ -8,7 +8,7 @@ using Acorisoft.Properties;
 
 namespace Acorisoft.Morisa
 {
-    public static class CompositionElementFactory
+    public static class Factory
     {
         //-------------------------------------------------------------------------------------------------
         //

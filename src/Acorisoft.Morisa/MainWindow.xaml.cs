@@ -61,7 +61,7 @@ namespace Acorisoft.Morisa
 
                 if (session.IsCompleted && session.GetResult<ICompositionSetInfo>() is ICompositionSetInfo info)
                 {
-                    info.Directory = Path.Combine(vm.WorkingDirectory, CompositionElementFactory.GenereateGuid());
+                    info.Directory = Path.Combine(vm.WorkingDirectory, Factory.GenereateGuid());
                     info.FileName = Path.Combine(info.Directory, CompositionSet.MainDatabaseName);
                     vm.CompositionSetManager.Load(info);
                 }

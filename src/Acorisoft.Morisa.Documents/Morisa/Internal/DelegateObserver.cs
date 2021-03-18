@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,26 +9,26 @@ namespace Acorisoft.Morisa.Internal
 {
 #pragma warning disable IDE0034
 
-    public class DelegateRecipient<T> : IObserver<T>
+    public class DelegateObserver<T> : ObserverBase<T>, IObserver<T>
     {
         private readonly Predicate<T>   _Predicate;
         private readonly Action<T>      _Handler;
         private T       _Value;
         private bool    _IsChanged;
 
-        public DelegateRecipient(Action<T> handler) : this(Delegate<T>.AlmostTrue, handler)
+        public DelegateObserver(Action<T> handler) : this(Delegate<T>.AlmostTrue, handler)
         {
 
         }
 
-        public DelegateRecipient(Predicate<T> predicate, Action<T> handler)
+        public DelegateObserver(Predicate<T> predicate, Action<T> handler)
         {
             _Predicate = predicate ?? throw new ArgumentNullException(nameof(predicate));
             _Handler = handler ?? throw new ArgumentNullException(nameof(handler));
         }
 
 
-        public void OnCompleted()
+        protected override void OnCompletedCore()
         {
             if (_IsChanged)
             {
@@ -36,7 +37,7 @@ namespace Acorisoft.Morisa.Internal
             }
         }
 
-        public void OnError(Exception error)
+        protected override void OnErrorCore(Exception error)
         {
             if (error != null)
             {
@@ -45,7 +46,7 @@ namespace Acorisoft.Morisa.Internal
             }
         }
 
-        public void OnNext(T value)
+        protected override void OnNextCore(T value)
         {
             if (_Predicate(value))
             {
