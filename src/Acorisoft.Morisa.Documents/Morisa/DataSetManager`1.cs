@@ -21,6 +21,11 @@ using System.IO;
 
 namespace Acorisoft.Morisa
 {
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="TDataSet"></typeparam>
     public abstract class DataSetManager<TDataSet> where TDataSet : DataSet
     {
         private protected readonly DelegateObserver<TDataSet>   DataSetStream;
@@ -164,7 +169,17 @@ namespace Acorisoft.Morisa
             return false;
         }
 
+
+        /// <summary>
+        /// 获取当前的输入流。当前输入流是一个数据集。
+        /// </summary>
+
         public IObserver<TDataSet> Input => DataSetStream;
+
+
+        /// <summary>
+        /// 获取一个资源流。
+        /// </summary>
         public IObserver<Resource> Resource => ResourceStream;
         internal event Action<Resource> ResourceChangedEvent;
     }

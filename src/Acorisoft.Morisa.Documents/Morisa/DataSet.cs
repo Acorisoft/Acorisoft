@@ -1,7 +1,6 @@
 ﻿using LiteDB;
 using DynamicData;
 using DynamicData.Binding;
-using LiteDB;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,12 +16,22 @@ using System.Reactive.Threading;
 using System.Text;
 using System.Threading.Tasks;
 using ExternalCollection = LiteDB.LiteCollection<LiteDB.BsonDocument>;
+using Disposable = Acorisoft.Morisa.Core.Disposable;
 
 namespace Acorisoft.Morisa
 {
-    public abstract class DataSet
+    public abstract class DataSet : Disposable
     {
+
+        protected override void OnDisposeUnmanagedCore()
+        {
+            Database?.Dispose();
+        }
+
+        [BsonIgnore]
         protected internal LiteDatabase Database { get; internal set; }
+
+        [BsonIgnore]
         protected internal ExternalCollection DB_External { get; internal set; }
     }
 }

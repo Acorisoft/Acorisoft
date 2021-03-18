@@ -22,6 +22,9 @@ using DryIoc;
 
 namespace Acorisoft.Morisa
 {
+    /// <summary>
+    /// <see cref="DataFactory"/> 表示一个数据工厂基类，为数据操作提供基础的支持。
+    /// </summary>
     public abstract class DataFactory : IDataFactory
     {
         private protected readonly DelegateObserver<ICompositionSet>            CompositionSet;
@@ -86,7 +89,15 @@ namespace Acorisoft.Morisa
             return false;
         }
 
+        /// <summary>
+        /// 获取当前的输入流。当前输入流是一个设定集。
+        /// </summary>
+
         public IObserver<ICompositionSet> Input => CompositionSet;
+
+        /// <summary>
+        /// 获取一个页面请求流。
+        /// </summary>
         public IObserver<IPageRequest> Pager => PagerStream;
     }
 }
