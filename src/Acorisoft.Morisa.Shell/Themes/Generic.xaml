@@ -5,7 +5,10 @@
                     xmlns:b="clr-namespace:Acorisoft.Morisa.Buttons"
                     xmlns:c="clr-namespace:Acorisoft.Morisa.Controls"
                     xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
-
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Acorisoft.Morisa.Shell;component/Themes/Icon.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Acorisoft.Morisa.Shell;component/Themes/Image.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
     <!-- 常用色 -->
     <Color x:Key="UI.Colors.Black">#000000</Color>
     <Color x:Key="UI.Colors.White">#FFFFFF</Color>
@@ -165,6 +168,44 @@
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=PressBackgroundBrush}" TargetName="PART_Border"/>
                             <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=PressForegroundBrush}" TargetName="PART_Icon"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type b:SymbolButton}">
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="MinWidth" Value="32" />
+        <Setter Property="Background" Value="{StaticResource UI.Brushes.Transparent}" />
+        <Setter Property="Foreground" Value="{StaticResource UI.Brushes.White}" />
+        <Setter Property="HoverBackgroundBrush" Value="#30FFFFFF" />
+        <Setter Property="HoverForegroundBrush" Value="{StaticResource UI.Brushes.White}" />
+        <Setter Property="PressBackgroundBrush" Value="#20FFFFFF" />
+        <Setter Property="PressForegroundBrush" Value="{StaticResource UI.Brushes.White}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type b:SymbolButton}">
+                    <Border x:Name="PART_Border" Background="{TemplateBinding Background}">
+                        <Viewbox Height="20" Width="20">
+                            <Path x:Name="PART_Icon" 
+                                  Data="{TemplateBinding Data}"
+                                  SnapsToDevicePixels="True"
+                                  Stretch="Uniform"
+                                  Stroke="{TemplateBinding Foreground}"
+                                  StrokeThickness="1"/>
+                        </Viewbox>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=HoverBackgroundBrush}" TargetName="PART_Border"/>
+                            <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=HoverForegroundBrush}" TargetName="PART_Icon"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=PressBackgroundBrush}" TargetName="PART_Border"/>
+                            <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=PressForegroundBrush}" TargetName="PART_Icon"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

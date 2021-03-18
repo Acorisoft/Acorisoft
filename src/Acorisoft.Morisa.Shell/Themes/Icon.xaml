@@ -1,0 +1,45 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- https://www.iconfont.cn/collections/detail?spm=a313x.7781069.1998910419.d9df05512&cid=29836 -->
+    <!-- https://feathericons.com/?query=file -->
+    <!-- https://dev.to/themesberg/10-open-source-svg-icon-libraries-that-you-can-use-for-your-next-project-44n8 -->
+    <Geometry x:Key="UI.Icon.Open">F1 M24,24z M0,0z M22,19A2,2,0,0,1,20,21L4,21A2,2,0,0,1,2,19L2,5A2,2,0,0,1,4,3L9,3 11,6 20,6A2,2,0,0,1,22,8z</Geometry>
+    <Geometry x:Key="UI.Icon.OpenFolder">F1 M24,24z M0,0z M22,19A2,2,0,0,1,20,21L4,21A2,2,0,0,1,2,19L2,5A2,2,0,0,1,4,3L9,3 11,6 20,6A2,2,0,0,1,22,8z</Geometry>
+    <GeometryGroup x:Key="UI.Icon.Save">
+        <GeometryGroup.Children>
+            <Geometry>F1 M24,24z M0,0z M19,21L5,21A2,2,0,0,1,3,19L3,5A2,2,0,0,1,5,3L16,3 21,8 21,19A2,2,0,0,1,19,21z</Geometry>
+            <Geometry>F1 M24,24z M0,0z M17,21L17,21 17,13 7,13 7,21</Geometry>
+            <Geometry>F1 M24,24z M0,0z M7,3L7,3 7,8 15,8</Geometry>
+        </GeometryGroup.Children>
+    </GeometryGroup>
+    <GeometryGroup x:Key="UI.Icon.File">
+        <GeometryGroup.Children>
+            <Geometry>F1 M24,24z M0,0z M13,2L6,2A2,2,0,0,0,4,4L4,20A2,2,0,0,0,6,22L18,22A2,2,0,0,0,20,20L20,9z</Geometry>
+            <Geometry>F1 M24,24z M0,0z M13,2L13,2 13,9 20,9</Geometry>
+        </GeometryGroup.Children>
+    </GeometryGroup>
+    <GeometryGroup x:Key="UI.Icon.FileText">
+        <GeometryGroup.Children>
+            <Geometry>F1 M24,24z M0,0z M13,2L6,2A2,2,0,0,0,4,4L4,20A2,2,0,0,0,6,22L18,22A2,2,0,0,0,20,20L20,9z</Geometry>
+            <Geometry>F1 M24,24z M0,0z M13,2L13,2 13,9 20,9</Geometry>
+            <Geometry>F1 M24,24z M0,0z M10,9L10,9 9,9 8,9</Geometry>
+            <LineGeometry StartPoint="16,17" EndPoint="8,17" />
+            <LineGeometry StartPoint="16,13" EndPoint="8,13" />
+        </GeometryGroup.Children>
+    </GeometryGroup>
+    <GeometryGroup x:Key="UI.Icon.FilePlus">
+        <GeometryGroup.Children>
+            <Geometry>F1 M24,24z M0,0z M13,2L6,2A2,2,0,0,0,4,4L4,20A2,2,0,0,0,6,22L18,22A2,2,0,0,0,20,20L20,9z</Geometry>
+            <Geometry>F1 M24,24z M0,0z M13,2L13,2 13,9 20,9</Geometry>
+            <LineGeometry StartPoint="12,18" EndPoint="12,12"/>
+            <LineGeometry StartPoint="9,15" EndPoint="15,15"/>
+        </GeometryGroup.Children>
+    </GeometryGroup>
+    <GeometryGroup x:Key="UI.Icon.FileMinus">
+        <GeometryGroup.Children>
+            <Geometry>F1 M24,24z M0,0z M14,2L6,2A2,2,0,0,0,4,4L4,20A2,2,0,0,0,6,22L18,22A2,2,0,0,0,20,20L20,8z</Geometry>
+            <Geometry>F1 M24,24z M0,0z M14,2L14,2 14,8 20,8</Geometry>
+            <LineGeometry StartPoint="9,15" EndPoint="15,15"/>
+        </GeometryGroup.Children>
+    </GeometryGroup>
+</ResourceDictionary>

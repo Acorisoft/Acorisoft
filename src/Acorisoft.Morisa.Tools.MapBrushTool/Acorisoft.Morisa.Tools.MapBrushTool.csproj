@@ -27,5 +27,16 @@
 		<ProjectReference Include="..\Acorisoft.Pandora.Map\Acorisoft.Pandora.Map.csproj" />
 		<ProjectReference Include="..\Acorisoft.Pandora\Acorisoft.Pandora.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Compile Update="Views\NewBrushSetDialogStep2View - 复制.xaml.cs">
+	    <DependentUpon>NewBrushSetDialogStep2View.xaml.cs</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Views\NewBrushSetDialogStep3View.xaml">
+	    <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+	    <SubType>Designer</SubType>
+	  </Page>
+	</ItemGroup>
 
 </Project>

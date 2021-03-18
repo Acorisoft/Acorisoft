@@ -131,6 +131,7 @@ namespace Acorisoft.Morisa.Windows
         //-------------------------------------------------------------------------------------------------
 
         private readonly Stack<DialogDisplayContext> _ContextStack;
+        private readonly Stack<DialogDisplayContext> _UndoStack;
 
         //-------------------------------------------------------------------------------------------------
         //
@@ -142,11 +143,14 @@ namespace Acorisoft.Morisa.Windows
             //
             // 
             _ContextStack = new Stack<DialogDisplayContext>();
+            _UndoStack = new Stack<DialogDisplayContext>();
 
             //
             //
             CommandBindings.Add(new CommandBinding(DialogCommands.Ok, DoDialogOk, CanDialogOk));
             CommandBindings.Add(new CommandBinding(DialogCommands.Cancel, DoDialogCancel, CanDialogCancel));
+            CommandBindings.Add(new CommandBinding(DialogCommands.LastStep, DoDialogLastStep, CanDialogLastStep));
+            CommandBindings.Add(new CommandBinding(DialogCommands.NextStep, DoDialogNextStep, CanDialogNextStep));
             CommandBindings.Add(new CommandBinding(WindowCommands.Goto, DoGoto, CanGoto));
             CommandBindings.Add(new CommandBinding(WindowCommands.Goback, DoGoback, CanGoback));
             CommandBindings.Add(new CommandBinding(SystemCommands.CloseWindowCommand, DoWindowClose, CanWindowClose));
@@ -260,7 +264,88 @@ namespace Acorisoft.Morisa.Windows
                 ClearValue(DialogPropertyKey);
             }
         }
+        protected void DoDialogNextStep(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (_ContextStack.Count == 0)
+            {
+                //
+                // 错误前返回。
+                return;
+            }
 
+            var Context = _ContextStack.Pop();
+
+            //
+            //
+            Context.Session.IsCompleted = false;
+
+            //
+            //
+            Context.TaskCompletionSource.SetResult(Context.Session);
+
+            //
+            // Fire Event
+            RaiseEvent(new RoutedEventArgs
+            {
+                RoutedEvent = DialogCloseEvent
+            });
+
+            //
+            //
+            if (_ContextStack.Count > 0)
+            {
+                Context = _ContextStack.Pop();
+
+                //
+                // Set New Dialog Content To Property Dialog
+                SetValue(DialogPropertyKey, Context.Content);
+            }
+            else
+            {
+                ClearValue(DialogPropertyKey);
+            }
+        }
+        protected void DoDialogLastStep(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (_ContextStack.Count == 0)
+            {
+                //
+                // 错误前返回。
+                return;
+            }
+
+            var Context = _ContextStack.Pop();
+
+            //
+            //
+            Context.Session.IsCompleted = false;
+
+            //
+            //
+            Context.TaskCompletionSource.SetResult(Context.Session);
+
+            //
+            // Fire Event
+            RaiseEvent(new RoutedEventArgs
+            {
+                RoutedEvent = DialogCloseEvent
+            });
+
+            //
+            //
+            if (_ContextStack.Count > 0)
+            {
+                Context = _ContextStack.Pop();
+
+                //
+                // Set New Dialog Content To Property Dialog
+                SetValue(DialogPropertyKey, Context.Content);
+            }
+            else
+            {
+                ClearValue(DialogPropertyKey);
+            }
+        }
         protected void DoWindowClose(object sender, ExecutedRoutedEventArgs e)
         {
             this.Close();
@@ -286,7 +371,40 @@ namespace Acorisoft.Morisa.Windows
         {
             ShellMixins.Router.NavigateBack.Execute();
         }
+        protected void CanDialogNextStep(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (_ContextStack.Count > 0)
+            {
+                e.CanExecute = true;
 
+                if (_ContextStack.Peek().Content is IResultable resultable)
+                {
+                    e.CanExecute = resultable.VerifyModel();
+                }
+            }
+            else
+            {
+                e.CanExecute = false;
+            }
+
+        }
+        protected void CanDialogLastStep(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (_ContextStack.Count > 0)
+            {
+                e.CanExecute = true;
+
+                if (_ContextStack.Peek().Content is IResultable resultable)
+                {
+                    e.CanExecute = resultable.VerifyModel();
+                }
+            }
+            else
+            {
+                e.CanExecute = false;
+            }
+
+        }
         protected void CanDialogOk(object sender, CanExecuteRoutedEventArgs e)
         {
             if (_ContextStack.Count > 0)
@@ -345,6 +463,11 @@ namespace Acorisoft.Morisa.Windows
             e.CanExecute = ((ICommand)ShellMixins.Router.NavigateBack).CanExecute(e.Parameter);
         }
 
+        protected IRoutableViewModel Get<TViewModel>() where TViewModel : IRoutableViewModel
+        {
+            return Locator.Current.GetService<TViewModel>();
+        }
+
         //-------------------------------------------------------------------------------------------------
         //
         //  Public Methods
@@ -369,6 +492,89 @@ namespace Acorisoft.Morisa.Windows
             }
 
             return null;
+        }
+
+        Task<IDialogSession> StepCore(IEnumerable<IRoutableViewModel> steps)
+        {
+
+        }
+
+        Task<IDialogSession> IDialogManager.Step<TStep1, TStep2>()
+        {
+            return StepCore(new IRoutableViewModel[]
+           {
+                Get<TStep1>(),
+                Get<TStep2>(),
+           });
+        }
+        Task<IDialogSession> IDialogManager.Step<TStep1, TStep2, TStep3>()
+        {
+            return StepCore(new IRoutableViewModel[]
+       {
+                Get<TStep1>(),
+                Get<TStep2>(),
+                Get<TStep3>(),
+       });
+        }
+        Task<IDialogSession> IDialogManager.Step<TStep1, TStep2, TStep3, TStep4>()
+        {
+            return StepCore(new IRoutableViewModel[]
+            {
+                Get<TStep1>(),
+                Get<TStep2>(),
+                Get<TStep3>(),
+                Get<TStep4>(),
+            });
+        }
+        Task<IDialogSession> IDialogManager.Step<TStep1, TStep2, TStep3, TStep4, TStep5>()
+        {
+            return StepCore(new IRoutableViewModel[]
+            {
+                Get<TStep1>(),
+                Get<TStep2>(),
+                Get<TStep3>(),
+                Get<TStep4>(),
+                Get<TStep5>(),
+            });
+        }
+        Task<IDialogSession> IDialogManager.Step<TStep1, TStep2, TStep3, TStep4, TStep5, TStep6>()
+        {
+            return StepCore(new IRoutableViewModel[]
+            {
+                Get<TStep1>(),
+                Get<TStep2>(),
+                Get<TStep3>(),
+                Get<TStep4>(),
+                Get<TStep5>(),
+                Get<TStep6>(),
+            });
+        }
+        Task<IDialogSession> IDialogManager.Step<TStep1, TStep2, TStep3, TStep4, TStep5, TStep6, TStep7>()
+        {
+            return StepCore(new IRoutableViewModel[]
+            {
+                Get<TStep1>(),
+                Get<TStep2>(),
+                Get<TStep3>(),
+                Get<TStep4>(),
+                Get<TStep5>(),
+                Get<TStep6>(),
+                Get<TStep7>()
+            });
+        }
+        Task<IDialogSession> IDialogManager.Step<TStep1, TStep2, TStep3, TStep4, TStep5, TStep6, TStep7, TStep8>()
+        {
+            return StepCore(new IRoutableViewModel[]
+            {
+                Get<TStep1>(),
+                Get<TStep2>(),
+                Get<TStep3>(),
+                Get<TStep4>(),
+                Get<TStep5>(),
+                Get<TStep6>(),
+                Get<TStep7>(),
+                Get<TStep8>()
+            });
         }
 
         Task<bool> IDialogManager.MessageBox(string title, string content)

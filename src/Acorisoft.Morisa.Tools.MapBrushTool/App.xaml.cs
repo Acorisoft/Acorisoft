@@ -35,34 +35,27 @@ namespace Acorisoft.Morisa.Tools
                       .UseViews(typeof(App).Assembly)
                       .UseDialog();
 
-            var counter = new Stopwatch();
-            var vmgr = _container.Resolve<IViewManager>();
-            counter.Start();
-
             RegisterDialogs(_container);
             RegisterViews(_container);
-
-            counter.Stop();
-            vmgr.Logger.Info($"视图注册花费了:{counter.ElapsedMilliseconds}ms,总计:{counter.ElapsedTicks}ticks");
             AppViewModel = Locator.Current.GetService<AppViewModel>();
         }
 
         protected virtual void RegisterDialogs(IContainer container)
         {
-            //container.Register<GenerateCompositionSetViewModel>();
-            //container.Register<SelectProjectDirectoryViewModel>();
+        }
 
-            //container.Register<IViewFor<GenerateCompositionSetViewModel>, GenerateCompositionSetView>();
-            //container.Register<IViewFor<SelectProjectDirectoryViewModel>, SelectProjectDirectoryView>();
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            ShellMixins.View<HomeViewModel>();
+            base.OnStartup(e);
         }
 
         protected virtual void RegisterViews(IContainer container)
         {
             container.Register<HomeViewModel>();
-            //container.Register<EmotionViewModel>();
-
+            container.Register<NewBrushSetDialogViewModel>();
             container.Register<IViewFor<HomeViewModel>, HomeView>();
-            //container.Register<IViewFor<EmotionViewModel>, EmotionView>();
+            container.Register<IViewFor<NewBrushSetDialogViewModel>, NewBrushSetDialogView>();
         }
 
         public AppViewModel AppViewModel { get; }

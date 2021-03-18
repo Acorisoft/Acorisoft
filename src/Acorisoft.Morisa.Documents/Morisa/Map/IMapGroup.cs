@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Map
 {
-    public interface IMapGroup
+    public partial interface IMapGroup
     {
         Guid Id { get; set; }
         Guid? OwnerId { get; set; }
