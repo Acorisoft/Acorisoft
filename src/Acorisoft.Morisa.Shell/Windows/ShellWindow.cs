@@ -40,6 +40,11 @@ namespace Acorisoft.Morisa.Windows
             //  Constructors
             //
             //-------------------------------------------------------------------------------------------------
+            public DialogSession(IRoutableViewModel viewModel)
+            {
+                ViewModel = viewModel;
+            }
+
             public DialogSession(IRoutableViewModel viewModel, IDialogManager manager)
             {
                 ViewModel = viewModel;
@@ -107,13 +112,14 @@ namespace Acorisoft.Morisa.Windows
                 Session = new DialogSession(content, manager);
             }
 
-            public DialogDisplayContext(TaskCompletionSource<IDialogSession> tcs, IRoutableViewModel content, IDialogManager manager, Guid id)
+            public DialogDisplayContext(TaskCompletionSource<IDialogSession> tcs, IRoutableViewModel content, object context, Guid id)
             {
                 TaskCompletionSource = tcs;
                 Task = tcs.Task;
                 Content = content;
-                Session = new DialogSession(content, manager);
+                Session = new DialogSession(content);
                 StepId = id;
+                Context = context;
             }
 
             //-------------------------------------------------------------------------------------------------
@@ -144,6 +150,7 @@ namespace Acorisoft.Morisa.Windows
             /// </summary>
             public DialogSession Session { get; }
 
+            public object Context { get; }
         }
 
         //-------------------------------------------------------------------------------------------------
@@ -247,6 +254,11 @@ namespace Acorisoft.Morisa.Windows
             {
                 Context = _ContextStack.Pop();
 
+                if (Context.Content is IStepViewModelContext nextVMContext)
+                {
+                    nextVMContext.GetContext(Context.Context);
+                }
+
                 //
                 // Set New Dialog Content To Property Dialog
                 SetValue(DialogPropertyKey, Context.Content);
@@ -290,10 +302,24 @@ namespace Acorisoft.Morisa.Windows
             Context.TaskCompletionSource.SetResult(Context.Session);
 
             //
+            // 将所有步骤退栈
+            while (_ContextStack.Count > 0 && Context.StepId != null && _ContextStack.Peek().StepId == Context.StepId)
+            {
+                Context = _ContextStack.Pop();
+            }
+
+
+            //
             //
             if (_ContextStack.Count > 0)
             {
+
                 Context = _ContextStack.Pop();
+
+                if (Context.Content is IStepViewModelContext nextVMContext)
+                {
+                    nextVMContext.GetContext(Context.Context);
+                }
 
                 //
                 // Set New Dialog Content To Property Dialog
@@ -343,6 +369,10 @@ namespace Acorisoft.Morisa.Windows
                 {
                     Context = _ContextStack.Peek();
 
+                    if (Context.Content is IStepViewModelContext nextVMContext)
+                    {
+                        nextVMContext.GetContext(Context.Context);
+                    }
                     //
                     // Set New Dialog Content To Property Dialog
                     SetValue(DialogPropertyKey, Context.Content);
@@ -433,6 +463,10 @@ namespace Acorisoft.Morisa.Windows
                 //
                 Context = _ContextStack.Peek();
 
+                if (Context.Content is IStepViewModelContext nextVMContext)
+                {
+                    nextVMContext.GetContext(Context.Context);
+                }
                 //
                 // Set New Dialog Content To Property Dialog
                 SetValue(DialogPropertyKey, Context.Content);
@@ -534,12 +568,16 @@ namespace Acorisoft.Morisa.Windows
 
             var Context = _ContextStack.Pop();
 
-
             //
             //
             if (_ContextStack.Count > 0)
             {
                 Context = _ContextStack.Pop();
+
+                if (Context.Content is IStepViewModelContext nextVMContext)
+                {
+                    nextVMContext.GetContext(Context.Context);
+                }
 
                 //
                 // Set New Dialog Content To Property Dialog
@@ -606,11 +644,18 @@ namespace Acorisoft.Morisa.Windows
             if (_ContextStack.Count > 0)
             {
                 e.CanExecute = true;
+
+                if (_ContextStack.Peek().Content is IResultable resultable)
+                {
+                    e.CanExecute = resultable.VerifyModel();
+                }
             }
             else
             {
                 e.CanExecute = false;
             }
+
+            
 
         }
         protected void CanDialogLastStep(object sender, CanExecuteRoutedEventArgs e)
@@ -649,17 +694,11 @@ namespace Acorisoft.Morisa.Windows
             if (_ContextStack.Count > 0)
             {
                 e.CanExecute = true;
-
-                if (_ContextStack.Peek().Content is IResultable resultable)
-                {
-                    e.CanExecute = resultable.VerifyModel();
-                }
             }
             else
             {
                 e.CanExecute = false;
             }
-
         }
         protected void CanDialogOk(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -682,16 +721,7 @@ namespace Acorisoft.Morisa.Windows
         {
             //
             //
-            if (_ContextStack.Count > 0)
-            {
-                //
-                //
-                e.CanExecute = true;
-            }
-
-            //
-            //
-            e.CanExecute = false;
+            e.CanExecute = _ContextStack.Count > 0;
         }
 
         protected void CanWindowRestore(object sender, CanExecuteRoutedEventArgs e)
@@ -725,7 +755,14 @@ namespace Acorisoft.Morisa.Windows
 
         protected static IRoutableViewModel Get(Type type)
         {
-            return (IRoutableViewModel)Locator.Current.GetService(type);
+            if (Locator.CurrentMutable.HasRegistration(type))
+            {
+                return (IRoutableViewModel)Locator.Current.GetService(type);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         //-------------------------------------------------------------------------------------------------
@@ -753,7 +790,7 @@ namespace Acorisoft.Morisa.Windows
 
             return null;
         }
-        Task<IDialogSession> StepCore(IEnumerable<IRoutableViewModel> steps)
+        Task<IDialogSession> StepCore(IEnumerable<IRoutableViewModel> steps, object context)
         {
             var TaskCompletionSource = new TaskCompletionSource<IDialogSession>();
             var id = Guid.NewGuid();
@@ -764,7 +801,7 @@ namespace Acorisoft.Morisa.Windows
                 {
                     continue;
                 }
-                _ContextStack.Push(new DialogDisplayContext(TaskCompletionSource, vm, this, id));
+                _ContextStack.Push(new DialogDisplayContext(TaskCompletionSource, vm, context, id));
             }
 
             var Context = _ContextStack.Peek();
@@ -775,7 +812,7 @@ namespace Acorisoft.Morisa.Windows
             return Context.Task;
         }
 
-        Task<IDialogSession> IDialogManager.Step(IEnumerable<Type> steps)
+        Task<IDialogSession> IDialogManager.Step(IEnumerable<Type> steps,object context)
         {
             var array = new IRoutableViewModel[steps.Count()];
             for (int i = 0; i < array.Length; i++)
@@ -783,32 +820,32 @@ namespace Acorisoft.Morisa.Windows
                 array[i] = Get(steps.ElementAt(i));
             }
 
-            return StepCore(array);
+            return StepCore(array, context);
         }
 
-        Task<IDialogSession> IDialogManager.Step(IEnumerable<IRoutableViewModel> steps)
+        Task<IDialogSession> IDialogManager.Step(IEnumerable<IRoutableViewModel> steps, object context)
         {
-            return StepCore(steps);
+            return StepCore(steps, context);
         }
 
-        Task<IDialogSession> IDialogManager.Step<TStep1, TStep2>()
+        Task<IDialogSession> IDialogManager.Step<TStep1, TStep2>(object context)
         {
             return StepCore(new IRoutableViewModel[]
             {
                 Get<TStep1>(),
                 Get<TStep2>(),
-            });
+            }, context);
         }
-        Task<IDialogSession> IDialogManager.Step<TStep1, TStep2, TStep3>()
+        Task<IDialogSession> IDialogManager.Step<TStep1, TStep2, TStep3>(object context)
         {
             return StepCore(new IRoutableViewModel[]
             {
                 Get<TStep1>(),
                 Get<TStep2>(),
                 Get<TStep3>(),
-            });
+            }, context);
         }
-        Task<IDialogSession> IDialogManager.Step<TStep1, TStep2, TStep3, TStep4>()
+        Task<IDialogSession> IDialogManager.Step<TStep1, TStep2, TStep3, TStep4>(object context)
         {
             return StepCore(new IRoutableViewModel[]
             {
@@ -816,9 +853,9 @@ namespace Acorisoft.Morisa.Windows
                 Get<TStep2>(),
                 Get<TStep3>(),
                 Get<TStep4>(),
-            });
+            }, context);
         }
-        Task<IDialogSession> IDialogManager.Step<TStep1, TStep2, TStep3, TStep4, TStep5>()
+        Task<IDialogSession> IDialogManager.Step<TStep1, TStep2, TStep3, TStep4, TStep5>(object context)
         {
             return StepCore(new IRoutableViewModel[]
             {
@@ -827,9 +864,9 @@ namespace Acorisoft.Morisa.Windows
                 Get<TStep3>(),
                 Get<TStep4>(),
                 Get<TStep5>(),
-            });
+            }, context);
         }
-        Task<IDialogSession> IDialogManager.Step<TStep1, TStep2, TStep3, TStep4, TStep5, TStep6>()
+        Task<IDialogSession> IDialogManager.Step<TStep1, TStep2, TStep3, TStep4, TStep5, TStep6>(object context)
         {
             return StepCore(new IRoutableViewModel[]
             {
@@ -839,9 +876,9 @@ namespace Acorisoft.Morisa.Windows
                 Get<TStep4>(),
                 Get<TStep5>(),
                 Get<TStep6>(),
-            });
+            }, context);
         }
-        Task<IDialogSession> IDialogManager.Step<TStep1, TStep2, TStep3, TStep4, TStep5, TStep6, TStep7>()
+        Task<IDialogSession> IDialogManager.Step<TStep1, TStep2, TStep3, TStep4, TStep5, TStep6, TStep7>(object context)
         {
             return StepCore(new IRoutableViewModel[]
             {
@@ -852,9 +889,9 @@ namespace Acorisoft.Morisa.Windows
                 Get<TStep5>(),
                 Get<TStep6>(),
                 Get<TStep7>()
-            });
+            },context);
         }
-        Task<IDialogSession> IDialogManager.Step<TStep1, TStep2, TStep3, TStep4, TStep5, TStep6, TStep7, TStep8>()
+        Task<IDialogSession> IDialogManager.Step<TStep1, TStep2, TStep3, TStep4, TStep5, TStep6, TStep7, TStep8>(object context)
         {
             return StepCore(new IRoutableViewModel[]
             {
@@ -866,7 +903,7 @@ namespace Acorisoft.Morisa.Windows
                 Get<TStep6>(),
                 Get<TStep7>(),
                 Get<TStep8>()
-            });
+            },context);
         }
 
         Task<bool> IDialogManager.MessageBox(string title, string content)

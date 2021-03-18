@@ -52,7 +52,7 @@ namespace Acorisoft.Morisa.Tools.ViewModels
         public AppViewModel()
         {
             _DialogManager = Locator.Current.GetService<IDialogManager>();
-            _NewOperator = ReactiveCommand.Create<IGenerateContext<MapBrushSetInformation>>(OnNewOperator);
+            _NewOperator = ReactiveCommand.Create(OnNewOperator);
             _Factory = Locator.Current.GetService<IMapBrushSetFactory>();
             _BrushCollection = _Factory.BrushCollection;
             // _GroupCollection = _Factory.GroupCollection;
@@ -60,13 +60,18 @@ namespace Acorisoft.Morisa.Tools.ViewModels
             _Factory.OnLoaded += OnRebuildGroupInformation;
         }
 
-        protected async void OnNewOperator(IGenerateContext<MapBrushSetInformation> context)
+        protected async void OnNewOperator()
         {
             var session = await _DialogManager.Step<
                 NewBrushSetDialogViewModel,
                 NewBrushSetDialogStep2ViewModel,
-                NewBrushSetDialogStep3ViewModel>();
+                NewBrushSetDialogStep3ViewModel>(new GenerateContext<MapBrushSetInformation>());
 
+            if(session.IsCompleted && 
+               session.GetResult<GenerateContext<MapBrushSetInformation>>() is GenerateContext<MapBrushSetInformation> generateContext)
+            {
+                MessageBox.Show("完成");
+            }
         }
 
         protected void OnRebuildGroupInformation(object sender, EventArgs e)

@@ -17,14 +17,14 @@ namespace Acorisoft.Morisa.Dialogs
         /// </summary>
         /// <param name="steps"></param>
         /// <returns></returns>
-        Task<IDialogSession> Step(IEnumerable<Type> steps);
+        Task<IDialogSession> Step(IEnumerable<Type> stepsType, object context);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="steps"></param>
         /// <returns></returns>
-        Task<IDialogSession> Step(IEnumerable<IRoutableViewModel> steps);
+        Task<IDialogSession> Step(IEnumerable<IRoutableViewModel> steps, object context);
 
         /// <summary>
         /// 
@@ -32,7 +32,7 @@ namespace Acorisoft.Morisa.Dialogs
         /// <typeparam name="TStep1"></typeparam>
         /// <typeparam name="TStep2"></typeparam>
         /// <returns></returns>
-        Task<IDialogSession> Step<TStep1, TStep2>()
+        Task<IDialogSession> Step<TStep1, TStep2>(object context)
             where TStep1 : IRoutableViewModel
             where TStep2 : IRoutableViewModel;
 
@@ -43,7 +43,7 @@ namespace Acorisoft.Morisa.Dialogs
         /// <typeparam name="TStep2"></typeparam>
         /// <typeparam name="TStep3"></typeparam>
         /// <returns></returns>
-        Task<IDialogSession> Step<TStep1, TStep2, TStep3>()
+        Task<IDialogSession> Step<TStep1, TStep2, TStep3>(object context)
             where TStep1 : IRoutableViewModel
             where TStep2 : IRoutableViewModel
             where TStep3 : IRoutableViewModel;
@@ -56,7 +56,7 @@ namespace Acorisoft.Morisa.Dialogs
         /// <typeparam name="TStep3"></typeparam>
         /// <typeparam name="TStep4"></typeparam>
         /// <returns></returns>
-        Task<IDialogSession> Step<TStep1, TStep2, TStep3, TStep4>()
+        Task<IDialogSession> Step<TStep1, TStep2, TStep3, TStep4>(object context)
             where TStep1 : IRoutableViewModel
             where TStep2 : IRoutableViewModel
             where TStep3 : IRoutableViewModel
@@ -71,7 +71,7 @@ namespace Acorisoft.Morisa.Dialogs
         /// <typeparam name="TStep4"></typeparam>
         /// <typeparam name="TStep5"></typeparam>
         /// <returns></returns>
-        Task<IDialogSession> Step<TStep1, TStep2, TStep3, TStep4, TStep5>()
+        Task<IDialogSession> Step<TStep1, TStep2, TStep3, TStep4, TStep5>(object context)
             where TStep1 : IRoutableViewModel
             where TStep2 : IRoutableViewModel
             where TStep3 : IRoutableViewModel
@@ -88,7 +88,7 @@ namespace Acorisoft.Morisa.Dialogs
         /// <typeparam name="TStep5"></typeparam>
         /// <typeparam name="TStep6"></typeparam>
         /// <returns></returns>
-        Task<IDialogSession> Step<TStep1, TStep2, TStep3, TStep4, TStep5, TStep6>()
+        Task<IDialogSession> Step<TStep1, TStep2, TStep3, TStep4, TStep5, TStep6>(object context)
             where TStep1 : IRoutableViewModel
             where TStep2 : IRoutableViewModel
             where TStep3 : IRoutableViewModel
@@ -107,7 +107,7 @@ namespace Acorisoft.Morisa.Dialogs
         /// <typeparam name="TStep6"></typeparam>
         /// <typeparam name="TStep7"></typeparam>
         /// <returns></returns>
-        Task<IDialogSession> Step<TStep1, TStep2, TStep3, TStep4, TStep5, TStep6, TStep7>()
+        Task<IDialogSession> Step<TStep1, TStep2, TStep3, TStep4, TStep5, TStep6, TStep7>(object context)
             where TStep1 : IRoutableViewModel
             where TStep2 : IRoutableViewModel
             where TStep3 : IRoutableViewModel
@@ -127,7 +127,7 @@ namespace Acorisoft.Morisa.Dialogs
         /// <typeparam name="TStep7"></typeparam>
         /// <typeparam name="TStep8"></typeparam>
         /// <returns></returns>
-        Task<IDialogSession> Step<TStep1, TStep2, TStep3, TStep4, TStep5, TStep6, TStep7, TStep8>()
+        Task<IDialogSession> Step<TStep1, TStep2, TStep3, TStep4, TStep5, TStep6, TStep7, TStep8>(object context)
             where TStep1 : IRoutableViewModel
             where TStep2 : IRoutableViewModel
             where TStep3 : IRoutableViewModel

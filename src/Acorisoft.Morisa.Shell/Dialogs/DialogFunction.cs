@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Dialogs
 {
-    public abstract class DialogFunction : ViewModelBase,IResultable
+    public abstract class DialogFunction : ViewModelBase, IResultable
     {
         protected virtual bool VerifyModelCore()
         {

@@ -1,4 +1,5 @@
 ﻿using Acorisoft.Morisa.Dialogs;
+using Acorisoft.Morisa.Map;
 using Acorisoft.Morisa.ViewModels;
 using DynamicData.Binding;
 using GongSolutions.Wpf.DragDrop;
@@ -20,7 +21,7 @@ using System.Windows.Input;
 
 namespace Acorisoft.Morisa.Tools.ViewModels
 {
-    public partial class NewBrushSetDialogViewModel : DialogFunction
+    public partial class NewBrushSetDialogViewModel : StepFunction<GenerateContext<MapBrushSetInformation>>
     {
         public NewBrushSetDialogViewModel()
         {
