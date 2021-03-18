@@ -109,11 +109,14 @@ namespace Acorisoft.Morisa.Map
             // 创建数据库
             var database = Factory.CreateDatabase(context.FileName);
 
-            
-
+            var mbs = new MapBrushSet
+            {                
+                Database = database,
+                DB_External = database.GetCollection(ExternalCollectionName)
+            };
             //
             // 提示更新。
-            Input.OnNext(new MapBrushSet { Database = database, DB_External = database.GetCollection(ExternalCollectionName) });
+            Input.OnNext(mbs);
         }
 
         protected override sealed MapBrushSetInformation CreateProfileCore()
@@ -169,7 +172,6 @@ namespace Acorisoft.Morisa.Map
             //
             // 获取数据库
             var database = set.Database;
-
             //
             // 获取集合
             set.DB_BrushCollection = database.GetCollection<IMapBrush>(BrushCollectionName);
@@ -211,7 +213,7 @@ namespace Acorisoft.Morisa.Map
         public ReadOnlyObservableCollection<IMapBrush> BrushCollection => _BindableBrushCollection;
 
         /// <summary>
-        /// 用于指示视图模型当前已经加载了数据
+        /// 用于指示视图模型当前已经加载了数据，通知视图模型以重建模型。
         /// </summary>
         public event EventHandler OnLoaded;
 

@@ -67,6 +67,29 @@ namespace Acorisoft.Morisa
 
             return instance;
         }
+        /// <summary>
+        /// 在数据库中查询或者创建一个新的单例。
+        /// </summary>
+        /// <typeparam name="T">要查询的单例对象类型。</typeparam>
+        /// <param name="database">数据库</param>
+        /// <returns>返回一个已经存在于数据库中的单例实例或者创建一个新的单例实例并保存于数据库当中。</returns>
+        protected internal static  T Singleton<T>(LiteDatabase database)
+        {
+            var key = typeof(T).FullName;
+            var collection = database.GetCollection(ExternalCollectionName);
+            T instance;
+            if (collection.Exists(Query.EQ("_id", key)))
+            {
+                instance = DatabaseMixins.Deserialize<T>(collection.FindById(key));
+            }
+            else
+            {
+                instance = ClassActivator.CreateInstance<T>();
+                collection.Upsert(key, DatabaseMixins.Serialize(instance));
+            }
+
+            return instance;
+        }
 
         /// <summary>
         /// 当配置信息改变的时候。
