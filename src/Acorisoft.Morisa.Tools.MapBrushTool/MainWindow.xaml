@@ -8,6 +8,7 @@
                  xmlns:mui="https://github.com/Acorisoft/Morisa/UI"
                  xmlns:rx="http://reactiveui.net"
                  mc:Ignorable="d"
+                 Color="{DynamicResource UI.Brushes.Transparent}"
                  Title="{Binding Title,Mode=OneWay}"
                  MinWidth="1152"
                  MinHeight="640">

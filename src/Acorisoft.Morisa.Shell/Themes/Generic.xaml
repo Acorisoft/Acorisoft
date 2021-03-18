@@ -14,6 +14,7 @@
     <Color x:Key="UI.Colors.White">#FFFFFF</Color>
     <Color x:Key="UI.Colors.Paper">#F5F5F5</Color>
     <Color x:Key="UI.Colors.Shadow">#AA000000</Color>
+    <Color x:Key="UI.Colors.Transparent">Transparent</Color>
     <Color x:Key="UI.Colors.Accent">#3F51B5</Color>
     <Color x:Key="UI.Colors.Accent.Dark">#303F9F</Color>
 
@@ -94,6 +95,14 @@
     <SolidColorBrush x:Key="UI.Brushes.Mask.Dark">#30000000</SolidColorBrush>
     <SolidColorBrush x:Key="UI.Brushes.Mask.Light">#30FFFFFF</SolidColorBrush>
 
+
+    <SolidColorBrush x:Key="UI.Brushes.Commons.Background" Color="{StaticResource UI.Colors.Transparent}"/>
+    <SolidColorBrush x:Key="UI.Brushes.Commons.Background.Hover">#30000000</SolidColorBrush>
+    <SolidColorBrush x:Key="UI.Brushes.Commons.Background.Press">#50000000</SolidColorBrush>
+    <SolidColorBrush x:Key="UI.Brushes.Commons.Foreground" Color="{StaticResource UI.Colors.Black}"/>
+    <SolidColorBrush x:Key="UI.Brushes.Commons.Foreground.Hover" Color="{StaticResource UI.Colors.White}"/>
+    <SolidColorBrush x:Key="UI.Brushes.Commons.Foreground.Press" Color="{StaticResource UI.Colors.White}"/>
+
     <!-- 阴影 -->
     <DropShadowEffect x:Key="UI.Effect.Shadow1" BlurRadius="5" ShadowDepth="1" Direction="270" Color="{StaticResource UI.Colors.Shadow}" Opacity=".2" RenderingBias="Performance" o:Freeze="True" />
     <DropShadowEffect x:Key="UI.Effect.Shadow2" BlurRadius="8" ShadowDepth="1.5" Direction="270" Color="{StaticResource UI.Colors.Shadow}" Opacity=".2" RenderingBias="Performance" o:Freeze="True" />
@@ -104,8 +113,8 @@
     <Style TargetType="{x:Type b:WindowCloseButton}">
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="MinWidth" Value="32" />
-        <Setter Property="Background" Value="{StaticResource UI.Brushes.Transparent}" />
-        <Setter Property="Foreground" Value="{StaticResource UI.Brushes.White}" />
+        <Setter Property="Background" Value="{DynamicResource UI.Brushes.Commons.Background}" />
+        <Setter Property="Foreground" Value="{StaticResource UI.Brushes.Commons.Foreground}" />
         <Setter Property="HoverBackgroundBrush" Value="#e81123" />
         <Setter Property="HoverForegroundBrush" Value="{StaticResource UI.Brushes.White}" />
         <Setter Property="PressBackgroundBrush" Value="#e81123" />
@@ -141,12 +150,12 @@
     <Style TargetType="{x:Type b:WindowMinButton}">
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="MinWidth" Value="32" />
-        <Setter Property="Background" Value="{StaticResource UI.Brushes.Transparent}" />
-        <Setter Property="Foreground" Value="{StaticResource UI.Brushes.White}" />
-        <Setter Property="HoverBackgroundBrush" Value="#30FFFFFF" />
-        <Setter Property="HoverForegroundBrush" Value="{StaticResource UI.Brushes.White}" />
-        <Setter Property="PressBackgroundBrush" Value="#20FFFFFF" />
-        <Setter Property="PressForegroundBrush" Value="{StaticResource UI.Brushes.White}" />
+        <Setter Property="Background" Value="{DynamicResource UI.Brushes.Commons.Background}" />
+        <Setter Property="Foreground" Value="{DynamicResource UI.Brushes.Commons.Foreground}" />
+        <Setter Property="HoverBackgroundBrush" Value="{DynamicResource UI.Brushes.Commons.Background.Hover}" />
+        <Setter Property="HoverForegroundBrush" Value="{DynamicResource UI.Brushes.Commons.Foreground.Hover}" />
+        <Setter Property="PressBackgroundBrush" Value="{DynamicResource UI.Brushes.Commons.Background.Press}" />
+        <Setter Property="PressForegroundBrush" Value="{DynamicResource UI.Brushes.Commons.Foreground.Press}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -178,12 +187,12 @@
     <Style TargetType="{x:Type b:SymbolButton}">
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="MinWidth" Value="32" />
-        <Setter Property="Background" Value="{StaticResource UI.Brushes.Transparent}" />
-        <Setter Property="Foreground" Value="{StaticResource UI.Brushes.White}" />
-        <Setter Property="HoverBackgroundBrush" Value="#30FFFFFF" />
-        <Setter Property="HoverForegroundBrush" Value="{StaticResource UI.Brushes.White}" />
-        <Setter Property="PressBackgroundBrush" Value="#20FFFFFF" />
-        <Setter Property="PressForegroundBrush" Value="{StaticResource UI.Brushes.White}" />
+        <Setter Property="Background" Value="{DynamicResource UI.Brushes.Commons.Background}" />
+        <Setter Property="Foreground" Value="{DynamicResource UI.Brushes.Commons.Foreground}" />
+        <Setter Property="HoverBackgroundBrush" Value="{DynamicResource UI.Brushes.Commons.Background.Hover}" />
+        <Setter Property="HoverForegroundBrush" Value="{DynamicResource UI.Brushes.Commons.Foreground.Hover}" />
+        <Setter Property="PressBackgroundBrush" Value="{DynamicResource UI.Brushes.Commons.Background.Press}" />
+        <Setter Property="PressForegroundBrush" Value="{DynamicResource UI.Brushes.Commons.Foreground.Press}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -216,12 +225,12 @@
     <Style TargetType="{x:Type b:WindowMaxButton}">
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="MinWidth" Value="32" />
-        <Setter Property="Background" Value="{StaticResource UI.Brushes.Transparent}" />
-        <Setter Property="Foreground" Value="{StaticResource UI.Brushes.White}" />
-        <Setter Property="HoverBackgroundBrush" Value="#30FFFFFF" />
-        <Setter Property="HoverForegroundBrush" Value="{StaticResource UI.Brushes.White}" />
-        <Setter Property="PressBackgroundBrush" Value="#20FFFFFF" />
-        <Setter Property="PressForegroundBrush" Value="{StaticResource UI.Brushes.White}" />
+        <Setter Property="Background" Value="{DynamicResource UI.Brushes.Commons.Background}" />
+        <Setter Property="Foreground" Value="{DynamicResource UI.Brushes.Commons.Foreground}" />
+        <Setter Property="HoverBackgroundBrush" Value="{DynamicResource UI.Brushes.Commons.Background.Hover}" />
+        <Setter Property="HoverForegroundBrush" Value="{DynamicResource UI.Brushes.Commons.Foreground.Hover}" />
+        <Setter Property="PressBackgroundBrush" Value="{DynamicResource UI.Brushes.Commons.Background.Press}" />
+        <Setter Property="PressForegroundBrush" Value="{DynamicResource UI.Brushes.Commons.Foreground.Press}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -256,12 +265,12 @@
     <Style TargetType="{x:Type b:WindowGoBackButton}">
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="MinWidth" Value="32" />
-        <Setter Property="Background" Value="{StaticResource UI.Brushes.Transparent}" />
-        <Setter Property="Foreground" Value="{StaticResource UI.Brushes.White}" />
-        <Setter Property="HoverBackgroundBrush" Value="#30FFFFFF" />
-        <Setter Property="HoverForegroundBrush" Value="{StaticResource UI.Brushes.White}" />
-        <Setter Property="PressBackgroundBrush" Value="#20FFFFFF" />
-        <Setter Property="PressForegroundBrush" Value="{StaticResource UI.Brushes.White}" />
+        <Setter Property="Background" Value="{DynamicResource UI.Brushes.Commons.Background}" />
+        <Setter Property="Foreground" Value="{DynamicResource UI.Brushes.Commons.Foreground}" />
+        <Setter Property="HoverBackgroundBrush" Value="{DynamicResource UI.Brushes.Commons.Background.Hover}" />
+        <Setter Property="HoverForegroundBrush" Value="{DynamicResource UI.Brushes.Commons.Foreground.Hover}" />
+        <Setter Property="PressBackgroundBrush" Value="{DynamicResource UI.Brushes.Commons.Background.Press}" />
+        <Setter Property="PressForegroundBrush" Value="{DynamicResource UI.Brushes.Commons.Foreground.Press}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="Template">
