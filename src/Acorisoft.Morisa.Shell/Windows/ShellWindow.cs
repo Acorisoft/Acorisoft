@@ -209,8 +209,16 @@ namespace Acorisoft.Morisa.Windows
             //
             Locator.CurrentMutable.RegisterConstant<IDialogManager>(this);
 
+            this.Unloaded += OnUnloaded;
             this.Loaded += OnLoaded;
             this.DataContextChanged += OnDataContextChanged;
+        }
+
+        protected virtual void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            this.Unloaded -= OnUnloaded;
+            this.Loaded -= OnLoaded;
+            this.DataContextChanged -= OnDataContextChanged;
         }
 
         protected virtual void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
