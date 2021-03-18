@@ -62,7 +62,10 @@ namespace Acorisoft.Morisa.Tools.ViewModels
 
         protected async void OnNewOperator(IGenerateContext<MapBrushSetInformation> context)
         {
-            var session = await _DialogManager.Dialog<NewBrushSetDialogViewModel>();
+            var session = await _DialogManager.Step<
+                NewBrushSetDialogViewModel,
+                NewBrushSetDialogStep2ViewModel,
+                NewBrushSetDialogStep3ViewModel>();
 
         }
 

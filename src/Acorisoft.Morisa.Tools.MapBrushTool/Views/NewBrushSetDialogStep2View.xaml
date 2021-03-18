@@ -19,8 +19,8 @@
                 Padding="0 100 0 0">
             <DockPanel>
                 <UniformGrid Columns="2" Height="48" DockPanel.Dock="Bottom">
-                    <Button Command="{x:Static mui:DialogCommands.Ok}" Content="上一步" BorderThickness="0"/>
-                    <Button Command="{x:Static mui:DialogCommands.Cancel}" Content="下一步" BorderThickness="0"/>
+                    <Button Command="{x:Static mui:DialogCommands.LastStep}" Content="上一步" BorderThickness="0"/>
+                    <Button Command="{x:Static mui:DialogCommands.NextStep}" Content="下一步" BorderThickness="0"/>
                 </UniformGrid>
                 <StackPanel DockPanel.Dock="Top">
                     <TextBlock Text="新建画刷集"
@@ -40,10 +40,12 @@
                                FontSize="14"
                                Margin="64 16"/>
                     <TextBox FontSize="20"
-                             AcceptsReturn="True"
-                             AcceptsTab="True"
-                             MinHeight="64"
                              Margin="64 0 64 16"/>
+                    <ItemsControl Background="{StaticResource UI.Brushes.White}"
+                                  Margin="64 0 64 0"
+                                  MinHeight="48">
+                        
+                    </ItemsControl>
                 </StackPanel>
             </DockPanel>
         </Border>

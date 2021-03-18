@@ -19,7 +19,7 @@
                 Padding="0 100 0 0">
             <DockPanel>
                 <UniformGrid Columns="2" Height="48" DockPanel.Dock="Bottom">
-                    <Button Command="{x:Static mui:DialogCommands.Ok}" Content="下一步" BorderThickness="0"/>
+                    <Button Command="{x:Static mui:DialogCommands.NextStep}" Content="下一步" BorderThickness="0"/>
                     <Button Command="{x:Static mui:DialogCommands.Cancel}" Content="取消" BorderThickness="0"/>
                 </UniformGrid>
                 <StackPanel DockPanel.Dock="Top">
