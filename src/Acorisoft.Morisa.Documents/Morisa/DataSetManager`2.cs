@@ -27,6 +27,7 @@ namespace Acorisoft.Morisa
     {
         private protected readonly DelegateObserver<TProfile> ProfileStream;
         private protected readonly IDisposable ProfileDisposable;
+        private TProfile _Profile;
 
         public DataSetManager() : base()
         {
@@ -44,7 +45,10 @@ namespace Acorisoft.Morisa
                                           });
         }
 
-
+        protected void SetGenerateContext(TProfile setting)
+        {
+            _Profile = setting;
+        }
 
 
         /// <summary>
@@ -69,6 +73,12 @@ namespace Acorisoft.Morisa
             return instance;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="instance"></param>
+        /// <returns></returns>
         protected internal T Singleton<T>(T instance)
         {
             DataSet.DB_External.Upsert(typeof(TProfile).FullName, DatabaseMixins.Serialize(instance));
@@ -126,6 +136,11 @@ namespace Acorisoft.Morisa
             OnProfileChanged?.Invoke(profile);
         }
 
+        protected override sealed void DataSetChanged(TDataSet set)
+        {
+            base.DataSetChanged(set);
+        }
+
         /// <summary>
         /// 当配置信息改变的时候。
         /// </summary>
@@ -155,17 +170,21 @@ namespace Acorisoft.Morisa
         /// <param name="set">指定此初始化操作所需要用到的数据库上下文，要求不能为空。</param>
         protected override void InitializeFromPattern(TDataSet set)
         {
-            set.Setting = Singleton(CreateProfileCore()); ;
-            base.InitializeFromPattern(set);
+            set.Setting = Singleton(CreateProfileCore());
         }
 
         /// <summary>
         /// 创建新的配置信息。在派生类中重写该方法以便生成针对性的配置信息。
         /// </summary>
         /// <returns>返回一个配置信息实例。</returns>
-        protected virtual TProfile CreateProfileCore()
+        protected TProfile CreateProfileCore()
         {
-            return default;
+            if(_Profile == null)
+            {
+                return default;
+            }
+
+            return _Profile;
         }
 
         public IObserver<TProfile> Profile => ProfileStream;

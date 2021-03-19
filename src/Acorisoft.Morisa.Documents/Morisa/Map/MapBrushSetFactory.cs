@@ -26,7 +26,6 @@ namespace Acorisoft.Morisa.Map
         public const string GroupCollectionName = "Groups";
 
         private readonly IDisposableCollector           _Collector;
-        private readonly Stack<MapBrushSetInformation>  _InformationStack;
         private readonly SourceList<IMapGroup>          _EditableGroupCollection;
         private readonly SourceList<IMapBrush>          _EditableBrushCollection;
         private readonly ReadOnlyObservableCollection<MapGroupAdapter>  _BindableGroupCollection;
@@ -35,7 +34,6 @@ namespace Acorisoft.Morisa.Map
         public MapBrushSetFactory(IDisposableCollector collector) : base()
         {
             _Collector = collector;
-            _InformationStack = new Stack<MapBrushSetInformation>();
             _EditableBrushCollection = new SourceList<IMapBrush>();
             _EditableGroupCollection = new SourceList<IMapGroup>();
 
@@ -86,8 +84,8 @@ namespace Acorisoft.Morisa.Map
             var database = Factory.CreateDatabase(context.FileName);
 
             //
-            // 压栈
-            _InformationStack.Push(context.Context);
+            //
+            SetGenerateContext(context.Context);
 
             //
             // 提示更新。
@@ -117,23 +115,6 @@ namespace Acorisoft.Morisa.Map
             //
             // 提示更新。
             Input.OnNext(mbs);
-        }
-
-        protected override sealed MapBrushSetInformation CreateProfileCore()
-        {
-            if (_InformationStack != null && _InformationStack.Count > 0)
-            {
-                //
-                // 退栈。
-                return _InformationStack.Pop();
-            }
-
-            //
-            // 否则返回创建的新配置信息。
-            return new MapBrushSetInformation
-            {
-
-            };
         }
 
         protected override sealed void InitializeFromDatabase(MapBrushSet set)

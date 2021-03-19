@@ -48,7 +48,7 @@ namespace Acorisoft.Morisa
                                            });
         }
 
-        protected void DataSetChanged(TDataSet set)
+        protected virtual void DataSetChanged(TDataSet set)
         {
             if (set is TDataSet)
             {
