@@ -12,4 +12,10 @@
                         Width="800"
                         Height="600"
                         d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,Type={x:Type vm:HomeViewModel}}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="280" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+    </Grid>
 </rx:ReactiveUserControl>

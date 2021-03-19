@@ -31,21 +31,22 @@
                                FontSize="16"
                                Foreground="Gray"
                                HorizontalAlignment="Center"/>
-                    <TextBlock Text="画刷集名字"
-                               FontSize="14"
-                               Margin="64 16"/>
-                    <TextBox FontSize="20"
-                             Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                             Margin="64 0 64 16"/>
-                    <TextBlock Text="画刷集介绍"
-                               FontSize="14"
-                               Margin="64 16"/>
-                    <TextBox FontSize="20"
-                             AcceptsReturn="True"
-                             AcceptsTab="True"
-                             MinHeight="64"
-                             Text="{Binding Summary,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                             Margin="64 0 64 16"/>
+                    <mui:FormGroup Header="画刷集名字"
+                                   Margin="64 16">
+                        <mui:FormGroup.Control>
+                            <TextBox FontSize="20" Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                        </mui:FormGroup.Control>
+                    </mui:FormGroup>
+                    <mui:FormGroup Header="画刷集介绍"
+                                   Margin="64 16">
+                        <mui:FormGroup.Control>
+                            <TextBox FontSize="20"
+                                     AcceptsReturn="True"
+                                     AcceptsTab="True"
+                                     MinHeight="64"
+                                     Text="{Binding Summary,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                        </mui:FormGroup.Control>
+                    </mui:FormGroup>
                 </StackPanel>
             </DockPanel>
         </Border>

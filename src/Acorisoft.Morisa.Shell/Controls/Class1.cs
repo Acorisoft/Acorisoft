@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Controls
 {
-    public interface IControlGroupChildren
+    class Class1
     {
-        double UniteHeaderWidth { get; set; }
     }
 }
