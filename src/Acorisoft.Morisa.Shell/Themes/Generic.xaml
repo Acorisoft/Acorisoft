@@ -311,7 +311,8 @@
             <Setter.Value>
                 <WindowChrome ResizeBorderThickness="7"
                               CornerRadius="0"
-                              GlassFrameThickness="0"/>
+                              GlassFrameThickness="0"
+                              NonClientFrameEdges="Bottom"/>
             </Setter.Value>
         </Setter>
         <Setter Property="Template">
