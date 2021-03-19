@@ -7,6 +7,7 @@ using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,5 +23,22 @@ namespace Acorisoft.Morisa.Tools.ViewModels
         {
         }
 
+        private string _File;
+
+        protected override bool VerifyModelCore()
+        {
+            return !string.IsNullOrEmpty(_File);
+        }
+
+        public string File
+        {
+            get => _File;
+            set
+            {
+                Context.FileName = value;
+                Context.Directory = Directory.GetParent(value).FullName;
+                Set(ref _File, value);
+            }
+        }
     }
 }

@@ -51,7 +51,7 @@ namespace Acorisoft.Morisa.Internal
             if (_Predicate(value))
             {
                 _Value = value;
-                _IsChanged = true;
+                _Handler(_Value);
             }
         }
     }

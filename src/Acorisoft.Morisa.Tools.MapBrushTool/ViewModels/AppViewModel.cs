@@ -65,12 +65,15 @@ namespace Acorisoft.Morisa.Tools.ViewModels
             var session = await _DialogManager.Step<
                 NewBrushSetDialogViewModel,
                 NewBrushSetDialogStep2ViewModel,
-                NewBrushSetDialogStep3ViewModel>(new GenerateContext<MapBrushSetInformation>());
+                NewBrushSetDialogStep3ViewModel>(new GenerateContext<MapBrushSetInformation>
+                {
+                    Context = new MapBrushSetInformation()
+                });
 
             if(session.IsCompleted && 
                session.GetResult<GenerateContext<MapBrushSetInformation>>() is GenerateContext<MapBrushSetInformation> generateContext)
             {
-                MessageBox.Show("完成");
+                _Factory.Generate(generateContext);
             }
         }
 

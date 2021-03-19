@@ -39,8 +39,7 @@ namespace Acorisoft.Morisa
                                               {
                                                   Resource.OnNext(x.Cover);
                                               }
-
-                                              DataSet.DB_External.Upsert(typeof(TProfile).FullName, DatabaseMixins.Serialize(x));
+                                              Singleton(x);
                                               ProfileChangedCore(x);
                                           });
         }
@@ -69,6 +68,13 @@ namespace Acorisoft.Morisa
 
             return instance;
         }
+
+        protected internal T Singleton<T>(T instance)
+        {
+            DataSet.DB_External.Upsert(typeof(TProfile).FullName, DatabaseMixins.Serialize(instance));
+            return instance;
+        }
+
         /// <summary>
         /// 在数据库中查询或者创建一个新的单例。
         /// </summary>
@@ -135,6 +141,8 @@ namespace Acorisoft.Morisa
         /// <param name="set">指定此初始化操作所需要用到的数据库上下文，要求不能为空。</param>
         protected override void InitializeFromDatabase(TDataSet set)
         {
+            set.DB_External = set.Database.GetCollection(ExternalCollectionName);
+
             //
             // 创建新的配置信息。
             set.Setting = Singleton<TProfile>();
@@ -147,6 +155,7 @@ namespace Acorisoft.Morisa
         /// <param name="set">指定此初始化操作所需要用到的数据库上下文，要求不能为空。</param>
         protected override void InitializeFromPattern(TDataSet set)
         {
+            set.Setting = Singleton(CreateProfileCore()); ;
             base.InitializeFromPattern(set);
         }
 

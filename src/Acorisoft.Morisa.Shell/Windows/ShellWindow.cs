@@ -264,7 +264,7 @@ namespace Acorisoft.Morisa.Windows
 
                 if (Context.Content is IStepViewModelContext nextVMContext)
                 {
-                    nextVMContext.GetContext(Context.Context);
+                    nextVMContext.PostContext(Context.Context);
                 }
 
                 //
@@ -326,7 +326,7 @@ namespace Acorisoft.Morisa.Windows
 
                 if (Context.Content is IStepViewModelContext nextVMContext)
                 {
-                    nextVMContext.GetContext(Context.Context);
+                    nextVMContext.PostContext(Context.Context);
                 }
 
                 //
@@ -379,7 +379,7 @@ namespace Acorisoft.Morisa.Windows
 
                     if (Context.Content is IStepViewModelContext nextVMContext)
                     {
-                        nextVMContext.GetContext(Context.Context);
+                        nextVMContext.PostContext(Context.Context);
                     }
                     //
                     // Set New Dialog Content To Property Dialog
@@ -473,7 +473,7 @@ namespace Acorisoft.Morisa.Windows
 
                 if (Context.Content is IStepViewModelContext nextVMContext)
                 {
-                    nextVMContext.GetContext(Context.Context);
+                    nextVMContext.PostContext(Context.Context);
                 }
                 //
                 // Set New Dialog Content To Property Dialog
@@ -584,7 +584,7 @@ namespace Acorisoft.Morisa.Windows
 
                 if (Context.Content is IStepViewModelContext nextVMContext)
                 {
-                    nextVMContext.GetContext(Context.Context);
+                    nextVMContext.PostContext(Context.Context);
                 }
 
                 //
@@ -809,10 +809,17 @@ namespace Acorisoft.Morisa.Windows
                 {
                     continue;
                 }
+
                 _ContextStack.Push(new DialogDisplayContext(TaskCompletionSource, vm, context, id));
             }
 
             var Context = _ContextStack.Peek();
+
+            if(Context.Content is IStepViewModelContext vmContext)
+            {
+                vmContext.PostContext(Context.Context);
+            }
+
             //
             // Set New Dialog Content To Property Dialog
             SetValue(DialogPropertyKey, Context.Content);

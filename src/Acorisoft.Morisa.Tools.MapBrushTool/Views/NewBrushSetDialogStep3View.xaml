@@ -28,16 +28,22 @@
                                FontSize="32"
                                Foreground="{StaticResource UI.Brushes.Accent.Dark}"
                                HorizontalAlignment="Center"/>
-                    <TextBlock Text="选择一个封面，让大家能够更直观的看到这个画刷的预览效果。"
+                    <TextBlock Text="选择一个画刷的保存目录。"
                                FontSize="16"
                                Foreground="Gray"
                                HorizontalAlignment="Center"/>
-                    <TextBlock Text="封面"
+                    <TextBlock Text="保存目录"
                                FontSize="14"
                                Margin="64 16"/>
                     <TextBox FontSize="20"
+                             Text="{Binding File,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                              Margin="64 0 64 16"/>
-                    <Image/>
+                    <Button Margin="64 0 64 16"
+                            Content="..."
+                            Width="64"
+                            Height="32"
+                            Click="SelectFolder"
+                            HorizontalAlignment="Right"/>
                 </StackPanel>
             </DockPanel>
         </Border>

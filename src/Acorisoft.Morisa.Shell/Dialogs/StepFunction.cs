@@ -8,7 +8,7 @@ namespace Acorisoft.Morisa.Dialogs
 {
     interface IStepViewModelContext
     {
-        void GetContext(object context);
+        void PostContext(object context);
     }
 
     public abstract class StepFunction<T> : DialogFunction, IStepViewModelContext
@@ -24,7 +24,7 @@ namespace Acorisoft.Morisa.Dialogs
             return Context;
         }
 
-        protected virtual void GetContextCore(object context)
+        protected virtual void OnGetContext(object context)
         {
             if(context is T targetContext)
             {
@@ -32,9 +32,9 @@ namespace Acorisoft.Morisa.Dialogs
             }
         }
 
-        void IStepViewModelContext.GetContext(object context)
+        void IStepViewModelContext.PostContext(object context)
         {
-            GetContextCore(context);
+            OnGetContext(context);
         }
 
         protected T Context { get; private set; }

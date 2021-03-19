@@ -26,5 +26,31 @@ namespace Acorisoft.Morisa.Tools.ViewModels
         public NewBrushSetDialogViewModel()
         {
         }
+
+        protected override bool VerifyModelCore()
+        {
+            var context = Context.Context;
+            return !string.IsNullOrEmpty(context.Name);
+        }
+
+        public string Name
+        {
+            get => Context.Context.Name;
+            set
+            {
+                Context.Context.Name = value;
+                RaiseUpdated(nameof(Name));
+            }
+        }
+
+        public string Summary
+        {
+            get => Context.Context.Summary;
+            set
+            {
+                Context.Context.Summary = value;
+                RaiseUpdated(nameof(Summary));
+            }
+        }
     }
 }

@@ -172,6 +172,11 @@ namespace Acorisoft.Morisa.Map
             //
             // 获取数据库
             var database = set.Database;
+
+            //
+            //
+            base.InitializeFromPattern(set);
+
             //
             // 获取集合
             set.DB_BrushCollection = database.GetCollection<IMapBrush>(BrushCollectionName);

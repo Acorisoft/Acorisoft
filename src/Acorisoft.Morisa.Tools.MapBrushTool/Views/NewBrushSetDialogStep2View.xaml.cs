@@ -31,9 +31,9 @@ namespace Acorisoft.Morisa.Tools.Views
     /// <summary>
     /// NotificationView.xaml 的交互逻辑
     /// </summary>
-    public partial class NewBrushSetDialogStep3View : DialogView<NewBrushSetDialogStep3ViewModel>
+    public partial class NewBrushSetDialogStep2View : DialogView<NewBrushSetDialogStep2ViewModel>
     {
-        public NewBrushSetDialogStep3View()
+        public NewBrushSetDialogStep2View()
         {
             InitializeComponent();
             this.WhenActivated(d =>

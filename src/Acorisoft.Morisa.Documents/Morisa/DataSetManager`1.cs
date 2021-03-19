@@ -52,6 +52,10 @@ namespace Acorisoft.Morisa
         {
             if (set is TDataSet)
             {
+                //
+                // 复制
+                DataSet = set;
+
                 if (DetermineDataSetInitialization(set))
                 {
                     InitializeFromDatabase(set);
