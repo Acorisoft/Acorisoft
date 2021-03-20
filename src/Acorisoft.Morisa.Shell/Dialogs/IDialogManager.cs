@@ -147,6 +147,13 @@ namespace Acorisoft.Morisa.Dialogs
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="vm"></param>
+        /// <returns></returns>
+        Task<IDialogSession> Dialog(IRoutableViewModel vm);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="title"></param>
         /// <param name="content"></param>
         /// <returns></returns>

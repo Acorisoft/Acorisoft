@@ -1,4 +1,5 @@
 ﻿
+using Acorisoft.Morisa.Dialogs;
 using ReactiveUI;
 using Splat;
 using System;
@@ -12,8 +13,14 @@ namespace Acorisoft.Morisa.ViewModels
 {
     public abstract class ViewModelBase : ReactiveObject, IRoutableViewModel
     {
-        private IScreen _screen;
+        private Lazy<IScreen> _ScreenExpression;
+        private Lazy<IDialogManager> _DialogManagerExpression;
 
+        protected ViewModelBase()
+        {
+            _ScreenExpression = new Lazy<IScreen>(() => Locator.Current.GetService<IScreen>());
+            _DialogManagerExpression = new Lazy<IDialogManager>(() => Locator.Current.GetService<IDialogManager>());
+        }
         /// <summary>
         /// 设置指定字段的值并通知更改
         /// </summary>
@@ -58,11 +65,15 @@ namespace Acorisoft.Morisa.ViewModels
 
         public IScreen HostScreen {
             get {
-                if (_screen == null)
-                {
-                    _screen = Locator.Current.GetService<IScreen>();
-                }
-                return _screen;
+                return _ScreenExpression.Value;
+            }
+        }
+
+        protected IDialogManager DialogManager
+        {
+            get
+            {
+                return _DialogManagerExpression.Value;
             }
         }
     }

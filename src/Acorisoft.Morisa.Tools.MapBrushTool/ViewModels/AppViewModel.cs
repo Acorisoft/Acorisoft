@@ -23,7 +23,6 @@ using Acorisoft.Morisa.Dialogs;
 using Splat;
 using System.Windows;
 using DryIoc;
-using Acorisoft.Morisa.ViewModels;
 using System.Windows.Input;
 using Acorisoft.Morisa.Core;
 
@@ -34,35 +33,23 @@ namespace Acorisoft.Morisa.Tools.ViewModels
         private readonly ICommand                       _NewOperator;
         private readonly ICommand                       _OpenOperator;
         private readonly ICommand                       _SaveOperator;
-        private readonly ICommand                       _AddBrushOperator;
-        private readonly ICommand                       _RemoveBrushOperator;
-        private readonly ICommand                       _RemoveThisGroupBrushOperator;
-        private readonly ICommand                       _ClearAllBrushOperator;
-        private readonly ICommand                       _AddGroupOperator;
-        private readonly ICommand                       _RemoveGroupOperator;
-        private readonly ICommand                       _RemoveThisGroupOperator;
-        private readonly ICommand                       _ClearAllGroupOperator;
         private readonly IMapBrushSetFactory            _Factory;
         private readonly ReadOnlyObservableCollection<IMapBrush> _BrushCollection;
         private readonly ReadOnlyObservableCollection<IMapGroup> _GroupCollection;
 
-
-        private readonly IDialogManager _DialogManager;
-
         public AppViewModel()
         {
-            _DialogManager = Locator.Current.GetService<IDialogManager>();
             _NewOperator = ReactiveCommand.Create(OnNewOperator);
+            _OpenOperator = ReactiveCommand.Create(OnOpenOperator);
             _Factory = Locator.Current.GetService<IMapBrushSetFactory>();
-            _BrushCollection = _Factory.BrushCollection;
-            // _GroupCollection = _Factory.GroupCollection;
-
             _Factory.OnLoaded += OnRebuildGroupInformation;
+            _BrushCollection = _Factory.BrushCollection;
+
         }
 
         protected async void OnNewOperator()
         {
-            var session = await _DialogManager.Step<
+            var session = await DialogManager.Step<
                 NewBrushSetDialogViewModel,
                 NewBrushSetDialogStep2ViewModel,
                 NewBrushSetDialogStep3ViewModel>(new GenerateContext<MapBrushSetInformation>
@@ -74,6 +61,15 @@ namespace Acorisoft.Morisa.Tools.ViewModels
                session.GetResult<GenerateContext<MapBrushSetInformation>>() is GenerateContext<MapBrushSetInformation> generateContext)
             {
                 _Factory.Generate(generateContext);
+            }
+        }
+
+        protected async void OnOpenOperator()
+        {
+            var session = await DialogManager.Dialog<OpenBrushSetViewFunction>();
+            if(session.IsCompleted && session.GetResult<string>() is string fileName)
+            {
+                _Factory.Load(new StoreContext { FileName = fileName });
             }
         }
 
@@ -97,44 +93,6 @@ namespace Acorisoft.Morisa.Tools.ViewModels
         /// </summary>
         public ICommand SaveOperator => _SaveOperator;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public ICommand AddBrushOperator => _AddBrushOperator;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public ICommand AddGroupOperator => _AddGroupOperator;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ICommand RemoveBrushOperator => _RemoveBrushOperator;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ICommand RemoveGroupOperator => _RemoveGroupOperator;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ICommand RemoveThisGroupBrushOperator => _RemoveThisGroupBrushOperator;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ICommand RemoveThisGroupOperator => _RemoveThisGroupOperator;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ICommand ClearBrushOperator => _ClearAllBrushOperator;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ICommand ClearGroupOperator => _ClearAllGroupOperator;
     }
 }

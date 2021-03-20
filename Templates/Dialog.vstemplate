@@ -15,8 +15,8 @@
 		<AppIdFilter>blend</AppIdFilter>
 	</TemplateData>
 	<TemplateContent>
-		<ProjectItem SubType="" TargetFileName="ViewModels\$fileinputname$DialogFunction.cs" ReplaceParameters="true">DialogViewModel.cs</ProjectItem>
-		<ProjectItem SubType="" TargetFileName="Views\$fileinputname$View.xaml" ReplaceParameters="true">DialogView.xaml</ProjectItem>
-		<ProjectItem SubType="" TargetFileName="Views\$fileinputname$View.xaml.cs" ReplaceParameters="true">DialogView.xaml.cs</ProjectItem>
+		<ProjectItem SubType="" TargetFileName="ViewModels\$fileinputname$DialogViewFunction.cs" ReplaceParameters="true">DialogFunction.cs</ProjectItem>
+		<ProjectItem SubType="" TargetFileName="Views\$fileinputname$DialogView.xaml" ReplaceParameters="true">DialogView.xaml</ProjectItem>
+		<ProjectItem SubType="" TargetFileName="Views\$fileinputname$DialogView.xaml.cs" ReplaceParameters="true">DialogView.xaml.cs</ProjectItem>
 	</TemplateContent>
 </VSTemplate>

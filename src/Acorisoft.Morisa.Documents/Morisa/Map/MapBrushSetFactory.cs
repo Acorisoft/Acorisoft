@@ -28,8 +28,8 @@ namespace Acorisoft.Morisa.Map
         private readonly IDisposableCollector           _Collector;
         private readonly SourceList<IMapGroup>          _EditableGroupCollection;
         private readonly SourceList<IMapBrush>          _EditableBrushCollection;
-        private readonly ReadOnlyObservableCollection<MapGroupAdapter>  _BindableGroupCollection;
-        private readonly ReadOnlyObservableCollection<IMapBrush>        _BindableBrushCollection;
+        private readonly ReadOnlyObservableCollection<IMapGroupAdapter>  _BindableGroupCollection;
+        private readonly ReadOnlyObservableCollection<IMapBrush>         _BindableBrushCollection;
 
         public MapBrushSetFactory(IDisposableCollector collector) : base()
         {
@@ -38,12 +38,12 @@ namespace Acorisoft.Morisa.Map
             _EditableGroupCollection = new SourceList<IMapGroup>();
 
             _EditableGroupCollection.Connect()
-                                    .Transform(x => new MapGroupAdapter(x))
+                                    .Transform(x => (IMapGroupAdapter)new MapGroupAdapter(x))
                                     .Bind(out _BindableGroupCollection)
                                     .SubscribeOn(ThreadPoolScheduler.Instance)
                                     .Subscribe(x =>
                                     {
-
+                                        PerformanceGroupChanged(x);
                                     })
                                     .DisposeWith(_Collector.Disposable);
 
@@ -59,6 +59,26 @@ namespace Acorisoft.Morisa.Map
             // 收集需要释放的实例。
             _Collector.Collect(ProfileDisposable);
             _Collector.Collect(ResourceDisposable);
+
+        }
+
+        public void PerformanceGroupChanged(IChangeSet<IMapGroupAdapter> x)
+        {
+            foreach(var changedItem in x)
+            {
+                switch (changedItem.Reason)
+                {
+                    case ListChangeReason.Add:
+                        DataSet.DB_GroupCollection.Upsert(changedItem.Item.Current);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        public void PerformanceBrushChanged(IChangeSet<IMapBrush> x)
+        {
 
         }
 
@@ -109,8 +129,7 @@ namespace Acorisoft.Morisa.Map
 
             var mbs = new MapBrushSet
             {
-                Database = database,
-                DB_External = database.GetCollection(ExternalCollectionName)
+                Database = database
             };
             //
             // 提示更新。
@@ -191,7 +210,7 @@ namespace Acorisoft.Morisa.Map
         /// <summary>
         /// 
         /// </summary>
-        public ReadOnlyObservableCollection<MapGroupAdapter> GroupCollection => _BindableGroupCollection;
+        public ReadOnlyObservableCollection<IMapGroupAdapter> GroupCollection => _BindableGroupCollection;
 
         /// <summary>
         /// 

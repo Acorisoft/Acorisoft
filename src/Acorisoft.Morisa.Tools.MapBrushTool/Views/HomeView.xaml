@@ -7,15 +7,58 @@
                         xmlns:vm="clr-namespace:Acorisoft.Morisa.Tools.ViewModels"
                         xmlns:rx="http://reactiveui.net"
                         xmlns:mui="https://github.com/Acorisoft/Morisa/UI"
+                        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                        xmlns:b="clr-namespace:Acorisoft.Morisa.Tools.Behaviors"
+                        xmlns:map="clr-namespace:Acorisoft.Morisa.Map;assembly=Acorisoft.Morisa.Documents"
                         mc:Ignorable="d" 
                         d:DesignHeight="600" d:DesignWidth="800"
-                        Width="800"
-                        Height="600"
                         d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,Type={x:Type vm:HomeViewModel}}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="280" />
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
+        <DockPanel Grid.Column="0"
+                   Background="{StaticResource UI.Brushes.White}">
+            <StackPanel Height="32" DockPanel.Dock="Top" Orientation="Horizontal">
+                <mui:SymbolButton Data="{StaticResource UI.Icon.Plus.Square}" Command="{Binding AddGroupOperator}"/>
+                <mui:SymbolButton Data="{StaticResource UI.Icon.Remove}"/>
+            </StackPanel>
+            <TreeView x:Name="PART_GroupPanel"
+                      DockPanel.Dock="Bottom" 
+                      BorderThickness="0"
+                      ItemsSource="{Binding GroupCollection,Mode=OneWay}"
+                      mui:FrameworkElementExtension.SelectedItem="{x:Null}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectedItemChanged">
+                        <i:EventTrigger.Actions>
+                            <i:InvokeCommandAction Command="{Binding SelectedGroupOperator,Mode=OneWay}"
+                                                   CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=TreeView},Path=SelectedItem}"/>
+                        </i:EventTrigger.Actions>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type map:MapGroupAdapter}" ItemsSource="{Binding Children}">
+                        <TextBlock Text="{Binding Name,Mode=OneWay}"/>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+                <TreeView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="添加新的分组"
+                                  Command="{Binding AddGroupOperator}"
+                                  CommandParameter="{Binding SelectedGroup,Mode=OneWay}">
+                            <MenuItem.Icon>
+                                <Path Data="{StaticResource UI.Icon.Plus.Square}"
+                                      Stroke="{StaticResource UI.Brushes.Black}"
+                                      StrokeThickness="1"
+                                      Width="11"
+                                      Height="11"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="清空"/>
+                    </ContextMenu>
+                </TreeView.ContextMenu>
+            </TreeView>
+        </DockPanel>
     </Grid>
 </rx:ReactiveUserControl>

@@ -213,7 +213,7 @@ namespace Acorisoft.Morisa.Controls
 
         public static readonly DependencyProperty SymbolProperty = DependencyProperty.Register(
             "Symbol",
-            typeof(Geometry),
+            typeof(object),
             typeof(DialogContentPresenter), 
             new PropertyMetadata(null));
 

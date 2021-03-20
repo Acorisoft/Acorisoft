@@ -12,53 +12,30 @@
                 Width="800"
                 Height="600"
                 d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,Type={x:Type vm:NewBrushSetDialogViewModel}}">
-    <Grid>
-        <Border Background="{StaticResource UI.Brushes.Paper}"
-                CornerRadius="8"
-                Margin="0 100 0 0"
-                Padding="0 100 0 0">
-            <DockPanel>
-                <UniformGrid Columns="2" Height="48" DockPanel.Dock="Bottom">
-                    <Button Command="{x:Static mui:DialogCommands.NextStep}" Content="下一步" IsDefault="True" BorderThickness="0"/>
-                    <Button Command="{x:Static mui:DialogCommands.Cancel}" Content="取消" BorderThickness="0"/>
-                </UniformGrid>
-                <StackPanel DockPanel.Dock="Top">
-                    <TextBlock Text="新建画刷集"
-                               FontSize="32"
-                               Foreground="{StaticResource UI.Brushes.Accent.Dark}"
-                               HorizontalAlignment="Center"/>
-                    <TextBlock Text="创建一个新的画刷集，保存并分享给你的朋友或者需要的人。"
-                               FontSize="16"
-                               Foreground="Gray"
-                               HorizontalAlignment="Center"/>
-                    <mui:FormGroup Header="画刷集名字"
-                                   Margin="64 16">
-                        <mui:FormGroup.Control>
-                            <TextBox FontSize="20" Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                        </mui:FormGroup.Control>
-                    </mui:FormGroup>
-                    <mui:FormGroup Header="画刷集介绍"
-                                   Margin="64 16">
-                        <mui:FormGroup.Control>
-                            <TextBox FontSize="20"
+
+    <mui:DialogContentPresenter Title="新建画刷集"
+                                Subtitle="创建一个新的画刷集，保存并分享给你的朋友或者需要的人。">
+        <StackPanel DockPanel.Dock="Top" Margin="64 0">
+            <mui:FormGroup Header="画刷集名字">
+                <mui:FormGroup.Control>
+                    <TextBox FontSize="20" Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                </mui:FormGroup.Control>
+            </mui:FormGroup>
+            <mui:FormGroup Header="画刷集介绍">
+                <mui:FormGroup.Control>
+                    <TextBox FontSize="20"
                                      AcceptsReturn="True"
                                      AcceptsTab="True"
                                      MinHeight="64"
                                      Text="{Binding Summary,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                        </mui:FormGroup.Control>
-                    </mui:FormGroup>
-                </StackPanel>
-            </DockPanel>
-        </Border>
-        <Border Background="{StaticResource UI.Brushes.Accent}"
-                CornerRadius="192"
-                Padding="32"
-                Height="192"
-                Width="192"
-                VerticalAlignment="Top">
-            <Image Source="{StaticResource UI.SVG.Create}"
-                   VerticalAlignment="Top"/>
-        </Border>
-        
-    </Grid>
+                </mui:FormGroup.Control>
+            </mui:FormGroup>
+        </StackPanel>
+        <mui:DialogContentPresenter.ButtonGroup>
+            <UniformGrid Columns="2" Height="48" DockPanel.Dock="Bottom">
+                <Button Command="{x:Static mui:DialogCommands.NextStep}" Content="下一步" IsDefault="True" BorderThickness="0"/>
+                <Button Command="{x:Static mui:DialogCommands.Cancel}" Content="取消" BorderThickness="0"/>
+            </UniformGrid>
+        </mui:DialogContentPresenter.ButtonGroup>
+    </mui:DialogContentPresenter>
 </mui:DialogView>

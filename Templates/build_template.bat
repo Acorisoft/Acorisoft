@@ -2,7 +2,7 @@ echo 'build view.zip'
 zip -r View.zip Template.ico View.xaml.cs View.xaml ViewModel.cs View.vstemplate
 
 echo 'build dialog.zip'
-zip -r Dialog.zip Template.ico StepDialogView.xaml.cs DialogView.xaml DialogFunction.cs Dialog.vstemplate
+zip -r Dialog.zip Template.ico DialogView.xaml.cs DialogView.xaml DialogFunction.cs Dialog.vstemplate
 
 echo 'build Step2.zip'
 zip -r Step2.zip Template.ico StepDialogView.xaml.cs StepDialogView.xaml StepDialogFunction.cs StepDialog2.vstemplate

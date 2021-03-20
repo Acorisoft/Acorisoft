@@ -7,6 +7,7 @@
         <ResourceDictionary Source="pack://application:,,,/Acorisoft.Morisa.Shell;component/Themes/Image.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     <Style TargetType="{x:Type components:FormGroup}">
+        <Setter Property="Margin" Value="0 8" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type components:FormGroup}">
@@ -24,15 +25,9 @@
                             </ContentControl.ContentTemplate>
                         </ContentControl>
                         <DockPanel DockPanel.Dock="Bottom">
-                            <ItemsControl DockPanel.Dock="Right"
-                                          ItemsSource="{TemplateBinding Children}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal"/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                            </ItemsControl>
-                            <ContentPresenter x:Name="PART_Content"
+                            <ItemsPresenter x:Name="PART_Tools"
+                                            DockPanel.Dock="Right"/>
+                            <ContentPresenter x:Name="PART_Control"
                                               Content="{TemplateBinding Control}"
                                               DockPanel.Dock="Left"/>
                         </DockPanel>

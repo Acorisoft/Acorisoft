@@ -21,12 +21,10 @@ using System.Windows.Input;
 
 namespace $rootnamespace$.ViewModels
 {
-    public partial class $safeitemname$ViewModel : DialogFunction
+    public partial class $safeitemname$ : DialogFunction
     {
-        public $safeitemname$ViewModel()
+        public $safeitemname$()
         {
-        }
-
-        
+        }        
     }
 }

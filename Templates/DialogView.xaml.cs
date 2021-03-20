@@ -30,12 +30,14 @@ using System.Windows.Shapes;
 
 namespace $rootnamespace$.Views
 {
+    // XXXDialogViewFunction.cs
+    // XXXDialogView.cs
     /// <summary>
     /// NotificationView.xaml 的交互逻辑
     /// </summary>
-    public partial class $safeitemname$View : DialogView<$safeitemname$ViewModel>
+    public partial class $safeitemname$ : DialogView<$safeitemname$Function>
     {
-        public $safeitemname$View() : base()
+        public $safeitemname$() : base()
         {
             InitializeComponent();
         }

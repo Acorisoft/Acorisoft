@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,17 +21,11 @@ namespace Acorisoft.Morisa.Components
     /// <summary>
     /// 
     /// </summary>
-    public class FormGroup : Control,IAddChild
+    public class FormGroup : ItemsControl
     {
         static FormGroup()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(FormGroup), new FrameworkPropertyMetadata(typeof(FormGroup)));
-            ChildrenPropertyKey = DependencyProperty.RegisterReadOnly(
-                "Children",
-                typeof(ObservableCollection<object>),
-                typeof(FormGroup),
-                new FrameworkPropertyMetadata(new ObservableCollection<object>()));
-            ChildrenProperty = ChildrenPropertyKey.DependencyProperty;
         }
 
         public object Control
@@ -45,12 +40,17 @@ namespace Acorisoft.Morisa.Components
             set => SetValue(HeaderProperty, value);
         }
 
-        public ObservableCollection<object> Children
+        public object Tools
         {
-            get => (ObservableCollection<object>)GetValue(ChildrenProperty);
-            private set => SetValue(ChildrenPropertyKey, value);
+            get => (object)GetValue(ToolsProperty);
+            set => SetValue(ToolsProperty, value);
         }
 
+        public static readonly DependencyProperty ToolsProperty = DependencyProperty.Register(
+            "Tools",
+            typeof(object),
+            typeof(FormGroup), 
+            new PropertyMetadata(null));
 
 
         public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register(
@@ -59,23 +59,10 @@ namespace Acorisoft.Morisa.Components
             typeof(FormGroup),
             new FrameworkPropertyMetadata(null));
 
-        public static readonly DependencyPropertyKey ChildrenPropertyKey;
-        public static readonly DependencyProperty ChildrenProperty;
-
         public static readonly DependencyProperty ControlProperty = DependencyProperty.Register(
             "Control",
             typeof(object),
             typeof(FormGroup),
             new FrameworkPropertyMetadata(null));
-
-        void IAddChild.AddChild(object value)
-        {
-            Children.Add(value);
-        }
-
-        void IAddChild.AddText(string text)
-        {
-            Children.Add(text);
-        }
     }
 }

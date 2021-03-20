@@ -56,10 +56,13 @@ namespace Acorisoft.Morisa.Tools
             container.Register<NewBrushSetDialogViewModel>();
             container.Register<NewBrushSetDialogStep2ViewModel>();
             container.Register<NewBrushSetDialogStep3ViewModel>();
+            container.Register<OpenBrushSetViewFunction>();
             container.Register<IViewFor<HomeViewModel>, HomeView>();
             container.Register<IViewFor<NewBrushSetDialogViewModel>, NewBrushSetDialogView>();
             container.Register<IViewFor<NewBrushSetDialogStep2ViewModel>, NewBrushSetDialogStep2View>();
             container.Register<IViewFor<NewBrushSetDialogStep3ViewModel>, NewBrushSetDialogStep3View>();
+            container.Register<IViewFor<OpenBrushSetViewFunction>, OpenBrushSetView>();
+            container.Register<IViewFor<NewBrushGroupViewFunction>, NewBrushGroupView>();
         }
 
         public AppViewModel AppViewModel { get; }

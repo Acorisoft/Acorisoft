@@ -20,7 +20,11 @@ using System.Threading.Tasks;
 namespace Acorisoft.Morisa
 {
     public interface IDataSetManager<TDataSet> where TDataSet : DataSet
-    {        
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        IObservable<bool> IsOpen { get; }
 
         /// <summary>
         /// 获取当前的输入流。当前输入流是一个数据集。

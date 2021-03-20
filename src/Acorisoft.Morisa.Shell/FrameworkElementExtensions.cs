@@ -10,6 +10,24 @@ namespace Acorisoft.Morisa
 {
     public static class FrameworkElementExtension
     {
+        public static object GetSelectedItem(DependencyObject obj)
+        {
+            return (object)obj.GetValue(SelectedItemProperty);
+        }
+
+        public static void SetSelectedItem(DependencyObject obj, object value)
+        {
+            obj.SetValue(SelectedItemProperty, value);
+        }
+
+        public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.RegisterAttached(
+            "SelectedItem",
+            typeof(object), 
+            typeof(FrameworkElementExtension), 
+            new PropertyMetadata(null));
+
+
+
         public static T FindAncestor<T>(this DependencyObject element, int maxDepth = 16) where T : FrameworkElement
         {
             var node = element;

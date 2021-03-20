@@ -15,11 +15,11 @@
 		<AppIdFilter>blend</AppIdFilter>
 	</TemplateData>
 	<TemplateContent>
-		<ProjectItem SubType="" TargetFileName="ViewModels\$fileinputname$StepFunction.cs" ReplaceParameters="true">StepDialogFunction.cs</ProjectItem>
-		<ProjectItem SubType="" TargetFileName="ViewModels\$fileinputname$Step2Function.cs" ReplaceParameters="true">StepDialogFunction.cs</ProjectItem>
-		<ProjectItem SubType="" TargetFileName="ViewModels\$fileinputname$Step3Function.cs" ReplaceParameters="true">StepDialogFunction.cs</ProjectItem>
-		<ProjectItem SubType="" TargetFileName="ViewModels\$fileinputname$Step4Function.cs" ReplaceParameters="true">StepDialogFunction.cs</ProjectItem>
-		<ProjectItem SubType="" TargetFileName="ViewModels\$fileinputname$Step5Function.cs" ReplaceParameters="true">StepDialogFunction.cs</ProjectItem>
+		<ProjectItem SubType="" TargetFileName="ViewModels\$fileinputname$StepViewFunction.cs" ReplaceParameters="true">StepDialogFunction.cs</ProjectItem>
+		<ProjectItem SubType="" TargetFileName="ViewModels\$fileinputname$Step2ViewFunction.cs" ReplaceParameters="true">StepDialogFunction.cs</ProjectItem>
+		<ProjectItem SubType="" TargetFileName="ViewModels\$fileinputname$Step3ViewFunction.cs" ReplaceParameters="true">StepDialogFunction.cs</ProjectItem>
+		<ProjectItem SubType="" TargetFileName="ViewModels\$fileinputname$Step4ViewFunction.cs" ReplaceParameters="true">StepDialogFunction.cs</ProjectItem>
+		<ProjectItem SubType="" TargetFileName="ViewModels\$fileinputname$Step5ViewFunction.cs" ReplaceParameters="true">StepDialogFunction.cs</ProjectItem>
 		<ProjectItem SubType="" TargetFileName="Views\$fileinputname$StepView.xaml" ReplaceParameters="true">StepDialogView.xaml</ProjectItem>
 		<ProjectItem SubType="" TargetFileName="Views\$fileinputname$StepView.xaml.cs" ReplaceParameters="true">StepDialogView.xaml.cs</ProjectItem>
 		<ProjectItem SubType="" TargetFileName="Views\$fileinputname$Step2View.xaml" ReplaceParameters="true">StepDialogView.xaml</ProjectItem>

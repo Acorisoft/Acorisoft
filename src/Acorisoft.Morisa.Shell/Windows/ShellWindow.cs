@@ -798,6 +798,27 @@ namespace Acorisoft.Morisa.Windows
 
             return null;
         }
+
+        Task<IDialogSession> IDialogManager.Dialog(IRoutableViewModel DialogContent)
+        {
+            if (DialogContent != null)
+            {
+                var Context = new DialogDisplayContext(new TaskCompletionSource<IDialogSession>(), DialogContent, this);
+
+                //
+                // Push DialogContext Stack
+                _ContextStack.Push(Context);
+
+                //
+                // Set New Dialog Content To Property Dialog
+                SetValue(DialogPropertyKey, DialogContent);
+
+                return Context.Task;
+            }
+
+            return null;
+        }
+
         Task<IDialogSession> StepCore(IEnumerable<IRoutableViewModel> steps, object context)
         {
             var TaskCompletionSource = new TaskCompletionSource<IDialogSession>();

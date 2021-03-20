@@ -36,7 +36,7 @@ namespace Acorisoft.Morisa.Map
         /// <summary>
         /// 
         /// </summary>
-        ReadOnlyObservableCollection<MapGroupAdapter> GroupCollection { get; }
+        ReadOnlyObservableCollection<IMapGroupAdapter> GroupCollection { get; }
 
         /// <summary>
         /// 

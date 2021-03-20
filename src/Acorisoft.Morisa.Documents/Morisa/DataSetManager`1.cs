@@ -33,18 +33,20 @@ namespace Acorisoft.Morisa
         private protected readonly DelegateObserver<TDataSet>   DataSetStream;
         private protected readonly DelegateObserver<Resource>   ResourceStream;
         private protected readonly IDisposable                  ResourceDisposable;
+        private protected readonly BehaviorSubject<bool>        IsOpenStream;
         private protected TDataSet DataSet;
 
         protected DataSetManager()
         {
             DataSetStream = new DelegateObserver<TDataSet>(DataSetChanged);
+            IsOpenStream = new BehaviorSubject<bool>(false);
             ResourceStream = new DelegateObserver<Resource>(ResourceChanged);
             ResourceDisposable = Observable.FromEvent<Resource>(x => ResourceChangedEvent += x, x => ResourceChangedEvent -= x)
                                            .SubscribeOn(ThreadPoolScheduler.Instance)
                                            .Subscribe(x =>
                                            {                                               
-                                               ResourceChanged(x);
                                                OnResourceChanged(x);
+                                               OnResourceChangedCore(x);
                                            });
         }
 
@@ -66,16 +68,26 @@ namespace Acorisoft.Morisa
                 }
 
                 OnDataSetChanged(set);
+                IsOpenStream.OnNext(true);
+            }
+            else
+            {
+                IsOpenStream.OnNext(false);
             }
         }
 
         protected void ResourceChanged(Resource resource)
         {
-            if(resource is InDatabaseResource idr)
-            {                
+            ResourceChangedEvent?.Invoke(resource);
+        }
+
+        protected void OnResourceChanged(Resource resource)
+        {
+            if (resource is InDatabaseResource idr)
+            {
                 PerformanceInDatabaseResource(idr);
             }
-            else if(resource is OutsideResource osr)
+            else if (resource is OutsideResource osr)
             {
                 PerformanceOutsideResource(osr);
             }
@@ -93,7 +105,7 @@ namespace Acorisoft.Morisa
 
             }
 
-            idr.Id = Factory.GenereateGuid();
+            idr.Id = Factory.GenerateId();
             try
             {
                 DataSet.Database
@@ -119,7 +131,7 @@ namespace Acorisoft.Morisa
 
             }
 
-            osr.Id = Factory.GenereateGuid();
+            osr.Id = Factory.GenerateId();
             try
             {
                 OnPerformanceOutsideResource(osr);
@@ -135,7 +147,7 @@ namespace Acorisoft.Morisa
 
         }
 
-        protected virtual void OnResourceChanged(Resource resource)
+        protected virtual void OnResourceChangedCore(Resource resource)
         {
 
         }
@@ -176,6 +188,7 @@ namespace Acorisoft.Morisa
             return false;
         }
 
+        public IObservable<bool> IsOpen => IsOpenStream;
 
         /// <summary>
         /// 获取当前的输入流。当前输入流是一个数据集。

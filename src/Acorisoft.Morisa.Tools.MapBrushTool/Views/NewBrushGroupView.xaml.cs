@@ -1,7 +1,9 @@
-﻿using Acorisoft.Morisa.Dialogs;
-using $rootnamespace$.ViewModels;
+﻿using Acorisoft.Morisa.Core;
+using Acorisoft.Morisa.Dialogs;
+using Acorisoft.Morisa.Tools.ViewModels;
 using Acorisoft.Morisa.ViewModels;
 using DryIoc;
+using Microsoft.Win32;
 using ReactiveUI;
 using Splat;
 using Splat.DryIoc;
@@ -26,24 +28,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace $rootnamespace$.ViewModels
+namespace Acorisoft.Morisa.Tools.Views
 {
-    // XXXStepViewFunction.cs
-    // XXXStepView.xaml
-    // XXXStepView.xaml.cs
-
+    // XXXDialogViewFunction.cs
+    // XXXDialogView.cs
     /// <summary>
     /// NotificationView.xaml 的交互逻辑
     /// </summary>
-    public partial class $safeitemname$ : DialogView<$safeitemname$Function>
+    public partial class NewBrushGroupView : DialogView<NewBrushGroupViewFunction>
     {
-        public $safeitemname$()
+        public NewBrushGroupView() : base()
         {
             InitializeComponent();
-            this.WhenActivated(d =>
-            {
-                d(this.WhenAnyValue(x => x.ViewModel).BindTo(this, x => x.DataContext));
-            });
         }
     }
 }

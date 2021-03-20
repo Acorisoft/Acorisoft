@@ -28,9 +28,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Items Solution", "Items Solution", "{EF57BF64-4C9F-4D19-8801-120627B80C88}"
 	ProjectSection(SolutionItems) = preProject
 		Templates\Dialog.vstemplate = Templates\Dialog.vstemplate
+		Templates\DialogFunction.cs = Templates\DialogFunction.cs
 		Templates\DialogView.xaml = Templates\DialogView.xaml
 		Templates\DialogView.xaml.cs = Templates\DialogView.xaml.cs
-		Templates\DialogViewModel.cs = Templates\DialogViewModel.cs
 		Templates\StepDialog2.vstemplate = Templates\StepDialog2.vstemplate
 		Templates\StepDialog3.vstemplate = Templates\StepDialog3.vstemplate
 		Templates\StepDialog4.vstemplate = Templates\StepDialog4.vstemplate
@@ -103,8 +103,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_SortFileContentOnSave = True
-		RESX_NeutralResourcesLanguage = zh-Hans
 		SolutionGuid = {3EE6B840-2DC2-4DF7-8922-192714C85F7B}
+		RESX_NeutralResourcesLanguage = zh-Hans
+		RESX_SortFileContentOnSave = True
 	EndGlobalSection
 EndGlobal
