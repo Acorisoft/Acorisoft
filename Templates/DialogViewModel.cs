@@ -21,9 +21,9 @@ using System.Windows.Input;
 
 namespace $rootnamespace$.ViewModels
 {
-    public partial class $saferootitemname$ViewModel : DialogFunction
+    public partial class $safeitemname$ViewModel : DialogFunction
     {
-        public $saferootitemname$ViewModel()
+        public $safeitemname$ViewModel()
         {
         }
 

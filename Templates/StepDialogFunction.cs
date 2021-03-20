@@ -22,9 +22,9 @@ using System.Windows.Input;
 
 namespace $rootnamespace$.ViewModels
 {
-    public partial class $saferootitemname$DialogFunction : StepFunction<GenerateContext<>>
+    public partial class $safeitemname$DialogFunction : StepFunction<GenerateContext<>>
     {
-        public $saferootitemname$DialogFunction()
+        public $safeitemname$DialogFunction()
         {
         }
     }

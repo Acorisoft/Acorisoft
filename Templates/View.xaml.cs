@@ -34,9 +34,9 @@ namespace $rootnamespace$.Views
     /// <summary>
     /// NotificationView.xaml 的交互逻辑
     /// </summary>
-    public partial class $saferootitemname$View : ReactiveUserControl<$saferootitemname$ViewModel>
+    public partial class $safeitemname$View : ReactiveUserControl<$safeitemname$ViewModel>
     {
-        public $saferootitemname$View()
+        public $safeitemname$View()
         {
             InitializeComponent();
             this.WhenActivated(d =>

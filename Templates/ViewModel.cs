@@ -13,7 +13,7 @@ using System.Windows.Input;
 
 namespace $rootnamespace$.ViewModels
 {
-    public partial class $saferootitemname$ViewModel : ViewModelBase
+    public partial class $safeitemname$ViewModel : ViewModelBase
     {
         public HomeViewModel()
         {

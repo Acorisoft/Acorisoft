@@ -33,9 +33,9 @@ namespace $rootnamespace$.Views
     /// <summary>
     /// NotificationView.xaml 的交互逻辑
     /// </summary>
-    public partial class $saferootitemname$View : DialogView<$saferootitemname$ViewModel>
+    public partial class $safeitemname$View : DialogView<$safeitemname$ViewModel>
     {
-        public $saferootitemname$View() : base()
+        public $safeitemname$View() : base()
         {
             InitializeComponent();
         }

@@ -31,9 +31,9 @@ namespace $rootnamespace$.ViewModels
     /// <summary>
     /// NotificationView.xaml 的交互逻辑
     /// </summary>
-    public partial class $saferootitemname$StepView : DialogView<$saferootitemname$StepViewModel>
+    public partial class $safeitemname$StepView : DialogView<$safeitemname$StepViewModel>
     {
-        public $saferootitemname$StepView()
+        public $safeitemname$StepView()
         {
             InitializeComponent();
             this.WhenActivated(d =>

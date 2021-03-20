@@ -1,4 +1,4 @@
-﻿<mui:DialogView x:Class="$rootnamespace$.Views.$saferootitemname$View"
+﻿<mui:DialogView x:Class="$rootnamespace$.Views.$safeitemname$View"
                 x:TypeArguments="vm:GenerateCompositionSetViewModel"
                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -11,7 +11,7 @@
                 d:DesignHeight="600" d:DesignWidth="800"
                 Width="800"
                 Height="600"
-                d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,Type={x:Type vm:$saferootitemname$ViewModel}}">
+                d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,Type={x:Type vm:$safeitemname$ViewModel}}">
     <Border Background="{StaticResource UI.Brushes.White}"
             CornerRadius="8"
             Padding="16">        
