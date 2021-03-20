@@ -52,7 +52,7 @@ namespace Acorisoft.Morisa.Map
                                     .SubscribeOn(ThreadPoolScheduler.Instance)
                                     .Subscribe(x =>
                                     {
-
+                                        PerformanceBrushChanged(x);
                                     })
                                     .DisposeWith(_Collector.Disposable);
             //

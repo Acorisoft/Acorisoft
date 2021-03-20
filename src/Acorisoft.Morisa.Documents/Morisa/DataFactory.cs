@@ -19,6 +19,8 @@ using System.Threading.Tasks;
 using ReactiveUI;
 using Splat;
 using DryIoc;
+using Acorisoft.Morisa.Core;
+using System.IO;
 
 namespace Acorisoft.Morisa
 {
@@ -27,19 +29,22 @@ namespace Acorisoft.Morisa
     /// </summary>
     public abstract class DataFactory : IDataFactory
     {
-        private protected readonly DelegateObserver<ICompositionSet>            CompositionSet;
+        private protected readonly DelegateObserver<ICompositionSet>            CompositionSetStream;
         private protected readonly BehaviorSubject<IPageRequest>                PagerStream;   // Page
 
         protected DataFactory()
         {
-            CompositionSet = new DelegateObserver<ICompositionSet>(CompositionSetChanged);
+            CompositionSetStream = new DelegateObserver<ICompositionSet>(CompositionSetChanged);
             PagerStream = new BehaviorSubject<IPageRequest>(new PageRequest(1, 25));
+ 
         }
 
         protected void CompositionSetChanged(ICompositionSet set)
         {
-            if(set != null)
+            if(set is CompositionSet cs)
             {
+                CompositionSet = cs;
+
                 if (DetermineDataSetInitialization(set))
                 {
                     InitializeFromDatabase(set);
@@ -52,6 +57,7 @@ namespace Acorisoft.Morisa
                 OnCompositionSetChanged(set);
             }
         }
+
 
         /// <summary>
         /// 使用数据库中的数据初始化。
@@ -89,11 +95,14 @@ namespace Acorisoft.Morisa
             return false;
         }
 
+
+        protected CompositionSet CompositionSet { get; private set; }
+
         /// <summary>
         /// 获取当前的输入流。当前输入流是一个设定集。
         /// </summary>
 
-        public IObserver<ICompositionSet> Input => CompositionSet;
+        public IObserver<ICompositionSet> Input => CompositionSetStream;
 
         /// <summary>
         /// 获取一个页面请求流。

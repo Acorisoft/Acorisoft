@@ -1,26 +1,26 @@
 echo 'build view.zip'
-zip Template.ico View.xaml.cs View.xaml ViewModel.cs View.vstemplate ItemTemplatesView.zip
+zip -r View.zip Template.ico View.xaml.cs View.xaml ViewModel.cs View.vstemplate
 
 echo 'build dialog.zip'
-zip Template.ico StepDialogView.xaml.cs DialogView.xaml DialogFunction.cs Dialog.vstemplate ItemTemplatesDialog.zip
+zip -r Dialog.zip Template.ico DialogView.xaml.cs DialogView.xaml DialogFunction.cs Dialog.vstemplate
 
-echo 'build stepdialog2.zip'
-zip Template.ico StepDialogView.xaml.cs StepDialogView.xaml StepDialogFunction.cs StepDialog2.vstemplate ItemTemplatesStepDialog.zip
+echo 'build Step2.zip'
+zip -r Step2.zip Template.ico StepDialogView.xaml.cs StepDialogView.xaml StepDialogFunction.cs StepDialog2.vstemplate
 
-echo 'build stepdialog3.zip'
-zip Template.ico StepDialogView.xaml.cs StepDialogView.xaml StepDialogFunction.cs StepDialog3.vstemplate ItemTemplatesStepDialog3.zip
+echo 'build Step3.zip'
+zip -r Step3.zip Template.ico StepDialogView.xaml.cs StepDialogView.xaml StepDialogFunction.cs StepDialog3.vstemplate
 
-echo 'build stepdialog4.zip'
-zip Template.ico StepDialogView.xaml.cs StepDialogView.xaml StepDialogFunction.cs StepDialog4.vstemplate ItemTemplatesStepDialog4.zip
+echo 'build Step4.zip'
+zip -r Step4.zip Template.ico StepDialogView.xaml.cs StepDialogView.xaml StepDialogFunction.cs StepDialog4.vstemplate
 
-echo 'build stepdialog5.zip'
-zip Template.ico StepDialogView.xaml.cs StepDialogView.xaml StepDialogFunction.cs StepDialog5.vstemplate ItemTemplatesStepDialog5.zip
+echo 'build Step5.zip'
+zip -r Step5.zip Template.ico StepDialogView.xaml.cs StepDialogView.xaml StepDialogFunction.cs StepDialog5.vstemplate
 
-echo 'build stepdialog6.zip'
-zip Template.ico StepDialogView.xaml.cs StepDialogView.xaml StepDialogFunction.cs StepDialog6.vstemplate ItemTemplatesStepDialog6.zip
+echo 'build Step6.zip'
+zip -r Step6.zip Template.ico StepDialogView.xaml.cs StepDialogView.xaml StepDialogFunction.cs StepDialog6.vstemplate
 
-echo 'build stepdialog7.zip'
-zip Template.ico StepDialogView.xaml.cs StepDialogView.xaml StepDialogFunction.cs StepDialog7.vstemplate ItemTemplatesStepDialog7.zip
+echo 'build Step7.zip'
+zip -r Step7.zip Template.ico StepDialogView.xaml.cs StepDialogView.xaml StepDialogFunction.cs StepDialog7.vstemplate
 
-echo 'build stepdialog8.zip'
-zip Template.ico StepDialogView.xaml.cs StepDialogView.xaml StepDialogFunction.cs StepDialog8.vstemplate ItemTemplatesStepDialog8.zip
+echo 'build Step8.zip'
+zip -r Step8.zip Template.ico StepDialogView.xaml.cs StepDialogView.xaml StepDialogFunction.cs StepDialog8.vstemplate
