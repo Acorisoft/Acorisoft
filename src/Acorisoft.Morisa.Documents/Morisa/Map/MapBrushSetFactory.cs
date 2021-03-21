@@ -30,13 +30,14 @@ namespace Acorisoft.Morisa.Map
         private readonly SourceList<IMapBrush>          _EditableBrushCollection;
         private readonly ReadOnlyObservableCollection<IMapGroupAdapter>  _BindableGroupCollection;
         private readonly ReadOnlyObservableCollection<IMapBrush>         _BindableBrushCollection;
+        private readonly SourceCache<IMapGroup,Guid>            _Tree;
 
         public MapBrushSetFactory(IDisposableCollector collector) : base()
         {
             _Collector = collector;
             _EditableBrushCollection = new SourceList<IMapBrush>();
             _EditableGroupCollection = new SourceList<IMapGroup>();
-
+            _Tree = new SourceCache<IMapGroup, Guid>(x => x.OwnerId);
             _EditableGroupCollection.Connect()
                                     .Transform(x => (IMapGroupAdapter)new MapGroupAdapter(x))
                                     .Bind(out _BindableGroupCollection)

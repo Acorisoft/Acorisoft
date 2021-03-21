@@ -18,6 +18,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Acorisoft.Morisa.Core;
 using System.Diagnostics.Contracts;
+using System.ComponentModel;
 
 namespace Acorisoft.Morisa
 {

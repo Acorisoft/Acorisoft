@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Map
 {
-    public partial interface IMapGroup
+    public interface ITerrainData : IMapData
     {
-        Guid Id { get; set; }
-        Guid OwnerId { get; set; }
-        string Name { get; set; }
-
+        Brush Brush { get; }
+        int UnitX { get; }
+        int UnitY { get; }
     }
 }

@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Map
 {
-    public partial interface IMapGroup
+    public interface IImmutable
     {
-        Guid Id { get; set; }
-        Guid OwnerId { get; set; }
-        string Name { get; set; }
-
+        IImmutable AsMutable(double x, double y);
+        IImmutable AsMutable(Brush brush);
     }
 }

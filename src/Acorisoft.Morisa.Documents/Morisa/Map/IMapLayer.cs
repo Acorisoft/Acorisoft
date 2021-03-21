@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Map
 {
-    public partial interface IMapGroup
+    public interface IMapLayer
     {
-        Guid Id { get; set; }
-        Guid OwnerId { get; set; }
-        string Name { get; set; }
-
+        bool HitTest(int x, int y);
+        bool HitTest(double x, double y);
     }
 }

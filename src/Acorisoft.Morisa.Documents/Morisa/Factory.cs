@@ -45,7 +45,7 @@ namespace Acorisoft.Morisa
             return new MapGroup
             {
                 Id = GenerateGuid(),
-                OwnerId = parent?.Id,
+                OwnerId = parent.Id,
                 Name = name
             };
         }

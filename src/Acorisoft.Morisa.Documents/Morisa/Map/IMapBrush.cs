@@ -28,7 +28,7 @@ namespace Acorisoft.Morisa.Map
         /// <summary>
         /// 
         /// </summary>
-        public Guid? OwnerId { get; set; }
+        public Guid OwnerId { get; set; }
 
         /// <summary>
         /// 

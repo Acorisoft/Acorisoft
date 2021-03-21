@@ -16,6 +16,7 @@ using System.Windows.Shell;
 using Acorisoft.Morisa;
 using Splat;
 using System.Diagnostics;
+using Acorisoft.Morisa.Map;
 
 namespace Acorisoft.Morisa.Tools
 {
@@ -38,6 +39,15 @@ namespace Acorisoft.Morisa.Tools
             RegisterDialogs(_container);
             RegisterViews(_container);
             AppViewModel = Locator.Current.GetService<AppViewModel>();
+            DatabaseMixins.Deserialize<MapDocument>(DatabaseMixins.Serialize(new MapDocument
+            {
+                Terrain = new TerrainLayer
+                {
+                    Width = 16,
+                    Height = 15
+                }
+                
+            }));
         }
 
         protected virtual void RegisterDialogs(IContainer container)

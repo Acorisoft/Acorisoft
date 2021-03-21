@@ -44,7 +44,7 @@ namespace Acorisoft.Morisa.Map
         /// <summary>
         /// 
         /// </summary>
-        public Guid? OwnerId
+        public Guid OwnerId
         {
             get => Source.OwnerId;
             set => Source.OwnerId = value;
