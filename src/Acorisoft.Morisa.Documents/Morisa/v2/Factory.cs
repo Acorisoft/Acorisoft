@@ -17,9 +17,25 @@ namespace Acorisoft.Morisa
         //  GenereateGuid
         //
         //-------------------------------------------------------------------------------------------------
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static string GenerateId() => Guid.NewGuid().ToString("N");
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static Guid GenerateGuid() => Guid.NewGuid();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="initSize"></param>
+        /// <returns></returns>
         public static LiteDatabase CreateDatabase(string fileName, long initSize = 4 * 1024 * 1024)
         {
             var database = new LiteDatabase(new ConnectionString
