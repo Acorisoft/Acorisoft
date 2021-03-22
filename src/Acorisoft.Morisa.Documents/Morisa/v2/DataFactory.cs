@@ -1,4 +1,4 @@
-﻿using Acorisoft.Morisa.Internal;
+﻿using Acorisoft.Morisa.v2.Internal;
 using DynamicData;
 using DynamicData.Binding;
 using LiteDB;
@@ -22,7 +22,7 @@ using DryIoc;
 using Acorisoft.Morisa.Core;
 using System.IO;
 
-namespace Acorisoft.Morisa
+namespace Acorisoft.Morisa.v2
 {
     /// <summary>
     /// <see cref="DataFactory"/> 表示一个数据工厂基类，为数据操作提供基础的支持。

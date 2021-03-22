@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa.Map
+namespace Acorisoft.Morisa.v2.Map
 {
     /// <summary>
     /// <see cref="DrawDirection"/> 表示一个画刷绘制的方向

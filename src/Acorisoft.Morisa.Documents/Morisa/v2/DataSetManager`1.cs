@@ -1,4 +1,4 @@
-﻿using Acorisoft.Morisa.Internal;
+﻿using Acorisoft.Morisa.v2.Internal;
 using LiteDB;
 using DynamicData;
 using DynamicData.Binding;
@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 using Acorisoft.Morisa.Core;
 using System.IO;
 
-namespace Acorisoft.Morisa
+namespace Acorisoft.Morisa.v2
 {
 
     /// <summary>

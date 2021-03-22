@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa.Map
+namespace Acorisoft.Morisa.v2.Map
 {
     /// <summary>
     /// <see cref="LandformData"/> 表示一个元素画刷绘制的数据。

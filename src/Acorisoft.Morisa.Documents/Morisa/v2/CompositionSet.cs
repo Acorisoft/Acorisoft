@@ -1,5 +1,5 @@
 ﻿using Acorisoft.Morisa.Core;
-using Acorisoft.Morisa.Internal;
+using Acorisoft.Morisa.v2.Internal;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,9 +9,9 @@ using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa
+namespace Acorisoft.Morisa.v2
 {
-    partial class CompositionSet : DataSet<CompositionSetInformation>
+    public class CompositionSet : DataSet<CompositionSetInformation>
     {
         public const string ImageDirectoryName = "Images";
         public const string VideoDirectoryName = "Videos";

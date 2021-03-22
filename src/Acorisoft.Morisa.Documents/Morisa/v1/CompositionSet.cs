@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa
+namespace Acorisoft.Morisa.v1
 {
     public partial class CompositionSet /*: ICompositionSet, INotifyPropertyChanged*/
     {
@@ -22,7 +22,7 @@ namespace Acorisoft.Morisa
         //public const string ImageDirectoryName = "Images";
         //public const string VideoDirectoryName = "Videos";
         //public const string BrushesDirectoryName = "Brushes";
-        //public const string MainDatabaseName = "Main.Morisa-Project";
+        //public const string MainDatabaseName = "Main.Morisa.v2-Project";
         //public const string MainDatabaseSettingName = "Morisa.Setting";
         //public const string ExternalCollectionName = "Externals";
         //public const string LoremIpsum = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";

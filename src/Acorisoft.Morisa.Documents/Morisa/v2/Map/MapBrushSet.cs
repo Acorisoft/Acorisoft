@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Acorisoft.Morisa.Core;
 using LiteDB;
 
-namespace Acorisoft.Morisa.Map
+namespace Acorisoft.Morisa.v2.Map
 {
     public partial class MapBrushSet : DataSet<MapBrushSetInformation>
     {

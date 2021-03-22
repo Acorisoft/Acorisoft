@@ -1,4 +1,4 @@
-﻿using Acorisoft.Morisa.Internal;
+﻿using Acorisoft.Morisa.v2.Internal;
 using System;
 using DynamicData;
 using DynamicData.Binding;
@@ -20,7 +20,7 @@ using Acorisoft.Morisa.Core;
 using System.Diagnostics.Contracts;
 using System.ComponentModel;
 
-namespace Acorisoft.Morisa
+namespace Acorisoft.Morisa.v2
 {
     public abstract class DataSetManager<TDataSet, TProfile> : DataSetManager<TDataSet>, IDataSetManager<TDataSet, TProfile> 
         where TDataSet : DataSet<TProfile>

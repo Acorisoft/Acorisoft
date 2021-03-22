@@ -19,7 +19,7 @@ using ReactiveUI;
 using Splat;
 using DryIoc;
 
-namespace Acorisoft.Morisa
+namespace Acorisoft.Morisa.v2
 {
     public abstract class IndexedDataFactory<TIndex, TDocument, TDestDocument> : DataFactory
     {

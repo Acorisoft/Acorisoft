@@ -1,7 +1,7 @@
 ﻿//using Acorisoft.Morisa.Core;
-//using Acorisoft.Morisa.Emotions;
-//using Acorisoft.Morisa.Persistants;
-//using Acorisoft.Morisa.Internal;
+//using Acorisoft.Morisa.v2.Emotions;
+//using Acorisoft.Morisa.v2.Persistants;
+//using Acorisoft.Morisa.v2.Internal;
 //using DynamicData;
 //using DynamicData.Binding;
 //using LiteDB;
@@ -24,9 +24,9 @@
 //using System.Windows;
 //using DryIoc;
 
-//using Setting = Acorisoft.Morisa.Map.MapBrushSet.Setting;
+//using Setting = Acorisoft.Morisa.v2.Map.MapBrushSet.Setting;
 
-//namespace Acorisoft.Morisa.Map
+//namespace Acorisoft.Morisa.v2.Map
 //{
 //    [Obsolete]
 //    public class MapMechanism : IMapMechanism, IDisposable

@@ -9,7 +9,7 @@ using System.Reactive.Subjects;
 using System.Reactive.Linq;
 using System.Reactive.Concurrency;
 
-namespace Acorisoft.Morisa.Samples
+namespace Acorisoft.Morisa.v2.Samples
 {
     public class TestData
     {

@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 using ExternalCollection = LiteDB.LiteCollection<LiteDB.BsonDocument>;
 using Disposable = Acorisoft.Morisa.Core.Disposable;
 
-namespace Acorisoft.Morisa
+namespace Acorisoft.Morisa.v2
 {
     public abstract class DataSet : Disposable
     {

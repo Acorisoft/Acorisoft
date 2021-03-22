@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 
 
-namespace Acorisoft.Morisa.Core
+namespace Acorisoft.Morisa.v1.Core
 {
     [Obsolete]
     public interface ICompositionElement : INotifyPropertyChanged, INotifyPropertyChanging

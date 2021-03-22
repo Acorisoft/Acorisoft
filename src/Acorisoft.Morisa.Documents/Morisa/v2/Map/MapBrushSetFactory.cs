@@ -1,5 +1,5 @@
 ﻿using Acorisoft.Morisa.Core;
-using Acorisoft.Morisa.Internal;
+using Acorisoft.Morisa.v2.Internal;
 using System;
 using DynamicData;
 using DynamicData.Binding;
@@ -18,7 +18,7 @@ using System.Reactive.Threading;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa.Map
+namespace Acorisoft.Morisa.v2.Map
 {
     public class MapBrushSetFactory : DataSetManager<MapBrushSet, MapBrushSetInformation>, IMapBrushSetFactory
     {

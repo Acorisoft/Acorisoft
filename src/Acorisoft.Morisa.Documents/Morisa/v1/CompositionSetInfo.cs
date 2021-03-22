@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa
+namespace Acorisoft.Morisa.v1
 {
     [Obsolete]
-    public class CompositionSetInfo : ICompositionSetInfo
+    public class CompositionSetInfo/* : ICompositionSetInfo*/
     {
         public string Directory { get; set; }
         public string FileName { get; set; }
@@ -16,6 +16,6 @@ namespace Acorisoft.Morisa
         public string Summary { get; set; }
         public string Topic { get; set; }
         public List<string> Tags { get; set; }
-        public Resource Cover { get; set; }
+       //public Resource Cover { get; set; }
     }
 }

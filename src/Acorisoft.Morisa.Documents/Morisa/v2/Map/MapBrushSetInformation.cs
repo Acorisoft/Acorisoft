@@ -1,7 +1,7 @@
 ﻿using Acorisoft.Morisa.Core;
 using System.Collections.Generic;
 
-namespace Acorisoft.Morisa.Map
+namespace Acorisoft.Morisa.v2.Map
 {
     public class MapBrushSetInformation : IMapBrushSetInformation
     {

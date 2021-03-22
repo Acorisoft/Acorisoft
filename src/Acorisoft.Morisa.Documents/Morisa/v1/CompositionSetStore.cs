@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa
+namespace Acorisoft.Morisa.v2
 {
     [Obsolete]
     [DebuggerDisplay("{FileName}")]
-    public class CompositionSetStore : ICompositionSetStore,IEquatable<CompositionSetStore>
+    public class CompositionSetStore : /*ICompositionSetStore,*/IEquatable<CompositionSetStore>
     {
         public bool Equals(CompositionSetStore y)
         {

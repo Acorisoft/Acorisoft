@@ -1,6 +1,6 @@
 ﻿using LiteDB;
 
-namespace Acorisoft.Morisa
+namespace Acorisoft.Morisa.v2
 {
     public interface ICompositionSet
     {

@@ -16,7 +16,7 @@ using System.Reactive.Threading;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa
+namespace Acorisoft.Morisa.v2
 {
     /// <summary>
     /// <see cref="DataFactory{TElement}"/> 表示一个数据工厂。为数据提供基础的增删改查以及绑定支持。

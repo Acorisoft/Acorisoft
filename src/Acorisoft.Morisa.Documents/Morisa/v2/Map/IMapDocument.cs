@@ -6,7 +6,7 @@ using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa.Map
+namespace Acorisoft.Morisa.v2.Map
 {
     /// <summary>
     /// <see cref="IMapDocument"/> 表示一个地图文档。

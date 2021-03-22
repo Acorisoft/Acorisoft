@@ -18,7 +18,7 @@ using Splat;
 using DryIoc;
 using DynamicData;
 
-namespace Acorisoft.Morisa
+namespace Acorisoft.Morisa.v2
 {
     public interface IDataFactorySelectable<TElement>
     {

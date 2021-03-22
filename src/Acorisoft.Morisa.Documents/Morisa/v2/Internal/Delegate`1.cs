@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa.Internal
+namespace Acorisoft.Morisa.v2.Internal
 {
     public static class Delegate<T>
     {

@@ -5,15 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa.Core
+namespace Acorisoft.Morisa.v1.Core
 {
     [Obsolete]
     public interface IMechanismCore
     {
-        IObserver<ICompositionSet> Input { get; }
+        //IObserver<ICompositionSet> Input { get; }
         int Page { get; set; }
         int PageSize { get; set; }
     }
+
     [Obsolete]
     public interface IMechanismCore<T> : IMechanismCore
     {

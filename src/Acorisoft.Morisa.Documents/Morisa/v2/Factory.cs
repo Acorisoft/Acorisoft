@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Acorisoft.Morisa.Emotions;
-using Acorisoft.Morisa.Map;
+//using Acorisoft.Morisa.v2.Emotions;
+using Acorisoft.Morisa.v2.Map;
 using Acorisoft.Properties;
 using LiteDB;
 
-namespace Acorisoft.Morisa
+namespace Acorisoft.Morisa.v2
 {
     public static class Factory
     {
@@ -36,7 +36,7 @@ namespace Acorisoft.Morisa
         /// <param name="fileName"></param>
         /// <param name="initSize"></param>
         /// <returns></returns>
-        public static LiteDatabase CreateDatabase(string fileName, long initSize = 4 * 1024 * 1024)
+        public static LiteDatabase CreateDatabase(string fileName , long initSize = 4 * 1024 * 1024)
         {
             var database = new LiteDatabase(new ConnectionString
             {
@@ -51,7 +51,7 @@ namespace Acorisoft.Morisa
         {
             return new MapGroup
             {
-                Id = GenerateGuid(),
+                Id = GenerateGuid() ,
                 Name = name
             };
         }
@@ -60,43 +60,43 @@ namespace Acorisoft.Morisa
         {
             return new MapGroup
             {
-                Id = GenerateGuid(),
-                OwnerId = parent.Id,
+                Id = GenerateGuid() ,
+                OwnerId = parent.Id ,
                 Name = name
             };
         }
 
-        [Obsolete]
-        //-------------------------------------------------------------------------------------------------
-        //
-        //  CreateMottoEmotion
-        //
-        //-------------------------------------------------------------------------------------------------
-        public static MottoEmotion CreateMottoEmotion()
-        {
-            return CreateMottoEmotion(SR.MottoEmotionSampleMotto, SR.MottoEmotionSampleSig, MottoEmotionPresentation.Default);
-        }
-        [Obsolete]
-        public static MottoEmotion CreateMottoEmotion(string motto, string sig)
-        {
-            return new MottoEmotion
-            {
-                Id = GenerateId(),
-                Motto = motto,
-                Signature = sig,
-                Presentation = MottoEmotionPresentation.Default
-            };
-        }
-        [Obsolete]
-        public static MottoEmotion CreateMottoEmotion(string motto, string sig, MottoEmotionPresentation presentation)
-        {
-            return new MottoEmotion
-            {
-                Id = GenerateId(),
-                Motto = motto,
-                Signature = sig,
-                Presentation = presentation
-            };
-        }
+        //[Obsolete]
+        ////-------------------------------------------------------------------------------------------------
+        ////
+        ////  CreateMottoEmotion
+        ////
+        ////-------------------------------------------------------------------------------------------------
+        //public static MottoEmotion CreateMottoEmotion()
+        //{
+        //    return CreateMottoEmotion(SR.MottoEmotionSampleMotto , SR.MottoEmotionSampleSig , MottoEmotionPresentation.Default);
+        //}
+        //[Obsolete]
+        //public static MottoEmotion CreateMottoEmotion(string motto , string sig)
+        //{
+        //    return new MottoEmotion
+        //    {
+        //        Id = GenerateId() ,
+        //        Motto = motto ,
+        //        Signature = sig ,
+        //        Presentation = MottoEmotionPresentation.Default
+        //    };
+        //}
+        //[Obsolete]
+        //public static MottoEmotion CreateMottoEmotion(string motto , string sig , MottoEmotionPresentation presentation)
+        //{
+        //    return new MottoEmotion
+        //    {
+        //        Id = GenerateId() ,
+        //        Motto = motto ,
+        //        Signature = sig ,
+        //        Presentation = presentation
+        //    };
+        //}
     }
 }

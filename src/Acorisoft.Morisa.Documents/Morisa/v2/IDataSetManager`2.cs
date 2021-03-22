@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa
+namespace Acorisoft.Morisa.v2
 {
     public interface IDataSetManager<TDataSet, TProfile> : IDataSetManager<TDataSet>
         where TDataSet : DataSet<TProfile>

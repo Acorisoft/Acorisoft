@@ -5,7 +5,7 @@ using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa.Internal
+namespace Acorisoft.Morisa.v2.Internal
 {
 #pragma warning disable IDE0034
 

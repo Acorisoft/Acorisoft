@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Acorisoft.Morisa
+namespace Acorisoft
 {
     public static class ClassActivator
     {
