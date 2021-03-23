@@ -8,5 +8,6 @@ namespace Acorisoft.Morisa.Map
 {
     public class BrushSetFactory : DataSetFactory<BrushSet, BrushSetProperty>, IDataSetFactory<BrushSet, BrushSetProperty>
     {
+
     }
 }

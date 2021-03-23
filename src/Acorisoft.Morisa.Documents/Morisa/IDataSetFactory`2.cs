@@ -30,6 +30,6 @@ namespace Acorisoft.Morisa
         /// <summary>
         /// 获取一个观测数据集属性更新的观测流。
         /// </summary>
-        IObservable<TProperty> Property { get; }
+        IObservable<TProperty> PropertyStream { get; }
     }
 }

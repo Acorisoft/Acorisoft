@@ -16,6 +16,6 @@ namespace Acorisoft.Morisa
         /// <summary>
         /// 获取一个观测数据集更新的数据流。
         /// </summary>
-        IObservable<TDataSet> DataSet { get; }
+        IObservable<TDataSet> DataSetStream { get; }
     }
 }

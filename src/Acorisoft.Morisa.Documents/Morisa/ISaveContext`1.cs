@@ -8,5 +8,8 @@ namespace Acorisoft.Morisa
 {
     public interface ISaveContext<TProperty>
     {
+        string FileName { get; set; }
+        string Directory { get; set; }
+        TProperty Property { get; }
     }
 }
