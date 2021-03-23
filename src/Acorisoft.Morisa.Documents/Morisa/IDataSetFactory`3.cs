@@ -18,7 +18,6 @@ namespace Acorisoft.Morisa
     }
 
     public interface IDataSetFactory<TElement, TDataSet, TProperty> : IDataSetFactory<TDataSet, TProperty>
-        where TElement : IComposition
         where TDataSet : DataSet<TProperty>
         where TProperty : DataSetProperty, IDataSetProperty
     {

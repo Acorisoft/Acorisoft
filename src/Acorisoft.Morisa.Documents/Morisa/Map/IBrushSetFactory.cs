@@ -8,8 +8,19 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Map
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IBrushSetFactory : IDataSetFactory<BrushSet, BrushSetProperty>
     {
-        ReadOnlyObservableCollection<Node<IBrushGroup, Guid>> BrushGroups { get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        ReadOnlyObservableCollection<IBrush> Brushes { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ReadOnlyObservableCollection<IBrushGroupTree> Groups { get; }
     }
 }
