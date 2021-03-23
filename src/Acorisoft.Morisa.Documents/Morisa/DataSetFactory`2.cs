@@ -51,12 +51,17 @@ namespace Acorisoft.Morisa
         {
             if (context == null)
             {
-                throw new InvalidOperationException(string.Format(SR.LoadContext_Invalid, SR.LoadContext_Null));
+                throw new InvalidOperationException(string.Format(SR.LoadContext_Invalid, SR.SaveContext_Invalid));
+            }
+
+            if(context.Property == null)
+            {
+                throw new InvalidOperationException(string.Format(SR.LoadContext_Invalid, SR.SaveContext_Property_Null));
             }
 
             if (!File.Exists(context.FileName))
             {
-                throw new InvalidOperationException(string.Format(SR.LoadContext_Invalid, SR.LoadContext_FileName_Null));
+                throw new InvalidOperationException(string.Format(SR.LoadContext_Invalid, SR.SaveContext_FileName_Null));
             }
 
             //

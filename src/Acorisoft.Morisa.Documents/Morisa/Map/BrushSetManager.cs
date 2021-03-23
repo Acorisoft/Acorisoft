@@ -30,21 +30,21 @@ namespace Acorisoft.Morisa.Map
         //
         private readonly BehaviorSubject<Func<IBrush,bool>>         _SelectedBrushFromSelectedBrushFilter;
         private readonly BehaviorSubject<Func<IBrush,bool>>         _SelectedBrushFromBrushGroupFilter;
-        private readonly DefferObserver<IBrushGroupTree>            _SelectedBrushFromBrushGroupHandler;
+        private readonly DefferObserver<IBrushGroupAdapter>         _SelectedBrushFromBrushGroupHandler;
         private readonly DefferObserver<IBrush>                     _SelectedBrushFromSelectedBrushHandler;
 
         //
         //
         //
-        private readonly ReadOnlyObservableCollection<IBrushGroupTree>  _GroupBindableCollection;
-        private readonly ReadOnlyObservableCollection<IBrush>           _BrushFromSelectedBrushCollection;
-        private readonly ReadOnlyObservableCollection<IBrush>           _BrushFromSelectedGroupCollection;
+        private readonly ReadOnlyObservableCollection<IBrushGroupAdapter>   _GroupBindableCollection;
+        private readonly ReadOnlyObservableCollection<IBrush>               _BrushFromSelectedBrushCollection;
+        private readonly ReadOnlyObservableCollection<IBrush>               _BrushFromSelectedGroupCollection;
 
         //
         //
         //
-        private readonly SourceCache<IBrushGroup,Guid>  _GroupEditableCollection;
-        private readonly SourceList<IBrush>             _BrushEditableCollection;
+        private readonly SourceCache<IBrushGroup,Guid>  _GroupSource;
+        private readonly SourceList<IBrush>             _BrushSource;
         private readonly IDisposable                    _SuggestionDisposable;
         private readonly IDisposable                    _GroupDisposable;
         private readonly IDisposable                    _Disposable;
@@ -54,7 +54,7 @@ namespace Acorisoft.Morisa.Map
         {
             _SelectedBrushFromSelectedBrushFilter = new BehaviorSubject<Func<IBrush, bool>>(x => false);
             _SelectedBrushFromBrushGroupFilter = new BehaviorSubject<Func<IBrush, bool>>(x => false);
-            _SelectedBrushFromBrushGroupHandler = new DefferObserver<IBrushGroupTree>(x =>
+            _SelectedBrushFromBrushGroupHandler = new DefferObserver<IBrushGroupAdapter>(x =>
             {
                 if (x != null)
                 {
@@ -70,21 +70,21 @@ namespace Acorisoft.Morisa.Map
                 }
             });
 
-            _GroupEditableCollection = new SourceCache<IBrushGroup, Guid>(x => x.Id);
-            _BrushEditableCollection = new SourceList<IBrush>();
-            _GroupEditableCollection.Connect()
-                                    .TransformToTree(x => x.ParentId)
-                                    .Transform(x => (IBrushGroupTree)new BrushGroupTree(x))
-                                    .TransformMany(x => x.Children, x => x.Id)
-                                    .Bind(out _GroupBindableCollection)
-                                    .Subscribe(x =>
-                                    {
-                                        OnGroupChanged(x);
-                                    });
+            _GroupSource = new SourceCache<IBrushGroup, Guid>(x => x.Id);
+            _BrushSource = new SourceList<IBrush>();
+            _GroupSource.Connect()
+                        .TransformToTree(x => x.ParentId)
+                        .Transform(x => (IBrushGroupAdapter)new BrushGroupAdapter(x))
+                        .TransformMany(x => x.Children, x => x.Id)
+                        .Bind(out _GroupBindableCollection)
+                        .Subscribe(x =>
+                        {
+                            OnGroupChanged(x);
+                        });
 
             //
             // 获取或设置当前选择的画刷组的推荐画刷
-            _SuggestionDisposable = _BrushEditableCollection.Connect()
+            _SuggestionDisposable = _BrushSource.Connect()
                                                             .Filter(_SelectedBrushFromSelectedBrushFilter)
                                                             .Bind(out _BrushFromSelectedBrushCollection)
                                                             .Subscribe(x =>
@@ -94,14 +94,14 @@ namespace Acorisoft.Morisa.Map
 
             //
             // 获取当前选择的画刷组的关联画刷。
-            _GroupDisposable = _BrushEditableCollection.Connect()
-                                                       .Filter(_SelectedBrushFromBrushGroupFilter)
-                                                       .Bind(out _BrushFromSelectedGroupCollection)
-                                                       .DisposeMany()
-                                                       .Subscribe(x =>
-                                                       {
- 
-                                                       });
+            _GroupDisposable = _BrushSource.Connect()
+                                           .Filter(_SelectedBrushFromBrushGroupFilter)
+                                           .Bind(out _BrushFromSelectedGroupCollection)
+                                           .DisposeMany()
+                                           .Subscribe(x =>
+                                           {
+
+                                           });
 
             _Disposable = System.Reactive.Disposables.Disposable.Create(() =>
             {
@@ -111,7 +111,7 @@ namespace Acorisoft.Morisa.Map
             });
         }
 
-        protected virtual void OnGroupChanged(IChangeSet<IBrushGroupTree, Guid> set)
+        protected virtual void OnGroupChanged(IChangeSet<IBrushGroupAdapter, Guid> set)
         {
 
         }
@@ -153,8 +153,8 @@ namespace Acorisoft.Morisa.Map
 
             //
             // add your code
-            _GroupEditableCollection.AddOrUpdate(ds.DB_Group.FindAll());
-            _BrushEditableCollection.AddRange(ds.DB_Brush.FindAll());
+            _GroupSource.AddOrUpdate(ds.DB_Group.FindAll());
+            _BrushSource.AddRange(ds.DB_Brush.FindAll());
         }
 
 
@@ -207,7 +207,7 @@ namespace Acorisoft.Morisa.Map
         /// <summary>
         /// 
         /// </summary>
-        public IObserver<IBrushGroupTree> SelectedGroup => _SelectedBrushFromBrushGroupHandler;
+        public IObserver<IBrushGroupAdapter> SelectedGroup => _SelectedBrushFromBrushGroupHandler;
 
         /// <summary>
         /// 
@@ -217,7 +217,7 @@ namespace Acorisoft.Morisa.Map
         /// <summary>
         /// 
         /// </summary>
-        public ReadOnlyObservableCollection<IBrushGroupTree> Groups => _GroupBindableCollection;
+        public ReadOnlyObservableCollection<IBrushGroupAdapter> Groups => _GroupBindableCollection;
 
         /// <summary>
         /// 

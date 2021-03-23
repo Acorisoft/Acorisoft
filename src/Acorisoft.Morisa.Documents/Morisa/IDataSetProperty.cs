@@ -8,5 +8,9 @@ namespace Acorisoft.Morisa
 {
     public interface IDataSetProperty
     {
+        string Name { get; set; }
+        string Summary { get; set; }
+        string Authors { get; set; }
+        Resource Cover { get; set; }
     }
 }

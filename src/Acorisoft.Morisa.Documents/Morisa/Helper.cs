@@ -16,5 +16,13 @@ namespace Acorisoft.Morisa
                 Filename = context.FileName,
             });
         }
+
+        public static LiteDatabase GetDatabase<TProperty>(ISaveContext<TProperty> context) where TProperty : IDataSetProperty
+        {
+            return new LiteDatabase(new ConnectionString
+            {
+                Filename = context.FileName,
+            });
+        }
     }
 }

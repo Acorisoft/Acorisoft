@@ -88,11 +88,29 @@ namespace Acorisoft.Properties {
         }
         
         /// <summary>
-        ///   查找类似 测试署名 的本地化字符串。
+        ///   查找类似 存储上下文为空 的本地化字符串。
         /// </summary>
-        internal static string MottoEmotionSampleSig {
+        internal static string SaveContext_FileName_Null {
             get {
-                return ResourceManager.GetString("MottoEmotionSampleSig", resourceCulture);
+                return ResourceManager.GetString("SaveContext_FileName_Null", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 无法使用一个无效的存储上下文,{0} 的本地化字符串。
+        /// </summary>
+        internal static string SaveContext_Invalid {
+            get {
+                return ResourceManager.GetString("SaveContext_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 存储上下文的属性为空 的本地化字符串。
+        /// </summary>
+        internal static string SaveContext_Property_Null {
+            get {
+                return ResourceManager.GetString("SaveContext_Property_Null", resourceCulture);
             }
         }
     }

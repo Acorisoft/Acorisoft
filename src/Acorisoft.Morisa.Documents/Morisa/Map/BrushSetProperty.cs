@@ -1,6 +1,6 @@
 ﻿namespace Acorisoft.Morisa.Map
 {
-    public class BrushSetProperty : DataSetProperty ,IBrushSet
+    public class BrushSetProperty : DataSetProperty ,IBrushSetProperty
     {
     }
 }

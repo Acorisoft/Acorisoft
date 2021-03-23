@@ -8,12 +8,12 @@ using System.ComponentModel;
 
 namespace Acorisoft.Morisa.Map
 {
-    public interface IBrushGroupTree : INotifyPropertyChanged
+    public interface IBrushGroupAdapter : INotifyPropertyChanged
     {
         public Guid Id { get; }
         public Guid ParentId { get; }
         public IBrushGroup Source { get; }
-        public ReadOnlyObservableCollection<IBrushGroupTree> Children { get; }
+        public ReadOnlyObservableCollection<IBrushGroupAdapter> Children { get; }
         public string Name
         {
             get; set;

@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Map
 {
-    public class BrushGroupTree : Bindable, IBrushGroupTree
+    public class BrushGroupAdapter : Bindable, IBrushGroupAdapter
     {
         private string _GroupName;
         private readonly Guid _Id;
         private readonly Guid _ParentId;
-        private readonly ReadOnlyObservableCollection<IBrushGroupTree> _Children;
+        private readonly ReadOnlyObservableCollection<IBrushGroupAdapter> _Children;
         private readonly IBrushGroup _Source;
 
-        public BrushGroupTree(Node<IBrushGroup,Guid> node)
+        public BrushGroupAdapter(Node<IBrushGroup,Guid> node)
         {
             _Id = node.Key;
             _ParentId = node.Item.ParentId;
@@ -25,7 +25,7 @@ namespace Acorisoft.Morisa.Map
 
             node.Children
                 .Connect()
-                .Transform(x => (IBrushGroupTree)new BrushGroupTree(x))
+                .Transform(x => (IBrushGroupAdapter)new BrushGroupAdapter(x))
                 .Bind(out _Children)
                 .DisposeMany()
                 .Subscribe();
@@ -49,7 +49,7 @@ namespace Acorisoft.Morisa.Map
         /// <summary>
         /// 
         /// </summary>
-        public ReadOnlyObservableCollection<IBrushGroupTree> Children => _Children;
+        public ReadOnlyObservableCollection<IBrushGroupAdapter> Children => _Children;
 
         /// <summary>
         /// 

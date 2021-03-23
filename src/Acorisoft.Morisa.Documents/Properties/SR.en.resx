@@ -117,16 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CannotLoadEmptyFile" xml:space="preserve">
-    <value>Cannot open a not exists directory or not exists file</value>
+  <data name="LoadContext_FileName_Null" xml:space="preserve">
+    <value>load context filename is empty</value>
   </data>
-  <data name="FileNotFound" xml:space="preserve">
-    <value>File not found</value>
+  <data name="LoadContext_Invalid" xml:space="preserve">
+    <value>cannot use an invalid load context,{0}</value>
   </data>
-  <data name="MottoEmotionSampleMotto" xml:space="preserve">
-    <value>Test Motto</value>
+  <data name="LoadContext_Null" xml:space="preserve">
+    <value>load context is null</value>
   </data>
-  <data name="MottoEmotionSampleSig" xml:space="preserve">
-    <value>Test Signature</value>
+  <data name="SaveContext_FileName_Null" xml:space="preserve">
+    <value>save context filename is empty</value>
+  </data>
+  <data name="SaveContext_Invalid" xml:space="preserve">
+    <value>cannot use an invalid save context,{0}</value>
+  </data>
+  <data name="SaveContext_Property_Null" xml:space="preserve">
+    <value>save context is null</value>
   </data>
 </root>

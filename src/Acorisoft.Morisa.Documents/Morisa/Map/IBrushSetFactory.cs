@@ -16,12 +16,12 @@ namespace Acorisoft.Morisa.Map
         /// <summary>
         /// 
         /// </summary>
-        ReadOnlyObservableCollection<IBrush> Brushes { get; }
+        ReadOnlyObservableCollection<IBrushAdapter> Brushes { get; }
 
         /// <summary>
         /// 
         /// </summary>
-        ReadOnlyObservableCollection<IBrushGroupTree> Groups { get; }
+        ReadOnlyObservableCollection<IBrushGroupAdapter> Groups { get; }
     }
 
     //
