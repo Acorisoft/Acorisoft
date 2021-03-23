@@ -12,7 +12,7 @@ namespace Acorisoft.Morisa
     /// <typeparam name="TDataSet">具体的数据集类型。</typeparam>
     /// <typeparam name="TProperty">具体的数据集属性类型。</typeparam>
     public interface IDataSetFactory<TDataSet, TProperty> : IDataSetFactory<TDataSet>
-        where TDataSet : IDataSet<TProperty>
+        where TDataSet : DataSet<TProperty>, IDataSet<TProperty>
         where TProperty : DataSetProperty, IDataSetProperty
     {
         /// <summary>

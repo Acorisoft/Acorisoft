@@ -18,13 +18,13 @@ namespace Acorisoft.Morisa
         /// </summary>
         IObservable<bool> IsOpen { get; }
 
-        /// <summary>
-        /// 获取一个观测分页请求操作的数据流。
-        /// </summary>
-        /// <remarks>
-        /// 这个流用于为数据集工厂提供通知分页请求变化支持。
-        /// </remarks>
-        IObserver<IPageRequest> Page { get; }
+        ///// <summary>
+        ///// 获取一个观测分页请求操作的数据流。
+        ///// </summary>
+        ///// <remarks>
+        ///// 这个流用于为数据集工厂提供通知分页请求变化支持。
+        ///// </remarks>
+        //IObserver<IPageRequest> Page { get; }
 
         /// <summary>
         /// 获取一个观测资源操作完成的数据流。

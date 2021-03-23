@@ -23,4 +23,16 @@ namespace Acorisoft.Morisa.Map
         /// </summary>
         ReadOnlyObservableCollection<IBrushGroupTree> Groups { get; }
     }
+
+    //
+    // this is a special data set factory,because we should considering about the multiple data set scenarios
+    // the first scenario is that user use it to add and edit
+    // the second and the lastest scenario is user use it to load brush
+    //
+    // * IBrushSetFactory
+    //  * Load
+    //  * Generate
+    //  *
+
+    // * IBrushSetFactory
 }

@@ -61,29 +61,29 @@ namespace Acorisoft.Properties {
         }
         
         /// <summary>
-        ///   查找类似 无法打开一个不存在的文件夹或者不存在的文件名 的本地化字符串。
+        ///   查找类似 加载上下文所打开的文件名为空 的本地化字符串。
         /// </summary>
-        internal static string CannotLoadAnEmptyFileOrDirectory {
+        internal static string LoadContext_FileName_Null {
             get {
-                return ResourceManager.GetString("CannotLoadAnEmptyFileOrDirectory", resourceCulture);
+                return ResourceManager.GetString("LoadContext_FileName_Null", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 未找到文件 的本地化字符串。
+        ///   查找类似 无法打开一个无效的加载上下文,{0} 的本地化字符串。
         /// </summary>
-        internal static string FileNotFound {
+        internal static string LoadContext_Invalid {
             get {
-                return ResourceManager.GetString("FileNotFound", resourceCulture);
+                return ResourceManager.GetString("LoadContext_Invalid", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 测试格言元素 的本地化字符串。
+        ///   查找类似 加载上下文为空 的本地化字符串。
         /// </summary>
-        internal static string MottoEmotionSampleMotto {
+        internal static string LoadContext_Null {
             get {
-                return ResourceManager.GetString("MottoEmotionSampleMotto", resourceCulture);
+                return ResourceManager.GetString("LoadContext_Null", resourceCulture);
             }
         }
         

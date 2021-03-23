@@ -11,6 +11,7 @@ namespace Acorisoft.Morisa
     interface IDataSetImpl
     {
         LiteDatabase Database { get; }
+        LiteCollection<BsonDocument> DB_External { get; }
     }
 
 

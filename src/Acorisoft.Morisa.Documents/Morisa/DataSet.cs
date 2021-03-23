@@ -13,11 +13,21 @@ namespace Acorisoft.Morisa
         /// <summary>
         /// 获取或设置应用于当前数据集的数据库对象。
         /// </summary>
-        protected internal LiteDatabase Database { get; internal set; }
+        protected internal LiteDatabase Database { get;internal set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected internal LiteCollection<BsonDocument> DB_External { get; internal set; }
 
         /// <summary>
         /// 获取或设置应用于当前数据集的数据库对象。
         /// </summary>
         LiteDatabase IDataSetImpl.Database => Database;
+
+        /// <summary>
+        /// 获取或设置应用于当前数据集的数据库对象。
+        /// </summary>
+        LiteCollection<BsonDocument> IDataSetImpl.DB_External => DB_External;
     }
 }
