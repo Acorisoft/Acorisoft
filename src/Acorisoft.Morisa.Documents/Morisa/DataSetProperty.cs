@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa
 {
-    public interface ICompositionFactory<TComposition> : ICompositionFactory
-        where TComposition : IComposition
+    public abstract class DataSetProperty : IDataSetProperty
     {
     }
 }

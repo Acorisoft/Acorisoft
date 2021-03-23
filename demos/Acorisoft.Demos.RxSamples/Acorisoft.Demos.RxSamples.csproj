@@ -7,6 +7,7 @@
   </PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="DryIoc.dll" Version="4.7.2" />
+		<PackageReference Include="DynamicData" Version="7.1.1" />
 		<PackageReference Include="gong-wpf-dragdrop" Version="2.3.2" />
 		<PackageReference Include="LiteDB" Version="4.1.4" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />

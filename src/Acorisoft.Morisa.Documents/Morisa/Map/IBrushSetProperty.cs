@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa
+namespace Acorisoft.Morisa.Map
 {
-    public interface IDataFactory<TData> : IDataFactory
-        where TData : IData
+    public interface IBrushSetProperty : IDataSetProperty
     {
     }
 }

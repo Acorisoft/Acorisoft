@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa
 {
-    public interface IDocumentFactory<TDocument, TIndex> : IDocumentFactory<TDocument>
+    public interface ISaveContext<TProperty>
     {
     }
 }

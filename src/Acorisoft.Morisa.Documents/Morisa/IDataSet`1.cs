@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa
 {
-    public interface IDataSet<TInformation> : IDataSet
+    public interface IDataSet<TProperty> : IDataSet
+        where TProperty : DataSetProperty
     {
-
     }
 }

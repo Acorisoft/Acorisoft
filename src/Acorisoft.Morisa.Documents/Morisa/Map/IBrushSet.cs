@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa
+namespace Acorisoft.Morisa.Map
 {
-    public interface ICompositionFactory
+    public interface IBrushSet : IDataSet<BrushSetProperty>
     {
     }
 }

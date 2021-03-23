@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LiteDB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,14 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa
 {
-    public interface IDataSet
+
+    interface IDataSetImpl
+    {
+        LiteDatabase Database { get; }
+    }
+
+
+    public interface IDataSet : IDisposable
     {
     }
 }

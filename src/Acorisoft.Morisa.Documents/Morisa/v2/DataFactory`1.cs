@@ -42,6 +42,7 @@ namespace Acorisoft.Morisa.v2
                               .ObserveOn(OnSetupObserveScheduler())
                               .SubscribeOn(OnSetupSubscribeScheduler())
                               .Subscribe(x => OnSubscribe(x));
+            EditableCollection.Edit(x => x.Add());
         }
 
         /// <summary>

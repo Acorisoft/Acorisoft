@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Morisa.v2.Core
+namespace Acorisoft.Morisa.Core
 {
     public abstract class Disposable : IDisposable
     {
