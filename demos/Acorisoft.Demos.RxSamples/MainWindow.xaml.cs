@@ -1,5 +1,5 @@
-﻿using DynamicData;
-using DynamicData.Binding;
+﻿using System.Reactive.Linq;
+using DynamicData;
 using LiteDB;
 using System;
 using System.Collections.Generic;
@@ -40,6 +40,7 @@ namespace Acorisoft.Demos.RxSamples
                           .Connect()
                           .Transform(x => new GroupAdapter(x))
                           .Bind(out _c)
+                          .DisposeMany()
                           .Subscribe(x =>
                           {
 
@@ -61,6 +62,7 @@ namespace Acorisoft.Demos.RxSamples
     {
         private SourceCache<Group,Guid> _EditableCollection;
         private ReadOnlyObservableCollection<GroupAdapter> _BindableCollection;
+        private ReadOnlyObservableCollection<Group> _FlatCollection;
 
         public MainWindow()
         {
@@ -90,10 +92,15 @@ namespace Acorisoft.Demos.RxSamples
                                {
 
                                });
+            _EditableCollection.Connect()
+                               .Bind(out _FlatCollection)
+                               .DisposeMany()
+                               .Subscribe();
         }
 
 
-        public ReadOnlyObservableCollection<GroupAdapter> Collection => _BindableCollection;
+        public ReadOnlyObservableCollection<GroupAdapter> Collection => _BindableCollection; 
+        public ReadOnlyObservableCollection<Group> Flat => _FlatCollection;
 
         private void Insert(object sender, RoutedEventArgs e)
         {

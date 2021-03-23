@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Reactive
 {
-    public class DefferObserver<T> : ObserverBase<T>
+    public class DefferObserver<T> : ObserverBase<T>,IObserver<T>
     {
         protected readonly Action<T> Handler;
 

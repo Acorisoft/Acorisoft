@@ -12,13 +12,26 @@
             <RowDefinition Height="48" />
         </Grid.RowDefinitions>
 
-        <TreeView ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=Collection,Mode=OneWay}">
-            <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding Children,Mode=OneWay}">
-                    <TextBlock Text="{Binding Name}"/>
-                </HierarchicalDataTemplate>
-            </TreeView.ItemTemplate>
-        </TreeView>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <TreeView ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=Collection,Mode=OneWay}">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Children,Mode=OneWay}">
+                        <TextBlock Text="{Binding Name}"/>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+            <TreeView Grid.Column="1" ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=Flat,Mode=OneWay}">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Children,Mode=OneWay}">
+                        <TextBlock Text="{Binding Name}"/>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+        </Grid>
         
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <Button Content="Insert" Click="Insert"/>
