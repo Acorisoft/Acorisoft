@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa
 {
-    public abstract class DataSet<TProfile> : DataSet where TProfile : class
+    /// <summary>
+    /// <see cref="DataSet{TProperty}"/> 表示一个支持
+    /// </summary>
+    /// <typeparam name="TProperty"></typeparam>
+    public abstract class DataSet<TProperty> : DataSet , IDataSet<TProperty>
+        where TProperty : DataSetProperty, IDataSetProperty
     {
-        protected internal TProfile Setting { get; internal set; }
+        /// <summary>
+        /// 获取或设置应用于当前数据集的数据集属性设置。
+        /// </summary>
+        protected internal TProperty Property { get; internal set; }
     }
 }

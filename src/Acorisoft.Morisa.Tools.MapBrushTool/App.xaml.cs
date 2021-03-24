@@ -16,6 +16,7 @@ using System.Windows.Shell;
 using Acorisoft.Morisa;
 using Splat;
 using System.Diagnostics;
+using Acorisoft.Morisa.Map;
 
 namespace Acorisoft.Morisa.Tools
 {
@@ -35,34 +36,43 @@ namespace Acorisoft.Morisa.Tools
                       .UseViews(typeof(App).Assembly)
                       .UseDialog();
 
-            var counter = new Stopwatch();
-            var vmgr = _container.Resolve<IViewManager>();
-            counter.Start();
-
             RegisterDialogs(_container);
             RegisterViews(_container);
-
-            counter.Stop();
-            vmgr.Logger.Info($"视图注册花费了:{counter.ElapsedMilliseconds}ms,总计:{counter.ElapsedTicks}ticks");
             AppViewModel = Locator.Current.GetService<AppViewModel>();
+            DatabaseMixins.Deserialize<MapDocument>(DatabaseMixins.Serialize(new MapDocument
+            {
+                Terrain = new TerrainLayer
+                {
+                    Width = 16,
+                    Height = 15
+                }
+                
+            }));
         }
 
         protected virtual void RegisterDialogs(IContainer container)
         {
-            //container.Register<GenerateCompositionSetViewModel>();
-            //container.Register<SelectProjectDirectoryViewModel>();
+        }
 
-            //container.Register<IViewFor<GenerateCompositionSetViewModel>, GenerateCompositionSetView>();
-            //container.Register<IViewFor<SelectProjectDirectoryViewModel>, SelectProjectDirectoryView>();
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            ShellMixins.View<HomeViewModel>();
+            base.OnStartup(e);
         }
 
         protected virtual void RegisterViews(IContainer container)
         {
             container.Register<HomeViewModel>();
-            //container.Register<EmotionViewModel>();
-
+            container.Register<NewBrushSetDialogViewModel>();
+            container.Register<NewBrushSetDialogStep2ViewModel>();
+            container.Register<NewBrushSetDialogStep3ViewModel>();
+            container.Register<OpenBrushSetViewFunction>();
             container.Register<IViewFor<HomeViewModel>, HomeView>();
-            //container.Register<IViewFor<EmotionViewModel>, EmotionView>();
+            container.Register<IViewFor<NewBrushSetDialogViewModel>, NewBrushSetDialogView>();
+            container.Register<IViewFor<NewBrushSetDialogStep2ViewModel>, NewBrushSetDialogStep2View>();
+            container.Register<IViewFor<NewBrushSetDialogStep3ViewModel>, NewBrushSetDialogStep3View>();
+            container.Register<IViewFor<OpenBrushSetViewFunction>, OpenBrushSetView>();
+            container.Register<IViewFor<NewBrushGroupViewFunction>, NewBrushGroupView>();
         }
 
         public AppViewModel AppViewModel { get; }

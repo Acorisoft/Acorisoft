@@ -87,6 +87,21 @@ namespace Acorisoft.Morisa.Buttons
 
     }
 
+    public class SymbolButton : MuiButton
+    {
+
+        public Geometry Data
+        {
+            get => (Geometry)GetValue(DataProperty);
+            set => SetValue(DataProperty, value);
+        }
+
+        public static readonly DependencyProperty DataProperty = DependencyProperty.Register(
+            "Data",
+            typeof(Geometry),
+            typeof(SymbolButton),
+            new PropertyMetadata(null));
+    }
     public class WindowCloseButton : MuiButton
     {
         static WindowCloseButton()

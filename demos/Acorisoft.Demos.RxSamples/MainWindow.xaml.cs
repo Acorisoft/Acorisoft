@@ -1,5 +1,5 @@
-﻿using DynamicData;
-using DynamicData.Binding;
+﻿using System.Reactive.Linq;
+using DynamicData;
 using LiteDB;
 using System;
 using System.Collections.Generic;
@@ -22,9 +22,37 @@ using System.Windows.Media.Imaging;
 
 namespace Acorisoft.Demos.RxSamples
 {
-    public class StringAdapter
+    public class Group
     {
-        public string Text { get; set; }
+        public Guid Id { get; set; }
+        public Guid GroupId { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class GroupAdapter
+    {
+        private ReadOnlyObservableCollection<GroupAdapter> _c;
+        public GroupAdapter(Node<Group,Guid> x)
+        {
+            Id = x.Key;
+            GroupId = x.Item.GroupId;
+            var loader = x.Children
+                          .Connect()
+                          .Transform(x => new GroupAdapter(x))
+                          .Bind(out _c)
+                          .DisposeMany()
+                          .Subscribe(x =>
+                          {
+
+                          });
+            Name = x.Item.Name;
+        }
+        public Guid Id { get; set; }
+        public Guid GroupId { get; set; }
+        public string Name { get; set; }
+        public GroupAdapter Item { get; set; }
+        public GroupAdapter Parent { get; set; }
+        public ReadOnlyObservableCollection<GroupAdapter> Children => _c;
     }
 
     /// <summary>
@@ -32,70 +60,56 @@ namespace Acorisoft.Demos.RxSamples
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ISubject<IPageRequest> Paginator;
-        private ISubject<Func<StringAdapter,bool>> Filter;
-        private ISubject<IComparer<StringAdapter>> Sorter;
-        private ISubject<Func<StringAdapter,DateTime>> Grouper;
-        private SourceList<string> _EditableCollection;
-        private ReadOnlyObservableCollection<StringAdapter> _BindableCollection;
-        private int _Page = 1;
-        private int _Temp;
-        private ObservableAsPropertyHelper<int> _TempOAPH;
+        private SourceCache<Group,Guid> _EditableCollection;
+        private ReadOnlyObservableCollection<GroupAdapter> _BindableCollection;
+        private ReadOnlyObservableCollection<Group> _FlatCollection;
 
         public MainWindow()
         {
             InitializeComponent();
-            Sorter = new BehaviorSubject<IComparer<StringAdapter>>(Comparer<StringAdapter>.Default);
-            Filter = new BehaviorSubject<Func<StringAdapter, bool>>(x => true);
-            Paginator = new BehaviorSubject<IPageRequest>(new PageRequest(1,12));
-            _EditableCollection = new SourceList<string>();
+            _EditableCollection = new SourceCache<Group, Guid>(x => x.Id);
+            var group = new Group
+            {
+                Id = Guid.NewGuid(),
+                Name = DateTime.Now.ToString()
+            };
+            var group1 = new Group
+            {
+                Id = Guid.NewGuid(),
+                GroupId = group.Id,
+                Name = DateTime.Now.ToString()
+            };
+
+            Func<Node<Group,Guid>,bool> predicate = (Node<Group,Guid> x) => x.IsRoot;
+
+            _EditableCollection.AddOrUpdate(group);
+            _EditableCollection.AddOrUpdate(group1);
             _EditableCollection.Connect()
-                               .Transform(x => new StringAdapter { Text = x })
-                               .Filter(Filter)
-                               .Page(Paginator)
-                               .Sort(SortExpressionComparer<StringAdapter>.Ascending(x => x.Text))
+                               .TransformToTree(x => x.GroupId, Observable.Return(predicate))
+                               .Transform(x => new GroupAdapter(x))
                                .Bind(out _BindableCollection)
-                               .SubscribeOn(Dispatcher)
                                .Subscribe(x =>
                                {
 
                                });
-            _EditableCollection.AddRange(CreateDataCore());
+            _EditableCollection.Connect()
+                               .Bind(out _FlatCollection)
+                               .DisposeMany()
+                               .Subscribe();
         }
 
-        protected IEnumerable<string> CreateDataCore()
+
+        public ReadOnlyObservableCollection<GroupAdapter> Collection => _BindableCollection; 
+        public ReadOnlyObservableCollection<Group> Flat => _FlatCollection;
+
+        private void Insert(object sender, RoutedEventArgs e)
         {
-            var list = new List<string>();
-            for(int i = 0; i < 100; i++)
+            _EditableCollection.AddOrUpdate(new Group
             {
-                list.Add(i.ToString());
-            }
-            return list;
-        }
-
-        public ReadOnlyObservableCollection<StringAdapter> Collection => _BindableCollection;
-
-        private void Last(object sender, RoutedEventArgs e)
-        {
-            Paginator.OnNext(new PageRequest(_Page > 1 ? --_Page : 1, 12));
-        }
-
-        private void Next(object sender, RoutedEventArgs e)
-        {
-            Paginator.OnNext(new PageRequest(_Page <9 ? ++_Page : 8, 12));
-        }
-
-
-        private void Search(object sender, RoutedEventArgs e)
-        {
-            Filter.OnNext(x => x.Text.Length > 1);
-        }
-
-        public int Value {
-            get
-            {
-                return _TempOAPH.Value;
-            } 
+                Id = Guid.NewGuid(),
+                GroupId = Guid.NewGuid(),
+                Name = DateTime.Now.ToString()
+            });
         }
     }
 }

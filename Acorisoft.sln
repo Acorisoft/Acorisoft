@@ -19,11 +19,34 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.Tools.MapB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.Tools.ViewModelGenerator", "src\Acorisoft.Morisa.Tools.ViewModelGenerator\Acorisoft.Morisa.Tools.ViewModelGenerator.csproj", "{F6E25566-4271-48CB-9E86-4133BFBA2C51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Pandora", "src\Acorisoft.Pandora\Acorisoft.Pandora.csproj", "{1C566B91-F471-4CC2-BC5E-3CCDB1C52342}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Pandora", "src\Acorisoft.Pandora\Acorisoft.Pandora.csproj", "{1C566B91-F471-4CC2-BC5E-3CCDB1C52342}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Pandora.Map", "src\Acorisoft.Pandora.Map\Acorisoft.Pandora.Map.csproj", "{0EB198A9-557F-458D-95AA-0C52C6E124BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Pandora.Map", "src\Acorisoft.Pandora.Map\Acorisoft.Pandora.Map.csproj", "{0EB198A9-557F-458D-95AA-0C52C6E124BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Pandora.Markdown", "src\Acorisoft.Pandora.Markdown\Acorisoft.Pandora.Markdown.csproj", "{6BCDF524-EF9C-4655-A51F-FF8B6404FBA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Pandora.Markdown", "src\Acorisoft.Pandora.Markdown\Acorisoft.Pandora.Markdown.csproj", "{6BCDF524-EF9C-4655-A51F-FF8B6404FBA0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Items Solution", "Items Solution", "{EF57BF64-4C9F-4D19-8801-120627B80C88}"
+	ProjectSection(SolutionItems) = preProject
+		Templates\Dialog.vstemplate = Templates\Dialog.vstemplate
+		Templates\DialogFunction.cs = Templates\DialogFunction.cs
+		Templates\DialogView.xaml = Templates\DialogView.xaml
+		Templates\DialogView.xaml.cs = Templates\DialogView.xaml.cs
+		Templates\StepDialog2.vstemplate = Templates\StepDialog2.vstemplate
+		Templates\StepDialog3.vstemplate = Templates\StepDialog3.vstemplate
+		Templates\StepDialog4.vstemplate = Templates\StepDialog4.vstemplate
+		Templates\StepDialog5.vstemplate = Templates\StepDialog5.vstemplate
+		Templates\StepDialog6.vstemplate = Templates\StepDialog6.vstemplate
+		Templates\StepDialog7.vstemplate = Templates\StepDialog7.vstemplate
+		Templates\StepDialog8.vstemplate = Templates\StepDialog8.vstemplate
+		Templates\StepDialogFunction.cs = Templates\StepDialogFunction.cs
+		Templates\StepDialogView.xaml = Templates\StepDialogView.xaml
+		Templates\StepDialogView.xaml.cs = Templates\StepDialogView.xaml.cs
+		Templates\Template.ico = Templates\Template.ico
+		Templates\View.vstemplate = Templates\View.vstemplate
+		Templates\View.xaml = Templates\View.xaml
+		Templates\View.xaml.cs = Templates\View.xaml.cs
+		Templates\ViewModel.cs = Templates\ViewModel.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,8 +103,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_SortFileContentOnSave = True
-		RESX_NeutralResourcesLanguage = zh-Hans
 		SolutionGuid = {3EE6B840-2DC2-4DF7-8922-192714C85F7B}
+		RESX_NeutralResourcesLanguage = zh-Hans
+		RESX_SortFileContentOnSave = True
 	EndGlobalSection
 EndGlobal

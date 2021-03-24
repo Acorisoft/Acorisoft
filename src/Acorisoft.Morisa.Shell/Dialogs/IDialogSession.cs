@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Dialogs
 {
+    public interface IUpdatableSession : IDialogSession
+    {
+        Task<IDialogSession> Update<TViewModel>() where TViewModel : IRoutableViewModel;
+    }
+
     public interface IDialogSession
     {
         bool IsCompleted { get; }
