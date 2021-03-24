@@ -51,6 +51,27 @@ namespace Acorisoft.Morisa.Map
             _GroupSource = new SourceCache<IBrushGroup, Guid>(x => x.Id);
             _PagerStream = new BehaviorSubject<IPageRequest>(new PageRequest(1, 50));
             _SorterStream = new BehaviorSubject<IComparer<BrushAdapter>>(SortExpressionComparer<IBrushAdapter>.Descending(x => x.Creation));
+
+            _BrushSource.Connect()
+                        .Transform(x => new BrushAdapter(x))
+                        .Sort(_SorterStream)
+                        .Page(_PagerStream)
+                        .DisposeMany()
+                        .Bind(out _BrushCollection)
+                        .Subscribe(x =>
+                        {
+
+                        });
+
+            _GroupSource.Connect()
+                        .TransformToTree(x => x.ParentId)
+                        .Transform(x => new BrushGroupAdapter(x))
+                        .DisposeMany()
+                        .Bind(out _GroupCollection)
+                        .Subscribe(x =>
+                        {
+                            OnGroupChanged(x);
+                        });
         }
 
         protected virtual void OnGroupChanged(IChangeSet<BrushGroupAdapter, Guid> changeSet)
@@ -59,6 +80,11 @@ namespace Acorisoft.Morisa.Map
             // capture tree set changed
             foreach (var change in changeSet)
             {
+                if(DataSet is null)
+                {
+                    continue;
+                }
+
                 switch (change.Reason)
                 {
                     case ChangeReason.Add:
@@ -628,33 +654,20 @@ namespace Acorisoft.Morisa.Map
                 {
                     Database = Helper.GetDatabase(context)
                 };
-
-                _BrushSource.Connect()
-                            .Transform(x => new BrushAdapter(x))
-                            .Sort(_SorterStream)
-                            .Page(_PagerStream)
-                            .DisposeMany()
-                            .Bind(out _BrushCollection)
-                            .Subscribe(x =>
-                            {
-
-                            });
-
-                _GroupSource.Connect()
-                            .TransformToTree(x => x.ParentId)
-                            .Transform(x => new BrushGroupAdapter(x))
-                            .DisposeMany()
-                            .Bind(out _GroupCollection)
-                            .Subscribe(x =>
-                            {
-                                OnGroupChanged(x);
-                            });
-
                 //
                 // 初始化数据集。
                 bs.DB_External = bs.Database.GetCollection(Constants.ExternalCollectionName);
                 bs.DB_Brush = bs.Database.GetCollection<IBrush>(Constants.BrushCollectionName);
                 bs.DB_Group = bs.Database.GetCollection<IBrushGroup>(Constants.GroupCollectionName);
+
+                if(DataSet is not null)
+                {
+                    DataSet.Dispose();
+                    DataSet = null;
+                }
+
+                _GroupSource.Clear();
+                _BrushSource.Clear();
 
                 //
                 // 调用基类的
@@ -678,27 +691,6 @@ namespace Acorisoft.Morisa.Map
                     Database = Helper.GetDatabase(context)
                 };
 
-                _BrushSource.Connect()
-                            .Transform(x => new BrushAdapter(x))
-                            .Sort(_SorterStream)
-                            .Page(_PagerStream)
-                            .DisposeMany()
-                            .Bind(out _BrushCollection)
-                            .Subscribe(x =>
-                            {
-
-                            });
-
-                _GroupSource.Connect()
-                            .TransformToTree(x => x.ParentId)
-                            .Transform(x => new BrushGroupAdapter(x))
-                            .DisposeMany()
-                            .Bind(out _GroupCollection)
-                            .Subscribe(x =>
-                            {
-                                OnGroupChanged(x);
-                            });
-
                 //
                 // 初始化数据集。
                 bs.DB_External = bs.Database.GetCollection(Constants.ExternalCollectionName);
@@ -716,6 +708,16 @@ namespace Acorisoft.Morisa.Map
                     ProtectedResourceHandler.OnNext(context.Property.Cover);
                 }
 
+
+                if (DataSet is not null)
+                {
+                    DataSet.Dispose();
+                    DataSet = null;
+                }
+
+                _GroupSource.Clear();
+                _BrushSource.Clear();
+
                 //
                 // 调用基类的
                 OnDataSetChanged(DataSet, bs);
@@ -731,11 +733,6 @@ namespace Acorisoft.Morisa.Map
             Contract.Assert(ds != null);
             Contract.Assert(ds.Database != null);
 
-
-            //
-            // 清空上下文
-            _GroupSource.Clear();
-            _BrushSource.Clear();
 
             foreach (var group in ds.DB_Group.FindAll())
             {
