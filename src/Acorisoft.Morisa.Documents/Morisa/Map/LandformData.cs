@@ -9,7 +9,7 @@ namespace Acorisoft.Morisa.Map
     /// <summary>
     /// <see cref="LandformData"/> 表示一个元素画刷绘制的数据。
     /// </summary>
-    public class LandformData : UnitMapData,ILandformData
+    public class LandformData : UnitMapData, ILandformData
     {
         /// <summary>
         /// 使用指定的参数初始化一个新的 <see cref="LandformData"/> 类型实例。
@@ -47,6 +47,11 @@ namespace Acorisoft.Morisa.Map
             Y = y * 40d;
             Direction = direction;
             Brush = brush ?? throw new ArgumentNullException(nameof(brush));
+        }
+
+        public override sealed string ToString()
+        {
+            return $"{{{UnitX},{UnitY}}},{Brush.Id}";
         }
     }
 }

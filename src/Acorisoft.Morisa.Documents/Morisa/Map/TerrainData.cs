@@ -36,5 +36,10 @@ namespace Acorisoft.Morisa.Map
             Y = y * 40d;
             Brush = brush ?? throw new ArgumentNullException(nameof(brush));
         }
+
+        public override sealed string ToString()
+        {
+            return $"{{{UnitX},{UnitY}}},{Brush.Id}";
+        }
     }
 }
