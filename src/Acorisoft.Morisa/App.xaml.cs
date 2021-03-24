@@ -60,11 +60,6 @@ namespace Acorisoft.Morisa
             container.Register<IViewFor<EmotionViewModel>, EmotionView>();
         }
 
-        protected virtual void RegisterViews(IContainer container)
-        {
-
-        }
-
         protected override void OnStartup(StartupEventArgs e)
         {
             if(e.Args.Length > 0)
