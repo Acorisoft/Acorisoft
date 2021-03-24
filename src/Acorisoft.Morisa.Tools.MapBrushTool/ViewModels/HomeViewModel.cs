@@ -34,6 +34,12 @@ namespace Acorisoft.Morisa.Tools.ViewModels
         public HomeViewModel()
         {
             _Factory = GetService<IBrushSetFactory>();
+            _Factory.DataSetStream
+                    .Subscribe(x =>
+                    {
+                        RaiseUpdated(nameof(Groups));
+                        RaiseUpdated(nameof(Brushes));
+                    });
             _AddGroupOperator = ReactiveCommand.Create(AddGroupCore);
             _AddRootGroupOperator = ReactiveCommand.Create(AddRootGroupCore);
             _RemoveGroupOperator = ReactiveCommand.Create(RemoveGroupCore);

@@ -3,10 +3,8 @@ using System;
 
 namespace Acorisoft.Morisa.Map
 {
-    public class BrushAdapter : Bindable, IBrushAdapter
+    public class BrushAdapter : Selectable, IBrushAdapter
     {
-        private bool _IsSelected;
-
         public BrushAdapter(IBrush x)
         {
             Creation = DateTime.Now;
@@ -16,18 +14,70 @@ namespace Acorisoft.Morisa.Map
         public DateTime Creation { get; set; }
         //
         // TODO:
-        public int Id { get; set; }
-        public Guid ParentId { get; set; }
-        public BrushMode Mode { get; set; }
-        public int RefId { get; set; }
-        public FillMode Left { get; set; }
-        public FillMode Right { get; set; }
-        public FillMode Top { get; set; }
-        public FillMode Bottom { get; set; }
-        public bool IsSelected
+        public int Id
         {
-            get => _IsSelected;
-            set => Set(ref _IsSelected, value);
+            get => Source.Id;
+            set
+            {
+
+            }
+        }
+
+        public Guid ParentId
+        {
+            get => Source.ParentId;
+            set
+            {
+
+            }
+        }
+        public BrushMode Mode
+        {
+            get => Source.Mode;
+            set
+            {
+
+            }
+        }
+        public int RefId
+        {
+            get => Source.RefId;
+            set
+            {
+
+            }
+        }
+        public FillMode Left
+        {
+            get => Source.Left;
+            set
+            {
+
+            }
+        }
+        public FillMode Right
+        {
+            get => Source.Right;
+            set
+            {
+
+            }
+        }
+        public FillMode Top
+        {
+            get => Source.Top;
+            set
+            {
+
+            }
+        }
+        public FillMode Bottom
+        {
+            get => Source.Bottom;
+            set
+            {
+
+            }
         }
         public IBrush Source { get; }
     }

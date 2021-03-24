@@ -14,10 +14,10 @@ namespace Acorisoft.Morisa.Map
         private string _GroupName;
         private readonly Guid _Id;
         private readonly Guid _ParentId;
-        private readonly ReadOnlyObservableCollection<IBrushGroupAdapter> _Children;
+        private readonly ReadOnlyObservableCollection<BrushGroupAdapter> _Children;
         private readonly IBrushGroup _Source;
 
-        public BrushGroupAdapter(Node<IBrushGroup,Guid> node)
+        public BrushGroupAdapter(Node<IBrushGroup,Guid> node, Action<IChangeSet<BrushGroupAdapter, Guid>> changeHandler)
         {
             _Id = node.Key;
             _ParentId = node.Item.ParentId;
@@ -25,10 +25,12 @@ namespace Acorisoft.Morisa.Map
             _Source = node.Item;
             node.Children
                 .Connect()
-                .Transform(x => (IBrushGroupAdapter)new BrushGroupAdapter(x))
+                .Transform(x => (BrushGroupAdapter)new BrushGroupAdapter(x, changeHandler))
                 .Bind(out _Children)
-                .DisposeMany()
-                .Subscribe();
+                .Subscribe(x =>
+                {
+                    changeHandler?.Invoke(x);
+                });
         }
 
 
@@ -50,7 +52,7 @@ namespace Acorisoft.Morisa.Map
         /// <summary>
         /// 
         /// </summary>
-        public ReadOnlyObservableCollection<IBrushGroupAdapter> Children => _Children;
+        public ReadOnlyObservableCollection<BrushGroupAdapter> Children => _Children;
 
         /// <summary>
         /// 

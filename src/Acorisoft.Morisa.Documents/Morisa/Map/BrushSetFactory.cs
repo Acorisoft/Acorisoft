@@ -30,15 +30,16 @@ namespace Acorisoft.Morisa.Map
 {
     public class BrushSetFactory : DataSetFactory<BrushSet, BrushSetProperty>, IBrushSetFactory
     {
+        private bool _LoadingState;
         //
         //
-        private SourceCache<IBrushGroup,Guid> _GroupSource;
-        private SourceList<IBrush>            _BrushSource;
+        private readonly SourceCache<IBrushGroup,Guid> _GroupSource;
+        private readonly SourceList<IBrush>            _BrushSource;
 
         //
         //
-        private ReadOnlyObservableCollection<BrushAdapter>           _BrushCollection;
-        private ReadOnlyObservableCollection<BrushGroupAdapter>      _GroupCollection;
+        private readonly ReadOnlyObservableCollection<BrushAdapter>           _BrushCollection;
+        private readonly ReadOnlyObservableCollection<BrushGroupAdapter>      _GroupCollection;
 
         //
         //
@@ -56,7 +57,6 @@ namespace Acorisoft.Morisa.Map
                         .Transform(x => new BrushAdapter(x))
                         .Sort(_SorterStream)
                         .Page(_PagerStream)
-                        .DisposeMany()
                         .Bind(out _BrushCollection)
                         .Subscribe(x =>
                         {
@@ -65,8 +65,7 @@ namespace Acorisoft.Morisa.Map
 
             _GroupSource.Connect()
                         .TransformToTree(x => x.ParentId)
-                        .Transform(x => new BrushGroupAdapter(x))
-                        .DisposeMany()
+                        .Transform(x => new BrushGroupAdapter(x, OnGroupChanged))
                         .Bind(out _GroupCollection)
                         .Subscribe(x =>
                         {
@@ -76,22 +75,28 @@ namespace Acorisoft.Morisa.Map
 
         protected virtual void OnGroupChanged(IChangeSet<BrushGroupAdapter, Guid> changeSet)
         {
+            if (DataSet is null)
+            {
+                return;
+            }
+
+            if (_LoadingState)
+            {
+                return;
+            }
+
             //
             // capture tree set changed
             foreach (var change in changeSet)
             {
-                if(DataSet is null)
-                {
-                    continue;
-                }
-
+  
                 switch (change.Reason)
                 {
                     case ChangeReason.Add:
                         //
                         // 当当前集合发生添加操作时。
                         var targetItem = change.Current.Source;
-                        DataSet.DB_Group.Insert(targetItem);
+                        DataSet.DB_Group.Upsert(targetItem);
                         break;
                     case ChangeReason.Refresh:
                         DataSet.DB_Group.Delete(Query.All());
@@ -410,7 +415,7 @@ namespace Acorisoft.Morisa.Map
                 // 添加到数据库
                 using (var brushStream = new FileStream(brush.FileName, FileMode.Open))
                 {
-                    using(var memStream = new MemoryStream())
+                    using (var memStream = new MemoryStream())
                     {
                         var id = brush.Context.Id.ToString();
 
@@ -548,12 +553,12 @@ namespace Acorisoft.Morisa.Map
         /// <returns></returns>
         public bool Remove(IBrush brush)
         {
-            if(brush is null)
+            if (brush is null)
             {
                 throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(brush), SR.Parameter_Null));
             }
 
-            if(brush.Id == 0)
+            if (brush.Id == 0)
             {
                 throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(brush), SR.Parameter_Not_Initialize));
             }
@@ -573,7 +578,7 @@ namespace Acorisoft.Morisa.Map
                 throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(brushes), SR.Parameter_Null));
             }
 
-            foreach(var brush in brushes)
+            foreach (var brush in brushes)
             {
                 _BrushSource.Remove(brush);
             }
@@ -613,7 +618,7 @@ namespace Acorisoft.Morisa.Map
                 throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(groups), SR.Parameter_Null));
             }
 
-            foreach(var group in groups)
+            foreach (var group in groups)
             {
                 _GroupSource.Remove(group);
             }
@@ -660,14 +665,11 @@ namespace Acorisoft.Morisa.Map
                 bs.DB_Brush = bs.Database.GetCollection<IBrush>(Constants.BrushCollectionName);
                 bs.DB_Group = bs.Database.GetCollection<IBrushGroup>(Constants.GroupCollectionName);
 
-                if(DataSet is not null)
+                if (DataSet is not null)
                 {
                     DataSet.Dispose();
                     DataSet = null;
                 }
-
-                _GroupSource.Clear();
-                _BrushSource.Clear();
 
                 //
                 // 调用基类的
@@ -715,9 +717,6 @@ namespace Acorisoft.Morisa.Map
                     DataSet = null;
                 }
 
-                _GroupSource.Clear();
-                _BrushSource.Clear();
-
                 //
                 // 调用基类的
                 OnDataSetChanged(DataSet, bs);
@@ -733,16 +732,40 @@ namespace Acorisoft.Morisa.Map
             Contract.Assert(ds != null);
             Contract.Assert(ds.Database != null);
 
+            _LoadingState = true;
+            //_GroupSource.Connect()
+            //            .TransformToTree(x => x.ParentId)
+            //            .Transform(x => new BrushGroupAdapter(x, OnGroupChanged))
+            //            .Bind(out _GroupCollection)
+            //            .Subscribe(x =>
+            //            {
+            //                OnGroupChanged(x);
+            //            });
 
-            foreach (var group in ds.DB_Group.FindAll())
+            //_BrushSource.Connect()
+            //            .Transform(x => new BrushAdapter(x))
+            //            .Sort(_SorterStream)
+            //            .Page(_PagerStream)
+            //            .Bind(out _BrushCollection)
+            //            .Subscribe(x =>
+            //            {
+
+            //            });
+
+            _GroupSource.Edit(x =>
             {
-                _GroupSource.AddOrUpdate(group);
-            }
+                x.Load(ds.DB_Group.FindAll());
+            });
 
-            _BrushSource.AddRange(ds.DB_Brush.FindAll());
+            _BrushSource.Edit(x =>
+            {
+                x.Clear();
+                x.AddRange(ds.DB_Brush.FindAll());
+            });
 
             base.InitializeFromDatabase(ds);
 
+            _LoadingState = false;
         }
 
         protected override bool DetermineDatabaseInitialization(BrushSet set)
