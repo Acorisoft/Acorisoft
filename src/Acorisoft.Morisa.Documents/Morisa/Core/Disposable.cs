@@ -15,7 +15,7 @@ namespace Acorisoft.Morisa.Core
 
         }
 
-        protected virtual void OnDisposeCore()
+        protected virtual void OnDisposeManagedCore()
         {
 
         }
@@ -26,7 +26,7 @@ namespace Acorisoft.Morisa.Core
             {
                 if (disposing)
                 {
-                    OnDisposeCore();
+                    OnDisposeManagedCore();
                 }
 
                 OnDisposeUnmanagedCore();

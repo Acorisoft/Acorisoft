@@ -1,37 +1,33 @@
-﻿using LiteDB;
-using DynamicData;
-using DynamicData.Binding;
+﻿using Acorisoft.Morisa.Core;
+using LiteDB;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reactive;
-using System.Reactive.Concurrency;
-using System.Reactive.Disposables;
-using System.Reactive.Joins;
-using System.Reactive.Linq;
-using System.Reactive.PlatformServices;
-using System.Reactive.Subjects;
-using System.Reactive.Threading;
 using System.Text;
 using System.Threading.Tasks;
-using ExternalCollection = LiteDB.LiteCollection<LiteDB.BsonDocument>;
-using Disposable = Acorisoft.Morisa.Core.Disposable;
 
 namespace Acorisoft.Morisa
 {
-    public abstract class DataSet : Disposable
+    public abstract class DataSet : Disposable, IDataSet, IDataSetImpl
     {
+        /// <summary>
+        /// 获取或设置应用于当前数据集的数据库对象。
+        /// </summary>
+        protected internal LiteDatabase Database { get;internal set; }
 
-        protected override void OnDisposeUnmanagedCore()
-        {
-            Database?.Dispose();
-        }
+        /// <summary>
+        /// 
+        /// </summary>
+        protected internal LiteCollection<BsonDocument> DB_External { get; internal set; }
 
-        [BsonIgnore]
-        protected internal LiteDatabase Database { get; internal set; }
+        /// <summary>
+        /// 获取或设置应用于当前数据集的数据库对象。
+        /// </summary>
+        LiteDatabase IDataSetImpl.Database => Database;
 
-        [BsonIgnore]
-        protected internal ExternalCollection DB_External { get; internal set; }
+        /// <summary>
+        /// 获取或设置应用于当前数据集的数据库对象。
+        /// </summary>
+        LiteCollection<BsonDocument> IDataSetImpl.DB_External => DB_External;
     }
 }

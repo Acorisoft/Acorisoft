@@ -12,11 +12,29 @@
             <RowDefinition Height="48" />
         </Grid.RowDefinitions>
 
-        <ItemsControl DisplayMemberPath="Text" ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=Collection,Mode=OneWay}"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <TreeView ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=Collection,Mode=OneWay}">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Children,Mode=OneWay}">
+                        <TextBlock Text="{Binding Name}"/>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+            <TreeView Grid.Column="1" ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=Flat,Mode=OneWay}">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Children,Mode=OneWay}">
+                        <TextBlock Text="{Binding Name}"/>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+        </Grid>
+        
         <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <Button Content="《" Click="Last"/>
-            <Button Content="》" Click="Next"/>
-            <Button Content="Search" Click="Search"/>
+            <Button Content="Insert" Click="Insert"/>
         </StackPanel>
     </Grid>
 </Window>

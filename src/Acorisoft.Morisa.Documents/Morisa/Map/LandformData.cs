@@ -9,7 +9,7 @@ namespace Acorisoft.Morisa.Map
     /// <summary>
     /// <see cref="LandformData"/> 表示一个元素画刷绘制的数据。
     /// </summary>
-    public class LandformData : MapData, ILandformData
+    public class LandformData : UnitMapData,ILandformData
     {
         /// <summary>
         /// 使用指定的参数初始化一个新的 <see cref="LandformData"/> 类型实例。
@@ -28,7 +28,7 @@ namespace Acorisoft.Morisa.Map
         /// <param name="x">绘制的横坐标。</param>
         /// <param name="y">绘制的纵坐标。</param>
         /// <param name="brush">绘制的画刷。</param>
-        public LandformData(int x, int y, Brush brush) : this(x, y, brush, DrawDirection.None)
+        public LandformData(int x, int y, Brush brush) : this(x, y, brush, Direction.None)
         {
         }
 
@@ -39,7 +39,7 @@ namespace Acorisoft.Morisa.Map
         /// <param name="y">绘制的纵坐标。</param>
         /// <param name="brush">绘制的画刷。</param>
         /// <param name="direction">绘制的方向。</param>
-        public LandformData(int x, int y, Brush brush, DrawDirection direction)
+        public LandformData(int x, int y, Brush brush, Direction direction)
         {
             UnitX = x;
             UnitY = y;
@@ -48,20 +48,5 @@ namespace Acorisoft.Morisa.Map
             Direction = direction;
             Brush = brush ?? throw new ArgumentNullException(nameof(brush));
         }
-
-        /// <summary>
-        /// 获取当前 <see cref="LandformData"/> 的绘制横坐标。
-        /// </summary>
-        public int UnitX { get; }
-
-        /// <summary>
-        /// 获取当前 <see cref="LandformData"/> 的绘制纵坐标。
-        /// </summary>
-        public int UnitY { get; }
-
-        /// <summary>
-        /// 获取当前 <see cref="LandformData"/> 的绘制方向。
-        /// </summary>
-        public DrawDirection Direction { get; }
     }
 }

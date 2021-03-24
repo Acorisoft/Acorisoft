@@ -8,20 +8,19 @@ namespace Acorisoft.Morisa.Map
 {
     public abstract class MapData : IMapData
     {
-
-
-        public IImmutable AsMutable(double x, double y)
-        {
-            return new TerrainData(x, y, Brush);
-        }
-
-        public IImmutable AsMutable(Brush brush)
-        {
-            return new TerrainData(X, Y, brush);
-        }
-
+        /// <summary>
+        /// 获取当前 <see cref="MapData"/> 的绘制画刷。
+        /// </summary>
         public Brush Brush { get; protected set; }
+
+        /// <summary>
+        /// 获取当前 <see cref="MapData"/> 的绘制横坐标。
+        /// </summary>
         public double X { get; protected set; }
+
+        /// <summary>
+        /// 获取当前 <see cref="MapData"/> 的绘制纵坐标。
+        /// </summary>
         public double Y { get; protected set; }
     }
 }

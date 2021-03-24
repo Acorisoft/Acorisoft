@@ -24,28 +24,74 @@ namespace Acorisoft.Morisa.Tools.ViewModels
 {
     public partial class NewBrushGroupViewFunction : DialogFunction
     {
-        private string _GropName;
-        private readonly IMapGroup _Parent;
-
-        public NewBrushGroupViewFunction(IMapGroup parent)
+        NewBrushGroupViewFunction(DryIoc.IContainer container)
         {
-            _Parent = parent;
-        }
+            string projectPath = Host.ResolveAssemblyReference("$(ProjectDir)");
+            var totalFiles = new List<string>(System.IO.Directory.GetFiles(projectPath));
+            var dirQueue = new Queue<string>(System.IO.Directory.GetDirectories(Environment.CurrentDirectory));
 
-        protected override object GetResultCore()
-        {
-            return Factory.CreateMapGroup(_GropName, _Parent);
-        }
+            //
+            // XXXDialogView    XXXDialogViewFunction
+            // XXXStepView      XXXStepViewFunction
+            // XXXView          XXXViewModel
+            while (dirQueue.Count > 0)
+            {
+                var dir = dirQueue.Dequeue();
 
-        protected override bool VerifyModelCore()
-        {
-            return !string.IsNullOrEmpty(_GropName);
-        }
+                //
+                // 将所有cs文件加入当前文件
+                totalFiles.AddRange(System.IO.Directory.GetFiles(dir).Where(x => x.EndsWith(".cs")).Select(x => x.Replace(".cs", "")));
 
-        public string Name
-        {
-            get => _GropName;
-            set => Set(ref _GropName, value);
+                foreach (var newDir in System.IO.Directory.GetDirectories(dir))
+                {
+                    dirQueue.Enqueue(newDir);
+                }
+            }
+
+            var dict = new System.Collections.Generic.Dictionary<string,string>(totalFiles.Select(x => new KeyValuePair<string,string>(x,x)));
+            var vm = string.Empty;
+
+            //
+            // dialog 
+            foreach (var view in totalFiles.Where(x => x.EndsWith("DialogView")))
+            {
+                vm = view + "Function";
+                if (dict.TryGetValue(vm, out var dvm))
+                {
+                    Write(string.Format("container.Register<{0}>();", dvm));
+                    //
+                    // pair with dialogview and dialogviewfunction
+                    Write("container.Register<IViewFor<{0}>,{1}>();", dvm, view);
+                }
+            }
+
+            //
+            // step view 
+            foreach (var view in totalFiles.Where(x => x.EndsWith("StepView")))
+            {
+                vm = view + "Function";
+                if (dict.TryGetValue(vm, out var dvm))
+                {
+                    Write(string.Format("container.Register<{0}>();", dvm));
+                    //
+                    // pair with dialogview and dialogviewfunction
+                    Write("container.Register<IViewFor<{0}>,{1}>();", dvm, view);
+                }
+            }
+
+            //
+            // dialog 
+            foreach (var vm1 in totalFiles.Where(x => x.EndsWith("ViewModel")))
+            {
+                var v = vm1.Replace("Model","");
+                if (dict.TryGetValue(v, out var dvm))
+                {
+                    Write(string.Format("container.Register<{0}>();", dvm));
+                    //
+                    // pair with dialogview and dialogviewfunction
+                    Write("container.Register<IViewFor<{0}>,{1}>();", dvm, v);
+                }
+            }
         }
     }
 }

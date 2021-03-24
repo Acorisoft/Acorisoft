@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Acorisoft.Morisa.Map
+﻿namespace Acorisoft.Morisa.Map
 {
-    public interface ILandformData : IMapData
+    public interface ILandformData
     {
     }
 }

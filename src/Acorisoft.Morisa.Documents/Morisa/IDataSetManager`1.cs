@@ -1,40 +1,25 @@
-﻿using Acorisoft.Morisa.Core;
-using DynamicData;
-using DynamicData.Binding;
-using LiteDB;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Reactive;
-using System.Reactive.Concurrency;
-using System.Reactive.Disposables;
-using System.Reactive.Joins;
-using System.Reactive.Linq;
-using System.Reactive.PlatformServices;
-using System.Reactive.Subjects;
-using System.Reactive.Threading;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace Acorisoft.Morisa
 {
-    public interface IDataSetManager<TDataSet> where TDataSet : DataSet
+    public interface IDataSetManager<TDataSet> : IDisposable
+        where TDataSet : DataSet, IDataSet
     {
+
+
+        /// <summary>
+        /// 获取一个观测当前数据集工厂是否已经加载数据集的数据流。该数据流用于表示当前数据集工厂是否已经加载了数据集。
+        /// </summary>
+        IObservable<bool> IsOpenStream { get; }
+
         /// <summary>
         /// 
         /// </summary>
-        IObservable<bool> IsOpen { get; }
+        IObservable<TDataSet> DataSetStream { get; }
 
         /// <summary>
-        /// 获取当前的输入流。当前输入流是一个数据集。
+        /// 获取当前工作中的数据集。
         /// </summary>
-        public IObserver<TDataSet> Input { get; }
-
-
-        /// <summary>
-        /// 获取一个资源流。
-        /// </summary>
-        public IObserver<Resource> Resource { get; }
+        TDataSet DataSet { get; }
     }
 }

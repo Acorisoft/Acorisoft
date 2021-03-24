@@ -1,8 +1,8 @@
-﻿using Acorisoft.Morisa.Internal;
-using System;
+﻿using Acorisoft.Properties;
 using DynamicData;
-using DynamicData.Binding;
 using LiteDB;
+using DynamicData.Binding;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -17,178 +17,137 @@ using System.Reactive.Threading;
 using System.Text;
 using System.Threading.Tasks;
 using Acorisoft.Morisa.Core;
-using System.Diagnostics.Contracts;
-using System.ComponentModel;
+using System.IO;
 
 namespace Acorisoft.Morisa
 {
-    public abstract class DataSetManager<TDataSet, TProfile> : DataSetManager<TDataSet>, IDataSetManager<TDataSet, TProfile> 
-        where TDataSet : DataSet<TProfile>
-        where TProfile : class, IProfile
+    public abstract class DataSetManager<TDataSet, TProperty> : DataSetManager<TDataSet>, IDataSetManager<TDataSet>
+        where TDataSet : DataSet, IDataSet
+        where TProperty : DataSetProperty, IDataSetProperty
     {
-        private protected readonly DelegateObserver<TProfile> ProfileStream;
-        private protected readonly IDisposable ProfileDisposable;
-        private TProfile _Profile;
+        protected readonly SourceList<TDataSet> EditableDataSetCollection;
+        private protected readonly ReadOnlyObservableCollection<TDataSet> BindableDataSetCollection;
+        private protected readonly Subject<TProperty> ProtectedPropertyStream;
+        private TProperty _Property;
 
-        public DataSetManager() : base()
+        protected DataSetManager()
         {
-            ProfileStream = new DelegateObserver<TProfile>(ProfileChanged);
-            ProfileDisposable = Observable.FromEvent<TProfile>(x => OnProfileChanged += x, x => OnProfileChanged -= x)
-                                          .SubscribeOn(ThreadPoolScheduler.Instance)
-                                          .Subscribe(x =>
-                                          {
-                                              if (x.Cover != null)
-                                              {
-                                                  Resource.OnNext(x.Cover);
-                                              }
-                                              Singleton(x);
-                                              ProfileChangedCore(x);
-                                          });
+            EditableDataSetCollection = new SourceList<TDataSet>();
+            EditableDataSetCollection.Connect()
+                              .Bind(out BindableDataSetCollection)
+                              .Subscribe(x =>
+                              {
+
+                              });
         }
 
-        protected void SetGenerateContext(TProfile setting)
+        public void Load(ILoadContext context)
         {
-            _Profile = setting;
+            if (context == null)
+            {
+                throw new InvalidOperationException(string.Format(SR.LoadContext_Invalid, SR.LoadContext_Null));
+            }
+
+            if (!File.Exists(context.FileName))
+            {
+                throw new InvalidOperationException(string.Format(SR.LoadContext_Invalid, SR.LoadContext_FileName_Null));
+            }
+
+            //
+            // 在派生类中操作，以决定如何加载数据集。
+            OnLoad(context);
+        }
+
+        protected void OnDataSetChanged(TDataSet oldDataSet, TDataSet newDataSet)
+        {
+            if(oldDataSet is not null)
+            {
+                //
+                // Clear State
+                oldDataSet.Dispose();
+            }
+
+            if(newDataSet is not null)
+            {
+                //
+                // Assign data set
+                DataSet = newDataSet;
+
+                //
+                //
+                if (DetermineDatabaseInitialization(newDataSet))
+                {
+                    InitializeFromDatabase(newDataSet);
+                }
+                else
+                {
+                    InitializeFromCode(newDataSet);
+                }
+
+                //
+                // notification
+                ProtectedDataSetStream.OnNext(newDataSet);
+
+                //
+                //
+                EditableDataSetCollection.Add(newDataSet);
+            }
+
+            ProtectedIsOpenStream.OnNext(newDataSet is not null);
+        }
+
+        /// <summary>
+        /// 重写该方法，实现从数据集中初始化支持。
+        /// </summary>
+        /// <param name="ds"></param>
+        protected virtual void InitializeFromDatabase(TDataSet ds)
+        {
+            _Property = Singleton<TProperty>(ds);
+        }
+
+        /// <summary>
+        /// 重写该方法，实现从代码中初始化数据集。
+        /// </summary>
+        /// <param name="ds"></param>
+        protected virtual void InitializeFromCode(TDataSet ds)
+        {
+            _Property = Singleton(ds, CreatePropertyCore());
+        }
+
+        protected abstract TProperty CreatePropertyCore();
+
+        /// <summary>
+        /// 重写该方法，用来判断当前数据库是否初始化。
+        /// </summary>
+        /// <param name="set">指定要判断数据库初始化的数据集。</param>
+        /// <returns>返回一个值，该值用于表示当前数据集的初始化状态，如果已初始化则返回true，否则返回false。</returns>
+        protected virtual bool DetermineDatabaseInitialization(TDataSet set)
+        {
+            return false;
         }
 
 
         /// <summary>
-        /// 在数据库中查询或者创建一个新的单例。
+        /// 重写该方法，以便编写从 <see cref="ILoadContext"/> 类型到 <see cref="TDataSet"/> 的逻辑转换。
         /// </summary>
-        /// <typeparam name="T">要查询的单例对象类型。</typeparam>
-        /// <returns>返回一个已经存在于数据库中的单例实例或者创建一个新的单例实例并保存于数据库当中。</returns>
-        protected internal T Singleton<T>()
-        {
-            var key = typeof(T).FullName;
-            T instance;
-            if (DataSet.DB_External.Exists(Query.EQ("_id", key)))
-            {
-                instance = DatabaseMixins.Deserialize<T>(DataSet.DB_External.FindById(key));
-            }
-            else
-            {
-                instance = ClassActivator.CreateInstance<T>();
-                DataSet.DB_External.Upsert(key, DatabaseMixins.Serialize(instance));
-            }
+        /// <param name="context">指定当前的加载上下文。</param>
+        protected abstract void OnLoad(ILoadContext context);
 
-            return instance;
-        }
+
 
         /// <summary>
         /// 
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="instance"></param>
-        /// <returns></returns>
-        protected internal T Singleton<T>(T instance)
-        {
-            DataSet.DB_External.Upsert(typeof(TProfile).FullName, DatabaseMixins.Serialize(instance));
-            return instance;
-        }
+        public TProperty Property => _Property;
 
         /// <summary>
-        /// 在数据库中查询或者创建一个新的单例。
+        /// 获取当前数据集管理器所管理的数据集集合。
         /// </summary>
-        /// <typeparam name="T">要查询的单例对象类型。</typeparam>
-        /// <param name="database">数据库</param>
-        /// <returns>返回一个已经存在于数据库中的单例实例或者创建一个新的单例实例并保存于数据库当中。</returns>
-        protected internal static T Singleton<T>(LiteDatabase database)
-        {
-            var key = typeof(T).FullName;
-            var collection = database.GetCollection(ExternalCollectionName);
-            T instance;
-            if (collection.Exists(Query.EQ("_id", key)))
-            {
-                instance = DatabaseMixins.Deserialize<T>(collection.FindById(key));
-            }
-            else
-            {
-                instance = ClassActivator.CreateInstance<T>();
-                collection.Upsert(key, DatabaseMixins.Serialize(instance));
-            }
-
-            return instance;
-        }
+        public ReadOnlyObservableCollection<TDataSet> DataSets => BindableDataSetCollection;
 
         /// <summary>
-        /// 当配置信息改变的时候。
+        /// 获取当前数据集管理器所管理的数据集集合。
         /// </summary>
-        /// <param name="profile">新的配置信息。</param>
-        protected void ProfileChanged(TProfile profile)
-        {
-            if (profile.Cover != null)
-            {
-                Contract.Assert(DataSet != null);
-                Contract.Assert(DataSet.Setting != null);
-
-                //
-                // Determined previous version
-                if (DataSet.Setting.Cover is InDatabaseResource)
-                {
-                    DataSet.Database.FileStorage.Delete(DataSet.Setting.Cover.Id);
-                }
-
-                if (profile.Cover != null)
-                {
-                    Resource.OnNext(profile.Cover);
-                }
-            }
-
-            OnProfileChanged?.Invoke(profile);
-        }
-
-        protected override sealed void DataSetChanged(TDataSet set)
-        {
-            base.DataSetChanged(set);
-        }
-
-        /// <summary>
-        /// 当配置信息改变的时候。
-        /// </summary>
-        /// <param name="profile">新的配置信息。</param>
-        protected virtual void ProfileChangedCore(TProfile profile)
-        {
-
-        }
-
-        /// <summary>
-        /// 使用数据库中的数据初始化。
-        /// </summary>
-        /// <param name="set">指定此初始化操作所需要用到的数据库上下文，要求不能为空。</param>
-        protected override void InitializeFromDatabase(TDataSet set)
-        {
-            set.DB_External = set.Database.GetCollection(ExternalCollectionName);
-
-            //
-            // 创建新的配置信息。
-            set.Setting = Singleton<TProfile>();
-
-        }
-
-        /// <summary>
-        /// 数据库未初始化，使用指定的模式来初始化数据库并写入数据。。
-        /// </summary>
-        /// <param name="set">指定此初始化操作所需要用到的数据库上下文，要求不能为空。</param>
-        protected override void InitializeFromPattern(TDataSet set)
-        {
-            set.Setting = Singleton(CreateProfileCore());
-        }
-
-        /// <summary>
-        /// 创建新的配置信息。在派生类中重写该方法以便生成针对性的配置信息。
-        /// </summary>
-        /// <returns>返回一个配置信息实例。</returns>
-        protected TProfile CreateProfileCore()
-        {
-            if(_Profile == null)
-            {
-                return default;
-            }
-
-            return _Profile;
-        }
-
-        public IObserver<TProfile> Profile => ProfileStream;
-        public event Action<TProfile> OnProfileChanged;
+        public IObservable<TProperty> PropertyStream => ProtectedPropertyStream;
     }
 }

@@ -12,7 +12,8 @@ using System.Threading.Tasks;
 namespace Acorisoft.Morisa.Core
 {
     public abstract class Bindable : INotifyPropertyChanged, INotifyPropertyChanging
-    {        //-------------------------------------------------------------------------------------------------
+    {
+        //-------------------------------------------------------------------------------------------------
         //
         //  Internal Classes
         //

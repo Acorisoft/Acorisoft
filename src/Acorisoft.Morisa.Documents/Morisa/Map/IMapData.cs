@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Acorisoft.Morisa.Map
+﻿namespace Acorisoft.Morisa.Map
 {
-    public interface IMapData : IImmutable
+    public interface IMapData
     {
-        double X { get; }
-        double Y { get; }
+         Brush Brush { get; }
+         double X { get; }
+         double Y { get; }
     }
 }
