@@ -11,7 +11,14 @@ namespace Acorisoft.Morisa.Map
             Source = x;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public DateTime Creation { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         //
         // TODO:
         public int Id
@@ -23,6 +30,9 @@ namespace Acorisoft.Morisa.Map
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Guid ParentId
         {
             get => Source.ParentId;
@@ -31,6 +41,10 @@ namespace Acorisoft.Morisa.Map
 
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public BrushMode Mode
         {
             get => Source.Mode;
@@ -39,6 +53,10 @@ namespace Acorisoft.Morisa.Map
 
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public int RefId
         {
             get => Source.RefId;
@@ -47,6 +65,10 @@ namespace Acorisoft.Morisa.Map
 
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public FillMode Left
         {
             get => Source.Left;
@@ -55,6 +77,10 @@ namespace Acorisoft.Morisa.Map
 
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public FillMode Right
         {
             get => Source.Right;
@@ -63,6 +89,10 @@ namespace Acorisoft.Morisa.Map
 
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public FillMode Top
         {
             get => Source.Top;
@@ -71,6 +101,10 @@ namespace Acorisoft.Morisa.Map
 
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public FillMode Bottom
         {
             get => Source.Bottom;
@@ -79,6 +113,10 @@ namespace Acorisoft.Morisa.Map
 
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public IBrush Source { get; }
     }
 }
