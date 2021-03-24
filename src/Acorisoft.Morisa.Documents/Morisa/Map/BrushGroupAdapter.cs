@@ -22,7 +22,7 @@ namespace Acorisoft.Morisa.Map
             _Id = node.Key;
             _ParentId = node.Item.ParentId;
             _GroupName = node.Item.Name;
-
+            _Source = node.Item;
             node.Children
                 .Connect()
                 .Transform(x => (IBrushGroupAdapter)new BrushGroupAdapter(x))
@@ -30,6 +30,7 @@ namespace Acorisoft.Morisa.Map
                 .DisposeMany()
                 .Subscribe();
         }
+
 
         /// <summary>
         /// 

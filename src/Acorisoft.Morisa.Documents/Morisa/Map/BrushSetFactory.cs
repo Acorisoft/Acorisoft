@@ -24,6 +24,7 @@ using FileMode = System.IO.FileMode;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
+using SixLabors.ImageSharp.Formats.Png;
 
 namespace Acorisoft.Morisa.Map
 {
@@ -41,18 +42,18 @@ namespace Acorisoft.Morisa.Map
 
         //
         //
-        private readonly IObservable<IPageRequest>              _PagerStream;
-        private readonly IObservable<IComparer<IBrushAdapter>>  _SorterStream;
-        private readonly IObservable<Func<IBrushAdapter,bool>>  _FilterStream;
+        private readonly BehaviorSubject<IPageRequest>              _PagerStream;
+        private readonly BehaviorSubject<IComparer<IBrushAdapter>>  _SorterStream;
 
         public BrushSetFactory()
         {
             _BrushSource = new SourceList<IBrush>();
             _GroupSource = new SourceCache<IBrushGroup, Guid>(x => x.Id);
+            _PagerStream = new BehaviorSubject<IPageRequest>(new PageRequest(1, 50));
+            _SorterStream = new BehaviorSubject<IComparer<IBrushAdapter>>(SortExpressionComparer<IBrushAdapter>.Descending(x => x.Creation));
 
             _BrushSource.Connect()
-                        .Transform(x => (IBrushAdapter)(new BrushAdapter(x)))
-                        .Filter(_FilterStream)
+                        .Transform(x => (IBrushAdapter)new BrushAdapter(x))
                         .Sort(_SorterStream)
                         .Page(_PagerStream)
                         .DisposeMany()
@@ -404,23 +405,38 @@ namespace Acorisoft.Morisa.Map
                 // 添加到数据库
                 using (var brushStream = new FileStream(brush.FileName, FileMode.Open))
                 {
-                    var id = brush.Context.Id.ToString();
-                    DataSet.Database
-                           .FileStorage
-                           .Upload(id,
-                                   id,
-                                   brushStream);
-
-                    //
-                    // 重置文件流的位置
-                    brushStream.Seek(0, SeekOrigin.Begin);
-
-                    //
-                    // 打开为图片
-                    using (var image = Image.Load(brushStream).CloneAs<Rgba32>())
+                    using(var memStream = new MemoryStream())
                     {
+                        var id = brush.Context.Id.ToString();
 
-                        AnalyzeFillMode(brush, image, landColor);
+                        //
+                        // size
+                        var image = Image.Load(brushStream);
+
+                        //
+                        //
+                        image.Mutate(x => x.Resize(80, 80));
+                        image.Save(memStream, new PngEncoder());
+                        image.Dispose();
+
+                        //
+                        //
+                        image = null;
+                        DataSet.Database
+                               .FileStorage
+                               .Upload(id,
+                                       id,
+                                       memStream);
+                        //
+                        // 重置文件流的位置
+                        memStream.Seek(0, SeekOrigin.Begin);
+
+                        //
+                        // 打开为图片
+                        using (image = Image.Load(memStream))
+                        {
+                            AnalyzeFillMode(brush, image.CloneAs<Rgba32>(), landColor);
+                        }
                     }
                 }
             }
@@ -481,35 +497,41 @@ namespace Acorisoft.Morisa.Map
                 // 创建Id
                 brush.Context.Id = DataSet.Property.GlobalSeed++;
 
-                try
+                using (var brushStream = new FileStream(brush.FileName, FileMode.Open))
                 {
-                    //
-                    // 添加到数据库
-                    using (var brushStream = new FileStream(brush.FileName, FileMode.Open))
+                    using (var memStream = new MemoryStream())
                     {
                         var id = brush.Context.Id.ToString();
+
+                        //
+                        // size
+                        var image = Image.Load(brushStream);
+
+                        //
+                        //
+                        image.Mutate(x => x.Resize(80, 80));
+                        image.Save(memStream, new PngEncoder());
+                        image.Dispose();
+
+                        //
+                        //
+                        image = null;
                         DataSet.Database
                                .FileStorage
                                .Upload(id,
                                        id,
-                                       brushStream);
-
+                                       memStream);
                         //
                         // 重置文件流的位置
-                        brushStream.Seek(0, SeekOrigin.Begin);
+                        memStream.Seek(0, SeekOrigin.Begin);
 
                         //
                         // 打开为图片
-                        using (var image = Image.Load(brushStream).CloneAs<Rgba32>())
+                        using (image = Image.Load(memStream))
                         {
-
-                            AnalyzeFillMode(brush, image, landColor);
+                            AnalyzeFillMode(brush, image.CloneAs<Rgba32>(), landColor);
                         }
                     }
-                }
-                catch
-                {
-
                 }
             }
         }

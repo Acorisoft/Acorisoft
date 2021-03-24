@@ -9,7 +9,7 @@ namespace Acorisoft.Morisa.Map
     public interface IBrushAdapter : IBrush
     {
         bool IsSelected { get; set; }
-
+        DateTime Creation { get; }
         IBrush Source { get; }
     }
 }

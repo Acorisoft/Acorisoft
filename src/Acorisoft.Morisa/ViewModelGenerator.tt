@@ -1,32 +1,17 @@
-﻿using Acorisoft.Morisa.Core;
-using Acorisoft.Morisa.Dialogs;
-using Acorisoft.Morisa.Map;
-using Acorisoft.Morisa.ViewModels;
-using DynamicData.Binding;
-using GongSolutions.Wpf.DragDrop;
-using ReactiveUI;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reactive;
-using System.Reactive.Concurrency;
-using System.Reactive.Disposables;
-using System.Reactive.Linq;
-using System.Reactive.Subjects;
-using System.Reactive.Threading;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Data;
-using System.Windows.Input;
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System"#>    
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension="GenerateViewModels.cs" #>
 
-namespace Acorisoft.Morisa.Tools.ViewModels
+partial class App
 {
-    public partial class NewBrushGroupViewFunction : DialogFunction
-    {
-        NewBrushGroupViewFunction(DryIoc.IContainer container)
-        {
-            string projectPath = Host.ResolveAssemblyReference("$(ProjectDir)");
+	public void RegisterViews(IContainer container)
+	{
+		<#
+			string projectPath = Host.ResolveAssemblyReference("$(ProjectDir)");
             var totalFiles = new List<string>(System.IO.Directory.GetFiles(projectPath));
             var dirQueue = new Queue<string>(System.IO.Directory.GetDirectories(Environment.CurrentDirectory));
 
@@ -92,6 +77,6 @@ namespace Acorisoft.Morisa.Tools.ViewModels
                     Write("container.Register<IViewFor<{0}>,{1}>();", dvm, v);
                 }
             }
-        }
-    }
+		#>
+	}
 }

@@ -36,5 +36,21 @@
     <ItemGroup>
       <Resource Include="Assets\Default_CS_Cover.jpg" />
     </ItemGroup>
+    <ItemGroup>
+      <None Update="ViewModelGenerator.tt">
+        <Generator>TextTemplatingFileGenerator</Generator>
+        <LastGenOutput>ViewModelGenerator.GenerateViewModels.cs</LastGenOutput>
+      </None>
+    </ItemGroup>
+    <ItemGroup>
+      <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Update="ViewModelGenerator.GenerateViewModels.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>ViewModelGenerator.tt</DependentUpon>
+      </Compile>
+    </ItemGroup>
 
 </Project>
