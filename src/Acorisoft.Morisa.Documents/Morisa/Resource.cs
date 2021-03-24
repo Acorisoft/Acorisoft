@@ -1,5 +1,6 @@
 ﻿using LiteDB;
 using System;
+using System.IO;
 
 namespace Acorisoft.Morisa
 {

@@ -17,8 +17,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Acorisoft.Morisa.Core;
 using Acorisoft.Morisa.Reactive;
+using Acorisoft.Properties;
 using System.IO;
 using System.Diagnostics.Contracts;
+using FileMode = System.IO.FileMode;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 
 namespace Acorisoft.Morisa.Map
 {
@@ -64,62 +69,543 @@ namespace Acorisoft.Morisa.Map
                         .Bind(out _GroupCollection)
                         .Subscribe(x =>
                         {
-
+                            OnGroupChanged(x);
                         });
         }
 
+        protected virtual void OnGroupChanged(IChangeSet<IBrushGroupAdapter, Guid> changeSet)
+        {
+            //
+            // capture tree set changed
+            foreach (var change in changeSet)
+            {
+                switch (change.Reason)
+                {
+                    case ChangeReason.Add:
+                        //
+                        // 当当前集合发生添加操作时。
+                        var targetItem = change.Current.Source;
+                        DataSet.DB_Group.Insert(targetItem);
+                        break;
+                    case ChangeReason.Refresh:
+                        DataSet.DB_Group.Delete(Query.All());
+                        break;
+                    case ChangeReason.Remove:
+                        DataSet.DB_Group.Delete(change.Current.Id);
+                        break;
+                    case ChangeReason.Update:
+                        targetItem = change.Current.Source;
+                        DataSet.DB_Group.Upsert(targetItem);
+                        break;
+                    case ChangeReason.Moved:
+                    default:
+                        //
+                        // 集合的移动不影响当前树形结构的持久化
+                        break;
+                }
+            }
+        }
+
+        protected static FillMode AnalyzeFillMode(int count, int width)
+        {
+            var rate = count / width;
+
+            if (rate < .25d)
+            {
+                return FillMode.Thin;
+            }
+            else if (rate > .25d && rate <= .5d)
+            {
+                return FillMode.Half;
+            }
+            else if (rate > .5d && rate < .75d)
+            {
+                return FillMode.Extra;
+            }
+            else
+            {
+                return FillMode.Large;
+            }
+        }
+
+        protected void AnalyzeFillMode(IGenerateContext<Brush> brush, Image<Rgba32> image, Rgba32 landColor)
+        {
+            //
+            // 打开为图片
+            if (image.TryGetSinglePixelSpan(out var colorSpan))
+            {
+                var count = 0;
+                //
+                // top edge
+                for (int x = 0; x < image.Width; x++)
+                {
+                    if (landColor == colorSpan[x])
+                    {
+                        count++;
+                    }
+                }
+
+                brush.Context.Top = AnalyzeFillMode(count, image.Width);
+                count = 0;
+
+                //
+                // bottom
+                for (int x = image.Height - 1 * image.Width; x < image.Width; x++)
+                {
+                    if (landColor == colorSpan[x])
+                    {
+                        count++;
+                    }
+                }
+
+                //
+                // left edge
+                brush.Context.Bottom = AnalyzeFillMode(count, image.Width);
+                count = 0;
+
+                for (int x = 0; x < image.Height; x += image.Width)
+                {
+                    if (landColor == colorSpan[x])
+                    {
+                        count++;
+                    }
+                }
+                //
+                // right edge
+                brush.Context.Left = AnalyzeFillMode(count, image.Width);
+                count = 0;
+
+                for (int x = image.Width - 1; x < image.Height; x += image.Width)
+                {
+                    if (landColor == colorSpan[x])
+                    {
+                        count++;
+                    }
+                }
+
+                brush.Context.Right = AnalyzeFillMode(count, image.Width);
+            }
+            else
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(AnalyzeFillMode), SR.InvalidOperation_ExecuteError));
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newGroup"></param>
         public void Add(IBrushGroup newGroup)
         {
+            if (newGroup is null)
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(newGroup), SR.Parameter_Null));
+            }
 
+            if (string.IsNullOrEmpty(newGroup.Name))
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(IBrushGroup.Name), SR.Parameter_Null));
+            }
+
+            if (newGroup.Id == Guid.Empty)
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(IBrushGroup.Name), SR.Parameter_Not_Initialize));
+            }
+
+            //
+            // 添加到画刷组
+            _GroupSource.AddOrUpdate(newGroup);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newGroup"></param>
+        /// <param name="parentGroup"></param>
         public void Add(IBrushGroup newGroup, IBrushGroup parentGroup)
         {
+            if (newGroup is null)
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(newGroup), SR.Parameter_Null));
+            }
 
+            if (string.IsNullOrEmpty(newGroup.Name))
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, newGroup, SR.Parameter_Null));
+            }
+
+            if (newGroup.Id == Guid.Empty)
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, newGroup, SR.Parameter_Not_Initialize));
+            }
+
+            if (parentGroup is null)
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(parentGroup), SR.Parameter_Null));
+            }
+
+            if (string.IsNullOrEmpty(parentGroup.Name))
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, parentGroup, SR.Parameter_Null));
+            }
+
+            if (parentGroup.Id == Guid.Empty)
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, parentGroup, SR.Parameter_Not_Initialize));
+            }
+
+            //
+            // 设置父级关系
+            newGroup.ParentId = parentGroup.Id;
+
+            //
+            // 添加到画刷组
+            _GroupSource.AddOrUpdate(newGroup);
         }
-        public void Add(IEnumerable<IBrushGroup> newGroup, IBrushGroup parentGroup)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newGroups"></param>
+        public void Add(IEnumerable<IBrushGroup> newGroups)
         {
+            if (newGroups == null)
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(newGroups), SR.Parameter_Null));
+            }
 
+            foreach (var newGroup in newGroups)
+            {
+                if (newGroup is null)
+                {
+                    continue;
+                }
+
+                if (string.IsNullOrEmpty(newGroup.Name))
+                {
+                    continue;
+                }
+
+                if (newGroup.Id == Guid.Empty)
+                {
+                    continue;
+                }
+
+                //
+                // 添加到画刷组
+                _GroupSource.AddOrUpdate(newGroup);
+            }
         }
 
-        public void Add(IBrush brush, IBrushGroup parentGroup)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newGroups"></param>
+        /// <param name="parentGroup"></param>
+        public void Add(IEnumerable<IBrushGroup> newGroups, IBrushGroup parentGroup)
         {
+            if (newGroups == null)
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(newGroups), SR.Parameter_Null));
+            }
 
+            if (parentGroup is null)
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(parentGroup), SR.Parameter_Null));
+            }
+
+            if (string.IsNullOrEmpty(parentGroup.Name))
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, parentGroup, SR.Parameter_Null));
+            }
+
+            if (parentGroup.Id == Guid.Empty)
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, parentGroup, SR.Parameter_Not_Initialize));
+            }
+
+            foreach (var newGroup in newGroups)
+            {
+                if (newGroup is null)
+                {
+                    continue;
+                }
+
+                if (string.IsNullOrEmpty(newGroup.Name))
+                {
+                    continue;
+                }
+
+                if (newGroup.Id == Guid.Empty)
+                {
+                    continue;
+                }
+
+                //
+                // 设置父级关系
+                newGroup.ParentId = parentGroup.Id;
+
+                //
+                // 添加到画刷组
+                _GroupSource.AddOrUpdate(newGroup);
+            }
         }
 
-        public void Add(IEnumerable<IBrush> brush, IBrushGroup parentGroup)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="brush"></param>
+        /// <param name="parentGroup"></param>
+        /// <param name="landColor">陆地颜色</param>
+        public void Add(IGenerateContext<Brush> brush, IBrushGroup parentGroup, Rgba32 landColor)
         {
+            if (brush is null)
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(brush), SR.Parameter_Null));
+            }
 
+            if (string.IsNullOrEmpty(brush.FileName))
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(brush), SR.Parameter_Null));
+            }
+
+            if (brush.Context is null)
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(brush), SR.Parameter_Null));
+            }
+
+
+            if (parentGroup is null)
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(parentGroup), SR.Parameter_Null));
+            }
+
+            if (string.IsNullOrEmpty(parentGroup.Name))
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, parentGroup, SR.Parameter_Null));
+            }
+
+            if (parentGroup.Id == Guid.Empty)
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, parentGroup, SR.Parameter_Not_Initialize));
+            }
+
+            //
+            // 设置父级
+            brush.Context.ParentId = parentGroup.Id;
+
+            //
+            // 创建Id
+            brush.Context.Id = DataSet.Property.GlobalSeed++;
+
+            try
+            {
+                //
+                // 添加到数据库
+                using (var brushStream = new FileStream(brush.FileName, FileMode.Open))
+                {
+                    var id = brush.Context.Id.ToString();
+                    DataSet.Database
+                           .FileStorage
+                           .Upload(id,
+                                   id,
+                                   brushStream);
+
+                    //
+                    // 重置文件流的位置
+                    brushStream.Seek(0, SeekOrigin.Begin);
+
+                    //
+                    // 打开为图片
+                    using (var image = Image.Load(brushStream).CloneAs<Rgba32>())
+                    {
+
+                        AnalyzeFillMode(brush, image, landColor);
+                    }
+                }
+            }
+            catch
+            {
+
+            }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="brushes"></param>
+        /// <param name="parentGroup"></param>
+        public void Add(IEnumerable<IGenerateContext<Brush>> brushes, IBrushGroup parentGroup, Rgba32 landColor)
+        {
+            if (parentGroup is null)
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(parentGroup), SR.Parameter_Null));
+            }
+
+            if (string.IsNullOrEmpty(parentGroup.Name))
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, parentGroup, SR.Parameter_Null));
+            }
+
+            if (parentGroup.Id == Guid.Empty)
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, parentGroup, SR.Parameter_Not_Initialize));
+            }
+
+            if (brushes == null)
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(brushes), SR.Parameter_Null));
+            }
+
+            foreach (var brush in brushes)
+            {
+                if (brush is null)
+                {
+                    continue;
+                }
+
+                if (string.IsNullOrEmpty(brush.FileName))
+                {
+                    continue;
+                }
+
+                if (brush.Context is null)
+                {
+                    continue;
+                }
+                //
+                // 设置父级
+                brush.Context.ParentId = parentGroup.Id;
+
+                //
+                // 创建Id
+                brush.Context.Id = DataSet.Property.GlobalSeed++;
+
+                try
+                {
+                    //
+                    // 添加到数据库
+                    using (var brushStream = new FileStream(brush.FileName, FileMode.Open))
+                    {
+                        var id = brush.Context.Id.ToString();
+                        DataSet.Database
+                               .FileStorage
+                               .Upload(id,
+                                       id,
+                                       brushStream);
+
+                        //
+                        // 重置文件流的位置
+                        brushStream.Seek(0, SeekOrigin.Begin);
+
+                        //
+                        // 打开为图片
+                        using (var image = Image.Load(brushStream).CloneAs<Rgba32>())
+                        {
+
+                            AnalyzeFillMode(brush, image, landColor);
+                        }
+                    }
+                }
+                catch
+                {
+
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="brush"></param>
+        /// <returns></returns>
         public bool Remove(IBrush brush)
         {
+            if(brush is null)
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(brush), SR.Parameter_Null));
+            }
 
+            if(brush.Id == 0)
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(brush), SR.Parameter_Not_Initialize));
+            }
+
+            return _BrushSource.Remove(brush);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="brushes"></param>
+        /// <returns></returns>
         public bool Remove(IEnumerable<IBrush> brushes)
         {
+            if (brushes is null)
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(brushes), SR.Parameter_Null));
+            }
 
+            foreach(var brush in brushes)
+            {
+                _BrushSource.Remove(brush);
+            }
+
+            return true;
         }
 
-        public bool Remove(IBrushGroup group)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="group"></param>
+        /// <returns></returns>
+        public void Remove(IBrushGroup group)
         {
+            if (group is null)
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(group), SR.Parameter_Null));
+            }
 
+            if (group.Id == Guid.Empty)
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(group), SR.Parameter_Not_Initialize));
+            }
+
+            _GroupSource.Remove(group);
         }
 
-        public bool Remove(IEnumerable<IBrushGroup> groups)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="groups"></param>
+        /// <returns></returns>
+        public void Remove(IEnumerable<IBrushGroup> groups)
         {
+            if (groups is null)
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(groups), SR.Parameter_Null));
+            }
 
+            foreach(var group in groups)
+            {
+                _GroupSource.Remove(group);
+            }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void RemoveAllBrushes()
         {
-
+            _BrushSource.Clear();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void RemoveAllGroups()
         {
-
+            _GroupSource.Clear();
         }
 
         protected override BrushSetProperty CreatePropertyCore()

@@ -1,4 +1,5 @@
 ﻿using Acorisoft.Morisa.Core;
+using LiteDB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace Acorisoft.Morisa.Map
     /// </summary>
     public class BrushGroup : Bindable, IBrushGroup
     {
+        [BsonId]
         public Guid Id { get; set; }
         public Guid ParentId { get; set; }
 

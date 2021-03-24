@@ -61,6 +61,24 @@ namespace Acorisoft.Properties {
         }
         
         /// <summary>
+        ///   查找类似 无效的操作，{0}{1} 的本地化字符串。
+        /// </summary>
+        internal static string InvalidOperation {
+            get {
+                return ResourceManager.GetString("InvalidOperation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 执行错误 的本地化字符串。
+        /// </summary>
+        internal static string InvalidOperation_ExecuteError {
+            get {
+                return ResourceManager.GetString("InvalidOperation_ExecuteError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 加载上下文所打开的文件名为空 的本地化字符串。
         /// </summary>
         internal static string LoadContext_FileName_Null {
@@ -84,6 +102,24 @@ namespace Acorisoft.Properties {
         internal static string LoadContext_Null {
             get {
                 return ResourceManager.GetString("LoadContext_Null", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 参数未初始化 的本地化字符串。
+        /// </summary>
+        internal static string Parameter_Not_Initialize {
+            get {
+                return ResourceManager.GetString("Parameter_Not_Initialize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 参数为空 的本地化字符串。
+        /// </summary>
+        internal static string Parameter_Null {
+            get {
+                return ResourceManager.GetString("Parameter_Null", resourceCulture);
             }
         }
         

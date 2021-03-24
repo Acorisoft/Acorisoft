@@ -126,7 +126,14 @@ namespace Acorisoft.Morisa
             return false;
         }
 
+
+        /// <summary>
+        /// 重写该方法，以便编写从 <see cref="ILoadContext"/> 类型到 <see cref="TDataSet"/> 的逻辑转换。
+        /// </summary>
+        /// <param name="context">指定当前的加载上下文。</param>
         protected abstract void OnLoad(ILoadContext context);
+
+
 
         /// <summary>
         /// 

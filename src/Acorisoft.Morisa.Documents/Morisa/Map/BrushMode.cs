@@ -21,9 +21,24 @@ namespace Acorisoft.Morisa.Map
     /// </summary>
     public enum FillMode
     {
+        /// <summary>
+        /// 小于四分之一
+        /// </summary>
         Thin,
+
+        /// <summary>
+        /// 小于二分之一
+        /// </summary>
         Half,
+
+        /// <summary>
+        /// 小于四分之三
+        /// </summary>
         Extra,
+
+        /// <summary>
+        /// 大于四份之三
+        /// </summary>
         Large
     }
 }

@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="InvalidOperation" xml:space="preserve">
+    <value>无效的操作，{0}{1}</value>
+  </data>
+  <data name="InvalidOperation_ExecuteError" xml:space="preserve">
+    <value>执行错误</value>
+  </data>
   <data name="LoadContext_FileName_Null" xml:space="preserve">
     <value>加载上下文所打开的文件名为空</value>
   </data>
@@ -125,6 +131,12 @@
   </data>
   <data name="LoadContext_Null" xml:space="preserve">
     <value>加载上下文为空</value>
+  </data>
+  <data name="Parameter_Not_Initialize" xml:space="preserve">
+    <value>参数未初始化</value>
+  </data>
+  <data name="Parameter_Null" xml:space="preserve">
+    <value>参数为空</value>
   </data>
   <data name="SaveContext_FileName_Null" xml:space="preserve">
     <value>存储上下文为空</value>
