@@ -59,11 +59,6 @@ namespace Acorisoft.Morisa
                 throw new InvalidOperationException(string.Format(SR.LoadContext_Invalid, SR.SaveContext_Property_Null));
             }
 
-            if (!File.Exists(context.FileName))
-            {
-                throw new InvalidOperationException(string.Format(SR.LoadContext_Invalid, SR.SaveContext_FileName_Null));
-            }
-
             //
             // 在派生类中操作，以决定如何加载数据集。
             OnLoad(context);

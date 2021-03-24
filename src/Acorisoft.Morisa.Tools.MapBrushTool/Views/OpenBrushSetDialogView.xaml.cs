@@ -1,4 +1,5 @@
-﻿using Acorisoft.Morisa.Dialogs;
+﻿using Acorisoft.Morisa.Core;
+using Acorisoft.Morisa.Dialogs;
 using Acorisoft.Morisa.Tools.ViewModels;
 using Acorisoft.Morisa.ViewModels;
 using DryIoc;
@@ -20,6 +21,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -28,18 +30,29 @@ using System.Windows.Shapes;
 
 namespace Acorisoft.Morisa.Tools.Views
 {
+    // XXXDialogViewFunction.cs
+    // XXXDialogView.cs
     /// <summary>
     /// NotificationView.xaml 的交互逻辑
     /// </summary>
-    public partial class NewBrushSetDialogStep2View : DialogView<NewBrushSetDialogStep2ViewModel>
+    public partial class OpenBrushSetDialogView : DialogView<OpenBrushSetDialogViewFunction>
     {
-        public NewBrushSetDialogStep2View()
+        public OpenBrushSetDialogView() : base()
         {
             InitializeComponent();
-            this.WhenActivated(d =>
+        }
+
+        private void SelectFolder(object sender, RoutedEventArgs e)
+        {
+            var opendlg = new OpenFileDialog
             {
-                d(this.WhenAnyValue(x => x.ViewModel).BindTo(this, x => x.DataContext));
-            });
+                Filter = "Morisa画刷|*.mbx"
+            };
+
+            if (opendlg.ShowDialog() == DialogResult.OK)
+            {
+                ViewModel.FileName = opendlg.FileName;
+            }
         }
     }
 }

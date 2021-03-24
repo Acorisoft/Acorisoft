@@ -1,5 +1,6 @@
 ﻿using Acorisoft.Morisa.Core;
 using Acorisoft.Morisa.Dialogs;
+using Acorisoft.Morisa.Map;
 using Acorisoft.Morisa.ViewModels;
 using DynamicData.Binding;
 using GongSolutions.Wpf.DragDrop;
@@ -21,31 +22,35 @@ using System.Windows.Input;
 
 namespace Acorisoft.Morisa.Tools.ViewModels
 {
-    public partial class OpenBrushSetViewFunction : DialogFunction
+    public partial class NewBrushDialogViewFunction : DialogFunction
     {
-        public OpenBrushSetViewFunction()
+
+        private string _name;
+        private string _summary;
+        private IBrushGroup _group;
+
+        public NewBrushDialogViewFunction()
         {
-        }
-
-
-        private string _File;
-
-        protected override object GetResultCore()
-        {
-            return _File;
+            _group = new BrushGroup();
         }
 
         protected override bool VerifyModelCore()
         {
-            return !string.IsNullOrEmpty(_File);
+            return !string.IsNullOrEmpty(_name);
         }
 
-        public string File
+        protected override object GetResultCore()
         {
-            get => _File;
+            return _group;
+        }
+
+        public string Name
+        {
+            get => _name;
             set
             {
-                Set(ref _File, value);
+                _group.Name = value;
+                Set(ref _name, value);
             }
         }
     }

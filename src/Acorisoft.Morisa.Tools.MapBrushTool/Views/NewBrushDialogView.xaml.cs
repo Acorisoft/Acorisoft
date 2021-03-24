@@ -1,7 +1,9 @@
-﻿using Acorisoft.Morisa.Dialogs;
+﻿using Acorisoft.Morisa.Core;
+using Acorisoft.Morisa.Dialogs;
 using Acorisoft.Morisa.Tools.ViewModels;
 using Acorisoft.Morisa.ViewModels;
 using DryIoc;
+using Microsoft.Win32;
 using ReactiveUI;
 using Splat;
 using Splat.DryIoc;
@@ -28,12 +30,14 @@ using System.Windows.Shapes;
 
 namespace Acorisoft.Morisa.Tools.Views
 {
+    // XXXDialogViewFunction.cs
+    // XXXDialogView.cs
     /// <summary>
     /// NotificationView.xaml 的交互逻辑
     /// </summary>
-    public partial class NewBrushSetDialogView : DialogView<NewBrushSetDialogViewModel>
+    public partial class NewBrushDialogView : DialogView<NewBrushDialogViewFunction>
     {
-        public NewBrushSetDialogView() : base()
+        public NewBrushDialogView() : base()
         {
             InitializeComponent();
         }

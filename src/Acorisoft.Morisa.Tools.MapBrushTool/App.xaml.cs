@@ -31,23 +31,14 @@ namespace Acorisoft.Morisa.Tools
         {
             _container = new Container(Rules.Default.WithTrackingDisposableTransients());
             _container.Init()
-                      .UseMorisa()
                       .UseLog()
+                      .UseMorisa()
                       .UseViews(typeof(App).Assembly)
                       .UseDialog();
 
             RegisterDialogs(_container);
             RegisterViews(_container);
             AppViewModel = Locator.Current.GetService<AppViewModel>();
-            DatabaseMixins.Deserialize<MapDocument>(DatabaseMixins.Serialize(new MapDocument
-            {
-                Terrain = new TerrainLayer
-                {
-                    Width = 16,
-                    Height = 15
-                }
-                
-            }));
         }
 
         protected virtual void RegisterDialogs(IContainer container)
@@ -58,21 +49,6 @@ namespace Acorisoft.Morisa.Tools
         {
             ShellMixins.View<HomeViewModel>();
             base.OnStartup(e);
-        }
-
-        protected virtual void RegisterViews(IContainer container)
-        {
-            container.Register<HomeViewModel>();
-            container.Register<NewBrushSetDialogViewModel>();
-            container.Register<NewBrushSetDialogStep2ViewModel>();
-            container.Register<NewBrushSetDialogStep3ViewModel>();
-            container.Register<OpenBrushSetViewFunction>();
-            container.Register<IViewFor<HomeViewModel>, HomeView>();
-            container.Register<IViewFor<NewBrushSetDialogViewModel>, NewBrushSetDialogView>();
-            container.Register<IViewFor<NewBrushSetDialogStep2ViewModel>, NewBrushSetDialogStep2View>();
-            container.Register<IViewFor<NewBrushSetDialogStep3ViewModel>, NewBrushSetDialogStep3View>();
-            container.Register<IViewFor<OpenBrushSetViewFunction>, OpenBrushSetView>();
-            container.Register<IViewFor<NewBrushGroupViewFunction>, NewBrushGroupView>();
         }
 
         public AppViewModel AppViewModel { get; }

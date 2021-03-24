@@ -32,49 +32,28 @@ namespace Acorisoft.Morisa.Map
     {
         //
         //
-        private readonly SourceCache<IBrushGroup,Guid> _GroupSource;
-        private readonly SourceList<IBrush>            _BrushSource;
+        private SourceCache<IBrushGroup,Guid> _GroupSource;
+        private SourceList<IBrush>            _BrushSource;
 
         //
         //
-        private readonly ReadOnlyObservableCollection<IBrushAdapter>           _BrushCollection;
-        private readonly ReadOnlyObservableCollection<IBrushGroupAdapter>      _GroupCollection;
+        private ReadOnlyObservableCollection<BrushAdapter>           _BrushCollection;
+        private ReadOnlyObservableCollection<BrushGroupAdapter>      _GroupCollection;
 
         //
         //
         private readonly BehaviorSubject<IPageRequest>              _PagerStream;
-        private readonly BehaviorSubject<IComparer<IBrushAdapter>>  _SorterStream;
+        private readonly BehaviorSubject<IComparer<BrushAdapter>>   _SorterStream;
 
         public BrushSetFactory()
         {
             _BrushSource = new SourceList<IBrush>();
             _GroupSource = new SourceCache<IBrushGroup, Guid>(x => x.Id);
             _PagerStream = new BehaviorSubject<IPageRequest>(new PageRequest(1, 50));
-            _SorterStream = new BehaviorSubject<IComparer<IBrushAdapter>>(SortExpressionComparer<IBrushAdapter>.Descending(x => x.Creation));
-
-            _BrushSource.Connect()
-                        .Transform(x => (IBrushAdapter)new BrushAdapter(x))
-                        .Sort(_SorterStream)
-                        .Page(_PagerStream)
-                        .DisposeMany()
-                        .Bind(out _BrushCollection)
-                        .Subscribe(x =>
-                        {
-
-                        });
-
-            _GroupSource.Connect()
-                        .TransformToTree(x => x.ParentId)
-                        .Transform(x => (IBrushGroupAdapter)new BrushGroupAdapter(x))
-                        .DisposeMany()
-                        .Bind(out _GroupCollection)
-                        .Subscribe(x =>
-                        {
-                            OnGroupChanged(x);
-                        });
+            _SorterStream = new BehaviorSubject<IComparer<BrushAdapter>>(SortExpressionComparer<IBrushAdapter>.Descending(x => x.Creation));
         }
 
-        protected virtual void OnGroupChanged(IChangeSet<IBrushGroupAdapter, Guid> changeSet)
+        protected virtual void OnGroupChanged(IChangeSet<BrushGroupAdapter, Guid> changeSet)
         {
             //
             // capture tree set changed
@@ -650,6 +629,27 @@ namespace Acorisoft.Morisa.Map
                     Database = Helper.GetDatabase(context)
                 };
 
+                _BrushSource.Connect()
+                            .Transform(x => new BrushAdapter(x))
+                            .Sort(_SorterStream)
+                            .Page(_PagerStream)
+                            .DisposeMany()
+                            .Bind(out _BrushCollection)
+                            .Subscribe(x =>
+                            {
+
+                            });
+
+                _GroupSource.Connect()
+                            .TransformToTree(x => x.ParentId)
+                            .Transform(x => new BrushGroupAdapter(x))
+                            .DisposeMany()
+                            .Bind(out _GroupCollection)
+                            .Subscribe(x =>
+                            {
+                                OnGroupChanged(x);
+                            });
+
                 //
                 // 初始化数据集。
                 bs.DB_External = bs.Database.GetCollection(Constants.ExternalCollectionName);
@@ -677,6 +677,27 @@ namespace Acorisoft.Morisa.Map
                 {
                     Database = Helper.GetDatabase(context)
                 };
+
+                _BrushSource.Connect()
+                            .Transform(x => new BrushAdapter(x))
+                            .Sort(_SorterStream)
+                            .Page(_PagerStream)
+                            .DisposeMany()
+                            .Bind(out _BrushCollection)
+                            .Subscribe(x =>
+                            {
+
+                            });
+
+                _GroupSource.Connect()
+                            .TransformToTree(x => x.ParentId)
+                            .Transform(x => new BrushGroupAdapter(x))
+                            .DisposeMany()
+                            .Bind(out _GroupCollection)
+                            .Subscribe(x =>
+                            {
+                                OnGroupChanged(x);
+                            });
 
                 //
                 // 初始化数据集。
@@ -710,6 +731,19 @@ namespace Acorisoft.Morisa.Map
             Contract.Assert(ds != null);
             Contract.Assert(ds.Database != null);
 
+
+            //
+            // 清空上下文
+            _GroupSource.Clear();
+            _BrushSource.Clear();
+
+            foreach (var group in ds.DB_Group.FindAll())
+            {
+                _GroupSource.AddOrUpdate(group);
+            }
+
+            _BrushSource.AddRange(ds.DB_Brush.FindAll());
+
             base.InitializeFromDatabase(ds);
 
         }
@@ -733,11 +767,21 @@ namespace Acorisoft.Morisa.Map
         /// <summary>
         /// 
         /// </summary>
-        public ReadOnlyObservableCollection<IBrushAdapter> Brushes => _BrushCollection;
+        public IObserver<IComparer<IBrush>> SorterStream => _SorterStream;
 
         /// <summary>
         /// 
         /// </summary>
-        public ReadOnlyObservableCollection<IBrushGroupAdapter> Groups => _GroupCollection;
+        public IObserver<IPageRequest> PageStream => _PagerStream;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ReadOnlyObservableCollection<BrushAdapter> Brushes => _BrushCollection;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ReadOnlyObservableCollection<BrushGroupAdapter> Groups => _GroupCollection;
     }
 }
