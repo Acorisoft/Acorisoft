@@ -14,6 +14,8 @@ namespace Acorisoft.Morisa.Tools
 	    {
 		    container.Register<NewBrushDialogViewFunction>();
 			container.Register<IViewFor<NewBrushDialogViewFunction>,NewBrushDialogView>();
+			container.Register<NewBrushesDialogViewFunction>();
+			container.Register<IViewFor<NewBrushesDialogViewFunction>,NewBrushesDialogView>();
 			container.Register<NewBrushGroupDialogViewFunction>();
 			container.Register<IViewFor<NewBrushGroupDialogViewFunction>,NewBrushGroupDialogView>();
 			container.Register<OpenBrushSetDialogViewFunction>();

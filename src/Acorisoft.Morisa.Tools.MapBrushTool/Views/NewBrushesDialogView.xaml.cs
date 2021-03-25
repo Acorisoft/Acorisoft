@@ -30,12 +30,14 @@ using System.Windows.Shapes;
 
 namespace Acorisoft.Morisa.Tools.Views
 {
+    // XXXDialogViewFunction.cs
+    // XXXDialogView.cs
     /// <summary>
     /// NotificationView.xaml 的交互逻辑
     /// </summary>
-    public partial class NewBrushDialogView : DialogView<NewBrushDialogViewFunction>
+    public partial class NewBrushesDialogView : DialogView<NewBrushesDialogViewFunction>
     {
-        public NewBrushDialogView() : base()
+        public NewBrushesDialogView() : base()
         {
             InitializeComponent();
         }
