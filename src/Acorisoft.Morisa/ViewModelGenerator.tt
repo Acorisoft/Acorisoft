@@ -25,103 +25,91 @@
 
 using DryIoc;
 using ReactiveUI;
-
-partial class App
+using Acorisoft.Morisa.Views;
+using Acorisoft.Morisa.ViewModels;
+namespace Acorisoft.Morisa
 {
-	public void RegisterViews(IContainer container)
-	{
-		<#
-            var projPath =  Host.ResolveAssemblyReference("$(ProjectDir)");
-            var totalFiles = new List<string>(System.IO.Directory.GetFiles(projPath,"*.cs"));
-            var dirQueue = new Queue<string>(System.IO.Directory.GetDirectories(projPath));
-            string message = "test message";
-            this.Host.LogErrors(new CompilerErrorCollection() { new CompilerError(this.Host.TemplateFile,0, 0, "0",projPath) });
-            // Message displayed in error window.
-            //
-            // XXXDialogView    XXXDialogViewFunction
-            // XXXStepView      XXXStepViewFunction
-            // XXXView          XXXViewModel
-            while (dirQueue.Count > 0)
-            {
-                var dir = dirQueue.Dequeue();
+    partial class App
+    {
+	    public void RegisterViews(IContainer container)
+	    {
+		    <#
+                var projPath =  Host.ResolveAssemblyReference("$(ProjectDir)");
+                var totalFiles = new List<string>(System.IO.Directory.GetFiles(projPath,"*.cs"));
+                var dirQueue = new Queue<string>(System.IO.Directory.GetDirectories(projPath));
+                // Message displayed in error window.
+                //
+                // XXXDialogView    XXXDialogViewFunction
+                // XXXStepView      XXXStepViewFunction
+                // XXXView          XXXViewModel
+                while (dirQueue.Count > 0)
+                {
+                    var dir = dirQueue.Dequeue();
+
+                    //
+                    // 将所有cs文件加入当前文件
+                    totalFiles.AddRange(System.IO.Directory.GetFiles(dir,"*.cs").Where(x => x.EndsWith(".cs") && !x.Contains("g.i")).Select(x => new FileInfo(x).Name.Replace(".cs", "").Replace(".xaml", "")));
+
+                    foreach (var newDir in System.IO.Directory.GetDirectories(dir))
+                    {
+                        dirQueue.Enqueue(newDir);
+                    }
+                }
+
+                var dict = new System.Collections.Generic.Dictionary<string,string>();
+
+                foreach(var item in totalFiles)
+                {
+                    if(!dict.ContainsKey(item))
+                    {
+                        dict.Add(item,item);
+                    }
+                }
+
+                var vm = string.Empty;
 
                 //
-                // 将所有cs文件加入当前文件
-                totalFiles.AddRange(System.IO.Directory.GetFiles(dir,"*.cs").Where(x => x.EndsWith(".cs") && !x.Contains("g.i")).Select(x => new FileInfo(x).Name.Replace(".cs", "").Replace(".xaml", "")));
-
-                foreach (var newDir in System.IO.Directory.GetDirectories(dir))
+                // dialog 
+                foreach (var view in totalFiles.Where(x => x.EndsWith("DialogView")))
                 {
-                    dirQueue.Enqueue(newDir);
+                    vm = view + "Function";
+                    if (dict.TryGetValue(vm, out var dvm))
+                    {
+                        WriteLine(string.Format("container.Register<{0}>();", dvm));
+                        //
+                        // pair with dialogview and dialogviewfunction
+                        WriteLine("container.Register<IViewFor<{0}>,{1}>();", dvm, view);
+                    }
                 }
-            }
 
-            var dict = new System.Collections.Generic.Dictionary<string,string>();
-
-            foreach(var item in totalFiles)
-            {
-                if(!dict.ContainsKey(item))
+                //
+                // step view 
+                foreach (var view in totalFiles.Where(x => x.EndsWith("StepView")))
                 {
-                    dict.Add(item,item);
+                    vm = view + "Function";
+                    if (dict.TryGetValue(vm, out var dvm))
+                    {
+                        WriteLine(string.Format("container.Register<{0}>();", dvm));
+                        //
+                        // pair with dialogview and dialogviewfunction
+                        WriteLine("container.Register<IViewFor<{0}>,{1}>();", dvm, view);
+                    }
                 }
-            }
 
-            var error = new CompilerErrorCollection() 
-            {
-                new CompilerError(this.Host.TemplateFile,0, 0, "0",projPath),
-                new CompilerError(this.Host.TemplateFile,1, 0, "0",dict.Count.ToString()),
-                new CompilerError(this.Host.TemplateFile,1, 0, "0",totalFiles.Where(x => x.EndsWith("ViewModel")).Count().ToString()),
-            };
-
-            foreach(var file in totalFiles)
-            {
-                error.Add(new CompilerError(this.Host.TemplateFile,0, 0, "0",file));
-            }
-
-            this.Host.LogErrors(error);
-
-            var vm = string.Empty;
-
-            //
-            // dialog 
-            foreach (var view in totalFiles.Where(x => x.EndsWith("DialogView")))
-            {
-                vm = view + "Function";
-                if (dict.TryGetValue(vm, out var dvm))
+                //
+                // dialog 
+                foreach (var vm1 in totalFiles.Where(x => x.EndsWith("ViewModel")))
                 {
-                    WriteLine(string.Format("container.Register<{0}>();", dvm));
-                    //
-                    // pair with dialogview and dialogviewfunction
-                    WriteLine("container.Register<IViewFor<{0}>,{1}>();", dvm, view);
+                    var v = vm1.Replace("Model","");
+                    if (dict.TryGetValue(v, out var dvm))
+                    {
+                        WriteLine(string.Format("container.Register<{0}>();", vm1));
+                        //
+                        // pair with dialogview and dialogviewfunction
+                        WriteLine("container.Register<IViewFor<{0}>,{1}>();", vm1, v);
+                    }
                 }
-            }
-
-            //
-            // step view 
-            foreach (var view in totalFiles.Where(x => x.EndsWith("StepView")))
-            {
-                vm = view + "Function";
-                if (dict.TryGetValue(vm, out var dvm))
-                {
-                    WriteLine(string.Format("container.Register<{0}>();", dvm));
-                    //
-                    // pair with dialogview and dialogviewfunction
-                    WriteLine("container.Register<IViewFor<{0}>,{1}>();", dvm, view);
-                }
-            }
-
-            //
-            // dialog 
-            foreach (var vm1 in totalFiles.Where(x => x.EndsWith("ViewModel")))
-            {
-                var v = vm1.Replace("Model","");
-                if (dict.TryGetValue(v, out var dvm))
-                {
-                    WriteLine(string.Format("container.Register<{0}>();", vm1));
-                    //
-                    // pair with dialogview and dialogviewfunction
-                    WriteLine("container.Register<IViewFor<{0}>,{1}>();", vm1, v);
-                }
-            }
-		#>
-	}
+		    #>
+	    }
+    }
 }

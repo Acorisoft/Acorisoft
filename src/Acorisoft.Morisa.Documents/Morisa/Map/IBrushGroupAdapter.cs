@@ -13,7 +13,7 @@ namespace Acorisoft.Morisa.Map
         public Guid Id { get; }
         public Guid ParentId { get; }
         public IBrushGroup Source { get; }
-        public ReadOnlyObservableCollection<IBrushGroupAdapter> Children { get; }
+        public ReadOnlyObservableCollection<BrushGroupAdapter> Children { get; }
         public string Name
         {
             get; set;

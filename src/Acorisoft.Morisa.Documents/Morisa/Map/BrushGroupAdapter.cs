@@ -9,15 +9,18 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Map
 {
+    /// <summary>
+    /// <see cref="BrushGroupAdapter"/>
+    /// </summary>
     public class BrushGroupAdapter : Bindable, IBrushGroupAdapter
     {
         private string _GroupName;
         private readonly Guid _Id;
         private readonly Guid _ParentId;
-        private readonly ReadOnlyObservableCollection<IBrushGroupAdapter> _Children;
+        private readonly ReadOnlyObservableCollection<BrushGroupAdapter> _Children;
         private readonly IBrushGroup _Source;
 
-        public BrushGroupAdapter(Node<IBrushGroup,Guid> node)
+        public BrushGroupAdapter(Node<IBrushGroup,Guid> node, Action<IChangeSet<BrushGroupAdapter, Guid>> changeHandler)
         {
             _Id = node.Key;
             _ParentId = node.Item.ParentId;
@@ -25,35 +28,38 @@ namespace Acorisoft.Morisa.Map
             _Source = node.Item;
             node.Children
                 .Connect()
-                .Transform(x => (IBrushGroupAdapter)new BrushGroupAdapter(x))
+                .Transform(x => (BrushGroupAdapter)new BrushGroupAdapter(x, changeHandler))
                 .Bind(out _Children)
-                .DisposeMany()
-                .Subscribe();
+                .Subscribe(x =>
+                {
+                    changeHandler?.Invoke(x);
+                });
         }
 
 
         /// <summary>
-        /// 
+        /// 获取或设置当前画刷分组的唯一标识符。
         /// </summary>
         public Guid Id => _Id;
 
+
         /// <summary>
-        /// 
+        /// 获取或设置当前画刷分组的父级分组。
         /// </summary>
         public Guid ParentId => _ParentId;
 
         /// <summary>
-        /// 
+        /// 获取或设置当前画刷。
         /// </summary>
         public IBrushGroup Source => _Source;
 
         /// <summary>
-        /// 
+        /// 获取或设置当前画刷的子集。
         /// </summary>
-        public ReadOnlyObservableCollection<IBrushGroupAdapter> Children => _Children;
+        public ReadOnlyObservableCollection<BrushGroupAdapter> Children => _Children;
 
         /// <summary>
-        /// 
+        /// 获取或设置当前画刷的名称。
         /// </summary>
         public string Name
         {

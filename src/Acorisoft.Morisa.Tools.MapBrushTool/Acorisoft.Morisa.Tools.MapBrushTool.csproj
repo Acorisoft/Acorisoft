@@ -19,6 +19,7 @@
 		<PackageReference Include="Splat" Version="9.8.1" />
 		<PackageReference Include="Splat.DryIoc" Version="9.8.1" />
 		<PackageReference Include="Splat.NLog" Version="9.8.1" />
+		<PackageReference Include="SixLabors.ImageSharp" Version="1.0.3" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Acorisoft.Morisa.Core\Acorisoft.Morisa.Core.csproj" />
@@ -28,15 +29,23 @@
 		<ProjectReference Include="..\Acorisoft.Pandora\Acorisoft.Pandora.csproj" />
 	</ItemGroup>
 	<ItemGroup>
+	  <Compile Update="ViewModelGenerator.GenerateViewModels.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>ViewModelGenerator.tt</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\NewBrushSetDialogStep2View - 复制.xaml.cs">
 	    <DependentUpon>NewBrushSetDialogStep2View.xaml.cs</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Views\NewBrushSetDialogStep3View.xaml">
-	    <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-	    <SubType>Designer</SubType>
-	  </Page>
+	  <None Update="ViewModelGenerator.tt">
+	    <LastGenOutput>ViewModelGenerator.GenerateViewModels.cs</LastGenOutput>
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	  </None>
+	</ItemGroup>
+	<ItemGroup>
+	  <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
 	</ItemGroup>
 
 </Project>

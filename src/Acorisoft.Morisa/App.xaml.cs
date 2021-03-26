@@ -30,6 +30,7 @@ namespace Acorisoft.Morisa
             _container = new Container(Rules.Default.WithTrackingDisposableTransients());            
             _container.Init()
                       .UseLog()
+                      .UseMorisa()
                       .UseViews(typeof(App).Assembly)
                       .UseDialog();
             RegisterServices(_container);
@@ -58,11 +59,6 @@ namespace Acorisoft.Morisa
 
             container.Register<IViewFor<HomeViewModel>, HomeView>();
             container.Register<IViewFor<EmotionViewModel>, EmotionView>();
-        }
-
-        protected virtual void RegisterViews(IContainer container)
-        {
-
         }
 
         protected override void OnStartup(StartupEventArgs e)

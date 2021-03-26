@@ -20,6 +20,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -28,14 +29,36 @@ using System.Windows.Shapes;
 
 namespace Acorisoft.Morisa.Tools.Views
 {
+    // XXXStepViewFunction.cs
+    // XXXStepView.xaml
+    // XXXStepView.xaml.cs
+
     /// <summary>
     /// NotificationView.xaml 的交互逻辑
     /// </summary>
-    public partial class NewBrushSetDialogView : DialogView<NewBrushSetDialogViewModel>
+    public partial class SaveBrushSetStep2View : DialogView<SaveBrushSetStep2ViewFunction>
     {
-        public NewBrushSetDialogView() : base()
+        public SaveBrushSetStep2View()
         {
+            //s
             InitializeComponent();
+            this.WhenActivated(d =>
+            {
+                d(this.WhenAnyValue(x => x.ViewModel).BindTo(this, x => x.DataContext));
+            });
+        }
+
+        private void SelectFolder(object sender, RoutedEventArgs e)
+        {
+            var opendlg = new SaveFileDialog
+            {
+                Filter = "Morisa画刷|*.mbx"
+            };
+
+            if (opendlg.ShowDialog() == DialogResult.OK)
+            {
+                ViewModel.FileName = opendlg.FileName;
+            }
         }
     }
 }

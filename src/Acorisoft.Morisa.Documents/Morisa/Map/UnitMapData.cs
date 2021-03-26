@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Map
 {
+    /// <summary>
+    /// <see cref="UnitMapData"/>
+    /// </summary>
     public abstract class UnitMapData : MapData, IUnitMapData
     {
         /// <summary>

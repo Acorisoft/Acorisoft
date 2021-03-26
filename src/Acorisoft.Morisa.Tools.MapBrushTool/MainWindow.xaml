@@ -29,7 +29,6 @@
                                     WindowChrome.IsHitTestVisibleInChrome="True"/>
             <StackPanel Grid.Column="2" Orientation="Horizontal">
                 <mui:SymbolButton Command="{Binding NewOperator}" Data="{StaticResource UI.Icon.File}" WindowChrome.IsHitTestVisibleInChrome="True"/>
-                <mui:SymbolButton Command="{Binding SaveOperator}" Data="{StaticResource UI.Icon.Save}" WindowChrome.IsHitTestVisibleInChrome="True"/>
                 <mui:SymbolButton Command="{Binding OpenOperator}" Data="{StaticResource UI.Icon.Open}" WindowChrome.IsHitTestVisibleInChrome="True"/>
             </StackPanel>
         </Grid>
