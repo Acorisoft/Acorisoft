@@ -1,6 +1,9 @@
 ﻿namespace Acorisoft.Morisa.Map
 {
-    public interface ITerrainData
+    /// <summary>
+    /// <see cref="ITerrainData"/>
+    /// </summary>
+    public interface ITerrainData : IUnitMapData
     {
     }
 }

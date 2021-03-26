@@ -18,7 +18,6 @@ namespace Acorisoft.Morisa
         protected readonly SourceList<TDataSet> EditableDataSetCollection;
         private protected readonly ReadOnlyObservableCollection<TDataSet> BindableDataSetCollection;
         private protected readonly Subject<TProperty> ProtectedPropertyStream;
-        private TProperty _Property;
 
         protected DataSetFactory()
         {
@@ -57,11 +56,6 @@ namespace Acorisoft.Morisa
             if(context.Property == null)
             {
                 throw new InvalidOperationException(string.Format(SR.LoadContext_Invalid, SR.SaveContext_Property_Null));
-            }
-
-            if (!File.Exists(context.FileName))
-            {
-                throw new InvalidOperationException(string.Format(SR.LoadContext_Invalid, SR.SaveContext_FileName_Null));
             }
 
             //
@@ -109,7 +103,7 @@ namespace Acorisoft.Morisa
         /// <param name="ds"></param>
         protected virtual void InitializeFromDatabase(TDataSet ds)
         {
-            _Property = Singleton<TProperty>(ds);
+            DataSet.Property = Singleton<TProperty>(ds);
         }
 
         /// <summary>
@@ -118,7 +112,7 @@ namespace Acorisoft.Morisa
         /// <param name="ds"></param>
         protected virtual void InitializeFromCode(TDataSet ds)
         {
-            _Property = Singleton(ds, CreatePropertyCore());
+            DataSet.Property = Singleton(ds, CreatePropertyCore());
         }
 
         protected abstract TProperty CreatePropertyCore();
@@ -148,7 +142,7 @@ namespace Acorisoft.Morisa
         /// <summary>
         /// 
         /// </summary>
-        public TProperty Property => _Property;
+        public TProperty Property => DataSet.Property;
         
 
         /// <summary>

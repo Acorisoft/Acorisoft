@@ -26,7 +26,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace $rootnamespace$.ViewModels
+namespace $rootnamespace$.Views
 {
     // XXXStepViewFunction.cs
     // XXXStepView.xaml

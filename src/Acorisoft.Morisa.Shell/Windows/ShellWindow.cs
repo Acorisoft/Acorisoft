@@ -260,7 +260,7 @@ namespace Acorisoft.Morisa.Windows
             //
             if (_ContextStack.Count > 0)
             {
-                Context = _ContextStack.Pop();
+                Context = _ContextStack.Peek();
 
                 if (Context.Content is IStepViewModelContext nextVMContext)
                 {
@@ -322,7 +322,7 @@ namespace Acorisoft.Morisa.Windows
             if (_ContextStack.Count > 0)
             {
 
-                Context = _ContextStack.Pop();
+                Context = _ContextStack.Peek();
 
                 if (Context.Content is IStepViewModelContext nextVMContext)
                 {
@@ -580,7 +580,7 @@ namespace Acorisoft.Morisa.Windows
             //
             if (_ContextStack.Count > 0)
             {
-                Context = _ContextStack.Pop();
+                Context = _ContextStack.Peek();
 
                 if (Context.Content is IStepViewModelContext nextVMContext)
                 {

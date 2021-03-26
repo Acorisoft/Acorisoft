@@ -1,4 +1,5 @@
-﻿using Acorisoft.Morisa.Dialogs;
+﻿using Acorisoft.Morisa.Core;
+using Acorisoft.Morisa.Dialogs;
 using Acorisoft.Morisa.Map;
 using Acorisoft.Morisa.ViewModels;
 using DynamicData.Binding;
@@ -21,35 +22,35 @@ using System.Windows.Input;
 
 namespace Acorisoft.Morisa.Tools.ViewModels
 {
-    public partial class NewBrushSetDialogViewModel : StepFunction<GenerateContext<MapBrushSetInformation>>
+    public partial class NewBrushGroupDialogViewFunction : DialogFunction
     {
-        public NewBrushSetDialogViewModel()
+        private string _name;
+        private string _summary;
+        private IBrushGroup _group;
+
+        public NewBrushGroupDialogViewFunction()
         {
+            _group = new BrushGroup();
         }
+
 
         protected override bool VerifyModelCore()
         {
-            var context = Context.Context;
-            return !string.IsNullOrEmpty(context.Name);
+            return !string.IsNullOrEmpty(_name);
+        }
+
+        protected override object GetResultCore()
+        {
+            return _group;
         }
 
         public string Name
         {
-            get => Context.Context.Name;
+            get => _name;
             set
             {
-                Context.Context.Name = value;
-                RaiseUpdated(nameof(Name));
-            }
-        }
-
-        public string Summary
-        {
-            get => Context.Context.Summary;
-            set
-            {
-                Context.Context.Summary = value;
-                RaiseUpdated(nameof(Summary));
+                _group.Name = value;
+                Set(ref _name, value);
             }
         }
     }

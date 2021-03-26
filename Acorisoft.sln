@@ -46,6 +46,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Items Solution", "Items Sol
 		Templates\View.xaml = Templates\View.xaml
 		Templates\View.xaml.cs = Templates\View.xaml.cs
 		Templates\ViewModel.cs = Templates\ViewModel.cs
+		src\Acorisoft.Morisa\ViewModelGenerator.tt = src\Acorisoft.Morisa\ViewModelGenerator.tt
 	EndProjectSection
 EndProject
 Global
@@ -103,8 +104,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {3EE6B840-2DC2-4DF7-8922-192714C85F7B}
-		RESX_NeutralResourcesLanguage = zh-Hans
 		RESX_SortFileContentOnSave = True
+		RESX_NeutralResourcesLanguage = zh-Hans
+		SolutionGuid = {3EE6B840-2DC2-4DF7-8922-192714C85F7B}
 	EndGlobalSection
 EndGlobal

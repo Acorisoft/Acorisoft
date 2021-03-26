@@ -67,5 +67,10 @@ namespace Acorisoft.Morisa.Map
         /// 获取当前 <see cref="ElementData"/> 的绘制大小。
         /// </summary>
         public int Size { get; }
+
+        public override sealed string ToString()
+        {
+            return $"{{{UnitX},{UnitY}}},{Brush.Id}";
+        }
     }
 }

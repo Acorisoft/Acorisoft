@@ -22,13 +22,12 @@ using System.IO;
 namespace Acorisoft.Morisa
 {
     public abstract class DataSetManager<TDataSet, TProperty> : DataSetManager<TDataSet>, IDataSetManager<TDataSet>
-        where TDataSet : DataSet, IDataSet
+        where TDataSet : DataSet<TProperty>, IDataSet
         where TProperty : DataSetProperty, IDataSetProperty
     {
         protected readonly SourceList<TDataSet> EditableDataSetCollection;
         private protected readonly ReadOnlyObservableCollection<TDataSet> BindableDataSetCollection;
         private protected readonly Subject<TProperty> ProtectedPropertyStream;
-        private TProperty _Property;
 
         protected DataSetManager()
         {
@@ -102,7 +101,7 @@ namespace Acorisoft.Morisa
         /// <param name="ds"></param>
         protected virtual void InitializeFromDatabase(TDataSet ds)
         {
-            _Property = Singleton<TProperty>(ds);
+            DataSet.Property = Singleton<TProperty>(ds);
         }
 
         /// <summary>
@@ -111,7 +110,7 @@ namespace Acorisoft.Morisa
         /// <param name="ds"></param>
         protected virtual void InitializeFromCode(TDataSet ds)
         {
-            _Property = Singleton(ds, CreatePropertyCore());
+            DataSet.Property = Singleton(ds, CreatePropertyCore());
         }
 
         protected abstract TProperty CreatePropertyCore();
@@ -138,7 +137,7 @@ namespace Acorisoft.Morisa
         /// <summary>
         /// 
         /// </summary>
-        public TProperty Property => _Property;
+        public TProperty Property => DataSet.Property;
 
         /// <summary>
         /// 获取当前数据集管理器所管理的数据集集合。
