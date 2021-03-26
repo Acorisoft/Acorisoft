@@ -28,6 +28,7 @@ using SixLabors.ImageSharp.Formats.Png;
 
 namespace Acorisoft.Morisa.Map
 {
+#pragma warning disable IDE0063
     public class BrushSetFactory : DataSetFactory<BrushSet, BrushSetProperty>, IBrushSetFactory
     {
         private bool _LoadingState;
@@ -51,7 +52,7 @@ namespace Acorisoft.Morisa.Map
             _BrushSource = new SourceList<IBrush>();
             _GroupSource = new SourceCache<IBrushGroup, Guid>(x => x.Id);
             _PagerStream = new BehaviorSubject<IPageRequest>(new PageRequest(1, 50));
-            _FilterStream = new BehaviorSubject<Func<IBrushAdapter, bool>>(x => true);
+            _FilterStream = new BehaviorSubject<Func<IBrushAdapter, bool>>(x => false);
 
             //
             // 呈现属性的时候需要单独连接一次，否则在监听集合变化操作的时候，一旦设置Filter、Pager都会使得集合发生改变。
@@ -320,6 +321,28 @@ namespace Acorisoft.Morisa.Map
             _GroupSource.AddOrUpdate(newGroup);
         }
 
+        public void Update(IBrushGroup newGroup)
+        {
+            if (newGroup is null)
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, nameof(newGroup), SR.Parameter_Null));
+            }
+
+            if (string.IsNullOrEmpty(newGroup.Name))
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, newGroup, SR.Parameter_Null));
+            }
+
+            if (newGroup.Id == Guid.Empty)
+            {
+                throw new InvalidOperationException(string.Format(SR.InvalidOperation, newGroup, SR.Parameter_Not_Initialize));
+            }
+
+            //
+            // 添加到画刷组
+            _GroupSource.AddOrUpdate(newGroup);
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -520,7 +543,10 @@ namespace Acorisoft.Morisa.Map
                         image.Mutate(x => x.Resize(80, 80));
                         image.Save(memStream, new PngEncoder());
                         image.Dispose();
-                        memStream.Position = 0;
+
+                        //
+                        // 重置文件流的位置
+                        memStream.Seek(0, SeekOrigin.Begin);
 
                         //
                         //
@@ -619,7 +645,9 @@ namespace Acorisoft.Morisa.Map
                         image.Mutate(x => x.Resize(80, 80));
                         image.Save(memStream, new PngEncoder());
                         image.Dispose();
-                        memStream.Position = 0;
+                        //
+                        // 重置文件流的位置
+                        memStream.Seek(0, SeekOrigin.Begin);
                         //
                         //
                         image = null;

@@ -27,12 +27,17 @@ namespace Acorisoft.Morisa.Tools.ViewModels
         private readonly IBrushSetFactory   _Factory;
         private readonly ICommand           _AddGroupOperator;
         private readonly ICommand           _AddRootGroupOperator;
+        private readonly ICommand           _RenameGroupOperator;
+        private readonly ICommand           _RemoveGroupOperator;
+        private readonly ICommand           _RemoveAllGroupOperator;
         private readonly ICommand           _AddBrushToGroupOperator;
         private readonly ICommand           _AddBrushesToGroupOperator;
         private readonly ICommand           _GroupSelectorOperator;
-        private readonly ICommand           _RemoveGroupOperator;
+        private readonly ICommand           _RemoveBrushesFromGroupOperator;
+        private readonly ICommand           _RemoveBrushFromGroupOperator;
+        private readonly ICommand           _SelectAllBrushesOperator;
         private IBrushGroupAdapter          _SelectedGroup;
-        private BehaviorSubject<bool>       _SelectedGroupObservable;
+        private readonly BehaviorSubject<bool>       _SelectedGroupObservable;
 
 
         public HomeViewModel()
@@ -65,10 +70,43 @@ namespace Acorisoft.Morisa.Tools.ViewModels
             // 必须打开数据集并且选择一个分组
             _RemoveGroupOperator = ReactiveCommand.Create(RemoveGroupCore, openAndSelectedGroup);
 
+            //
+            //
+            _RemoveAllGroupOperator = ReactiveCommand.Create(RemoveAllGroupCore, _Factory.IsOpen);
+
+            //
+            //
+            _RemoveBrushesFromGroupOperator = ReactiveCommand.Create(RemoveBrushesFromGroupCore, openAndSelectedGroup);
+
+            //
+            //
+            _RemoveBrushFromGroupOperator = ReactiveCommand.Create(RemoveBrushFromGroupCore, openAndSelectedGroup);
 
             //
             // 随时
             _GroupSelectorOperator = ReactiveCommand.Create<IBrushGroupAdapter>(OnSelectedBrushGroup);
+
+            //
+            //
+            _SelectAllBrushesOperator  = ReactiveCommand.Create(SelectAllBrushesCore, openAndSelectedGroup);
+        }
+
+        protected void SelectAllBrushesCore()
+        {
+            foreach(var brush in _Factory.Brushes.Where(x => x.ParentId == _SelectedGroup.Id))
+            {
+                brush.IsSelected = true;
+            }
+        }
+
+        protected async void RenameGroupToGroupCore()
+        {
+            var session = await Dialog<NewBrushGroupDialogViewFunction>();
+
+            if (session.IsCompleted && session.GetResult<IBrushGroup>() is IBrushGroup newGroup)
+            {
+                _SelectedGroup.Name = newGroup.Name;
+            }
         }
 
         protected async void AddBrushToGroupCore()
@@ -109,6 +147,38 @@ namespace Acorisoft.Morisa.Tools.ViewModels
             if (session.IsCompleted)
             {
                 _Factory.Remove(_SelectedGroup.Source);
+                _Factory.Remove(_Factory.Brushes.Where(x => x.ParentId == _SelectedGroup.Id).Select(x => x.Source).ToArray());
+            }
+        }
+
+        protected async void RemoveBrushFromGroupCore()
+        {
+            var session = await Dialog(new Notification{ });
+
+            if (session.IsCompleted)
+            {
+                _Factory.Remove(_Factory.Brushes.Where(x => x.IsSelected).Select(x => x.Source).ToArray());
+            }
+        }
+
+        protected async void RemoveBrushesFromGroupCore()
+        {
+            var session = await Dialog(new Notification{ });
+
+            if (session.IsCompleted)
+            {
+                _Factory.Remove(_Factory.Brushes.Where(x => x.ParentId == _SelectedGroup.Id).Select(x => x.Source).ToArray());
+            }
+        }
+
+        protected async void RemoveAllGroupCore()
+        {
+            var session = await Dialog(new Notification{ });
+
+            if (session.IsCompleted)
+            {
+                _Factory.RemoveAllBrushes();
+                _Factory.RemoveAllGroups();
             }
         }
 
@@ -130,6 +200,7 @@ namespace Acorisoft.Morisa.Tools.ViewModels
                 }
             }
         }
+
         protected async void AddRootGroupCore()
         {
             var session = await Dialog<NewBrushGroupDialogViewFunction>();
@@ -149,6 +220,17 @@ namespace Acorisoft.Morisa.Tools.ViewModels
             _Factory.FilterStream.OnNext(x => x.ParentId == group.Id);
         }
 
+        public ICommand SelectAllBrushesOperator => _SelectAllBrushesOperator;
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand RemoveBrushFromGroupOperator => _RemoveBrushFromGroupOperator;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand RemoveBrushesFromGroupOperator => _RemoveBrushesFromGroupOperator;
+
         /// <summary>
         /// 
         /// </summary>
@@ -163,6 +245,10 @@ namespace Acorisoft.Morisa.Tools.ViewModels
         /// 
         /// </summary>
         public ICommand RemoveGroupOperator => _RemoveGroupOperator;
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand RemoveAllGroupOperator => _RemoveAllGroupOperator;
 
         /// <summary>
         /// 

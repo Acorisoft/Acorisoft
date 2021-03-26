@@ -25,6 +25,7 @@
             <StackPanel Orientation="Horizontal"
                         DockPanel.Dock="Top">
                 <mui:SymbolButton Data="{StaticResource UI.Icon.Plus.Square}" Command="{Binding AddRootGroupOperator}"/>
+                <mui:SymbolButton Data="{StaticResource UI.Icon.Remove}" Command="{Binding RemoveAllGroupOperator}"/>
             </StackPanel>
 
             <TreeView x:Name="PART_GroupPanel"
@@ -65,13 +66,24 @@
         <DockPanel Grid.Column="1">
             <StackPanel Orientation="Horizontal"
                         DockPanel.Dock="Top">
-                <mui:SymbolButton Data="{StaticResource UI.Icon.Plus.Square}" Command="{Binding AddRootGroupOperator}"/>
+                <mui:SymbolButton Data="{StaticResource UI.Icon.Check.Square}" Command="{Binding SelectAllBrushesOperator}"/>
+                <mui:SymbolButton Data="{StaticResource UI.Icon.Plus}" Command="{Binding AddBrushToGroupOperator}"/>
+                <mui:SymbolButton Data="{StaticResource UI.Icon.Plus.Square}" Command="{Binding AddBrushesToGroupOperator}"/>
+                <mui:SymbolButton Data="{StaticResource UI.Icon.Remove.Square}" Command="{Binding RemoveBrushFromGroupOperator}"/>
+                <mui:SymbolButton Data="{StaticResource UI.Icon.Remove}" Command="{Binding RemoveBrushesFromGroupOperator}"/>
             </StackPanel>
 
             <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ItemsControl x:Name="PART_BrushPanel"
                           DockPanel.Dock="Bottom"
                           ItemsSource="{Binding Brushes,Mode=OneWay}">
+                    <ItemsControl.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="添加分组" Command="{Binding Source={StaticResource BindingProxy},Path=Data.AddGroupOperator}"/>
+                            <MenuItem Header="重命名"/>
+                            <MenuItem Header="清空" Command="{Binding Source={StaticResource BindingProxy},Path=Data.RemoveGroupOperator}"/>
+                        </ContextMenu>
+                    </ItemsControl.ContextMenu>
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel/>
@@ -88,13 +100,18 @@
                                             <MenuItem Header="添加画刷到分组" Command="{Binding Source={StaticResource BindingProxy},Path=Data.AddBrushToGroupOperator}"/>
                                             <MenuItem Header="添加多个画刷到分组" Command="{Binding Source={StaticResource BindingProxy},Path=Data.AddBrushesToGroupOperator}"/>
                                         </MenuItem>
+                                        <MenuItem Header="重命名"/>
                                         <MenuItem Header="删除" Command="{Binding Source={StaticResource BindingProxy},Path=Data.RemoveGroupOperator}"/>
                                     </ContextMenu>
                                 </Border.ContextMenu>
 
-                                <Image Source="{Binding Converter={StaticResource Resource}}"
-                                       Width="80"
-                                       Height="80"/>
+                                <Grid>
+                                    <Image Source="{Binding Converter={StaticResource Resource}}"
+                                           Width="80"
+                                           Height="80"/>
+                                    <CheckBox HorizontalAlignment="Right"
+                                              IsChecked="{Binding IsSelected,Mode=TwoWay}"/>
+                                </Grid>
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
