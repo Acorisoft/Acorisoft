@@ -58,22 +58,22 @@ namespace Acorisoft.Morisa.Map
                         .Filter(_FilterStream)
                         .Page(_PagerStream)
                         .Bind(out _BrushCollection)
-                        .Subscribe(x =>
-                        {
-                            OnBrushChanged(x);
-                        });
+                        .Subscribe();
+
+            _BrushSource.Connect()
+                        .Subscribe(x => OnBrushChanged(x));
 
             _GroupSource.Connect()
                         .TransformToTree(x => x.ParentId)
                         .Transform(x => new BrushGroupAdapter(x, OnGroupChanged))
                         .Bind(out _GroupCollection)
-                        .Subscribe(x =>
-                        {
-                            OnGroupChanged(x);
-                        });
+                        .Subscribe();
+
+            _GroupSource.Connect()
+                        .Subscribe(x => OnGroupChanged(x));
         }
 
-        protected virtual void OnBrushChanged(IChangeSet<BrushAdapter> changeSet)
+        protected virtual void OnBrushChanged(IChangeSet<IBrush> changeSet)
         {
             if (DataSet is null)
             {
@@ -93,10 +93,10 @@ namespace Acorisoft.Morisa.Map
                 switch (change.Reason)
                 {
                     case ListChangeReason.Add:
-                        DataSet.DB_Brush.Insert(change.Item.Current.Source);
+                        DataSet.DB_Brush.Insert(change.Item.Current);
                         break;
                     case ListChangeReason.AddRange:
-                        DataSet.DB_Brush.Insert(change.Item.Current.Source);
+                        DataSet.DB_Brush.Insert(change.Item.Current);
                         break;
                     case ListChangeReason.Clear:
                         DataSet.DB_Brush.Delete(Query.All());
@@ -111,6 +111,50 @@ namespace Acorisoft.Morisa.Map
                         
                         break;
                     case ListChangeReason.Moved:
+                    default:
+                        //
+                        // 集合的移动不影响当前树形结构的持久化
+                        break;
+                }
+            }
+        }
+
+        protected virtual void OnGroupChanged(IChangeSet<IBrushGroup, Guid> changeSet)
+        {
+            if (DataSet is null)
+            {
+                return;
+            }
+
+            if (_LoadingState)
+            {
+                return;
+            }
+
+            //
+            // capture tree set changed
+            foreach (var change in changeSet)
+            {
+
+                switch (change.Reason)
+                {
+                    case ChangeReason.Add:
+                        //
+                        // 当当前集合发生添加操作时。
+                        var targetItem = change.Current;
+                        DataSet.DB_Group.Upsert(targetItem);
+                        break;
+                    case ChangeReason.Refresh:
+                        DataSet.DB_Group.Delete(Query.All());
+                        break;
+                    case ChangeReason.Remove:
+                        DataSet.DB_Group.Delete(change.Current.Id);
+                        break;
+                    case ChangeReason.Update:
+                        targetItem = change.Current;
+                        DataSet.DB_Group.Upsert(targetItem);
+                        break;
+                    case ChangeReason.Moved:
                     default:
                         //
                         // 集合的移动不影响当前树形结构的持久化
