@@ -13,22 +13,12 @@ namespace Acorisoft.Morisa.Map
         /// 
         /// </summary>
         [BsonId]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         public Guid ParentId  { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public BrushMode Mode  { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int RefId  { get; set; }
 
         /// <summary>
         /// 

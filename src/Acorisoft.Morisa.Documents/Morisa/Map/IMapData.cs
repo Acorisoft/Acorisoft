@@ -6,9 +6,19 @@
     public interface IMapData
     {
         /// <summary>
-        /// 获取当前 <see cref="MapData"/> 的绘制画刷。
+        /// 
         /// </summary>
-        Brush Brush { get; }
+        public int Id { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int RefId { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public BrushMode Mode { get; set; }
 
         /// <summary>
         /// 获取当前 <see cref="MapData"/> 的绘制横坐标。

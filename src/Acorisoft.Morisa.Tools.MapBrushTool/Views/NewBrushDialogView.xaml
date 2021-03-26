@@ -28,6 +28,7 @@
                 <mui:FormGroup.Control>
                     <TextBox FontSize="20" Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                 </mui:FormGroup.Control>
+                <Button Content="..." Click="SelectFile"/>
             </mui:FormGroup>
         </StackPanel>
     </mui:DialogContentPresenter>

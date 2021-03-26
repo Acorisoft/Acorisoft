@@ -3,6 +3,7 @@ using SixLabors.ImageSharp.PixelFormats;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace Acorisoft.Morisa.Map
     /// </summary>
     public interface IBrushSetFactory : IDataSetFactory<BrushSet, BrushSetProperty>
     {
+        Stream GetResource(IBrush brush);
 
         /// <summary>
         /// 
@@ -97,7 +99,8 @@ namespace Acorisoft.Morisa.Map
         /// <summary>
         /// 
         /// </summary>
-        public IObserver<IComparer<IBrush>> SorterStream { get; }
+        public IObserver<Func<IBrushAdapter, bool>> FilterStream { get; }
+
 
         /// <summary>
         /// 

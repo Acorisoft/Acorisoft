@@ -10,11 +10,11 @@ namespace Acorisoft.Morisa.Tools.Models
 {
     public class BrushesGenerateContext : GenerateContext<IEnumerable<IGenerateContext<Brush>>>, IGenerateContext<IEnumerable<IGenerateContext<Brush>>>
     {
-        private readonly List<IGenerateContext<IBrush>> _Brushes;
+        private readonly List<IGenerateContext<Brush>> _Brushes;
 
         public BrushesGenerateContext() : base(new List<IGenerateContext<Brush>>())
         {
-            _Brushes = (List<IGenerateContext<IBrush>>)Context;
+            _Brushes = (List<IGenerateContext<Brush>>)Context;
         }
 
         internal List<IGenerateContext<Brush>> Brushes => _Brushes;

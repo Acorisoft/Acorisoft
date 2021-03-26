@@ -21,7 +21,7 @@ namespace Acorisoft.Morisa.Map
         /// </summary>
         //
         // TODO:
-        public int Id
+        public Guid Id
         {
             get => Source.Id;
             set
@@ -36,30 +36,6 @@ namespace Acorisoft.Morisa.Map
         public Guid ParentId
         {
             get => Source.ParentId;
-            set
-            {
-
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public BrushMode Mode
-        {
-            get => Source.Mode;
-            set
-            {
-
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int RefId
-        {
-            get => Source.RefId;
             set
             {
 

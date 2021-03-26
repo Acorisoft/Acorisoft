@@ -38,38 +38,32 @@ namespace Acorisoft.Morisa.Tools.ViewModels
         public HomeViewModel()
         {
             _Factory = GetService<IBrushSetFactory>();
-            _Factory.DataSetStream
-                    .Subscribe(x =>
-                    {
-                        RaiseUpdated(nameof(Groups));
-                        RaiseUpdated(nameof(Brushes));
-                    });
-
-            var openAndSelectedGroup = Observable.CombineLatest(_SelectedGroupObservable,_Factory.IsOpen,(x,y)=> x && y);
 
             _SelectedGroupObservable = new BehaviorSubject<bool>(false);
 
+            var openAndSelectedGroup = Observable.CombineLatest(_SelectedGroupObservable, _Factory.IsOpen,( x , y)=> x && y);
+
             //
             // 必须打开数据集并且选择一个分组
-            _AddGroupOperator = ReactiveCommand.Create(AddGroupCore , openAndSelectedGroup);
+            _AddGroupOperator = ReactiveCommand.Create(AddGroupCore, openAndSelectedGroup);
 
             //
             // 必须选择打开数据集
-            _AddRootGroupOperator = ReactiveCommand.Create(AddRootGroupCore , _Factory.IsOpen);
+            _AddRootGroupOperator = ReactiveCommand.Create(AddRootGroupCore, _Factory.IsOpen);
 
             //
             // 必须打开数据集并且选择一个分组
-            _AddBrushToGroupOperator = ReactiveCommand.Create(AddBrushToGroupCore , openAndSelectedGroup);
-
-
-            //
-            // 必须打开数据集并且选择一个分组
-            _AddBrushesToGroupOperator = ReactiveCommand.Create(AddBrushesToGroupCore , openAndSelectedGroup);
+            _AddBrushToGroupOperator = ReactiveCommand.Create(AddBrushToGroupCore, openAndSelectedGroup);
 
 
             //
             // 必须打开数据集并且选择一个分组
-            _RemoveGroupOperator = ReactiveCommand.Create(RemoveGroupCore , openAndSelectedGroup);
+            _AddBrushesToGroupOperator = ReactiveCommand.Create(AddBrushesToGroupCore, openAndSelectedGroup);
+
+
+            //
+            // 必须打开数据集并且选择一个分组
+            _RemoveGroupOperator = ReactiveCommand.Create(RemoveGroupCore, openAndSelectedGroup);
 
 
             //
@@ -79,7 +73,16 @@ namespace Acorisoft.Morisa.Tools.ViewModels
 
         protected async void AddBrushToGroupCore()
         {
-
+            //
+            // 添加到选择的
+            var session = await Dialog<NewBrushDialogViewFunction>();
+            if (session.IsCompleted && session.GetResult<BrushGenerateContext>() is BrushGenerateContext context)
+            {
+                var parentGroup = _SelectedGroup;
+                var brush = context.Context;
+                brush.ParentId = parentGroup.Id;
+                _Factory.Add(context, _SelectedGroup.Source, context.LandColor);
+            }
         }
 
         protected async void AddBrushesToGroupCore()
@@ -90,7 +93,12 @@ namespace Acorisoft.Morisa.Tools.ViewModels
             if (session.IsCompleted && session.GetResult<BrushesGenerateContext>() is BrushesGenerateContext context)
             {
                 var parentGroup = _SelectedGroup;
-                _Factory.Add(context.Context , _SelectedGroup.Source , context.LandColor);
+                foreach(var brushContext in context.Context)
+                {
+                    var brush = brushContext.Context;
+                    brush.ParentId = parentGroup.Id;
+                }
+                _Factory.Add(context.Context, _SelectedGroup.Source, context.LandColor);
             }
         }
 
@@ -118,7 +126,7 @@ namespace Acorisoft.Morisa.Tools.ViewModels
                 }
                 else
                 {
-                    _Factory.Add(newGroup , _SelectedGroup.Source);
+                    _Factory.Add(newGroup, _SelectedGroup.Source);
                 }
             }
         }
@@ -138,7 +146,18 @@ namespace Acorisoft.Morisa.Tools.ViewModels
         {
             _SelectedGroup = group;
             _SelectedGroupObservable.OnNext(group is IBrushGroupAdapter);
+            _Factory.FilterStream.OnNext(x => x.ParentId == group.Id);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand AddBrushToGroupOperator => _AddBrushToGroupOperator;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand AddBrushesToGroupOperator => _AddBrushesToGroupOperator;
 
         /// <summary>
         /// 

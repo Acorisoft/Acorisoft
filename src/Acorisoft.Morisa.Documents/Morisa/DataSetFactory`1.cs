@@ -1,6 +1,7 @@
 ﻿using LiteDB;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reactive.Subjects;
 using System.Text;
@@ -47,8 +48,29 @@ namespace Acorisoft.Morisa
         /// <returns></returns>
         protected internal static T Singleton<T>(TDataSet ds, T instance)
         {
-            ds.DB_External.Upsert(typeof(T).FullName, DatabaseMixins.Serialize(instance));
+            var key = typeof(T).FullName;
+            if (ds.DB_External.Exists(Query.EQ("_id", key)))
+            {
+                ds.DB_External.Update(key, DatabaseMixins.Serialize(instance));
+            }
+            else
+            {
+                ds.DB_External.Insert(key, DatabaseMixins.Serialize(instance));
+            }
+
             return instance;
+        }
+
+        public Stream GetResource(InDatabaseResource resource)
+        {
+            if(resource == null)
+            {
+                return null;
+            }
+
+            return DataSet.Database
+                          .FileStorage
+                          .OpenRead(resource.Id);
         }
 
         /// <summary>

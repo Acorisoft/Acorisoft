@@ -30,7 +30,7 @@ namespace Acorisoft.Morisa.Map
         //
         private readonly BehaviorSubject<Func<IBrush,bool>>         _SelectedBrushFromSelectedBrushFilter;
         private readonly BehaviorSubject<Func<IBrush,bool>>         _SelectedBrushFromBrushGroupFilter;
-        private readonly DefferObserver<BrushGroupAdapter>         _SelectedBrushFromBrushGroupHandler;
+        private readonly DefferObserver<BrushGroupAdapter>          _SelectedBrushFromBrushGroupHandler;
         private readonly DefferObserver<IBrush>                     _SelectedBrushFromSelectedBrushHandler;
 
         //

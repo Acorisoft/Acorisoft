@@ -3,7 +3,6 @@ using Acorisoft.Morisa.Dialogs;
 using Acorisoft.Morisa.Tools.ViewModels;
 using Acorisoft.Morisa.ViewModels;
 using DryIoc;
-using Microsoft.Win32;
 using ReactiveUI;
 using Splat;
 using Splat.DryIoc;
@@ -22,6 +21,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -38,6 +38,19 @@ namespace Acorisoft.Morisa.Tools.Views
         public NewBrushDialogView() : base()
         {
             InitializeComponent();
+        }
+
+        private void SelectFile(object sender, RoutedEventArgs e)
+        {
+            var opendlg = new OpenFileDialog
+            {
+                Filter = "图片文件|*.bmp;*.jpg;*.png;*.jpeg"
+            };
+
+            if (opendlg.ShowDialog() == DialogResult.OK)
+            {
+                ViewModel.FileName = opendlg.FileName;
+            }
         }
     }
 }

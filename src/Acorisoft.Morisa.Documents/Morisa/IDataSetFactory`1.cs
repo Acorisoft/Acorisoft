@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,8 @@ namespace Acorisoft.Morisa
     public interface IDataSetFactory<TDataSet> : IDataSetFactory
         where TDataSet : IDataSet
     {
+        Stream GetResource(InDatabaseResource resource);
+
         /// <summary>
         /// 获取一个观测数据集更新的数据流。
         /// </summary>

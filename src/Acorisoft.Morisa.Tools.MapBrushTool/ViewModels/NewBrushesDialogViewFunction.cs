@@ -1,5 +1,6 @@
 ﻿using Acorisoft.Morisa.Core;
 using Acorisoft.Morisa.Dialogs;
+using Acorisoft.Morisa.Map;
 using Acorisoft.Morisa.Tools.Models;
 using Acorisoft.Morisa.ViewModels;
 using DynamicData.Binding;
@@ -33,6 +34,16 @@ namespace Acorisoft.Morisa.Tools.ViewModels
             _Context = new BrushesGenerateContext();
         }
 
+        protected override object GetResultCore()
+        {
+            return _Context;
+        }
+
+        protected override bool VerifyModelCore()
+        {
+            return !string.IsNullOrEmpty(_Folder);
+        }
+
         public string Folder
         {
             get => _Folder;
@@ -50,11 +61,14 @@ namespace Acorisoft.Morisa.Tools.ViewModels
                                          .Where(x =>
                                          {
                                              var fi = new FileInfo(x);
-                                             return fi.Extension == ".png" && fi.Extension == ".jpg" && fi.Extension == ".bmp";
+                                             return fi.Extension == ".png" || fi.Extension == ".jpg" || fi.Extension == ".bmp" || fi.Extension == ".jpeg";
                                          })
-                                         .Select(x => new GenerateContext<Brush>();
+                                         .Select(x => new GenerateContext<Brush>(new Brush())
+                                         {
+                                             FileName = x
+                                         });
 
-
+                    _Context.Brushes.AddRange(files);
                 }
             }
         }
