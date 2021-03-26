@@ -53,6 +53,8 @@ namespace Acorisoft.Morisa.Map
             _PagerStream = new BehaviorSubject<IPageRequest>(new PageRequest(1, 50));
             _FilterStream = new BehaviorSubject<Func<IBrushAdapter, bool>>(x => true);
 
+            //
+            // 呈现属性的时候需要单独连接一次，否则在监听集合变化操作的时候，一旦设置Filter、Pager都会使得集合发生改变。
             _BrushSource.Connect()
                         .Transform(x => new BrushAdapter(x))
                         .Filter(_FilterStream)
