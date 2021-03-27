@@ -26,7 +26,7 @@
         <StackPanel Margin="64 0">
             <mui:FormGroup Header="画刷位置">
                 <mui:FormGroup.Control>
-                    <TextBox FontSize="20" Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox FontSize="20" Text="{Binding FileName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                 </mui:FormGroup.Control>
                 <Button Content="..." Click="SelectFile" Padding="8"/>
             </mui:FormGroup>
