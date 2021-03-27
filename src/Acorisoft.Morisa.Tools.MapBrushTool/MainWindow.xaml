@@ -31,6 +31,7 @@
                 <mui:SymbolButton Command="{Binding NewOperator}" Data="{StaticResource UI.Icon.File}" WindowChrome.IsHitTestVisibleInChrome="True"/>
                 <mui:SymbolButton Command="{Binding OpenOperator}" Data="{StaticResource UI.Icon.Open}" WindowChrome.IsHitTestVisibleInChrome="True"/>
             </StackPanel>
+            <TextBlock Grid.Column="3" Text="{Binding Title,TargetNullValue=未打开画刷集,Mode=OneWay,StringFormat='正在编辑:\{0\}'}" FontSize="15" HorizontalAlignment="Center"/>
         </Grid>
     </mui:ShellWindow.TitleBar>
     <Grid>

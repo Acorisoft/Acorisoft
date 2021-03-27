@@ -5,6 +5,9 @@
 		<TargetFramework>net5.0-windows</TargetFramework>
 		<UseWPF>true</UseWPF>
 		<RootNamespace>Acorisoft.Morisa.Tools</RootNamespace>
+		<GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+		<GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+		<ApplicationIcon>Acorisoft Team.ico</ApplicationIcon>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="DryIoc.dll" Version="4.7.2" />

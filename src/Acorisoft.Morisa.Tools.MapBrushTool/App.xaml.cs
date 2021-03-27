@@ -51,6 +51,12 @@ namespace Acorisoft.Morisa.Tools
             base.OnStartup(e);
         }
 
+        protected override void OnExit(ExitEventArgs e)
+        {
+            _container.Dispose();
+            base.OnExit(e);
+        }
+
         public AppViewModel AppViewModel { get; }
     }
 }

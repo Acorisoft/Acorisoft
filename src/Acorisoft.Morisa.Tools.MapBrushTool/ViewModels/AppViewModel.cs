@@ -26,6 +26,8 @@ using DryIoc;
 using System.Windows.Input;
 using Acorisoft.Morisa.Core;
 using Acorisoft.Morisa.Tools.Models;
+using ReactiveUI.Fody.Helpers;
+using System.IO;
 
 namespace Acorisoft.Morisa.Tools.ViewModels
 {
@@ -53,6 +55,7 @@ namespace Acorisoft.Morisa.Tools.ViewModels
             // 打开对话框
             if(session.IsCompleted && session.GetResult<ILoadContext>() is ILoadContext context)
             {
+                Title = new FileInfo(context.FileName).Name;
                 _Factory.Load(context);
             }
         }
@@ -65,11 +68,15 @@ namespace Acorisoft.Morisa.Tools.ViewModels
             // 打开对话框
             if (session.IsCompleted && session.GetResult<BrushSetGenerateContext>() is BrushSetGenerateContext context)
             {
+                Title = new FileInfo(context.FileName).Name;
                 _Factory.Save(context);
             }
         }
 
-
+        [Reactive]public string Title
+        {
+            get;set;
+        }
         public ICommand OpenOperator => _OpenOperator;
         public ICommand NewOperator => _NewOperator;
     }
