@@ -49,6 +49,7 @@ namespace Acorisoft.Morisa.Tools.Converters
                     bi.DecodePixelWidth = 80;
                     bi.DecodePixelHeight = 80;
                     bi.EndInit();
+                    bi.Freeze();
                     return bi;
                 }
             }

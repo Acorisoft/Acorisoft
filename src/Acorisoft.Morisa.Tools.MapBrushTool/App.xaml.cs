@@ -26,6 +26,8 @@ namespace Acorisoft.Morisa.Tools
     public partial class App : Application
     {
         private readonly IContainer _container;
+        private readonly IFullLogger _logger;
+
 
         public App()
         {
@@ -35,10 +37,29 @@ namespace Acorisoft.Morisa.Tools
                       .UseMorisa()
                       .UseViews(typeof(App).Assembly)
                       .UseDialog();
+            
+            //
+            // 创建Logger
+            _logger = this.GetLogger();
+
+            AppDomain.CurrentDomain.UnhandledException += OnAppdomainUnhandleException;
+            DispatcherUnhandledException += OnApplicationunhandleException;
 
             RegisterDialogs(_container);
             RegisterViews(_container);
             AppViewModel = Locator.Current.GetService<AppViewModel>();
+        }
+
+        private void OnApplicationunhandleException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            _logger.Error($"致命的错误:{e.Exception.Message}");
+            _logger.Error($"致命的错误:{e.Exception.StackTrace}");
+            e.Handled = true;
+        }
+
+        private void OnAppdomainUnhandleException(object sender, UnhandledExceptionEventArgs e)
+        {
+            _logger.Error(e.ExceptionObject);
         }
 
         protected virtual void RegisterDialogs(IContainer container)
