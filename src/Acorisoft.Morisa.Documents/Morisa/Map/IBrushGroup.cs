@@ -7,5 +7,7 @@ namespace Acorisoft.Morisa.Map
         Guid Id { get; set; }
         Guid ParentId { get; set; }
         string Name { get; set; }
+        bool IsLocked { get; set; }
+        bool IsElement { get; set; }
     }
 }

@@ -18,6 +18,6 @@ namespace Acorisoft.Morisa.Tools.Models
         }
 
         internal List<IGenerateContext<Brush>> Brushes => _Brushes;
-        public Rgba32 LandColor { get; set; }
+        public Rgba32 LandColor { get; set; } = new Rgba32(226, 205, 156);
     }
 }

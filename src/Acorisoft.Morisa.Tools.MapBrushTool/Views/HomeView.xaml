@@ -42,7 +42,8 @@
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate DataType="{x:Type map:BrushGroupAdapter}"
                                               ItemsSource="{Binding Children}">
-                        <Border Padding="8">
+                        <Border Background="{StaticResource UI.Brushes.Transparent}"
+                                Padding="8">
                             <Border.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem Header="添加">
@@ -51,11 +52,36 @@
                                         <MenuItem Header="添加画刷到分组" Command="{Binding Source={StaticResource BindingProxy},Path=Data.AddBrushToGroupOperator}"/>
                                         <MenuItem Header="添加多个画刷到分组" Command="{Binding Source={StaticResource BindingProxy},Path=Data.AddBrushesToGroupOperator}"/>
                                     </MenuItem>
-                                        <MenuItem Header="删除" Command="{Binding Source={StaticResource BindingProxy},Path=Data.RemoveGroupOperator}"/>
+                                    <MenuItem Header="重命名" Command="{Binding Source={StaticResource BindingProxy},Path=Data.RenameGroupOperator}"/>
+                                    <MenuItem Header="删除" Command="{Binding Source={StaticResource BindingProxy},Path=Data.RemoveGroupOperator}"/>
+                                    <MenuItem Header="锁住当前分组" Command="{Binding Source={StaticResource BindingProxy},Path=Data.LockGroupOperator}"/>
+                                    <MenuItem Header="解锁当前分组" Command="{Binding Source={StaticResource BindingProxy},Path=Data.UnlockGroupOperator}" IsEnabled="{Binding IsLocked,Mode=OneWay}"/>
+                                    <MenuItem Header="标记为元素画刷图层" Command="{Binding Source={StaticResource BindingProxy},Path=Data.SignAsElementOpeator}"/>
+                                    <MenuItem Header="取消标记为元素画刷图层" Command="{Binding Source={StaticResource BindingProxy},Path=Data.UnsignAsElementOperator}" IsEnabled="{Binding IsElement,Mode=OneWay}"/>
                                 </ContextMenu>
                             </Border.ContextMenu>
-                            <TextBlock Text="{Binding Name,Mode=OneWay}"
-                                       FontSize="15"/>
+                            <DockPanel Width="160">
+                                <Path Data="{StaticResource UI.Icon.Lock}"
+                                      Stroke="{StaticResource UI.Brushes.Black}"
+                                      StrokeThickness="1"
+                                      Width="15"
+                                      Height="15"
+                                      Stretch="Uniform"
+                                      VerticalAlignment="Center"
+                                      DockPanel.Dock="Right"
+                                      Visibility="{Binding IsLocked,Mode=OneWay,Converter={StaticResource True2Visibility}}"/>
+                                <Path Data="{StaticResource UI.Icon.Aperture}"
+                                      Stroke="{StaticResource UI.Brushes.Black}"
+                                      StrokeThickness="1"
+                                      Width="15"
+                                      Height="15"
+                                      Stretch="Uniform"
+                                      VerticalAlignment="Center"
+                                      DockPanel.Dock="Right"
+                                      Margin="0 0 30 0"
+                                      Visibility="{Binding IsElement,Mode=OneWay,Converter={StaticResource True2Visibility}}"/>
+                                <TextBlock Text="{Binding Name,Mode=OneWay}" FontSize="15" DockPanel.Dock="Left"/>
+                            </DockPanel>
                         </Border>
                     </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>
@@ -80,7 +106,7 @@
                     <ItemsControl.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="添加分组" Command="{Binding Source={StaticResource BindingProxy},Path=Data.AddGroupOperator}"/>
-                            <MenuItem Header="重命名"/>
+                            <MenuItem Header="重命名" Command="{Binding Source={StaticResource BindingProxy},Path=Data.RenameGroupOperator}"/>
                             <MenuItem Header="清空" Command="{Binding Source={StaticResource BindingProxy},Path=Data.RemoveGroupOperator}"/>
                         </ContextMenu>
                     </ItemsControl.ContextMenu>
@@ -92,19 +118,6 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type map:BrushAdapter}">
                             <Border Padding="8">
-                                <Border.ContextMenu>
-                                    <ContextMenu>
-                                        <MenuItem Header="添加">
-                                            <MenuItem Header="添加分组" Command="{Binding Source={StaticResource BindingProxy},Path=Data.AddGroupOperator}"/>
-                                            <Separator/>
-                                            <MenuItem Header="添加画刷到分组" Command="{Binding Source={StaticResource BindingProxy},Path=Data.AddBrushToGroupOperator}"/>
-                                            <MenuItem Header="添加多个画刷到分组" Command="{Binding Source={StaticResource BindingProxy},Path=Data.AddBrushesToGroupOperator}"/>
-                                        </MenuItem>
-                                        <MenuItem Header="重命名"/>
-                                        <MenuItem Header="删除" Command="{Binding Source={StaticResource BindingProxy},Path=Data.RemoveGroupOperator}"/>
-                                    </ContextMenu>
-                                </Border.ContextMenu>
-
                                 <Grid>
                                     <Image Source="{Binding Converter={StaticResource Resource}}"
                                            Width="80"

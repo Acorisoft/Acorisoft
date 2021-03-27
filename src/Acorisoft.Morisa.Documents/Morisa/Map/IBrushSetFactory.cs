@@ -99,6 +99,13 @@ namespace Acorisoft.Morisa.Map
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="group"></param>
+        /// <returns></returns>
+        public void Update(IBrushGroup group);
+
+        /// <summary>
+        /// 
+        /// </summary>
         public IObserver<Func<IBrushAdapter, bool>> FilterStream { get; }
 
 

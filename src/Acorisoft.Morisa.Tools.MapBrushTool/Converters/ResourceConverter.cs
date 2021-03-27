@@ -45,6 +45,10 @@ namespace Acorisoft.Morisa.Tools.Converters
                     var bi = new BitmapImage();
                     bi.BeginInit();
                     bi.StreamSource = ms;
+                    bi.CacheOption = BitmapCacheOption.OnDemand;
+                    bi.DecodePixelWidth = 80;
+                    bi.DecodePixelHeight = 80;
+                    bi.Freeze();
                     bi.EndInit();
                     return bi;
                 }

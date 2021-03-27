@@ -13,8 +13,8 @@
                 Height="600"
                 d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,Type={x:Type vm:SaveBrushSetStep2ViewFunction}}">
     <mui:DialogContentPresenter Title="新建画刷集" 
-                                Subtitle="选择一个画刷的保存目录。">
-        <mui:FormGroup Header="保存目录" 
+                                Subtitle="选择画刷的保存位置。">
+        <mui:FormGroup Header="保存位置" 
                        Margin="64 0">
             <mui:FormGroup.Control>
                 <TextBox FontSize="20" Text="{Binding FileName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
@@ -28,7 +28,7 @@
         <mui:DialogContentPresenter.ButtonGroup>
             <UniformGrid Columns="2" Height="48" DockPanel.Dock="Bottom">
                 <Button Command="{x:Static mui:DialogCommands.LastStep}" Content="上一步" BorderThickness="0"/>
-                <Button Command="{x:Static mui:DialogCommands.Completion}" Content="完成" BorderThickness="0"/>
+                <Button Command="{x:Static mui:DialogCommands.Completion}" IsDefault="True" Content="完成" BorderThickness="0"/>
             </UniformGrid>
         </mui:DialogContentPresenter.ButtonGroup>
     </mui:DialogContentPresenter>

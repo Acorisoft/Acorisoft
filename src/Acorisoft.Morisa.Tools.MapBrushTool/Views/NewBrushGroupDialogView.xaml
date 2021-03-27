@@ -13,8 +13,8 @@
                 Height="600"
                 d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,Type={x:Type vm:NewBrushGroupDialogViewFunction}}">
 
-    <mui:DialogContentPresenter Title="新建画刷集"
-                                Subtitle="新建一个新的画刷集"
+    <mui:DialogContentPresenter Title="新建画刷分组"
+                                Subtitle="新建画刷分组"
                                 Symbol="{StaticResource UI.SVG.Create}"
                                 SymbolColor="{StaticResource UI.Brushes.Accent}">
         <mui:DialogContentPresenter.ButtonGroup>
@@ -25,7 +25,7 @@
         </mui:DialogContentPresenter.ButtonGroup>
 
         <StackPanel Margin="64 0">
-            <mui:FormGroup Header="画刷集名字">
+            <mui:FormGroup Header="分组名字">
                 <mui:FormGroup.Control>
                     <TextBox FontSize="20" Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                 </mui:FormGroup.Control>

@@ -14,6 +14,6 @@ namespace Acorisoft.Morisa.Tools.Models
         {
 
         }
-        public Rgba32 LandColor { get; set; }
+        public Rgba32 LandColor { get; set; } = new Rgba32(226, 205, 156);
     }
 }

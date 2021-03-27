@@ -36,6 +36,29 @@ namespace Acorisoft.Morisa.Map
                 });
         }
 
+        public bool IsElement
+        {
+            get
+            {
+                return Source.IsElement;
+            }
+            set
+            {
+                Source.IsElement = value;
+                RaiseUpdate(nameof(IsElement));
+            }
+        }
+
+        public bool IsLocked
+        {
+            get => _Source.IsLocked;
+            set
+            {
+                _Source.IsLocked = value;
+                RaiseUpdate(nameof(IsLocked));
+            }
+        }
+
 
         /// <summary>
         /// 获取或设置当前画刷分组的唯一标识符。

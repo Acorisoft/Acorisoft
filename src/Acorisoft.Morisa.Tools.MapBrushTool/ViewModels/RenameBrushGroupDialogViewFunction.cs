@@ -22,12 +22,12 @@ using System.Windows.Input;
 
 namespace Acorisoft.Morisa.Tools.ViewModels
 {
-    public partial class NewBrushGroupDialogViewFunction : DialogFunction
+    public partial class RenameBrushGroupDialogViewFunction : DialogFunction
     {
         private string _name;
-        private IBrushGroup _group;
+        private readonly IBrushGroup _group;
 
-        public NewBrushGroupDialogViewFunction()
+        public RenameBrushGroupDialogViewFunction()
         {
             _group = new BrushGroup();
         }

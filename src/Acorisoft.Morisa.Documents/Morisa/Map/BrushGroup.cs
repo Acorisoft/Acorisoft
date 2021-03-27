@@ -19,14 +19,25 @@ namespace Acorisoft.Morisa.Map
         [BsonId]
         public Guid Id { get; set; }
 
+        [BsonField("l")]
+        public bool IsLocked { get; set; }
+
         /// <summary>
         /// 获取或设置当前画刷分组的父级分组。
         /// </summary>
+        [BsonField("p")]
         public Guid ParentId { get; set; }
 
         /// <summary>
         /// 获取或设置当前画刷的名称。
         /// </summary>
+        [BsonField("n")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [BsonField("ie")]
+        public bool IsElement { get; set; }
     }
 }

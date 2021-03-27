@@ -7,6 +7,13 @@
         <ResourceDictionary Source="pack://application:,,,/Acorisoft.Morisa.Shell;component/Themes/Image.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     <Style TargetType="{x:Type components:FormGroup}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Margin" Value="0 8" />
         <Setter Property="Template">
             <Setter.Value>

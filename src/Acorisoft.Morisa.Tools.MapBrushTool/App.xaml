@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Acorisoft.Morisa.Tools"
              xmlns:convs="clr-namespace:Acorisoft.Morisa.Tools.Converters"
+             xmlns:convs2="clr-namespace:Acorisoft.Morisa.Converters;assembly=Acorisoft.Morisa.Shell"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
@@ -14,6 +15,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <convs:ResourceConverter x:Key="Resource"/>
+            <convs2:TrueVisibilityConverter x:Key="True2Visibility"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

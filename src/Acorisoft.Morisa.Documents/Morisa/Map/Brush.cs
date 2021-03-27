@@ -18,26 +18,34 @@ namespace Acorisoft.Morisa.Map
         /// <summary>
         /// 
         /// </summary>
+        [BsonField("p")]
         public Guid ParentId  { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
+        [BsonField("l")]
         public FillMode Left  { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
+
+        [BsonField("r")] 
         public FillMode Right  { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
+
+        [BsonField("t")] 
         public FillMode Top  { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
+
+        [BsonField("b")]
         public FillMode Bottom  { get; set; }
     }
 }

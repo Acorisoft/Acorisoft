@@ -12,23 +12,23 @@
                 Width="800"
                 Height="600"
                 d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,Type={x:Type vm:NewBrushDialogViewFunction}}">
-    <mui:DialogContentPresenter Title="新建画刷集"
-                                Subtitle="新建一个新的画刷集"
+    <mui:DialogContentPresenter Title="添加画刷"
+                                Subtitle="添加一个新的画刷到分组"
                                 Symbol="{StaticResource UI.SVG.Create}"
                                 SymbolColor="{StaticResource UI.Brushes.Accent}">
         <mui:DialogContentPresenter.ButtonGroup>
             <UniformGrid Columns="2" Height="48" DockPanel.Dock="Bottom">
-                <Button Command="{x:Static mui:DialogCommands.Ok}" Content="确定" BorderThickness="0"/>
+                <Button Command="{x:Static mui:DialogCommands.Ok}" Content="确定" IsDefault="True" BorderThickness="0"/>
                 <Button Command="{x:Static mui:DialogCommands.Cancel}" Content="取消" BorderThickness="0"/>
             </UniformGrid>
         </mui:DialogContentPresenter.ButtonGroup>
 
         <StackPanel Margin="64 0">
-            <mui:FormGroup Header="画刷集名字">
+            <mui:FormGroup Header="画刷位置">
                 <mui:FormGroup.Control>
                     <TextBox FontSize="20" Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                 </mui:FormGroup.Control>
-                <Button Content="..." Click="SelectFile"/>
+                <Button Content="..." Click="SelectFile" Padding="8"/>
             </mui:FormGroup>
         </StackPanel>
     </mui:DialogContentPresenter>
