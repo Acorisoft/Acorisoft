@@ -1,49 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFramework>net5.0</TargetFramework>
-		<RootNamespace>Acorisoft</RootNamespace>
-	</PropertyGroup>
-
-	<ItemGroup>
-	  <Compile Remove="Morisa\v1\**" />
-	  <Compile Remove="Morisa\v2\**" />
-	  <Compile Remove="Morisa\v3\**" />
-	  <EmbeddedResource Remove="Morisa\v1\**" />
-	  <EmbeddedResource Remove="Morisa\v2\**" />
-	  <EmbeddedResource Remove="Morisa\v3\**" />
-	  <None Remove="Morisa\v1\**" />
-	  <None Remove="Morisa\v2\**" />
-	  <None Remove="Morisa\v3\**" />
-	</ItemGroup>
-
-	<ItemGroup>
-        <PackageReference Include="DynamicData" Version="7.1.1" />
-        <PackageReference Include="LiteDB" Version="4.1.4" />
-        <PackageReference Include="DryIoc.dll" Version="4.7.2" />
-        <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-        <PackageReference Include="SixLabors.ImageSharp" Version="1.0.3" /> 
-		<PackageReference Include="System.Reactive" Version="5.0.0" />
-        <PackageReference Include="ReactiveUI.Fody" Version="13.0.1" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\Acorisoft.Morisa.Core\Acorisoft.Morisa.Core.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Compile Update="Properties\SR.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>SR.resx</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <EmbeddedResource Update="Properties\SR.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	    <LastGenOutput>SR.Designer.cs</LastGenOutput>
-	  </EmbeddedResource>
-	</ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
 
 </Project>

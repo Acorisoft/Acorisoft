@@ -3,51 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa", "src\Acorisoft.Morisa\Acorisoft.Morisa.csproj", "{2AE1C8AA-B9CB-4151-BEA1-0DBB19ADF0A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Morisa.Xaml", "src\Acorisoft.Morisa.Xaml\Acorisoft.Morisa.Xaml.csproj", "{41E068A3-F830-419E-AE3A-FAA342B8B749}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.Tests", "src\Acorisoft.Morisa.Tests\Acorisoft.Morisa.Tests.csproj", "{9B31D456-1D53-48FB-B5AD-9CAA8B68B847}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.Shell", "src\Acorisoft.Morisa.Shell\Acorisoft.Morisa.Shell.csproj", "{CA9121C4-9A2C-4B38-A0FD-DFB9C983C9C5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.Documents", "src\Acorisoft.Morisa.Documents\Acorisoft.Morisa.Documents.csproj", "{E1308C06-F25B-4CCA-910D-1E45702F08C2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Morisa.Documents", "src\Acorisoft.Morisa.Documents\Acorisoft.Morisa.Documents.csproj", "{9B9C001D-D562-4845-8254-2DAA04D2BA43}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Demos.RxSamples", "demos\Acorisoft.Demos.RxSamples\Acorisoft.Demos.RxSamples.csproj", "{BE8F35AC-31A2-4E0D-B922-EAAB0B5B74A0}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.Shell", "src\Acorisoft.Morisa.Shell\Acorisoft.Morisa.Shell.csproj", "{605F1C84-BD3A-43E9-BCAB-B275E1799D09}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.Core", "src\Acorisoft.Morisa.Core\Acorisoft.Morisa.Core.csproj", "{8CC1A86F-7986-46D6-8655-9BAEBD7B3BF4}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.Tools.MapBrushTool", "src\Acorisoft.Morisa.Tools.MapBrushTool\Acorisoft.Morisa.Tools.MapBrushTool.csproj", "{F2D3B863-E2CB-4A42-A656-762D0FB0A1FB}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Morisa.Tools.ViewModelGenerator", "src\Acorisoft.Morisa.Tools.ViewModelGenerator\Acorisoft.Morisa.Tools.ViewModelGenerator.csproj", "{F6E25566-4271-48CB-9E86-4133BFBA2C51}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Pandora", "src\Acorisoft.Pandora\Acorisoft.Pandora.csproj", "{1C566B91-F471-4CC2-BC5E-3CCDB1C52342}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Pandora.Map", "src\Acorisoft.Pandora.Map\Acorisoft.Pandora.Map.csproj", "{0EB198A9-557F-458D-95AA-0C52C6E124BC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Pandora.Markdown", "src\Acorisoft.Pandora.Markdown\Acorisoft.Pandora.Markdown.csproj", "{6BCDF524-EF9C-4655-A51F-FF8B6404FBA0}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Items Solution", "Items Solution", "{EF57BF64-4C9F-4D19-8801-120627B80C88}"
-	ProjectSection(SolutionItems) = preProject
-		Templates\Dialog.vstemplate = Templates\Dialog.vstemplate
-		Templates\DialogFunction.cs = Templates\DialogFunction.cs
-		Templates\DialogView.xaml = Templates\DialogView.xaml
-		Templates\DialogView.xaml.cs = Templates\DialogView.xaml.cs
-		Templates\StepDialog2.vstemplate = Templates\StepDialog2.vstemplate
-		Templates\StepDialog3.vstemplate = Templates\StepDialog3.vstemplate
-		Templates\StepDialog4.vstemplate = Templates\StepDialog4.vstemplate
-		Templates\StepDialog5.vstemplate = Templates\StepDialog5.vstemplate
-		Templates\StepDialog6.vstemplate = Templates\StepDialog6.vstemplate
-		Templates\StepDialog7.vstemplate = Templates\StepDialog7.vstemplate
-		Templates\StepDialog8.vstemplate = Templates\StepDialog8.vstemplate
-		Templates\StepDialogFunction.cs = Templates\StepDialogFunction.cs
-		Templates\StepDialogView.xaml = Templates\StepDialogView.xaml
-		Templates\StepDialogView.xaml.cs = Templates\StepDialogView.xaml.cs
-		Templates\Template.ico = Templates\Template.ico
-		Templates\View.vstemplate = Templates\View.vstemplate
-		Templates\View.xaml = Templates\View.xaml
-		Templates\View.xaml.cs = Templates\View.xaml.cs
-		Templates\ViewModel.cs = Templates\ViewModel.cs
-		src\Acorisoft.Morisa\ViewModelGenerator.tt = src\Acorisoft.Morisa\ViewModelGenerator.tt
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Morisa.Testing", "src\Acorisoft.Morisa.Testing\Acorisoft.Morisa.Testing.csproj", "{59BF2514-B0F1-459A-95A8-9066A0E43860}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,57 +17,29 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2AE1C8AA-B9CB-4151-BEA1-0DBB19ADF0A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2AE1C8AA-B9CB-4151-BEA1-0DBB19ADF0A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2AE1C8AA-B9CB-4151-BEA1-0DBB19ADF0A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2AE1C8AA-B9CB-4151-BEA1-0DBB19ADF0A2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9B31D456-1D53-48FB-B5AD-9CAA8B68B847}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B31D456-1D53-48FB-B5AD-9CAA8B68B847}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9B31D456-1D53-48FB-B5AD-9CAA8B68B847}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B31D456-1D53-48FB-B5AD-9CAA8B68B847}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E1308C06-F25B-4CCA-910D-1E45702F08C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E1308C06-F25B-4CCA-910D-1E45702F08C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E1308C06-F25B-4CCA-910D-1E45702F08C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E1308C06-F25B-4CCA-910D-1E45702F08C2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BE8F35AC-31A2-4E0D-B922-EAAB0B5B74A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE8F35AC-31A2-4E0D-B922-EAAB0B5B74A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE8F35AC-31A2-4E0D-B922-EAAB0B5B74A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE8F35AC-31A2-4E0D-B922-EAAB0B5B74A0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{605F1C84-BD3A-43E9-BCAB-B275E1799D09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{605F1C84-BD3A-43E9-BCAB-B275E1799D09}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{605F1C84-BD3A-43E9-BCAB-B275E1799D09}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{605F1C84-BD3A-43E9-BCAB-B275E1799D09}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8CC1A86F-7986-46D6-8655-9BAEBD7B3BF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8CC1A86F-7986-46D6-8655-9BAEBD7B3BF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8CC1A86F-7986-46D6-8655-9BAEBD7B3BF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8CC1A86F-7986-46D6-8655-9BAEBD7B3BF4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F2D3B863-E2CB-4A42-A656-762D0FB0A1FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F2D3B863-E2CB-4A42-A656-762D0FB0A1FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F2D3B863-E2CB-4A42-A656-762D0FB0A1FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F2D3B863-E2CB-4A42-A656-762D0FB0A1FB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F6E25566-4271-48CB-9E86-4133BFBA2C51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F6E25566-4271-48CB-9E86-4133BFBA2C51}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F6E25566-4271-48CB-9E86-4133BFBA2C51}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F6E25566-4271-48CB-9E86-4133BFBA2C51}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1C566B91-F471-4CC2-BC5E-3CCDB1C52342}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C566B91-F471-4CC2-BC5E-3CCDB1C52342}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1C566B91-F471-4CC2-BC5E-3CCDB1C52342}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1C566B91-F471-4CC2-BC5E-3CCDB1C52342}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0EB198A9-557F-458D-95AA-0C52C6E124BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0EB198A9-557F-458D-95AA-0C52C6E124BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0EB198A9-557F-458D-95AA-0C52C6E124BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0EB198A9-557F-458D-95AA-0C52C6E124BC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6BCDF524-EF9C-4655-A51F-FF8B6404FBA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6BCDF524-EF9C-4655-A51F-FF8B6404FBA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6BCDF524-EF9C-4655-A51F-FF8B6404FBA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6BCDF524-EF9C-4655-A51F-FF8B6404FBA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41E068A3-F830-419E-AE3A-FAA342B8B749}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41E068A3-F830-419E-AE3A-FAA342B8B749}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41E068A3-F830-419E-AE3A-FAA342B8B749}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41E068A3-F830-419E-AE3A-FAA342B8B749}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA9121C4-9A2C-4B38-A0FD-DFB9C983C9C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA9121C4-9A2C-4B38-A0FD-DFB9C983C9C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA9121C4-9A2C-4B38-A0FD-DFB9C983C9C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA9121C4-9A2C-4B38-A0FD-DFB9C983C9C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B9C001D-D562-4845-8254-2DAA04D2BA43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B9C001D-D562-4845-8254-2DAA04D2BA43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B9C001D-D562-4845-8254-2DAA04D2BA43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B9C001D-D562-4845-8254-2DAA04D2BA43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59BF2514-B0F1-459A-95A8-9066A0E43860}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59BF2514-B0F1-459A-95A8-9066A0E43860}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59BF2514-B0F1-459A-95A8-9066A0E43860}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59BF2514-B0F1-459A-95A8-9066A0E43860}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_SortFileContentOnSave = True
-		RESX_NeutralResourcesLanguage = zh-Hans
 		SolutionGuid = {3EE6B840-2DC2-4DF7-8922-192714C85F7B}
+		RESX_NeutralResourcesLanguage = zh-Hans
+		RESX_SortFileContentOnSave = True
 	EndGlobalSection
 EndGlobal
