@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Views
 {
+    [DebuggerDisplay("Count = {_Dict.Count}")]
     public class NavigateParameter : INavigateParameter, IReadOnlyDictionary<string, object>
     {
         private readonly Dictionary<string,object> _Dict;
@@ -63,5 +65,10 @@ namespace Acorisoft.Views
         }
 
         #endregion IReadOnlyDictionary<string, object> Interface Implementations
+
+        public override sealed string ToString()
+        {
+            return $"Count:{_Dict.Count}";
+        }
     }
 }

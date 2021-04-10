@@ -104,5 +104,14 @@ namespace Acorisoft.Properties {
                 return ResourceManager.GetString("View_Navigating", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   查找类似 正在后退到{0}视图 的本地化字符串。
+        /// </summary>
+        internal static string View_NavigatingBack {
+            get {
+                return ResourceManager.GetString("View_NavigatingBack", resourceCulture);
+            }
+        }
     }
 }

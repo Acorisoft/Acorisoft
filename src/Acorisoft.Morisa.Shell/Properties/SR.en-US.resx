@@ -112,4 +112,7 @@
   <data name="View_Navigating" xml:space="preserve">
     <value>Navigating to View : {0}</value>
   </data>
+  <data name="View_NavigatingBack" xml:space="preserve">
+    <value>Navigate Back to View{0}</value>
+  </data>
 </root>

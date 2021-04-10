@@ -6,10 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using System.Reactive.Linq;
 
 namespace Acorisoft.Views
 {
-    public class ViewManager
+    public class ViewManager : IScreen
     {
         #region Internal Class
 
@@ -44,6 +46,9 @@ namespace Acorisoft.Views
         private readonly List<INavigatePipeline>    _ViewPipelines;
         private readonly IFullLogger                _ViewLogger;
         private readonly RoutingState               _ViewRouter;
+        private readonly ICommand                   _GoBack;
+        private IRoutableViewModel _CurrentVM;
+        private INavigateParameter _CurrentParams;
         private IRoutableViewModel _LastVM;
         private INavigateParameter _LastParams;
 
@@ -53,6 +58,107 @@ namespace Acorisoft.Views
             _ViewRouter = new RoutingState();
             _ViewLogger = logMgr.GetLogger(typeof(ViewManager));
             _ViewPipelines = new List<INavigatePipeline>();
+            _GoBack = ReactiveCommand.Create(() =>
+            {
+                //
+                // 创建上下文
+                var currentVM = _CurrentVM;
+                var currentParams = _CurrentParams;
+                var lastVM = _LastVM;
+                var lastParams = _LastParams;
+                var context = new NavigateContext(
+                    lastVM,
+                    lastParams,
+                    currentVM,
+                    currentParams);
+
+                INavigateFrom fromVMware;
+
+                //
+                // 日志记录当前导航的目标视图
+                _ViewLogger.Info(string.Format(SR.View_Navigating, context.NavigateTo.GetType().Name));
+
+
+                //
+                // 进入管线过滤
+                foreach (var pipeline in _ViewPipelines)
+                {
+                    pipeline.OnNext(context);
+
+                    if (context.NavigateIntend is not null && !ReferenceEquals(context.NavigateIntend, context.NavigateTo))
+                    {
+                        //
+                        // 日志记录
+                        _ViewLogger.Info(string.Format(SR.View_NavigateRedirection, context.NavigateIntend.GetType().Name));
+
+                        //
+                        // 如果是 INavigateTo 类型，则调用 INavigateTo 方法
+                        if (context.NavigateIntend is INavigateFrom)
+                        {
+                            fromVMware = (INavigateFrom)context.NavigateIntend;
+                            fromVMware.NavigateFrom(context);
+                        }
+
+                        //
+                        // 直接导航，不进行视图级过滤
+                        DisplayViewFor(context.NavigateIntend);
+
+                        //
+                        // 上一个视图模型和导航参数
+                        _LastVM = _CurrentVM;
+                        _LastParams = _CurrentParams;
+                        _CurrentVM = context.NavigateIntend;
+                        _CurrentParams = context.NavigateToParameters;
+
+                        //
+                        // 结束管线
+                        break;
+                    }
+
+                }
+
+                //
+                // 进入视图模型级别的过滤
+                if (context.NavigateFrom is INavigateFrom)
+                {
+                    fromVMware = (INavigateFrom)context.NavigateIntend;
+                    fromVMware.NavigateFrom(context);
+                }
+
+                //
+                // 如果过滤了
+                if (context.NavigateIntend is not null && !ReferenceEquals(context.NavigateIntend, context.NavigateTo))
+                {
+                    //
+                    // 日志记录
+                    _ViewLogger.Info(string.Format(SR.View_NavigateRedirection, context.NavigateIntend.GetType().Name));
+
+                    //
+                    // 如果是 INavigateTo 类型，则调用 INavigateTo 方法
+                    if (context.NavigateIntend is INavigateFrom)
+                    {
+                        fromVMware = (INavigateFrom)context.NavigateIntend;
+                        fromVMware.NavigateFrom(context);
+                    }
+
+                    //
+                    // 直接导航，不进行视图级过滤
+                    DisplayViewFor(context.NavigateIntend);
+
+                    //
+                    // 上一个视图模型和导航参数
+                    _LastVM = _CurrentVM;
+                    _LastParams = _CurrentParams;
+                    _CurrentVM = context.NavigateIntend;
+                    _CurrentParams = context.NavigateToParameters;
+                }
+                else
+                {
+                    _ViewRouter.NavigateBack.Execute();
+                }
+
+
+            }, _ViewRouter.CurrentViewModel.Select(x => x is not null));
         }
 
         protected void DisplayViewFor(IRoutableViewModel vm)
@@ -109,8 +215,8 @@ namespace Acorisoft.Views
             //
             // 构造一个导航上下文
             var context = new NavigateContext(
-                _LastVM,
-                _LastParams,
+                _CurrentVM,
+                _CurrentParams,
                 currentVM,
                 currentParams);
 
@@ -146,8 +252,10 @@ namespace Acorisoft.Views
 
                     //
                     // 上一个视图模型和导航参数
-                    _LastVM = context.NavigateIntend;
-                    _LastParams = context.NavigateToParameters;
+                    _LastVM = _CurrentVM;
+                    _LastParams = _CurrentParams;
+                    _CurrentVM = context.NavigateIntend;
+                    _CurrentParams = context.NavigateToParameters;
 
                     //
                     // 结束管线
@@ -186,13 +294,18 @@ namespace Acorisoft.Views
 
                 //
                 // 上一个视图模型和导航参数
-                _LastVM = context.NavigateIntend;
-                _LastParams = context.NavigateToParameters;
+                _LastVM = _CurrentVM;
+                _LastParams = _CurrentParams;
+                _CurrentVM = context.NavigateIntend;
+                _CurrentParams = context.NavigateToParameters;
             }
             else
             {
                 DisplayViewFor(context.NavigateTo);
             }
         }
+
+        public RoutingState Router => _ViewRouter;
+        public ICommand GoBack => _GoBack;
     }
 }
