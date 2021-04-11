@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.ViewModels
 {
-#pragma warning disable IDE0090
+#pragma warning disable IDE0090,IDE0052
 
     /// <summary>
     /// <see cref="AppViewModel"/>
@@ -226,7 +226,7 @@ namespace Acorisoft.ViewModels
             }
             else
             {
-                _Logger.Info(string.Format(SR.AppViewModel_Navigate_ViewModel_NotRegister, typeof(TViewModel).Name));
+                _Logger.Error(string.Format(SR.AppViewModel_Navigate_ViewModel_NotRegister, typeof(TViewModel).Name));
 
             }
         }
@@ -239,7 +239,7 @@ namespace Acorisoft.ViewModels
             // 检测导航的目标视图参数是否为空
             if (PassingParameters == null)
             {
-                _Logger.Info(SR.AppViewModel_Navigate_Parameter_Null);
+                _Logger.Error(SR.AppViewModel_Navigate_Parameter_Null);
             }
 
             if (Locator.CurrentMutable.HasRegistration(ViewModelType))
@@ -248,7 +248,7 @@ namespace Acorisoft.ViewModels
             }
             else
             {
-                _Logger.Info(string.Format(SR.AppViewModel_Navigate_ViewModel_NotRegister, typeof(TViewModel).Name));
+                _Logger.Error(string.Format(SR.AppViewModel_Navigate_ViewModel_NotRegister, typeof(TViewModel).Name));
             }
         }
 
@@ -258,7 +258,7 @@ namespace Acorisoft.ViewModels
             // 检测导航的目标视图模型是否为空
             if (ViewModelType == null)
             {
-                _Logger.Info(string.Format(SR.AppViewModel_Navigate_ViewModel_Null, ViewModelType.Name));
+                _Logger.Error(string.Format(SR.AppViewModel_Navigate_ViewModel_Null, ViewModelType.Name));
             }
 
             if (ViewModelType.IsAssignableTo(typeof(IViewModel)) && Locator.CurrentMutable.HasRegistration(ViewModelType))
@@ -277,14 +277,14 @@ namespace Acorisoft.ViewModels
             // 检测导航的目标视图模型是否为空
             if (ViewModelType == null)
             {
-                _Logger.Info(string.Format(SR.AppViewModel_Navigate_ViewModel_Null, ViewModelType.Name));
+                _Logger.Error(string.Format(SR.AppViewModel_Navigate_ViewModel_Null, ViewModelType.Name));
             }
 
             //
             // 检测导航的目标视图参数是否为空
             if (PassingParameters == null)
             {
-                _Logger.Info(SR.AppViewModel_Navigate_Parameter_Null);
+                _Logger.Error(SR.AppViewModel_Navigate_Parameter_Null);
                 return;
             }
 

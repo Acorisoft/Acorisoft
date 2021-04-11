@@ -95,5 +95,14 @@ namespace Acorisoft.Properties {
                 return ResourceManager.GetString("AppViewModel_Navigating_Forward", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   查找类似 步骤对话框有一个或者多个未注册的类型 的本地化字符串。
+        /// </summary>
+        internal static string DialogManager_Step_ManyViewModel_NotRegister {
+            get {
+                return ResourceManager.GetString("DialogManager_Step_ManyViewModel_NotRegister", resourceCulture);
+            }
+        }
     }
 }

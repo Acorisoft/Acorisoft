@@ -109,4 +109,7 @@
   <data name="AppViewModel_Navigating_Forward" xml:space="preserve">
     <value>已经导航到指定的视图{0}</value>
   </data>
+  <data name="DialogManager_Step_ManyViewModel_NotRegister" xml:space="preserve">
+    <value>步骤对话框有一个或者多个未注册的类型</value>
+  </data>
 </root>
