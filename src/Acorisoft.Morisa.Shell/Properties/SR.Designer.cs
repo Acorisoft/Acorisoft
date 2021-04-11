@@ -61,56 +61,38 @@ namespace Acorisoft.Properties {
         }
         
         /// <summary>
-        ///   查找类似 无法导航到指定的视图，因为视图{0}没有注册 的本地化字符串。
+        ///   查找类似 导航到指定的视图模型传递的参数为空 的本地化字符串。
         /// </summary>
-        internal static string View_CannotFoundViewModel {
+        internal static string AppViewModel_Navigate_Parameter_Null {
             get {
-                return ResourceManager.GetString("View_CannotFoundViewModel", resourceCulture);
+                return ResourceManager.GetString("AppViewModel_Navigate_Parameter_Null", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 导航已完成,视图{0} 的本地化字符串。
+        ///   查找类似 导航操作的目标视图模型{0}未注册 的本地化字符串。
         /// </summary>
-        internal static string View_Navigated {
+        internal static string AppViewModel_Navigate_ViewModel_NotRegister {
             get {
-                return ResourceManager.GetString("View_Navigated", resourceCulture);
+                return ResourceManager.GetString("AppViewModel_Navigate_ViewModel_NotRegister", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 导航操作已经发生了重定向，导航到的视图为{0} 的本地化字符串。
+        ///   查找类似 导航到指定的视图模型为空{0} 的本地化字符串。
         /// </summary>
-        internal static string View_NavigateRedirection {
+        internal static string AppViewModel_Navigate_ViewModel_Null {
             get {
-                return ResourceManager.GetString("View_NavigateRedirection", resourceCulture);
+                return ResourceManager.GetString("AppViewModel_Navigate_ViewModel_Null", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 导航到一个空的视图，导航已取消。 的本地化字符串。
+        ///   查找类似 已经导航到指定的视图{0} 的本地化字符串。
         /// </summary>
-        internal static string View_NavigateToNullViewModel {
+        internal static string AppViewModel_Navigating_Forward {
             get {
-                return ResourceManager.GetString("View_NavigateToNullViewModel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 正在导航到{0}视图 的本地化字符串。
-        /// </summary>
-        internal static string View_Navigating {
-            get {
-                return ResourceManager.GetString("View_Navigating", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 正在后退到{0}视图 的本地化字符串。
-        /// </summary>
-        internal static string View_NavigatingBack {
-            get {
-                return ResourceManager.GetString("View_NavigatingBack", resourceCulture);
+                return ResourceManager.GetString("AppViewModel_Navigating_Forward", resourceCulture);
             }
         }
     }

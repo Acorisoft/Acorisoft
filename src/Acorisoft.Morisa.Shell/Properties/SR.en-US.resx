@@ -97,22 +97,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="View_CannotFoundViewModel" xml:space="preserve">
-    <value>Cannot Navigate to View{0},is never register</value>
+  <data name="AppViewModel_Navigate_Parameter_Null" xml:space="preserve">
+    <value>导航到指定的视图模型传递的参数为空</value>
   </data>
-  <data name="View_Navigated" xml:space="preserve">
-    <value>Navigated to View {0}</value>
+  <data name="AppViewModel_Navigate_ViewModel_NotRegister" xml:space="preserve">
+    <value>导航操作的目标视图模型{0}未注册</value>
   </data>
-  <data name="View_NavigateRedirection" xml:space="preserve">
-    <value>Navigate Operation has been redirect,target view is {0}</value>
+  <data name="AppViewModel_Navigate_ViewModel_Null" xml:space="preserve">
+    <value>导航到指定的视图模型为空{0}</value>
   </data>
-  <data name="View_NavigateToNullViewModel" xml:space="preserve">
-    <value>Navigate to an empty view model,navigation operation is cancel.</value>
-  </data>
-  <data name="View_Navigating" xml:space="preserve">
-    <value>Navigating to View : {0}</value>
-  </data>
-  <data name="View_NavigatingBack" xml:space="preserve">
-    <value>Navigate Back to View{0}</value>
+  <data name="AppViewModel_Navigating_Forward" xml:space="preserve">
+    <value>已经导航到指定的视图{0}</value>
   </data>
 </root>

@@ -44,6 +44,7 @@ namespace Acorisoft.Views
 
         public int Count => ((IReadOnlyCollection<KeyValuePair<string, object>>)_Dict).Count;
 
+
         public bool ContainsKey(string key)
         {
             return ((IReadOnlyDictionary<string, object>)_Dict).ContainsKey(key);
@@ -65,6 +66,9 @@ namespace Acorisoft.Views
         }
 
         #endregion IReadOnlyDictionary<string, object> Interface Implementations
+
+
+        public IReadOnlyDictionary<string, object> Dictionary => _Dict;
 
         public override sealed string ToString()
         {

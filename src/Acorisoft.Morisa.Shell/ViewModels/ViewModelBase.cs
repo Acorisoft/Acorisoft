@@ -1,4 +1,6 @@
-﻿using ReactiveUI;
+﻿using Acorisoft.Views;
+using LiteDB;
+using ReactiveUI;
 using Splat;
 using System;
 using System.Collections.Generic;
@@ -7,36 +9,28 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Views
+namespace Acorisoft.ViewModels
 {
+#pragma warning disable IDE0090
+
     /// <summary>
-    /// <see cref="ViewModelBase"/> 表示一个视图模型基类。
+    /// <see cref="ViewModelBase"/>
     /// </summary>
-    public abstract class ViewModelBase : ReactiveObject, INavigateFrom, INavigateTo
+    public abstract class ViewModelBase : ReactiveObject, IViewModel
     {
-        #region Passing Parameter Support
+        [NonSerialized]
+        [BsonIgnore]
+        private readonly Lazy<IScreen> _LazyScreenInstance = new Lazy<IScreen>(()=> GetService<IScreen>());
 
-        void INavigateFrom.NavigateFrom(INavigateContext context)
-        {
-            OnNavigateFrom(context);
-        }
-
-        void INavigateTo.NavigateTo(INavigateContext context)
-        {
-            OnNavigateTo(context);
-        }
-
-        protected virtual void OnNavigateFrom(INavigateContext context)
+        protected virtual void OnTransferParameter(INavigateParameter parameter)
         {
 
         }
 
-        protected virtual void OnNavigateTo(INavigateContext context)
+        void IParameterTransfer.Transfer(INavigateParameter parameter)
         {
-
+            OnTransferParameter(parameter);
         }
-
-        #endregion Passing Parameter Support
 
         #region Property Notification
 
@@ -54,10 +48,8 @@ namespace Acorisoft.Views
                 this.RaisePropertyChanging(name);
                 source = value;
                 this.RaisePropertyChanged(name);
-
                 return true;
             }
-
             return false;
         }
 
@@ -89,5 +81,26 @@ namespace Acorisoft.Views
         }
 
         #endregion Service Locator Methods
+
+        /// <summary>
+        /// 获取或设置当前视图模型的标题.
+        /// </summary>
+        public string Title { get; protected set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string UrlPathSegment => Title;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public IScreen HostScreen
+        {
+            get
+            {
+                return _LazyScreenInstance.Value;
+            }
+        }
     }
 }
