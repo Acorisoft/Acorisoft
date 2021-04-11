@@ -97,11 +97,74 @@ namespace Acorisoft.Properties {
         }
         
         /// <summary>
+        ///   查找类似 对话框返回Cancel 的本地化字符串。
+        /// </summary>
+        internal static string DialogManager_Dialog_Cancel {
+            get {
+                return ResourceManager.GetString("DialogManager_Dialog_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 对话框{0}有为未注册的类型 的本地化字符串。
+        /// </summary>
+        internal static string DialogManager_Dialog_NotRegister {
+            get {
+                return ResourceManager.GetString("DialogManager_Dialog_NotRegister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 对话框类型为空 的本地化字符串。
+        /// </summary>
+        internal static string DialogManager_Dialog_Null {
+            get {
+                return ResourceManager.GetString("DialogManager_Dialog_Null", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 对话框返回Ok 的本地化字符串。
+        /// </summary>
+        internal static string DialogManager_Dialog_Ok {
+            get {
+                return ResourceManager.GetString("DialogManager_Dialog_Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 步骤对话框返回跳过这一步 的本地化字符串。
+        /// </summary>
+        internal static string DialogManager_Step_Ignore {
+            get {
+                return ResourceManager.GetString("DialogManager_Step_Ignore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 步骤对话框返回上一步 的本地化字符串。
+        /// </summary>
+        internal static string DialogManager_Step_Last {
+            get {
+                return ResourceManager.GetString("DialogManager_Step_Last", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 步骤对话框有一个或者多个未注册的类型 的本地化字符串。
         /// </summary>
         internal static string DialogManager_Step_ManyViewModel_NotRegister {
             get {
                 return ResourceManager.GetString("DialogManager_Step_ManyViewModel_NotRegister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 步骤对话框返回下一步 的本地化字符串。
+        /// </summary>
+        internal static string DialogManager_Step_Next {
+            get {
+                return ResourceManager.GetString("DialogManager_Step_Next", resourceCulture);
             }
         }
     }

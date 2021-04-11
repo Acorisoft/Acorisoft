@@ -1,9 +1,8 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ï»¿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:w="clr-namespace:Acorisoft.Morisa.Windows"
+                    xmlns:w="clr-namespace:Acorisoft.Windows"
                     xmlns:rx="http://reactiveui.net"                    
-                    xmlns:b="clr-namespace:Acorisoft.Morisa.Buttons"
-                    xmlns:c="clr-namespace:Acorisoft.Morisa.Controls">
+                    xmlns:b="clr-namespace:Acorisoft.Buttons">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Acorisoft.Morisa.Shell;component/Themes/Color.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/Acorisoft.Morisa.Shell;component/Themes/Controls.xaml"/>
@@ -236,7 +235,7 @@
                                     <ColumnDefinition Width="144"/>
                                 </Grid.ColumnDefinitions>
 
-                                <!-- ±êÌâÀ¸ -->
+                                <!-- æ ‡é¢˜æ  -->
                                 <ContentControl Grid.Column="0"
                                                 Content="{TemplateBinding TitleBar}"
                                                 ContentTemplate="{TemplateBinding TitleBarTemplate}"
@@ -246,7 +245,7 @@
                                                 HorizontalAlignment="Stretch"
                                                 WindowChrome.IsHitTestVisibleInChrome="True"/>
 
-                                <!-- ÏµÍ³°´Å¥ -->
+                                <!-- ç³»ç»ŸæŒ‰é’® -->
                                 <StackPanel Grid.Column="1"
                                             Orientation="Horizontal"
                                             WindowChrome.IsHitTestVisibleInChrome="True"

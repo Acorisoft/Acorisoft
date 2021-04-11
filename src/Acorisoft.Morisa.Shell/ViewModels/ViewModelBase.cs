@@ -1,4 +1,5 @@
-﻿using Acorisoft.Views;
+﻿using Acorisoft.Dialogs;
+using Acorisoft.Views;
 using LiteDB;
 using ReactiveUI;
 using Splat;
@@ -20,7 +21,17 @@ namespace Acorisoft.ViewModels
     {
         [NonSerialized]
         [BsonIgnore]
-        private readonly Lazy<IScreen> _LazyScreenInstance = new Lazy<IScreen>(()=> GetService<IScreen>());
+        private static readonly Lazy<IScreen> _LazyScreenInstance;
+
+        [NonSerialized]
+        [BsonIgnore]
+        private static readonly Lazy<IDialogManager> _LazyDialogManager;
+
+        static ViewModelBase()
+        {
+            _LazyScreenInstance = new Lazy<IScreen>(() => GetService<IScreen>());
+            _LazyDialogManager = new Lazy<IDialogManager>(() => GetService<IDialogManager>());
+        }
 
         protected virtual void OnTransferParameter(INavigateParameter parameter)
         {
@@ -80,7 +91,142 @@ namespace Acorisoft.ViewModels
             return Locator.Current.GetService<T>();
         }
 
+        protected IDialogManager DialogManager => _LazyDialogManager.Value;
+
         #endregion Service Locator Methods
+
+
+        #region Dialog
+
+        public Task<bool> Confirm(string title, string content)
+        {
+            return DialogManager.Confirm(title, content);
+        }
+
+        public Task<bool> Confirm(string title, object content)
+        {
+            return DialogManager.Confirm(title, content);
+        }
+
+        public Task<bool> Confirm<TViewModel>(string title) where TViewModel : IViewModel
+        {
+            return DialogManager.Confirm<TViewModel>(title);
+        }
+
+        public Task Notification(string title, string content)
+        {
+            return DialogManager.Notification(title, content);
+        }
+
+        public Task Notification(string title, object content)
+        {
+            return DialogManager.Notification(title, content);
+        }
+
+        public Task Notification<TViewModel>(string title) where TViewModel : IViewModel
+        {
+            return DialogManager.Notification<TViewModel>(title);
+        }
+
+        public Task<IDialogSession> Dialog<TViewModel>() where TViewModel : IViewModel
+        {
+            return DialogManager.Dialog<TViewModel>();
+        }
+
+        public Task<IDialogSession> Dialog(IViewModel vm)
+        {
+            return DialogManager.Dialog(vm);
+        }
+
+        public Task<IDialogSession> Step<TContext, TStep1, TStep2>()
+            where TContext : IViewModel
+            where TStep1 : IStepViewModel
+            where TStep2 : IStepViewModel
+        {
+            return DialogManager.Step<TContext, TStep1, TStep2>();
+        }
+
+        public Task<IDialogSession> Step<TContext, TStep1, TStep2, TStep3>()
+            where TContext : IViewModel
+            where TStep1 : IStepViewModel
+            where TStep2 : IStepViewModel
+            where TStep3 : IStepViewModel
+        {
+            return DialogManager.Step<TContext, TStep1, TStep2, TStep3>();
+        }
+
+        public Task<IDialogSession> Step<TContext, TStep1, TStep2, TStep3, TStep4>()
+            where TContext : IViewModel
+            where TStep1 : IStepViewModel
+            where TStep2 : IStepViewModel
+            where TStep3 : IStepViewModel
+            where TStep4 : IStepViewModel
+        {
+            return DialogManager.Step<TContext, TStep1, TStep2, TStep3, TStep4>();
+        }
+
+        public Task<IDialogSession> Step<TContext, TStep1, TStep2, TStep3, TStep4, TStep5>()
+            where TContext : IViewModel
+            where TStep1 : IStepViewModel
+            where TStep2 : IStepViewModel
+            where TStep3 : IStepViewModel
+            where TStep4 : IStepViewModel
+            where TStep5 : IStepViewModel
+        {
+            return DialogManager.Step<TContext, TStep1, TStep2, TStep3, TStep4, TStep5>();
+        }
+
+        public Task<IDialogSession> Step<TContext, TStep1, TStep2, TStep3, TStep4, TStep5, TStep6>()
+            where TContext : IViewModel
+            where TStep1 : IStepViewModel
+            where TStep2 : IStepViewModel
+            where TStep3 : IStepViewModel
+            where TStep4 : IStepViewModel
+            where TStep5 : IStepViewModel
+            where TStep6 : IStepViewModel
+        {
+            return DialogManager.Step<TContext, TStep1, TStep2, TStep3, TStep4, TStep5, TStep6>();
+        }
+
+        public Task<IDialogSession> Step<TContext, TStep1, TStep2, TStep3, TStep4, TStep5, TStep6, TStep7>()
+            where TContext : IViewModel
+            where TStep1 : IStepViewModel
+            where TStep2 : IStepViewModel
+            where TStep3 : IStepViewModel
+            where TStep4 : IStepViewModel
+            where TStep5 : IStepViewModel
+            where TStep6 : IStepViewModel
+            where TStep7 : IStepViewModel
+        {
+            return DialogManager.Step<TContext, TStep1, TStep2, TStep3, TStep4, TStep5, TStep6, TStep7>();
+        }
+
+        public Task<IDialogSession> Step<TContext, TStep1, TStep2, TStep3, TStep4, TStep5, TStep6, TStep7, TStep8>()
+            where TContext : IViewModel
+            where TStep1 : IStepViewModel
+            where TStep2 : IStepViewModel
+            where TStep3 : IStepViewModel
+            where TStep4 : IStepViewModel
+            where TStep5 : IStepViewModel
+            where TStep6 : IStepViewModel
+            where TStep7 : IStepViewModel
+            where TStep8 : IStepViewModel
+        {
+            return DialogManager.Step<TContext, TStep1, TStep2, TStep3, TStep4, TStep5, TStep6, TStep7, TStep8>();
+        }
+
+        public Task<IDialogSession> Step<TContext>(IEnumerable<IStepViewModel> stepViewModels) where TContext : IViewModel
+        {
+            return DialogManager.Step<TContext>(stepViewModels);
+        }
+
+        public Task<IDialogSession> Step(IEnumerable<IStepViewModel> stepViewModels, IViewModel Context)
+        {
+            return DialogManager.Step(stepViewModels, Context);
+        }
+
+
+        #endregion Dialog
 
         /// <summary>
         /// 获取或设置当前视图模型的标题.

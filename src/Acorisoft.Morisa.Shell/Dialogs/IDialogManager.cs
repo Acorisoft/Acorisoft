@@ -81,9 +81,10 @@ namespace Acorisoft.Dialogs
         /// <typeparam name="TStep1"></typeparam>
         /// <typeparam name="TStep2"></typeparam>
         /// <returns></returns>
-        Task<IDialogSession> Step<TStep1, TStep2>()
-            where TStep1 : IViewModel
-            where TStep2 : IViewModel;
+        Task<IDialogSession> Step<TContext, TStep1, TStep2>()
+            where TContext : IViewModel
+            where TStep1 : IStepViewModel
+            where TStep2 : IStepViewModel;
 
         /// <summary>
         /// 
@@ -92,10 +93,11 @@ namespace Acorisoft.Dialogs
         /// <typeparam name="TStep2"></typeparam>
         /// <typeparam name="TStep3"></typeparam>
         /// <returns></returns>
-        Task<IDialogSession> Step<TStep1, TStep2, TStep3>()
-            where TStep1 : IViewModel
-            where TStep2 : IViewModel
-            where TStep3 : IViewModel;
+        Task<IDialogSession> Step<TContext, TStep1, TStep2, TStep3>()
+            where TContext : IViewModel
+            where TStep1 : IStepViewModel
+            where TStep2 : IStepViewModel
+            where TStep3 : IStepViewModel;
 
         /// <summary>
         /// 
@@ -105,11 +107,12 @@ namespace Acorisoft.Dialogs
         /// <typeparam name="TStep3"></typeparam>
         /// <typeparam name="TStep4"></typeparam>
         /// <returns></returns>
-        Task<IDialogSession> Step<TStep1, TStep2, TStep3, TStep4>()
-            where TStep1 : IViewModel
-            where TStep2 : IViewModel
-            where TStep3 : IViewModel
-            where TStep4 : IViewModel;
+        Task<IDialogSession> Step<TContext, TStep1, TStep2, TStep3, TStep4>()
+            where TContext : IViewModel
+            where TStep1 : IStepViewModel
+            where TStep2 : IStepViewModel
+            where TStep3 : IStepViewModel
+            where TStep4 : IStepViewModel;
 
         /// <summary>
         /// 
@@ -120,12 +123,13 @@ namespace Acorisoft.Dialogs
         /// <typeparam name="TStep4"></typeparam>
         /// <typeparam name="TStep5"></typeparam>
         /// <returns></returns>
-        Task<IDialogSession> Step<TStep1, TStep2, TStep3, TStep4, TStep5>()
-            where TStep1 : IViewModel
-            where TStep2 : IViewModel
-            where TStep3 : IViewModel
-            where TStep4 : IViewModel
-            where TStep5 : IViewModel;
+        Task<IDialogSession> Step<TContext, TStep1, TStep2, TStep3, TStep4, TStep5>()
+            where TContext : IViewModel
+            where TStep1 : IStepViewModel
+            where TStep2 : IStepViewModel
+            where TStep3 : IStepViewModel
+            where TStep4 : IStepViewModel
+            where TStep5 : IStepViewModel;
 
         /// <summary>
         /// 
@@ -137,13 +141,14 @@ namespace Acorisoft.Dialogs
         /// <typeparam name="TStep5"></typeparam>
         /// <typeparam name="TStep6"></typeparam>
         /// <returns></returns>
-        Task<IDialogSession> Step<TStep1, TStep2, TStep3, TStep4, TStep5, TStep6>()
-            where TStep1 : IViewModel
-            where TStep2 : IViewModel
-            where TStep3 : IViewModel
-            where TStep4 : IViewModel
-            where TStep5 : IViewModel
-            where TStep6 : IViewModel;
+        Task<IDialogSession> Step<TContext, TStep1, TStep2, TStep3, TStep4, TStep5, TStep6>()
+            where TContext : IViewModel
+            where TStep1 : IStepViewModel
+            where TStep2 : IStepViewModel
+            where TStep3 : IStepViewModel
+            where TStep4 : IStepViewModel
+            where TStep5 : IStepViewModel
+            where TStep6 : IStepViewModel;
 
         /// <summary>
         /// 
@@ -156,18 +161,20 @@ namespace Acorisoft.Dialogs
         /// <typeparam name="TStep6"></typeparam>
         /// <typeparam name="TStep7"></typeparam>
         /// <returns></returns>
-        Task<IDialogSession> Step<TStep1, TStep2, TStep3, TStep4, TStep5, TStep6, TStep7>()
-            where TStep1 : IViewModel
-            where TStep2 : IViewModel
-            where TStep3 : IViewModel
-            where TStep4 : IViewModel
-            where TStep5 : IViewModel
-            where TStep6 : IViewModel
-            where TStep7 : IViewModel;
+        Task<IDialogSession> Step<TContext, TStep1, TStep2, TStep3, TStep4, TStep5, TStep6, TStep7>()
+            where TContext : IViewModel
+            where TStep1 : IStepViewModel
+            where TStep2 : IStepViewModel
+            where TStep3 : IStepViewModel
+            where TStep4 : IStepViewModel
+            where TStep5 : IStepViewModel
+            where TStep6 : IStepViewModel
+            where TStep7 : IStepViewModel;
 
         /// <summary>
         /// 
         /// </summary>
+        /// <typeparam name="TContext"></typeparam>
         /// <typeparam name="TStep1"></typeparam>
         /// <typeparam name="TStep2"></typeparam>
         /// <typeparam name="TStep3"></typeparam>
@@ -177,21 +184,30 @@ namespace Acorisoft.Dialogs
         /// <typeparam name="TStep7"></typeparam>
         /// <typeparam name="TStep8"></typeparam>
         /// <returns></returns>
-        Task<IDialogSession> Step<TStep1, TStep2, TStep3, TStep4, TStep5, TStep6, TStep7, TStep8>()
-            where TStep1 : IViewModel
-            where TStep2 : IViewModel
-            where TStep3 : IViewModel
-            where TStep4 : IViewModel
-            where TStep5 : IViewModel
-            where TStep6 : IViewModel
-            where TStep7 : IViewModel
-            where TStep8 : IViewModel;
+        Task<IDialogSession> Step<TContext, TStep1, TStep2, TStep3, TStep4, TStep5, TStep6, TStep7, TStep8>()
+            where TContext : IViewModel
+            where TStep1 : IStepViewModel
+            where TStep2 : IStepViewModel
+            where TStep3 : IStepViewModel
+            where TStep4 : IStepViewModel
+            where TStep5 : IStepViewModel
+            where TStep6 : IStepViewModel
+            where TStep7 : IStepViewModel
+            where TStep8 : IStepViewModel;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="stepViewModels"></param>
         /// <returns></returns>
-        Task<IDialogSession> Step(IEnumerable<IViewModel> stepViewModels);
+        Task<IDialogSession> Step<TContext>(IEnumerable<IStepViewModel> stepViewModels) where TContext : IViewModel;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stepViewModels"></param>
+        /// <returns></returns>
+        Task<IDialogSession> Step(IEnumerable<IStepViewModel> stepViewModels, IViewModel Context);
     }
 }

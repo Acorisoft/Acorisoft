@@ -15,6 +15,7 @@ namespace Acorisoft.Windows
             Cancel = Create("Acorisoft.Cancel");
             Last = Create("Acorisoft.Last");
             Next = Create("Acorisoft.Next");
+            Ignore = Create("Acorisoft.Ignore");
         }
 
         static RoutedUICommand Create(string name)
@@ -26,5 +27,6 @@ namespace Acorisoft.Windows
         public static RoutedUICommand Cancel { get; }
         public static RoutedUICommand Next { get; }
         public static RoutedUICommand Last { get; }
+        public static RoutedUICommand Ignore { get; }
     }
 }

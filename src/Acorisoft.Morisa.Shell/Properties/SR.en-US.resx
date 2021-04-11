@@ -109,7 +109,28 @@
   <data name="AppViewModel_Navigating_Forward" xml:space="preserve">
     <value>已经导航到指定的视图{0}</value>
   </data>
+  <data name="DialogManager_Dialog_Cancel" xml:space="preserve">
+    <value>对话框返回Cancel</value>
+  </data>
+  <data name="DialogManager_Dialog_NotRegister" xml:space="preserve">
+    <value>对话框{0}有为未注册的类型</value>
+  </data>
+  <data name="DialogManager_Dialog_Null" xml:space="preserve">
+    <value>对话框类型为空</value>
+  </data>
+  <data name="DialogManager_Dialog_Ok" xml:space="preserve">
+    <value>对话框返回Ok</value>
+  </data>
+  <data name="DialogManager_Step_Ignore" xml:space="preserve">
+    <value>步骤对话框返回跳过这一步</value>
+  </data>
+  <data name="DialogManager_Step_Last" xml:space="preserve">
+    <value>步骤对话框返回上一步</value>
+  </data>
   <data name="DialogManager_Step_ManyViewModel_NotRegister" xml:space="preserve">
     <value>步骤对话框有一个或者多个未注册的类型</value>
+  </data>
+  <data name="DialogManager_Step_Next" xml:space="preserve">
+    <value>步骤对话框返回下一步</value>
   </data>
 </root>
