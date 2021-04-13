@@ -1,5 +1,0 @@
-<Project>
-	<PropertyGroup>
-		<OutDir>$(MSBuildThisFileDirectory)\Bin\bin</OutDir>
-	</PropertyGroup>
-</Project>
