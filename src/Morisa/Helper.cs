@@ -11,11 +11,23 @@ namespace Acorisoft.Morisa
     static class Helper
     {
         public static Guid ToGuid() => Guid.NewGuid();
+        public static string ToId => ToGuid().ToString("N");
+
         public static LiteDatabase ToDatabase(ILoadContext context)
         {
             return new LiteDatabase(new ConnectionString
             {
                 Filename = context.FileName
+            });
+        }
+
+        public static LiteDatabase ToDatabase(ISaveContext context)
+        {
+            return new LiteDatabase(new ConnectionString
+            {
+                Filename = context.FileName,
+                InitialSize = Constants.InitialSize,
+                Mode = FileMode.Exclusive
             });
         }
 
@@ -44,6 +56,21 @@ namespace Acorisoft.Morisa
             else
             {
                 instance = Activator.CreateInstance<T>();
+                ds.ObjectInstance.Insert(BsonMapper.Global.ToDocument<T>(instance));
+            }
+
+            return instance;
+        }
+
+        public static T ToObject<T>(DataSet ds, T instance)
+        {
+            if (ds.ObjectInstance == null)
+            {
+                return instance;
+            }
+            var key = typeof(T).FullName;
+            if (!ds.ObjectInstance.Exists(key))
+            {
                 ds.ObjectInstance.Insert(BsonMapper.Global.ToDocument<T>(instance));
             }
 

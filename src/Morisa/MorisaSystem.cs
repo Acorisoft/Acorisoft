@@ -7,6 +7,7 @@ using DryIoc;
 using MediatR;
 using Acorisoft.Morisa;
 using Acorisoft.Morisa.Composition;
+using Acorisoft.Morisa.Core;
 
 namespace Acorisoft.Morisa
 {
@@ -23,8 +24,16 @@ namespace Acorisoft.Morisa
             container.RegisterInstance<ICompositionSetMediator>(new CompositionSetMediator(container.Resolve<ServiceFactory>()));
 
             //
-            // 注册所有System
+            // 创建 IDataPropertyManager 中介者
+            container.RegisterInstance<IDataPropertyManager>(new DataPropertyManager(container));
 
+            //
+            // 创建 IResourceManager 资源管理器
+            container.RegisterInstance<IResourceManager>(new ResourceManager());
+
+            container.RegisterInstance<IFileManager>(new FileManager());
+            //
+            // 注册所有System
             return container;
         }
     }

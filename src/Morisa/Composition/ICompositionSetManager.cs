@@ -59,5 +59,10 @@ namespace Acorisoft.Morisa.Composition
         /// 当 <see cref="ICompositionSetManager"/> 创作集管理器释放资源时触发。
         /// </summary>
         event EventHandler Disposed;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        event EventHandler PropertyChanged;
     }
 }

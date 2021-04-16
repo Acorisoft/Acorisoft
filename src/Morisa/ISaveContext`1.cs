@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 namespace Acorisoft.Morisa
 {
     /// <summary>
-    /// <see cref="ISaveContext{T}"/> 接口表示一个抽象的存储上下文。存储上下文用于为数据集管理器、数据集工厂、数据工厂提供数据保存向导支持。
+    /// <see cref="ISaveContext"/> 接口表示一个抽象的存储上下文。存储上下文用于为数据集管理器、数据集工厂、数据工厂提供数据保存向导支持。
     /// </summary>
-    /// <typeparam name="T"><see cref="ISaveContext{T}"/> 存储上下文的具体加载类型。</typeparam>
-    public interface ISaveContext<T> where T : DataProperty, IDataProperty
+    public interface ISaveContext
     {
         /// <summary>
         /// 获取当前 <see cref="ISaveContext{T}"/> 存储上下文所存储的上下文名称。
@@ -41,5 +40,19 @@ namespace Acorisoft.Morisa
         /// 获取当前 <see cref="ISaveContext{T}"/> 加载上下文所存储的上下文文件路径。
         /// </summary>
         string FileName { get; }
+
+    }
+
+    /// <summary>
+    /// <see cref="ISaveContext{T}"/> 接口表示一个抽象的存储上下文。存储上下文用于为数据集管理器、数据集工厂、数据工厂提供数据保存向导支持。
+    /// </summary>
+    /// <typeparam name="T"><see cref="ISaveContext{T}"/> 存储上下文的具体加载类型。</typeparam>
+    public interface ISaveContext<T> : ISaveContext where T : DataProperty, IDataProperty
+    {
+
+        /// <summary>
+        /// 获取当前 <see cref="ISaveContext{T}"/> 加载上下文所存储的上下文属性。
+        /// </summary>
+        T Property { get; }
     }
 }

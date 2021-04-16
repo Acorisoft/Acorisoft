@@ -10,9 +10,9 @@ namespace Acorisoft.Morisa.Core
     /// 
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public interface IDataSorter<TEntity> 
+    public abstract class DataSorter<TEntity> : IDataSorter<TEntity>
     {
-        IComparer<TEntity> EntityComparer { get; set; }
+        public IComparer<TEntity> EntityComparer { get; set; }
     }
 
     /// <summary>
@@ -20,9 +20,11 @@ namespace Acorisoft.Morisa.Core
     /// </summary>
     /// <typeparam name="TEntity1"></typeparam>
     /// <typeparam name="TEntity2"></typeparam>
-    public interface IDataSorter<TEntity1, TEntity2> : IDataSorter<TEntity1>
+    public abstract class DataSorter<TEntity1, TEntity2> :
+        DataSorter<TEntity1>,
+        IDataSorter<TEntity1, TEntity2>
     {
-        IComparer<TEntity2> Entity2Comparer { get; set; }
+        public IComparer<TEntity2> Entity2Comparer { get; set; }
     }
 
     /// <summary>
@@ -31,9 +33,11 @@ namespace Acorisoft.Morisa.Core
     /// <typeparam name="TEntity1"></typeparam>
     /// <typeparam name="TEntity2"></typeparam>
     /// <typeparam name="TEntity3"></typeparam>
-    public interface IDataSorter<TEntity1, TEntity2, TEntity3> : IDataSorter<TEntity1, TEntity2>
+    public abstract class DataSorter<TEntity1, TEntity2, TEntity3> :
+        DataSorter<TEntity1, TEntity2>,
+        IDataSorter<TEntity1, TEntity2, TEntity3>
     {
-        IComparer<TEntity3> Entity3Comparer { get; set; }
+        public IComparer<TEntity3> Entity3Comparer { get; set; }
     }
 
     /// <summary>
@@ -43,9 +47,11 @@ namespace Acorisoft.Morisa.Core
     /// <typeparam name="TEntity2"></typeparam>
     /// <typeparam name="TEntity3"></typeparam>
     /// <typeparam name="TEntity4"></typeparam>
-    public interface IDataSorter<TEntity1, TEntity2, TEntity3, TEntity4> : IDataSorter<TEntity1, TEntity2, TEntity3>
+    public abstract class DataSorter<TEntity1, TEntity2, TEntity3, TEntity4> :
+        DataSorter<TEntity1, TEntity2, TEntity3>,
+        IDataSorter<TEntity1, TEntity2, TEntity3, TEntity4>
     {
-        IComparer<TEntity4> Entity4Comparer { get; set; }
+        public IComparer<TEntity4> Entity4Comparer { get; set; }
     }
 
     /// <summary>
@@ -56,9 +62,11 @@ namespace Acorisoft.Morisa.Core
     /// <typeparam name="TEntity3"></typeparam>
     /// <typeparam name="TEntity4"></typeparam>
     /// <typeparam name="TEntity5"></typeparam>
-    public interface IDataSorter<TEntity1, TEntity2, TEntity3, TEntity4, TEntity5> : IDataSorter<TEntity1, TEntity2, TEntity3, TEntity4>
+    public abstract class DataSorter<TEntity1, TEntity2, TEntity3, TEntity4, TEntity5> :
+        DataSorter<TEntity1, TEntity2, TEntity3, TEntity4>,
+        IDataSorter<TEntity1, TEntity2, TEntity3, TEntity4, TEntity5>
     {
-        IComparer<TEntity5> Entity5Comparer { get; set; }
+        public IComparer<TEntity5> Entity5Comparer { get; set; }
     }
 
     /// <summary>
@@ -70,9 +78,11 @@ namespace Acorisoft.Morisa.Core
     /// <typeparam name="TEntity4"></typeparam>
     /// <typeparam name="TEntity5"></typeparam>
     /// <typeparam name="TEntity6"></typeparam>
-    public interface IDataSorter<TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6> : IDataSorter<TEntity1, TEntity2, TEntity3, TEntity4, TEntity5>
+    public abstract class DataSorter<TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6> :
+        DataSorter<TEntity1, TEntity2, TEntity3, TEntity4, TEntity5>,
+        IDataSorter<TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6>
     {
-        IComparer<TEntity6> Entity6Comparer { get; set; }
+        public IComparer<TEntity6> Entity6Comparer { get; set; }
     }
 
     /// <summary>
@@ -85,9 +95,11 @@ namespace Acorisoft.Morisa.Core
     /// <typeparam name="TEntity5"></typeparam>
     /// <typeparam name="TEntity6"></typeparam>
     /// <typeparam name="TEntity7"></typeparam>
-    public interface IDataSorter<TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6, TEntity7> : IDataSorter<TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6>
+    public abstract class DataSorter<TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6, TEntity7> :
+    DataSorter<TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6>,
+    IDataSorter<TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6, TEntity7>
     {
-        IComparer<TEntity7> Entity7Comparer { get; set; }
+        public IComparer<TEntity7> Entity7Comparer { get; set; }
     }
 
     /// <summary>
@@ -101,8 +113,10 @@ namespace Acorisoft.Morisa.Core
     /// <typeparam name="TEntity6"></typeparam>
     /// <typeparam name="TEntity7"></typeparam>
     /// <typeparam name="TEntity8"></typeparam>
-    public interface IDataSorter<TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6, TEntity7, TEntity8> : IDataSorter<TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6, TEntity7>
+    public abstract class DataSorter<TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6, TEntity7, TEntity8> :
+        DataSorter<TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6, TEntity7>,
+        IDataSorter<TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6, TEntity7, TEntity8>
     {
-        IComparer<TEntity8> Entity8Comparer { get; set; }
+        public IComparer<TEntity8> Entity8Comparer { get; set; }
     }
 }

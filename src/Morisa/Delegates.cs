@@ -24,4 +24,9 @@ namespace Acorisoft.Morisa
     /// </summary>
     /// <param name="csc">指定当前操作的创作集上下文。</param>
     public delegate void CompositionSwitchHandler(ICompositionSetContext csc);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public delegate void Callback();
 }

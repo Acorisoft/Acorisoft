@@ -61,11 +61,83 @@ namespace Acorisoft.Morisa.Properties {
         }
         
         /// <summary>
+        ///   查找类似 关闭创作集{0}成功 的本地化字符串。
+        /// </summary>
+        internal static string CompositionSetManager_Close_Success {
+            get {
+                return ResourceManager.GetString("CompositionSetManager_Close_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 生成上下文的保存文件夹路径属性为空 的本地化字符串。
+        /// </summary>
+        internal static string CompositionSetManager_Generate_Context_Directory_Empty {
+            get {
+                return ResourceManager.GetString("CompositionSetManager_Generate_Context_Directory_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 生成上下文的保存文件路径属性为空 的本地化字符串。
+        /// </summary>
+        internal static string CompositionSetManager_Generate_Context_FileName_Empty {
+            get {
+                return ResourceManager.GetString("CompositionSetManager_Generate_Context_FileName_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 生成上下文的命名属性为空 的本地化字符串。
+        /// </summary>
+        internal static string CompositionSetManager_Generate_Context_Name_Empty {
+            get {
+                return ResourceManager.GetString("CompositionSetManager_Generate_Context_Name_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 生成上下文为空 的本地化字符串。
+        /// </summary>
+        internal static string CompositionSetManager_Generate_Context_Null {
+            get {
+                return ResourceManager.GetString("CompositionSetManager_Generate_Context_Null", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 生成上下文的生成属性为空 的本地化字符串。
+        /// </summary>
+        internal static string CompositionSetManager_Generate_Context_Property_Null {
+            get {
+                return ResourceManager.GetString("CompositionSetManager_Generate_Context_Property_Null", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 加载上下文的创作集目录不存在 的本地化字符串。
         /// </summary>
         internal static string CompositionSetManager_Load_Directory_NotExists {
             get {
                 return ResourceManager.GetString("CompositionSetManager_Load_Directory_NotExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 加载上下文成功，正在通知组件更新 的本地化字符串。
+        /// </summary>
+        internal static string CompositionSetManager_Load_Notification {
+            get {
+                return ResourceManager.GetString("CompositionSetManager_Load_Notification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 加载上下文成功，正在打开{0} 的本地化字符串。
+        /// </summary>
+        internal static string CompositionSetManager_Load_Success {
+            get {
+                return ResourceManager.GetString("CompositionSetManager_Load_Success", resourceCulture);
             }
         }
         

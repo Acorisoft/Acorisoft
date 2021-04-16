@@ -115,4 +115,28 @@
   <data name="CompositionSetManager_Switch_Context_Invalid" xml:space="preserve">
     <value>切换指定的上下文无效，上下文无效</value>
   </data>
+  <data name="CompositionSetManager_Load_Success" xml:space="preserve">
+    <value>加载上下文成功，正在打开{0}</value>
+  </data>
+  <data name="CompositionSetManager_Load_Notification" xml:space="preserve">
+    <value>加载上下文成功，正在通知组件更新</value>
+  </data>
+  <data name="CompositionSetManager_Generate_Context_Null" xml:space="preserve">
+    <value>生成上下文为空</value>
+  </data>
+  <data name="CompositionSetManager_Generate_Context_Property_Null" xml:space="preserve">
+    <value>生成上下文的生成属性为空</value>
+  </data>
+  <data name="CompositionSetManager_Generate_Context_Name_Empty" xml:space="preserve">
+    <value>生成上下文的命名属性为空</value>
+  </data>
+  <data name="CompositionSetManager_Generate_Context_FileName_Empty" xml:space="preserve">
+    <value>生成上下文的保存文件路径属性为空</value>
+  </data>
+  <data name="CompositionSetManager_Generate_Context_Directory_Empty" xml:space="preserve">
+    <value>生成上下文的保存文件夹路径属性为空</value>
+  </data>
+  <data name="CompositionSetManager_Close_Success" xml:space="preserve">
+    <value>关闭创作集{0}成功</value>
+  </data>
 </root>
