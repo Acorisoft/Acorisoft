@@ -28,5 +28,12 @@ namespace Acorisoft.Morisa
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="exception"></param>
+    public delegate void ExceptionHandler(object sender, Exception exception);
+
+    /// <summary>
+    /// 
+    /// </summary>
     public delegate void Callback();
 }

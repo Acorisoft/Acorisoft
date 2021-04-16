@@ -1,0 +1,11 @@
+<Project>
+	<PropertyGroup>
+		<TargetFrameworks>net5.0-Windows</TargetFrameworks>
+		<Authors>Acoris&lt;731984870@qq.com&gt;</Authors>
+		<Copyright>All copyright reserved by Acorisoft</Copyright>
+		<Company>Acorisoft</Company>
+		<RepositoryUrl>https://github.com/Acorisoft/Acorisoft</RepositoryUrl>
+		<RepositoryType>Github</RepositoryType>
+		<NoWarn>IDE0001;IDE0034;IDEOO87;CS1998;</NoWarn>
+	</PropertyGroup>
+</Project>

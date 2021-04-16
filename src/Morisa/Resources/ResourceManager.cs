@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Resources
 {
-    class ResourceManager : IResourceManager
-    {
-    }
+    //class ResourceManager : IResourceManager
+    //{
+    //}
 }

@@ -13,6 +13,8 @@ using Disposable = Acorisoft.Morisa.Core.Disposable;
 using Acorisoft.Morisa.EventBus;
 using Splat;
 using PropertyHandler = Acorisoft.Morisa.Core.IDataPropertyHandler<Acorisoft.Morisa.Composition.CompositionSetProperty>;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 
 namespace Acorisoft.Morisa.Composition
 {
@@ -32,6 +34,7 @@ namespace Acorisoft.Morisa.Composition
         private protected readonly ReadOnlyObservableCollection<ICompositionSetContext>     OpeningInstance;
 
         private protected readonly SourceList<ICompositionSetContext>   ContextSource;
+        private protected readonly BehaviorSubject<IPageRequest>        ContextPager;
         private protected readonly HashSet<ICompositionSetContext>      ContextDistinct;
 
         private protected CompositionSetContext         ActivatingInstace;
@@ -44,7 +47,7 @@ namespace Acorisoft.Morisa.Composition
         //  Variables
         //
         //-------------------------------------------------------------------------------------------------
-        public CompositionSetManager(ICompositionSetMediator mediator, ILogManager logMrg,IDataPropertyManager dpMgr)
+        public CompositionSetManager(ICompositionSetMediator mediator, ILogManager logMrg, IDataPropertyManager dpMgr)
         {
             _Disposable = new CompositeDisposable();
             _Logger = logMrg.GetLogger(GetType());
@@ -53,8 +56,10 @@ namespace Acorisoft.Morisa.Composition
             MediatorInstance = mediator ?? throw new ArgumentNullException(nameof(mediator));
             ContextSource = new SourceList<ICompositionSetContext>();
             ContextDistinct = new HashSet<ICompositionSetContext>();
+            ContextPager = new BehaviorSubject<IPageRequest>(new PageRequest(1, 25));
 
             var disposable =  ContextSource.Connect()
+                                           .Page(ContextPager)
                                            .Filter(x => !ContextDistinct.Contains(x))
                                            .Bind(out OpeningInstance)
                                            .Subscribe(x =>
@@ -66,14 +71,17 @@ namespace Acorisoft.Morisa.Composition
                                                    {
                                                        case ListChangeReason.Add:
                                                            _Disposable.Add(item);
+                                                           ContextDistinct.Add(item);
                                                            break;
                                                        case ListChangeReason.Remove:
                                                            _Disposable.Remove(item);
+                                                           ContextDistinct.Remove(item);
                                                            break;
                                                    }
                                                }
                                            });
             _Disposable.Add(disposable);
+            _Disposable.Add(ContextPager);
         }
 
         //-------------------------------------------------------------------------------------------------
@@ -197,33 +205,39 @@ namespace Acorisoft.Morisa.Composition
                 throw new InvalidOperationException(SR.CompositionSetManager_Load_Directory_NotExists);
             }
 
-            //
-            // 创建数据库
-            var database = Helper.ToDatabase(context);
+            try
+            {  //
+               // 创建数据库
+                var database = Helper.ToDatabase(context);
 
-            //
-            // 创建数据集
-            var cs = new CompositionSet
+                //
+                // 创建数据集
+                var cs = new CompositionSet
+                {
+                    DatabaseInstance = database,
+                    ObjectInstance = Helper.ToObject(database),
+                };
+
+                //
+                // 反序列化属性。
+                cs.Property = Helper.ToObject<CompositionSetProperty>(cs);
+
+                //
+                // 
+                ActivatingInstace = new CompositionSetContext(cs, context);
+
+                //
+                // 添加到上下文
+                ContextSource.Add(ActivatingInstace);
+
+                //
+                // 推送
+                OnLoad(context, ActivatingInstace);
+            }
+            catch(Exception ex)
             {
-                DatabaseInstance = database,
-                ObjectInstance = Helper.ToObject(database),
-            };
-
-            //
-            // 反序列化属性。
-            cs.Property = Helper.ToObject<CompositionSetProperty>(cs);
-
-            //
-            // 
-            ActivatingInstace = new CompositionSetContext(cs, context);
-
-            //
-            // 添加到上下文
-            ContextSource.Add(ActivatingInstace);
-
-            //
-            // 推送
-            OnLoad(context, ActivatingInstace);
+                OpenFailed?.Invoke(this, ex);
+            }
         }
 
         /// <summary>
@@ -232,12 +246,12 @@ namespace Acorisoft.Morisa.Composition
         /// <param name="context">指定的保存上下文，要求不能为空。</param>
         public void Generate(ISaveContext<CompositionSetProperty> context)
         {
-            if(context == null)
+            if (context == null)
             {
                 throw new InvalidOperationException(SR.CompositionSetManager_Generate_Context_Null);
             }
 
-            if(context.Property == null)
+            if (context.Property == null)
             {
                 throw new InvalidOperationException(SR.CompositionSetManager_Generate_Context_Property_Null);
             }
@@ -257,37 +271,44 @@ namespace Acorisoft.Morisa.Composition
                 throw new InvalidOperationException(SR.CompositionSetManager_Generate_Context_Directory_Empty);
             }
 
-            //
-            // 创建数据库
-            var database = Helper.ToDatabase(context);
-
-            //
-            // 创建数据集
-            var cs = new CompositionSet
+            try
             {
-                DatabaseInstance = database,
-                ObjectInstance = Helper.ToObject(database),
-            };
+                //
+                // 创建数据库
+                var database = Helper.ToDatabase(context);
 
-            //
-            // 序列化属性。
-            cs.Property = Helper.ToObject<CompositionSetProperty>(cs, context.Property);
+                //
+                // 创建数据集
+                var cs = new CompositionSet
+                {
+                    DatabaseInstance = database,
+                    ObjectInstance = Helper.ToObject(database),
+                };
 
-            //
-            // 处理属性中的资源
-            _PropertyHandler.Handle(context.Property, Empty);
+                //
+                // 序列化属性。
+                cs.Property = Helper.ToObject<CompositionSetProperty>(cs, context.Property);
 
-            //
-            // 
-            ActivatingInstace = new CompositionSetContext(cs, context);
+                //
+                // 处理属性中的资源
+                _PropertyHandler?.Handle(context.Property, Empty);
 
-            //
-            // 添加到上下文
-            ContextSource.Add(ActivatingInstace);
+                //
+                // 
+                ActivatingInstace = new CompositionSetContext(cs, context);
 
-            //
-            // 推送
-            OnLoad(context, ActivatingInstace);
+                //
+                // 添加到上下文
+                ContextSource.Add(ActivatingInstace);
+
+                //
+                // 推送
+                OnLoad(context, ActivatingInstace);
+            }
+            catch(Exception ex)
+            {
+                OpenFailed?.Invoke(this, ex);
+            }
         }
 
         /// <summary>
@@ -344,14 +365,14 @@ namespace Acorisoft.Morisa.Composition
         /// <param name="property">指定要更新的创作集属性，要求不能为空。</param>
         public void Update(CompositionSetProperty property)
         {
-            if(property == null)
+            if (property == null)
             {
                 return;
             }
 
             //
             // 异步更新属性。
-            _PropertyHandler.Handle(property, ()=>
+            _PropertyHandler.Handle(property, () =>
             {
                 PropertyChanged?.Invoke(this, new EventArgs());
             });
@@ -373,7 +394,7 @@ namespace Acorisoft.Morisa.Composition
                 throw new InvalidOperationException(SR.CompositionSetManager_Switch_Context_Invalid);
             }
 
-            if(context is ICompositionSetContext csc)
+            if (context is ICompositionSetContext csc)
             {
 
                 ActivatingInstace = (CompositionSetContext)csc;
@@ -399,7 +420,7 @@ namespace Acorisoft.Morisa.Composition
         /// <summary>
         /// 获取当前创作集管理器的中介者。
         /// </summary>
-        public IActivatingContext<CompositionSet, CompositionSetProperty> Activating => null;
+        public IActivatingContext<CompositionSet, CompositionSetProperty> Activating => ActivatingInstace;
 
         /// <summary>
         /// 获取当前创作集管理器的中介者。
@@ -435,5 +456,10 @@ namespace Acorisoft.Morisa.Composition
         /// 当 <see cref="ICompositionSetManager"/> 创作集管理器的活跃创作集属性更新时触发。
         /// </summary>
         public event EventHandler PropertyChanged;
+
+        /// <summary>
+        /// 当 <see cref="ICompositionSetManager"/> 创作集管理器的活跃创作集属性加载时触发。
+        /// </summary>
+        public event ExceptionHandler OpenFailed;
     }
 }

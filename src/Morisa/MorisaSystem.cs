@@ -4,15 +4,72 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DryIoc;
+using Splat.DryIoc;
 using MediatR;
-using Acorisoft.Morisa;
+using System.Reflection;
+using System.Diagnostics;
+using Splat;
+using NLog;
+using Splat.NLog;
+using LogLevel = NLog.LogLevel;
+using NLog.Config;
+using NLog.Targets;
 using Acorisoft.Morisa.Composition;
 using Acorisoft.Morisa.Core;
+using static DryIoc.Rules;
 
 namespace Acorisoft.Morisa
 {
     public static class MorisaSystem
     {
+        public static IContainer Init()
+        {
+            return new Container(Rules.Default.WithTrackingDisposableTransients());
+        }
+        public static IContainer UseDryIoc(this IContainer container)
+        {
+            //
+            //
+            container.UseDryIocDependencyResolver();
+
+            //
+            // 注册所有System
+            return container;
+        }
+        public static IContainer UseLog(this IContainer container)
+        {
+            //
+            // 创建日志配置文件
+            var config = new LoggingConfiguration();
+
+            //
+            // 创建文件日志目标。
+            var logFileTarget = new FileTarget("logFile")
+            {
+                FileName = "log.log"
+            };
+            //
+            // 创建控制台日志目标
+            var logConsoleTarget = new ConsoleTarget("logConsole");
+
+            //
+            // 添加过滤规则
+            config.AddRule(LogLevel.Info, LogLevel.Fatal, logFileTarget);
+            config.AddRule(LogLevel.Debug, LogLevel.Fatal, logConsoleTarget);
+
+            //
+            // 应用设置
+            LogManager.Configuration = config;
+
+            //
+            // 设置使用NLog作为日志工具
+            Locator.CurrentMutable.UseNLogWithWrappingFullLogger();
+
+
+            //
+            // 注册所有System
+            return container;
+        }
         public static IContainer UseMorisa(this IContainer container)
         {
             //
@@ -27,11 +84,16 @@ namespace Acorisoft.Morisa
             // 创建 IDataPropertyManager 中介者
             container.RegisterInstance<IDataPropertyManager>(new DataPropertyManager(container));
 
-            //
-            // 创建 IResourceManager 资源管理器
-            container.RegisterInstance<IResourceManager>(new ResourceManager());
 
-            container.RegisterInstance<IFileManager>(new FileManager());
+            // container.RegisterInstance<IFileManager>(new FileManager());
+            var logger = container.ResolveMany<ILogManager>()
+                                  .LastOrDefault();
+
+            container.RegisterInstance<ICompositionSetManager>(new CompositionSetManager(
+                container.Resolve<ICompositionSetMediator>(),
+                logger,
+                container.Resolve<IDataPropertyManager>()));
+
             //
             // 注册所有System
             return container;

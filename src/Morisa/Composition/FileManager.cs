@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.Composition
 {
-    class FileManager : IFileManager
-    {
-    }
+    //class FileManager : IFileManager
+    //{
+    //}
 }

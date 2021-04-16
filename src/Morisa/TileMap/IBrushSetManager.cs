@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Morisa.TileMap
 {
-    public interface IBrushSetManager : IDataSetManager<IBrushSet>
+    public interface IBrushSetManager : IDataSetManager<BrushSet>
     {
     }
 }

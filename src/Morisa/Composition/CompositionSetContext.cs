@@ -60,7 +60,7 @@ namespace Acorisoft.Morisa.Composition
         /// <returns></returns>
         public override sealed int GetHashCode()
         {
-            return HashCode.Combine(GetHashCode(), FileName?.GetHashCode() ?? -1);
+            return HashCode.Combine(base.GetHashCode(), FileName?.GetHashCode() ?? 1);
         }
 
         /// <summary>
