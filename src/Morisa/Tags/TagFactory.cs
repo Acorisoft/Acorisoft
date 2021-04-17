@@ -248,12 +248,12 @@ namespace Acorisoft.Morisa.Tags
 
         #endregion Add / AddToRoot / AddToChildren
 
-        protected IReadOnlyCollection<ITag> GetChildren(ITag entity)
+        public IReadOnlyCollection<ITag> GetChildren(ITag entity)
         {
             return SourceInstance.Items.Where(x => x.ParentId == entity.Id && entity.GetHashCode() != x.GetHashCode()).ToArray();
         }
 
-        protected ITag GetParent(ITag entity)
+        public ITag GetParent(ITag entity)
         {
             return SourceInstance.Items.Where(x => x.ParentId == entity.Id).FirstOrDefault();
         }

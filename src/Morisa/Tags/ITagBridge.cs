@@ -27,6 +27,9 @@ namespace Acorisoft.Morisa.Tags
         /// </summary>
         ITag Source { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         ReadOnlyObservableCollection<ITagBridge> Children { get; }
     }
 }

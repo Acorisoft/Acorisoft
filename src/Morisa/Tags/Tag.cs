@@ -64,11 +64,19 @@ namespace Acorisoft.Morisa.Tags
             return base.Equals(obj);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override sealed int GetHashCode()
         {
             return HashCode.Combine(base.GetHashCode(), Name?.GetHashCode() ?? 17);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return Name;

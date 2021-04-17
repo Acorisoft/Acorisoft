@@ -15,6 +15,46 @@ namespace Acorisoft.Morisa.Tags
     public interface ITagFactory : IEntitySystem, IDataFactory<ITag>
     {
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        IReadOnlyCollection<ITag> GetChildren(ITag entity);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        ITag GetParent(ITag entity);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        void AddToRoot(ITag entity);
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="parent"></param>
+        void AddToChildren(ITag entity, ITag parent);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        void RemoveEntityAndChildren(ITag entity);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        bool HasChildren(ITag entity);
+
+        /// <summary>
         /// 升级
         /// </summary>
         /// <param name="tag"></param>
