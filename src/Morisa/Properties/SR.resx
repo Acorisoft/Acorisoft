@@ -163,4 +163,10 @@
   <data name="TagFactory_Update_Entity_Id_Empty" xml:space="preserve">
     <value>标签工厂更新实体失败，目标的唯一标识符为空</value>
   </data>
+  <data name="TagFactory_Update_Entity_NotExists" xml:space="preserve">
+    <value>标签工厂更新实体失败，不是当前集合的元素</value>
+  </data>
+  <data name="TagFactory_Update_Entity_No_Parent" xml:space="preserve">
+    <value>标签工厂更新实体失败，当前元素没有父级</value>
+  </data>
 </root>

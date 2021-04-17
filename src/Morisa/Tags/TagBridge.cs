@@ -26,7 +26,7 @@ namespace Acorisoft.Morisa.Tags
             _Parent = node.Parent.HasValue ? node.Parent.Value : null;
             node.Children
                 .Connect()
-                .Transform(x => (ITagBridge)new TagBridge(x,handler))
+                .Transform(x => (ITagBridge)new TagBridge(x, handler))
                 .Bind(out CollectionInstance)
                 .Subscribe(x =>
                 {

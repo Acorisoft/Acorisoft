@@ -250,6 +250,24 @@ namespace Acorisoft.Morisa.Properties {
         }
         
         /// <summary>
+        ///   查找类似 标签工厂更新实体失败，当前元素没有父级 的本地化字符串。
+        /// </summary>
+        internal static string TagFactory_Update_Entity_No_Parent {
+            get {
+                return ResourceManager.GetString("TagFactory_Update_Entity_No_Parent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 标签工厂更新实体失败，不是当前集合的元素 的本地化字符串。
+        /// </summary>
+        internal static string TagFactory_Update_Entity_NotExists {
+            get {
+                return ResourceManager.GetString("TagFactory_Update_Entity_NotExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 标签工厂更新实体失败，目标为空 的本地化字符串。
         /// </summary>
         internal static string TagFactory_Update_Entity_Null {

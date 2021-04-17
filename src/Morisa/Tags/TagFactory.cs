@@ -248,6 +248,16 @@ namespace Acorisoft.Morisa.Tags
 
         #endregion Add / AddToRoot / AddToChildren
 
+        protected IReadOnlyCollection<ITag> GetChildren(ITag entity)
+        {
+            return SourceInstance.Items.Where(x => x.ParentId == entity.Id && entity.GetHashCode() != x.GetHashCode()).ToArray();
+        }
+
+        protected ITag GetParent(ITag entity)
+        {
+            return SourceInstance.Items.Where(x => x.ParentId == entity.Id).FirstOrDefault();
+        }
+
         public void Clear()
         {
             SourceInstance.Clear();
@@ -255,14 +265,59 @@ namespace Acorisoft.Morisa.Tags
             SourceHashset.Clear();
         }
 
-        public void Demote(ITag tag)
+        public void Demote(ITag entity)
         {
-            
+            if (entity == null)
+            {
+                throw new InvalidOperationException(SR.TagFactory_Update_Entity_Null);
+            }
+
+            if (!SourceHashset.Contains(entity))
+            {
+                throw new InvalidOperationException(SR.TagFactory_Update_Entity_NotExists);
+            }
+
+            if (HasChildren(entity))
+            {
+                var firstChild = SourceInstance.Items.First(x => x.ParentId == entity.Id);
+
+                //
+                // changed
+                entity.ParentId = firstChild.Id;
+                SourceInstance.AddOrUpdate(entity);
+            }
         }
 
-        public void Promote(ITag tag)
+        public bool HasChildren(ITag entity)
         {
+            return SourceInstance.Items.Any(x => x.ParentId == entity.Id);
         }
+
+        public void Promote(ITag entity)
+        {
+            if (entity == null)
+            {
+                throw new InvalidOperationException(SR.TagFactory_Update_Entity_Null);
+            }
+
+            if (!SourceHashset.Contains(entity))
+            {
+                throw new InvalidOperationException(SR.TagFactory_Update_Entity_NotExists);
+            }
+
+            if (entity.Id == Guid.Empty)
+            {
+                throw new InvalidOperationException(SR.TagFactory_Update_Entity_Id_Empty);
+            }
+
+            var parent = GetParent(entity);
+            entity.ParentId = parent.Id;
+            SourceInstance.AddOrUpdate(entity);
+
+        }
+
+
+        #region Remove / RemoveEntityAndChildren 
 
         public void Remove(ITag entity)
         {
@@ -273,9 +328,68 @@ namespace Acorisoft.Morisa.Tags
 
             if (SourceHashset.Contains(entity))
             {
+                if(entity.Id == Guid.Empty)
+                {
+                    //
+                    // 移除的是根元素
+                    var children = GetChildren(entity);
+
+                    //
+                    // 将根元素移交到根这里
+                    if(children.Count > 0)
+                    {
+                        foreach(var child in children)
+                        {
+                            child.ParentId = Guid.Empty;
+                            SourceInstance.AddOrUpdate(child);
+                        }
+                    }
+                }
+                else
+                {
+                    var parent = GetParent(entity);
+                    var children = GetChildren(entity);
+
+                    foreach(var child in children)
+                    {
+                        child.ParentId = parent.Id;
+                        SourceInstance.AddOrUpdate(child);
+                    }
+                }
+
                 SourceInstance.Remove(entity);
             }
         }
+
+        public void RemoveEntityAndChildren(ITag entity)
+        {
+            if (entity == null)
+            {
+                throw new InvalidOperationException(SR.TagFactory_Remove_Entity_Null);
+            }
+
+            if (SourceHashset.Contains(entity))
+            {
+                //
+                // 移除的是根元素
+                var children = GetChildren(entity);
+
+                //
+                // 将根元素移交到根这里
+                if (children.Count > 0)
+                {
+                    foreach (var child in children)
+                    {
+                        child.ParentId = Guid.Empty;
+                        SourceInstance.Remove(child);
+                    }
+                }
+
+                SourceInstance.Remove(entity);
+            }
+        }
+
+        #endregion
 
         public void Update(ITag entity)
         {

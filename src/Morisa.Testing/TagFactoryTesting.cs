@@ -11,6 +11,21 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Acorisoft.Morisa.Composition;
+using Acorisoft.Morisa.Core;
+using Acorisoft.Morisa.EventBus;
+using Acorisoft.Morisa.Properties;
+using DynamicData;
+using LiteDB;
+using Splat;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using BindableTagBridgeCollection = System.Collections.ObjectModel.ReadOnlyObservableCollection<Acorisoft.Morisa.Tags.ITagBridge>;
 
 namespace Acorisoft.Morisa
 {
@@ -23,6 +38,79 @@ namespace Acorisoft.Morisa
         {
             _Container = new Container(Rules.Default.WithTrackingDisposableTransients());
             _Container.UseDryIoc().UseLog().UseMorisa();
+        }
+
+        [TestMethod]
+        public void GetParent_Test()
+        {
+            var factory = new SourceCache<ITag,Guid>(x => x.Id);
+            ReadOnlyObservableCollection<ITagBridge> ss;
+
+            factory.Connect()
+                   .TransformToTree(x => x.ParentId)
+                   .Transform(x => (ITagBridge)new TagBridge(x, (o) => { }))
+                   .Bind(out ss)
+                   .Subscribe();
+            var p1 = new Tag
+            {
+                Color = "#007ACC",
+                Name  = $"Tag_Parent1",
+                Id = Guid.NewGuid(),
+            };
+            var p2 = new Tag
+            {
+                Color = "#007ACC",
+                Name  = $"Tag_Parent2",
+                Id = Guid.NewGuid(),
+            };
+            var p3 = new Tag
+            {
+                Color = "#007ACC",
+                Name  = $"Tag_Parent3",
+                Id = Guid.NewGuid(),
+            };
+            factory.AddOrUpdate(p1);
+            factory.AddOrUpdate(p2);
+            factory.AddOrUpdate(p3);
+            for (int i = 0; i < 100; i++)
+            {
+                factory.AddOrUpdate(new Tag
+                {
+                    Color = "#007ACC",
+                    Name = $"Tag{i}",
+                    Id = Guid.NewGuid(),
+                    ParentId = p1.Id
+                });
+            }
+
+            for (int i = 100; i < 200; i++)
+            {
+                factory.AddOrUpdate(new Tag
+                {
+                    Color = "#007ACC",
+                    Name = $"Tag{i}",
+                    Id = Guid.NewGuid(),
+                    ParentId = p2.Id
+                });
+            }
+            for (int i = 200; i < 300; i++)
+            {
+                factory.AddOrUpdate(new Tag
+                {
+                    Color = "#007ACC",
+                    Name = $"Tag{i}",
+                    Id = Guid.NewGuid(),
+                    ParentId = p3.Id
+                });
+            }
+
+            //
+            // set all p3 node's child to root
+            foreach(var child in factory.Items.Where(x => x.ParentId == p3.Id).ToArray())
+            {
+                child.ParentId = Guid.Empty;
+                factory.AddOrUpdate(child);
+            }
         }
 
         [TestMethod]
