@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Acorisoft.Morisa.Composition
 {
-#pragma warning disable CA1816 
 
     /// <summary>
     /// <see cref="CompositionSetContext"/> 类型表示一个创作集上下文。
@@ -73,12 +73,17 @@ namespace Acorisoft.Morisa.Composition
         }
 
         /// <summary>
-        /// 
+        /// 比较与指定对象之间的值等价性。
         /// </summary>
-        /// <param name="y"></param>
-        /// <returns></returns>
-        public bool Equals(CompositionSetContext y)
+        /// <param name="y">指定要比较的对象。</param>
+        /// <returns>如果指定的对象值等价性一致，则返回<see cref="true"/>否则返回<see cref="false"/></returns>
+        public bool Equals([AllowNull]CompositionSetContext y)
         {
+            if(y == null)
+            {
+                return false;
+            }
+
             return y.FileName == FileName;
         }
     }

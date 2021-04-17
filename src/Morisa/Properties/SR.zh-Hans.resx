@@ -139,4 +139,28 @@
   <data name="CompositionSetManager_Close_Success" xml:space="preserve">
     <value>关闭创作集{0}成功</value>
   </data>
+  <data name="TagFactory_Add_Entity_Null" xml:space="preserve">
+    <value>标签工厂添加实体失败，目标为空</value>
+  </data>
+  <data name="TagFactory_Add_Entity_Duplicate" xml:space="preserve">
+    <value>标签工厂添加实体失败，名字{0}重复</value>
+  </data>
+  <data name="TagFactory_Add_Entity_Parent_Null" xml:space="preserve">
+    <value>标签工厂添加实体失败，父级元素为空</value>
+  </data>
+  <data name="TagFactory_Add_Entity_Parent_NotExists" xml:space="preserve">
+    <value>标签工厂添加实体失败，父级元素{0}不存在</value>
+  </data>
+  <data name="TagFactory_Add_Entity_Id_Empty" xml:space="preserve">
+    <value>标签工厂更新实体失败，目标的唯一标识符为空</value>
+  </data>
+  <data name="TagFactory_Remove_Entity_Null" xml:space="preserve">
+    <value>标签工厂移除实体失败，目标为空</value>
+  </data>
+  <data name="TagFactory_Update_Entity_Null" xml:space="preserve">
+    <value>标签工厂更新实体失败，目标为空</value>
+  </data>
+  <data name="TagFactory_Update_Entity_Id_Empty" xml:space="preserve">
+    <value>标签工厂更新实体失败，目标的唯一标识符为空</value>
+  </data>
 </root>

@@ -17,6 +17,8 @@ using NLog.Targets;
 using Acorisoft.Morisa.Composition;
 using Acorisoft.Morisa.Core;
 using static DryIoc.Rules;
+using Acorisoft.Morisa.Tags;
+using Acorisoft.Morisa.EventBus;
 
 namespace Acorisoft.Morisa
 {
@@ -89,14 +91,41 @@ namespace Acorisoft.Morisa
             var logger = container.ResolveMany<ILogManager>()
                                   .LastOrDefault();
 
+            //------------------------------------------------------------------------------------------------
+            //
+            //
+            //
+            //
+            //
+            //------------------------------------------------------------------------------------------------
+
+
+
+            var mediator = container.Resolve<ICompositionSetMediator>();
+
+            //
+            //
             container.RegisterInstance<ICompositionSetManager>(new CompositionSetManager(
-                container.Resolve<ICompositionSetMediator>(),
+                mediator,
                 logger,
                 container.Resolve<IDataPropertyManager>()));
 
             //
+            //
+            RegisterTagFactory(container, mediator, logger);
+
+            //
             // 注册所有System
             return container;
+        }
+
+        private static void RegisterTagFactory(IContainer container, ICompositionSetMediator mediator, ILogManager logger)
+        {
+            var factory = new TagFactory(mediator , logger);
+
+            container.RegisterInstance<ITagFactory>(factory);
+            container.UseInstance<INotificationHandler<CompositionSetOpeningInstruction>>(factory);
+            container.UseInstance<INotificationHandler<CompositionSetClosingInstruction>>(factory);
         }
     }
 }

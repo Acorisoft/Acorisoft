@@ -185,5 +185,77 @@ namespace Acorisoft.Morisa.Properties {
                 return ResourceManager.GetString("DataSetManager_Load_FileName_Null", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   查找类似 标签工厂添加实体失败，名字{0}重复 的本地化字符串。
+        /// </summary>
+        internal static string TagFactory_Add_Entity_Duplicate {
+            get {
+                return ResourceManager.GetString("TagFactory_Add_Entity_Duplicate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 标签工厂更新实体失败，目标的唯一标识符为空 的本地化字符串。
+        /// </summary>
+        internal static string TagFactory_Add_Entity_Id_Empty {
+            get {
+                return ResourceManager.GetString("TagFactory_Add_Entity_Id_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 标签工厂添加实体失败，目标为空 的本地化字符串。
+        /// </summary>
+        internal static string TagFactory_Add_Entity_Null {
+            get {
+                return ResourceManager.GetString("TagFactory_Add_Entity_Null", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 标签工厂添加实体失败，父级元素{0}不存在 的本地化字符串。
+        /// </summary>
+        internal static string TagFactory_Add_Entity_Parent_NotExists {
+            get {
+                return ResourceManager.GetString("TagFactory_Add_Entity_Parent_NotExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 标签工厂添加实体失败，父级元素为空 的本地化字符串。
+        /// </summary>
+        internal static string TagFactory_Add_Entity_Parent_Null {
+            get {
+                return ResourceManager.GetString("TagFactory_Add_Entity_Parent_Null", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 标签工厂移除实体失败，目标为空 的本地化字符串。
+        /// </summary>
+        internal static string TagFactory_Remove_Entity_Null {
+            get {
+                return ResourceManager.GetString("TagFactory_Remove_Entity_Null", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 标签工厂更新实体失败，目标的唯一标识符为空 的本地化字符串。
+        /// </summary>
+        internal static string TagFactory_Update_Entity_Id_Empty {
+            get {
+                return ResourceManager.GetString("TagFactory_Update_Entity_Id_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 标签工厂更新实体失败，目标为空 的本地化字符串。
+        /// </summary>
+        internal static string TagFactory_Update_Entity_Null {
+            get {
+                return ResourceManager.GetString("TagFactory_Update_Entity_Null", resourceCulture);
+            }
+        }
     }
 }

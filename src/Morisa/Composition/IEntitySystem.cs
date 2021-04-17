@@ -8,7 +8,7 @@ using MediatR;
 
 namespace Acorisoft.Morisa.Composition
 {
-    public interface IEntitySystem : INotificationHandler<CompositionSetOpeningInstruction>
+    public interface IEntitySystem : INotificationHandler<CompositionSetOpeningInstruction>, INotificationHandler<CompositionSetClosingInstruction>
     {
     }
 }

@@ -3,7 +3,6 @@
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
 		<RootNamespace>Acorisoft.Morisa</RootNamespace>
-
 		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 
@@ -23,7 +22,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Morisa\Morisa.csproj" />
+	  <ProjectReference Include="..\Morisa\Morisa.csproj" />
 	</ItemGroup>
 
 </Project>

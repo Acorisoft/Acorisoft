@@ -9,6 +9,7 @@ namespace Acorisoft.Morisa
     public static class Constants
     {
         public const string ObjectCollection = "Objects";
+        public const string TagCollection = "Tags";
 
         public const long InitialSize = 1024 * 1024 * 8;
     }

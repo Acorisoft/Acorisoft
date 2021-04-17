@@ -1,4 +1,5 @@
 ﻿using Acorisoft.Morisa.Composition;
+using DynamicData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,4 +37,6 @@ namespace Acorisoft.Morisa
     /// 
     /// </summary>
     public delegate void Callback();
+
+    public delegate void EntityChangedHandler<TEntity, TKey>(IChangeSet<TEntity, TKey> set) where TEntity : class where TKey : notnull;
 }

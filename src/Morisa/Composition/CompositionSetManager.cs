@@ -118,14 +118,14 @@ namespace Acorisoft.Morisa.Composition
         /// 加载操作的后续处理。
         /// </summary>
         /// <param name="context">指定的要加载的上下文。该参数不能为空，并且保证不为空。</param>
-        protected virtual void OnLoad(ILoadContext context, CompositionSetContext activatingContext)
+        protected virtual async void OnLoad(ILoadContext context, CompositionSetContext activatingContext)
         {
             //
             // 记录
             _Logger.Info(string.Format(SR.CompositionSetManager_Load_Success, activatingContext.Name));
             _Logger.Info(SR.CompositionSetManager_Load_Notification);
 
-            MediatorInstance?.Publish(new CompositionSetOpeningInstruction
+            await MediatorInstance?.Publish(new CompositionSetOpeningInstruction
             {
                 Context = activatingContext
             });
@@ -138,14 +138,14 @@ namespace Acorisoft.Morisa.Composition
         /// </summary>
         /// <param name="context">指定的要加载的上下文。该参数不能为空，并且保证不为空。</param>
 
-        protected virtual void OnLoad(ISaveContext context, CompositionSetContext activatingContext)
+        protected virtual async void OnLoad(ISaveContext context, CompositionSetContext activatingContext)
         {
             //
             // 记录
             _Logger.Info(string.Format(SR.CompositionSetManager_Load_Success, activatingContext.Name));
             _Logger.Info(SR.CompositionSetManager_Load_Notification);
 
-            MediatorInstance?.Publish(new CompositionSetOpeningInstruction
+            await MediatorInstance?.Publish(new CompositionSetOpeningInstruction
             {
                 Context = activatingContext
             });
@@ -157,11 +157,11 @@ namespace Acorisoft.Morisa.Composition
         /// 关闭操作的后续处理。
         /// </summary>
         /// <param name="context">指定的要关闭的上下文。该参数不能为空，并且保证不为空。</param>
-        protected virtual void OnClose(CompositionSetContext activatingContext)
+        protected virtual async void OnClose(CompositionSetContext activatingContext)
         {
             //
             // 通知组件更新
-            MediatorInstance?.Publish(new CompositionSetClosingInstruction());
+            await MediatorInstance?.Publish(new CompositionSetClosingInstruction());
 
 
             Closed?.Invoke(activatingContext);
