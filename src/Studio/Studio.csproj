@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net5.0-windows</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<RootNamespace>Acorisoft.Studio</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!--<PackageReference Include="Acorisoft.Spa" Version="1.0.3" />-->
+		<PackageReference Include="LiteDB" Version="4.1.4" />
+		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
+		<PackageReference Include="Splat" Version="9.8.1" />
+		<PackageReference Include="Splat.DryIoc" Version="9.8.1" />
+		<PackageReference Include="Splat.NLog" Version="9.8.1" />
+		<PackageReference Include="ReactiveUI" Version="13.0.1" />
+		<PackageReference Include="ReactiveUI.WPF" Version="13.0.1" />
+		<PackageReference Include="NLog" Version="4.7.9" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\Spa\src\Spa\Spa.csproj" />
+	</ItemGroup>
+
+</Project>
