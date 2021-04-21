@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Studio", "src\Studio\Studio.csproj", "{61204345-B0F1-4947-91C3-8FA64C5B1ADC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spa", "..\Spa\src\Spa\Spa.csproj", "{63F16AF3-5206-4A2B-9DAD-FFC12D0F1E37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spa", "..\Spa\src\Spa\Spa.csproj", "{AB4C63CA-FCD8-431E-A7A5-8C915AB7EAB4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Studio.UI", "src\Studio.UI\Studio.UI.csproj", "{30D691AA-5E56-4294-90C8-32E07A48FEC6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,17 +19,21 @@ Global
 		{61204345-B0F1-4947-91C3-8FA64C5B1ADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61204345-B0F1-4947-91C3-8FA64C5B1ADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61204345-B0F1-4947-91C3-8FA64C5B1ADC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{63F16AF3-5206-4A2B-9DAD-FFC12D0F1E37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{63F16AF3-5206-4A2B-9DAD-FFC12D0F1E37}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{63F16AF3-5206-4A2B-9DAD-FFC12D0F1E37}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{63F16AF3-5206-4A2B-9DAD-FFC12D0F1E37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB4C63CA-FCD8-431E-A7A5-8C915AB7EAB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB4C63CA-FCD8-431E-A7A5-8C915AB7EAB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB4C63CA-FCD8-431E-A7A5-8C915AB7EAB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB4C63CA-FCD8-431E-A7A5-8C915AB7EAB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30D691AA-5E56-4294-90C8-32E07A48FEC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30D691AA-5E56-4294-90C8-32E07A48FEC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30D691AA-5E56-4294-90C8-32E07A48FEC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30D691AA-5E56-4294-90C8-32E07A48FEC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {3EE6B840-2DC2-4DF7-8922-192714C85F7B}
-		RESX_NeutralResourcesLanguage = zh-Hans
 		RESX_SortFileContentOnSave = True
+		RESX_NeutralResourcesLanguage = zh-Hans
+		SolutionGuid = {3EE6B840-2DC2-4DF7-8922-192714C85F7B}
 	EndGlobalSection
 EndGlobal

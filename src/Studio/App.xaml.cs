@@ -24,6 +24,8 @@ namespace Acorisoft.Studio
         protected override void RegisterServices(IContainer container)
         {
             container.Register<IViewFor<TestViewModel>, TestView>();
+            container.Register<IViewFor<DialogViewModel>, TestDialog>();
+            container.Register<DialogViewModel>();
             base.RegisterServices(container);
         }
 

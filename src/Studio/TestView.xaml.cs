@@ -1,4 +1,5 @@
 ﻿using Acorisoft.Spa;
+using Acorisoft.Studio.ViewModels;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -17,16 +18,17 @@ using System.Windows.Shapes;
 
 namespace Acorisoft.Studio
 {
-    public class TestViewModel : ReactiveObject, IParameterViewModel
+    public class TestViewModel : ViewModelBase
     {
-        void IParameterViewModel.Parameter(IReadOnlyDictionary<string, object> parameters)
+
+    }
+
+    public class DialogViewModel : ViewModelBase, IDialogViewModel
+    {
+        public object GetResult()
         {
-
+            return this;
         }
-
-        public string UrlPathSegment { get; }
-
-        public IScreen HostScreen { get; }
     }
 
     /// <summary>
@@ -37,6 +39,14 @@ namespace Acorisoft.Studio
         public TestView()
         {
             InitializeComponent();
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var session = await ViewModel.Dialog<DialogViewModel>();
+            if (session.IsCompleted)
+            {
+            }
         }
     }
 }
