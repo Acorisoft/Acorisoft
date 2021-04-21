@@ -19,9 +19,4 @@
 		<PackageReference Include="NLog" Version="4.7.9" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\..\..\Spa\src\Spa\Spa.csproj" />
-	  <ProjectReference Include="..\Studio.UI\Studio.UI.csproj" />
-	</ItemGroup>
-
 </Project>

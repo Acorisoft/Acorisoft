@@ -1,14 +1,26 @@
-﻿<spa:SpaWindow x:Class="Acorisoft.Studio.MainWindow"
+﻿<Window x:Class="Acorisoft.Studio.MainWindow"
                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:local="clr-namespace:Acorisoft.Studio"
-               xmlns:spa="https://github.com/Acorisoft/Spa"
                xmlns:rx="http://reactiveui.net"
                mc:Ignorable="d"
-               Title="MainWindow" Height="450" Width="800">
+               WindowStyle="None"
+               WindowState="Maximized">
     <Grid>
-        <rx:RoutedViewHost Router="{Binding Source={x:Static spa:Spa.Router},Mode=OneWay}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="29"/>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="29" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0"
+                BorderBrush="Black"
+                BorderThickness="1">
+            <Grid>
+                
+            </Grid>
+        </Border>
     </Grid>
-</spa:SpaWindow>
+</Window>
