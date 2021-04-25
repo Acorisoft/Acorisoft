@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -49,11 +50,12 @@ namespace WPF.Manipulation
         private double _Delta;
         private DispatcherTimer _Timer;
         private FrameworkElement _Element;
-        private Pointer _Pointer;
+        private readonly Pointer _Pointer;
         private bool _IsDragging;
 
-        public MouseGestureRecognition() 
+        public MouseGestureRecognition()
         {
+
             _Delta = 0d;
             _Pointer = new Pointer();
             TargetBehavior = Behavior.NoAction;
@@ -65,7 +67,7 @@ namespace WPF.Manipulation
             {
                 _Timer = timer ?? throw new ArgumentNullException(nameof(timer));
                 _Timer.Tick += Sampling;
-                _Timer.Interval = TimeSpan.FromMilliseconds(10);
+                _Timer.Interval = TimeSpan.FromMilliseconds(8);
                 _Timer.Start();
             }
         }
@@ -84,7 +86,7 @@ namespace WPF.Manipulation
             // 
             if (!_IsDragging && TargetBehavior != Behavior.NoAction)
             {
-                PerformanceBehavior(pressed);
+                PerformanceBehavior();
             }
 
         }
@@ -98,7 +100,7 @@ namespace WPF.Manipulation
 
                 if (_Pointer.IsEnable)
                 {
-                    _Delta += 1.46 * React(_Pointer);
+                    _Delta += 1 * React(_Pointer);
                     _Delta = Math.Clamp(_Delta, 0d, 1d);
                     Dragging?.Invoke(Delta);
                 }
@@ -125,8 +127,8 @@ namespace WPF.Manipulation
 
         protected abstract double React(Pointer pointer);
 
-        protected void PerformanceBehavior(bool pressed)
-        {            
+        protected void PerformanceBehavior()
+        {
             if (!_IsDragging)
             {
                 switch (TargetBehavior)
@@ -178,17 +180,175 @@ namespace WPF.Manipulation
         }
     }
 
+    public class IxContentControl : ContentControl
+    {
+        protected abstract class TranslateTransformer
+        {
+            public abstract void Transform(FrameworkElement parent, FrameworkElement element, double delta);
+        }
+
+        protected sealed class Top2BottomTransformer : TranslateTransformer
+        {
+            public override void Transform(FrameworkElement parent,FrameworkElement element, double delta)
+            {
+                var height = element.ActualHeight;
+                var transform = new TranslateTransform(0, -height + height * delta);
+                element.RenderTransform = transform;
+            }
+        }
+
+        protected sealed class Bottom2TopTransformer : TranslateTransformer
+        {
+            public override void Transform(FrameworkElement parent, FrameworkElement element, double delta)
+            {
+                var height = element.ActualHeight;
+                var transform = new TranslateTransform(0, height - height * delta);
+                element.RenderTransform = transform;
+            }
+        }
+
+        protected sealed class Left2RightTransformer : TranslateTransformer
+        {
+            public override void Transform(FrameworkElement parent, FrameworkElement element, double delta)
+            {
+                var width = element.ActualWidth;
+                var transform = new TranslateTransform(-width + delta * width,0);
+                element.RenderTransform = transform;
+            }
+        }
+
+        protected sealed class Right2LeftTransformer : TranslateTransformer
+        {
+            public override void Transform(FrameworkElement parent, FrameworkElement element, double delta)
+            {
+                var width = element.ActualHeight;
+                var transform = new TranslateTransform(parent.ActualWidth - width * delta, 0);
+                element.RenderTransform = transform;
+            }
+        }
+
+        private TranslateTransformer _Transformer;
+        private ContentPresenter _Presenter;
+
+        public IxContentControl()
+        {
+            _Transformer = new Top2BottomTransformer();
+            this.SizeChanged += OnSizeChanged;
+        }
+
+        protected virtual void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (_Presenter is not null)
+            {
+                _Transformer?.Transform(this, _Presenter, 0);
+            }
+        }
+
+        public override void OnApplyTemplate()
+        {
+            var count = VisualTreeHelper.GetChildrenCount(this);
+            for(int i = 0;i < count; i++)
+            {
+                if(VisualTreeHelper.GetChild(this,i) is ContentPresenter presenter)
+                {
+                    _Presenter = presenter;
+                    _Transformer?.Transform(this, presenter, 0);
+                }
+            }
+            base.OnApplyTemplate();
+        }
+
+        protected override void OnChildDesiredSizeChanged(UIElement child)
+        {
+            if (_Presenter is not null)
+            {
+                _Transformer?.Transform(this, _Presenter, 0);
+            }
+            base.OnChildDesiredSizeChanged(child);
+        }
+
+        protected override void OnContentChanged(object oldContent, object newContent)
+        {
+            if (_Presenter is not null)
+            {
+                _Transformer?.Transform(this, _Presenter, 0);
+            }
+            base.OnContentChanged(oldContent, newContent);
+        }
+
+        private static void OnDirectionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var direction = (ExpandDirection)e.NewValue;
+            var tcc = (IxContentControl)d;
+            switch (direction)
+            {
+                case ExpandDirection.Down:
+                    tcc._Transformer = new Top2BottomTransformer();
+                    break;
+                case ExpandDirection.Up:
+                    tcc._Transformer = new Bottom2TopTransformer();
+                    break;
+                case ExpandDirection.Left:
+                    tcc._Transformer = new Right2LeftTransformer();
+                    break;
+                case ExpandDirection.Right:
+                    tcc._Transformer = new Left2RightTransformer();
+                    break;
+            }
+        }
+
+        private static void OnDeltaChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var delta = (double)e.NewValue;
+            var parent = (IxContentControl)d;
+            var element = parent._Presenter;
+            var transformer = parent._Transformer;
+            if(element is not null)
+            {
+                transformer?.Transform(parent, element, delta);
+            }
+        }
+
+
+        public ExpandDirection Direction
+        {
+            get => (ExpandDirection)GetValue(DirectionProperty);
+            set => SetValue(DirectionProperty, value);
+        }
+
+        public static readonly DependencyProperty DirectionProperty = DependencyProperty.Register(
+            "Direction",
+            typeof(ExpandDirection),
+            typeof(IxContentControl),
+            new PropertyMetadata(ExpandDirection.Down, OnDirectionChanged));
+
+
+        public double Delta
+        {
+            get => (double)GetValue(DeltaProperty);
+            set => SetValue(DeltaProperty, value);
+        }
+
+        public static readonly DependencyProperty DeltaProperty = DependencyProperty.Register(
+            "Delta",
+            typeof(double),
+            typeof(IxContentControl),
+            new PropertyMetadata(0d, OnDeltaChanged));
+
+    }
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
         private readonly DispatcherTimer _Timer;
-        private readonly SweapLeftRecognition _Recognition;
+        private readonly MouseGestureRecognition     _Recognition;
+
         public MainWindow()
         {
-            _Timer = new DispatcherTimer(DispatcherPriority.Normal, Dispatcher);
-            _Recognition = new SweapLeftRecognition();
+            _Timer = new DispatcherTimer(DispatcherPriority.Render, Dispatcher);
+            _Recognition = new SweapDownRecognition();
             _Recognition.SetInputElement(this);
             _Recognition.SetSampler(_Timer);
             _Recognition.Expanding += OnPerformancePosition;
@@ -199,7 +359,7 @@ namespace WPF.Manipulation
 
         private void OnPerformancePosition(double delta)
         {
-            Panel.RenderTransform = new TranslateTransform(-360 + delta * 360, 0);
+            Panel.Delta = delta;
         }
     }
 }

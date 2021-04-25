@@ -7,12 +7,10 @@
         mc:Ignorable="d"
         IsManipulationEnabled="True"
         Background="White"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="800">
     <Grid x:Name="MainPanel" Background="Transparent">
-        <Grid x:Name="Panel" Background="CornflowerBlue" Width="360" HorizontalAlignment="Left">
-            <Grid.RenderTransform>
-                <TranslateTransform X="-360" />
-            </Grid.RenderTransform>
-        </Grid>
+        <local:IxContentControl x:Name="Panel">
+            <Grid Background="CornflowerBlue"/>
+        </local:IxContentControl>
     </Grid>
 </Window>
