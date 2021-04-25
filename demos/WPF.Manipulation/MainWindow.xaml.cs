@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,74 +13,168 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace WPF.Manipulation
 {
-    public class SimulateTouchDevice : TouchDevice
+    public abstract class MouseGestureRecognition
     {
-        public SimulateTouchDevice(int deviceId, Window window) : base(deviceId)
+        protected enum Behavior
         {
-            Window = window;
+            NoAction,
+            Collapsing,
+            Expansing
         }
 
-        public override TouchPointCollection GetIntermediateTouchPoints(IInputElement relativeTo)
+        protected class Pointer
         {
-            return new TouchPointCollection
-            {
+            private Point _Last,_Current;
+            private int _Time;
 
-            };
+            public void Set(Point point)
+            {
+                _Last = _Current;
+                _Current = point;
+                _Time++;
+            }
+
+            public void Unset() => _Time = 0;
+
+            public Point Last => _Last;
+            public Point Current => _Current;
+
+            public bool IsEnable => _Time > 2;
         }
 
-        /// <summary>
-        /// 触摸点
-        /// </summary>
-        public Point Position { set; get; }
+        private double _Delta;
+        private DispatcherTimer _Timer;
+        private FrameworkElement _Element;
+        private Pointer _Pointer;
+        private bool _IsDragging;
 
-        /// <summary>
-        /// 触摸大小
-        /// </summary>
-        public Size Size { set; get; }
-
-        public void Down()
+        public MouseGestureRecognition() 
         {
-            TouchAction = TouchAction.Down;
+            _Delta = 0d;
+            _Pointer = new Pointer();
+            TargetBehavior = Behavior.NoAction;
+        }
 
-            if (!IsActive)
+        public void SetSampler(DispatcherTimer timer)
+        {
+            if (_Timer is null)
             {
-                SetActiveSource(PresentationSource.FromVisual(Window));
+                _Timer = timer ?? throw new ArgumentNullException(nameof(timer));
+                _Timer.Tick += Sampling;
+                _Timer.Interval = TimeSpan.FromMilliseconds(10);
+                _Timer.Start();
+            }
+        }
 
-                Activate();
-                ReportDown();
+        public void SetInputElement(FrameworkElement element) => _Element = element;
+
+        void Sampling(object sender, EventArgs e)
+        {
+            var pressed = Mouse.LeftButton == MouseButtonState.Pressed || Mouse.RightButton == MouseButtonState.Pressed;
+
+            //
+            //
+            PerformanceDragging(pressed);
+
+            //
+            // 
+            if (!_IsDragging && TargetBehavior != Behavior.NoAction)
+            {
+                PerformanceBehavior(pressed);
+            }
+
+        }
+
+        protected void PerformanceDragging(bool pressed)
+        {
+            if (pressed)
+            {
+                _Pointer.Set(Mouse.GetPosition(_Element));
+                _IsDragging = true;
+
+                if (_Pointer.IsEnable)
+                {
+                    _Delta += 1.46 * React(_Pointer);
+                    _Delta = Math.Clamp(_Delta, 0d, 1d);
+                    Dragging?.Invoke(Delta);
+                }
             }
             else
             {
-                ReportDown();
+                if (_Delta > 0 && _Delta < .73d)
+                {
+                    TargetBehavior = Behavior.Collapsing;
+                }
+                else if (_Delta > .73 && _Delta < 1d)
+                {
+                    TargetBehavior = pressed ? Behavior.NoAction : Behavior.Expansing;
+                }
+                else
+                {
+                    TargetBehavior = Behavior.NoAction;
+                }
+
+                _IsDragging = false;
+                _Pointer.Unset();
             }
         }
 
-        public void Move()
-        {
-            TouchAction = TouchAction.Move;
+        protected abstract double React(Pointer pointer);
 
-            ReportMove();
+        protected void PerformanceBehavior(bool pressed)
+        {            
+            if (!_IsDragging)
+            {
+                switch (TargetBehavior)
+                {
+                    case Behavior.Collapsing:
+                        _Delta -= 0.02;
+                        _Delta = Math.Clamp(_Delta, 0d, 1d);
+                        Collapsing?.Invoke(Delta);
+                        break;
+                    case Behavior.Expansing:
+                        _Delta += 0.02;
+                        _Delta = Math.Clamp(_Delta, 0d, 1d);
+                        Expanding?.Invoke(Delta);
+                        break;
+                }
+            }
         }
 
-        public void Up()
-        {
-            TouchAction = TouchAction.Up;
+        /// <summary>
+        /// 获取或设置当前目标的状态。
+        /// </summary>
+        protected Behavior TargetBehavior { get; set; }
 
-            ReportUp();
-            Deactivate();
+        protected FrameworkElement Element => _Element;
+
+        /// <summary>
+        /// 获取当前手势的导数
+        /// </summary>
+        public double Delta { get => _Delta; }
+
+        public event Action<double> Collapsing;
+        public event Action<double> Expanding;
+        public event Action<double> Dragging;
+    }
+
+    public sealed class SweapDownRecognition : MouseGestureRecognition
+    {
+        protected override double React(Pointer pointer)
+        {
+            return (pointer.Current.Y - pointer.Last.Y) / 192;
         }
+    }
 
-
-        private Window Window { get; }
-
-        private TouchAction TouchAction { set; get; }
-
-        public override TouchPoint GetTouchPoint(IInputElement relativeTo)
+    public sealed class SweapLeftRecognition : MouseGestureRecognition
+    {
+        protected override double React(Pointer pointer)
         {
-            return new TouchPoint(this, Position, new Rect(Position, Size), TouchAction);
+            return (pointer.Current.X - pointer.Last.X) / 192;
         }
     }
 
@@ -88,73 +183,23 @@ namespace WPF.Manipulation
     /// </summary>
     public partial class MainWindow : Window
     {
-        private SimulateTouchDevice device;
-        private bool _isDown;
+        private readonly DispatcherTimer _Timer;
+        private readonly SweapLeftRecognition _Recognition;
         public MainWindow()
         {
+            _Timer = new DispatcherTimer(DispatcherPriority.Normal, Dispatcher);
+            _Recognition = new SweapLeftRecognition();
+            _Recognition.SetInputElement(this);
+            _Recognition.SetSampler(_Timer);
+            _Recognition.Expanding += OnPerformancePosition;
+            _Recognition.Collapsing += OnPerformancePosition;
+            _Recognition.Dragging += OnPerformancePosition;
             InitializeComponent();
-            this.MouseDown += OnMouseDown;
-            this.MouseMove += OnMouseMove;
         }
 
-        private void OnMouseDown(object sender, MouseButtonEventArgs e)
+        private void OnPerformancePosition(double delta)
         {
-        }
-
-        private void OnMouseMove(object sender, MouseEventArgs e)
-        {
-            if(Mouse.LeftButton == MouseButtonState.Pressed)
-            {
-                var delta = e.GetPosition((IInputElement)sender);
-                var transform = new TranslateTransform(0,(delta.Y / 1080) * Panel.ActualHeight);
-                Panel.RenderTransform = transform;
-            }
-        }
-
-        public bool HasTouchInput()
-        {
-            foreach (TabletDevice tabletDevice in Tablet.TabletDevices)
-            {
-                //Only detect if it is a touch Screen not how many touches (i.e. Single touch or Multi-touch)
-                if (tabletDevice.Type == TabletDeviceType.Touch)
-                    return true;
-            }
-
-            return false;
-        }
-
-        private void OnTouchUp(object sender, TouchEventArgs e)
-        {
-            device.Up();
-        }
-
-        private void OnTouchMove(object sender, TouchEventArgs e)
-        {
-            device.Move();
-        }
-
-        private void OnTouchDown(object sender, TouchEventArgs e)
-        {
-            device.Down();
-        }
-
-        private void OnManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
-        {
-        }
-
-        private void OnManipulationStarting(object sender, ManipulationStartingEventArgs e)
-        {
-            e.ManipulationContainer = (IInputElement)sender;
-            e.Mode = ManipulationModes.Translate;
-        }
-
-        private void OnManipulationDelta(object sender, ManipulationDeltaEventArgs e)
-        {
-        }
-
-        private void OnManipulationStated(object sender, ManipulationStartedEventArgs e)
-        {
-
+            Panel.RenderTransform = new TranslateTransform(-360 + delta * 360, 0);
         }
     }
 }

@@ -9,9 +9,9 @@
         Background="White"
         Title="MainWindow" Height="450" Width="800">
     <Grid x:Name="MainPanel" Background="Transparent">
-        <Grid x:Name="Panel" Background="CornflowerBlue">
+        <Grid x:Name="Panel" Background="CornflowerBlue" Width="360" HorizontalAlignment="Left">
             <Grid.RenderTransform>
-                <TranslateTransform Y="2560"/>
+                <TranslateTransform X="-360" />
             </Grid.RenderTransform>
         </Grid>
     </Grid>
