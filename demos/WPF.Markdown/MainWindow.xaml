@@ -1,0 +1,27 @@
+﻿<Window x:Class="WPF.Markdown.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:markdig="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
+        xmlns:local="clr-namespace:WPF.Markdown"
+        xmlns:ae="http://icsharpcode.net/sharpdevelop/avalonedit"
+        WindowState="Maximized"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <FrameworkElement.CommandBindings>
+        <CommandBinding Command="{x:Static markdig:Commands.Hyperlink}" Executed="OpenHyperlink" />
+    </FrameworkElement.CommandBindings>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <ae:TextEditor x:Name="Editor" FontSize="15" SyntaxHighlighting="MarkDown" 
+            LineNumbersForeground="Black" 
+            ShowLineNumbers="True"/>
+        <markdig:MarkdownViewer x:Name="Viewer"  Grid.Column="1"/>
+        <FlowDocumentScrollViewer x:Name="Viewer1"  Grid.Column="2"/>
+    </Grid>
+</Window>

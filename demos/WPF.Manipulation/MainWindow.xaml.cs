@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Acorisoft.Spa;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -340,26 +341,18 @@ namespace WPF.Manipulation
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : SpaWindow
     {
         private readonly DispatcherTimer _Timer;
         private readonly MouseGestureRecognition     _Recognition;
 
         public MainWindow()
         {
-            _Timer = new DispatcherTimer(DispatcherPriority.Render, Dispatcher);
-            _Recognition = new SweapDownRecognition();
-            _Recognition.SetInputElement(this);
-            _Recognition.SetSampler(_Timer);
-            _Recognition.Expanding += OnPerformancePosition;
-            _Recognition.Collapsing += OnPerformancePosition;
-            _Recognition.Dragging += OnPerformancePosition;
             InitializeComponent();
         }
 
         private void OnPerformancePosition(double delta)
         {
-            Panel.Delta = delta;
         }
     }
 }

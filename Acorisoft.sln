@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spa", "..\Spa\src\Spa\Spa.csproj", "{AB4C63CA-FCD8-431E-A7A5-8C915AB7EAB4}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPF.Manipulation", "demos\WPF.Manipulation\WPF.Manipulation.csproj", "{09E02D81-B44B-41DF-B9DC-715FFFEBDA1A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF.Markdown", "demos\WPF.Markdown\WPF.Markdown.csproj", "{8C0B1481-898A-4ABF-B9D1-08B5ED854E5D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,21 +11,17 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AB4C63CA-FCD8-431E-A7A5-8C915AB7EAB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AB4C63CA-FCD8-431E-A7A5-8C915AB7EAB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AB4C63CA-FCD8-431E-A7A5-8C915AB7EAB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AB4C63CA-FCD8-431E-A7A5-8C915AB7EAB4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{09E02D81-B44B-41DF-B9DC-715FFFEBDA1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{09E02D81-B44B-41DF-B9DC-715FFFEBDA1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{09E02D81-B44B-41DF-B9DC-715FFFEBDA1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{09E02D81-B44B-41DF-B9DC-715FFFEBDA1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C0B1481-898A-4ABF-B9D1-08B5ED854E5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C0B1481-898A-4ABF-B9D1-08B5ED854E5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C0B1481-898A-4ABF-B9D1-08B5ED854E5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C0B1481-898A-4ABF-B9D1-08B5ED854E5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {3EE6B840-2DC2-4DF7-8922-192714C85F7B}
-		RESX_NeutralResourcesLanguage = zh-Hans
 		RESX_SortFileContentOnSave = True
+		RESX_NeutralResourcesLanguage = zh-Hans
+		SolutionGuid = {3EE6B840-2DC2-4DF7-8922-192714C85F7B}
 	EndGlobalSection
 EndGlobal
