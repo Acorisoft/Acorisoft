@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Acorisoft.Spa" Version="1.0.5" />
+		<PackageReference Include="Gensokyo.Components.Features" Version="1.0.3" />
+		<PackageReference Include="Gensokyo.Xaml" Version="1.0.1" />
+		<PackageReference Include="NLog" Version="4.7.9" />
+		<PackageReference Include="ReactiveUI" Version="13.0.1" />
+		<PackageReference Include="ReactiveUI.WPF" Version="13.0.1" />
+		<PackageReference Include="DryIoc.dll" Version="4.7.2" />
+		<PackageReference Include="Splat" Version="9.8.1" />
+		<PackageReference Include="Splat.DryIoc" Version="9.8.1" />
+		<PackageReference Include="Splat.NLog" Version="9.8.1" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Windows\" />
+	</ItemGroup>
+</Project>
