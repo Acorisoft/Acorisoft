@@ -12,4 +12,40 @@
 		<ProjectReference Include="..\FantasyStudio.Frameworks.Documents\FantasyStudio.Frameworks.Documents.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Page Update="Documents\Characters\Basic\BasicLand.xaml">
+	    <SubType>Designer</SubType>
+	  </Page>
+	  <Page Update="Documents\Characters\Basic\NameLand.xaml">
+	    <SubType>Designer</SubType>
+	  </Page>
+	  <Page Update="Documents\Characters\Basic\BirthdayLand.xaml">
+	    <SubType>Designer</SubType>
+	  </Page>
+	  <Page Update="Documents\Characters\Basic\AgeLand.xaml">
+	    <SubType>Designer</SubType>
+	  </Page>
+	  <Page Update="Documents\Characters\Basic\GenderLand.xaml">
+	    <SubType>Designer</SubType>
+	  </Page>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Documents\Characters\Basic\BasicLand.xaml.cs">
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Documents\Characters\Basic\NameLand.xaml.cs">
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Documents\Characters\Basic\BirthdayLand.xaml.cs">
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Documents\Characters\Basic\AgeLand.xaml.cs">
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Documents\Characters\Basic\GenderLand.xaml.cs">
+	    <SubType>Code</SubType>
+	  </Compile>
+	</ItemGroup>
+
 </Project>

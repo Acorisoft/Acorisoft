@@ -9,12 +9,13 @@
         xmlns:doc="clr-namespace:Acorisoft.FantasyStudio.Documents.Characters;assembly=FantasyStudio.Frameworks.Documents"
         mc:Ignorable="d"
         Background="#F1F1F1"
+        MinWidth="1152"
         Title="MainWindow" Height="450" Width="800">
     <Window.DataContext>
         <local:AppViewModel/>
     </Window.DataContext>
     <Grid>
-        <TabControl>
+        <TabControl TabStripPlacement="Left">
             <TabItem Header="基本设定"
                      Background="#F1F1F1">
                 <DockPanel Background="#F1F1F1" Margin="32 0">
@@ -26,10 +27,15 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="768"/>
                         </Grid.ColumnDefinitions>
-                        <ItemsControl DockPanel.Dock="Bottom" Grid.Column="2"
+                        
+                        <StackPanel Grid.Column="0">
+                            <Image Source="王少珺_衣服.png"></Image>
+                            <tile:NameLand DataContext="{Binding}"/>
+                        </StackPanel>
+                        
+                        <ItemsControl DockPanel.Dock="Bottom" Grid.Column="1"
                                       ItemsSource="{Binding Definitions,Mode=OneWay}">
                             <ItemsControl.Resources>
                                 <DataTemplate DataType="{x:Type doc:BasicCharacterDefinition}">
