@@ -1,0 +1,108 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
+    <!-- 常用色 -->
+    <Color x:Key="Colors.Black">#000000</Color>
+    <Color x:Key="Colors.White">#FFFFFF</Color>
+    <Color x:Key="Colors.Paper">#F5F5F5</Color>
+    <Color x:Key="Colors.Shadow">#AA000000</Color>
+    <Color x:Key="Colors.Transparent">Transparent</Color>
+    <Color x:Key="Colors.Accent">#3F51B5</Color>
+    <Color x:Key="Colors.Accent.Dark">#303F9F</Color>
+    <Color x:Key="Colors.Text.Primary">#3c4858</Color>
+    <Color x:Key="Colors.Text.Secondary">#8492a6</Color>
+    <!-- MaterialDesignColor -->
+    <Color x:Key="Colors.MaterialDesign.Red">#F44336</Color>
+    <Color x:Key="Colors.MaterialDesign.Red.Dark">#D32F2F</Color>
+    <Color x:Key="Colors.MaterialDesign.Pink">#E91E63</Color>
+    <Color x:Key="Colors.MaterialDesign.Pink.Dark">#C2185B</Color>
+    <Color x:Key="Colors.MaterialDesign.Purple">#9C27B0</Color>
+    <Color x:Key="Colors.MaterialDesign.Purple.Dark">#7B1FA2</Color>
+    <Color x:Key="Colors.MaterialDesign.DeepPurple">#673AB7</Color>
+    <Color x:Key="Colors.MaterialDesign.DeepPurple.Dark">#512DA8</Color>
+    <Color x:Key="Colors.MaterialDesign.Indigo">#3F51B5</Color>
+    <Color x:Key="Colors.MaterialDesign.Indigo.Dark">#303F9F</Color>
+    <Color x:Key="Colors.MaterialDesign.Blue">#2196F3</Color>
+    <Color x:Key="Colors.MaterialDesign.Blue.Dark">#1976D2</Color>
+    <Color x:Key="Colors.MaterialDesign.LightBlue">#03A9F4</Color>
+    <Color x:Key="Colors.MaterialDesign.LightBlue.Dark">#0288D1</Color>
+    <Color x:Key="Colors.MaterialDesign.Cyan">#00BCD4</Color>
+    <Color x:Key="Colors.MaterialDesign.Cyan.Dark">#0097A7</Color>
+    <Color x:Key="Colors.MaterialDesign.Teal">#009688</Color>
+    <Color x:Key="Colors.MaterialDesign.Teal.Dark">#00796B</Color>
+    <Color x:Key="Colors.MaterialDesign.Green">#4CAF50</Color>
+    <Color x:Key="Colors.MaterialDesign.Green.Dark">#388E3C</Color>
+    <Color x:Key="Colors.MaterialDesign.LightGreen">#8BC34A</Color>
+    <Color x:Key="Colors.MaterialDesign.LightGreen.Dark">#689F38</Color>
+    <Color x:Key="Colors.MaterialDesign.Lime">#CDDC39</Color>
+    <Color x:Key="Colors.MaterialDesign.Lime.Dark">#AFB42B</Color>
+    <Color x:Key="Colors.MaterialDesign.Yellow">#FFEB3B</Color>
+    <Color x:Key="Colors.MaterialDesign.Yellow.Dark">#FBC02D</Color>
+    <Color x:Key="Colors.MaterialDesign.Amber">#FFC107</Color>
+    <Color x:Key="Colors.MaterialDesign.Amber.Dark">#FFA000</Color>
+    <Color x:Key="Colors.MaterialDesign.Orange">#FF9800</Color>
+    <Color x:Key="Colors.MaterialDesign.Orange.Dark">#F57C00</Color>
+    <Color x:Key="Colors.MaterialDesign.DeepOrange">#FF5722</Color>
+    <Color x:Key="Colors.MaterialDesign.DeepOrange.Dark">#E64A19</Color>
+
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.Red" Color="{StaticResource Colors.MaterialDesign.Red}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.Red.Dark" Color="{StaticResource Colors.MaterialDesign.Red.Dark}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.Pink" Color="{StaticResource Colors.MaterialDesign.Pink}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.Pink.Dark" Color="{StaticResource Colors.MaterialDesign.Pink.Dark}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.Purple" Color="{StaticResource Colors.MaterialDesign.Purple}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.Purple.Dark" Color="{StaticResource Colors.MaterialDesign.Purple.Dark}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.DeepPurple" Color="{StaticResource Colors.MaterialDesign.DeepPurple}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.DeepPurple.Dark" Color="{StaticResource Colors.MaterialDesign.DeepPurple.Dark}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.Indigo" Color="{StaticResource Colors.MaterialDesign.Indigo}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.Indigo.Dark" Color="{StaticResource Colors.MaterialDesign.Indigo.Dark}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.Blue" Color="{StaticResource Colors.MaterialDesign.Blue}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.Blue.Dark" Color="{StaticResource Colors.MaterialDesign.Blue.Dark}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.LightBlue" Color="{StaticResource Colors.MaterialDesign.LightBlue}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.LightBlue.Dark" Color="{StaticResource Colors.MaterialDesign.LightBlue.Dark}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.Cyan" Color="{StaticResource Colors.MaterialDesign.Cyan}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.Cyan.Dark" Color="{StaticResource Colors.MaterialDesign.Cyan.Dark}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.Teal" Color="{StaticResource Colors.MaterialDesign.Teal}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.Teal.Dark" Color="{StaticResource Colors.MaterialDesign.Teal.Dark}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.Green" Color="{StaticResource Colors.MaterialDesign.Green}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.Green.Dark" Color="{StaticResource Colors.MaterialDesign.Green.Dark}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.LightGreen" Color="{StaticResource Colors.MaterialDesign.LightGreen}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.LightGreen.Dark" Color="{StaticResource Colors.MaterialDesign.LightGreen.Dark}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.Lime" Color="{StaticResource Colors.MaterialDesign.Lime}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.Lime.Dark" Color="{StaticResource Colors.MaterialDesign.Lime.Dark}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.Yellow" Color="{StaticResource Colors.MaterialDesign.Yellow}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.Yellow.Dark" Color="{StaticResource Colors.MaterialDesign.Yellow.Dark}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.Amber" Color="{StaticResource Colors.MaterialDesign.Amber}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.Amber.Dark" Color="{StaticResource Colors.MaterialDesign.Amber.Dark}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.Orange" Color="{StaticResource Colors.MaterialDesign.Orange}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.Orange.Dark" Color="{StaticResource Colors.MaterialDesign.Orange.Dark}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.DeepOrange" Color="{StaticResource Colors.MaterialDesign.DeepOrange}"/>
+    <SolidColorBrush x:Key="Brushes.MaterialDesign.DeepOrange.Dark" Color="{StaticResource Colors.MaterialDesign.DeepOrange.Dark}"/>
+
+    <!-- 常用画刷 -->
+    <SolidColorBrush x:Key="Brushes.Black" Color="{StaticResource Colors.Black}"/>
+    <SolidColorBrush x:Key="Brushes.White" Color="{StaticResource Colors.White}"/>
+    <SolidColorBrush x:Key="Brushes.Paper" Color="{StaticResource Colors.Paper}"/>
+    <SolidColorBrush x:Key="Brushes.Accent" Color="{StaticResource Colors.Accent}"/>
+    <SolidColorBrush x:Key="Brushes.Accent.Dark" Color="{StaticResource Colors.Accent.Dark}"/>
+    <SolidColorBrush x:Key="Brushes.Transparent" Color="Transparent"/>
+    <SolidColorBrush x:Key="Brushes.Mask.Dark">#30000000</SolidColorBrush>
+    <SolidColorBrush x:Key="Brushes.Mask.Light">#30FFFFFF</SolidColorBrush>
+    <SolidColorBrush x:Key="Brushes.Text.Primary" Color="{StaticResource Colors.Text.Primary}"/>
+    <SolidColorBrush x:Key="Brushes.Text.Secondary" Color="{StaticResource Colors.Text.Secondary}"/>
+
+
+    <SolidColorBrush x:Key="Brushes.Commons.Background" Color="{StaticResource Colors.Transparent}"/>
+    <SolidColorBrush x:Key="Brushes.Commons.Background.Hover">#30000000</SolidColorBrush>
+    <SolidColorBrush x:Key="Brushes.Commons.Background.Press">#50000000</SolidColorBrush>
+    <SolidColorBrush x:Key="Brushes.Commons.Foreground" Color="{StaticResource Colors.Black}"/>
+    <SolidColorBrush x:Key="Brushes.Commons.Foreground.Hover" Color="{StaticResource Colors.White}"/>
+    <SolidColorBrush x:Key="Brushes.Commons.Foreground.Press" Color="{StaticResource Colors.White}"/>
+
+    <!-- 阴影 -->
+    <DropShadowEffect x:Key="Effect.Shadow1" BlurRadius="5" ShadowDepth="1" Direction="270" Color="{StaticResource Colors.Shadow}" Opacity=".2" RenderingBias="Performance" o:Freeze="True" />
+    <DropShadowEffect x:Key="Effect.Shadow2" BlurRadius="8" ShadowDepth="1.5" Direction="270" Color="{StaticResource Colors.Shadow}" Opacity=".2" RenderingBias="Performance" o:Freeze="True" />
+    <DropShadowEffect x:Key="Effect.Shadow3" BlurRadius="14" ShadowDepth="4.5" Direction="270" Color="{StaticResource Colors.Shadow}" Opacity=".2" RenderingBias="Performance" o:Freeze="True" />
+    <DropShadowEffect x:Key="Effect.Shadow4" BlurRadius="25" ShadowDepth="8" Direction="270" Color="{StaticResource Colors.Shadow}" Opacity=".2" RenderingBias="Performance" o:Freeze="True" />
+    <DropShadowEffect x:Key="Effect.Shadow5" BlurRadius="35" ShadowDepth="13" Direction="270" Color="{StaticResource Colors.Shadow}" Opacity=".2" RenderingBias="Performance" o:Freeze="True" />
+
+</ResourceDictionary>

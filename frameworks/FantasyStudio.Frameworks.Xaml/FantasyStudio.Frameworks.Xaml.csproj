@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0-windows</TargetFramework>
+		<RootNamespace>Acorisoft.Frameworks</RootNamespace>
+		<UseWPF>true</UseWPF>
+		<NoWarn>IDE0034;</NoWarn>
+	</PropertyGroup>
+
+</Project>

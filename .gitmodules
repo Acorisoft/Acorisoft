@@ -1,0 +1,12 @@
+[submodule "markdig"]
+	path = markdig
+	url = https://github.com/Acorisoft/markdig.git
+[submodule "NeoMarkdigXaml"]
+	path = NeoMarkdigXaml
+	url = https://github.com/Acorisoft/NeoMarkdigXaml.git
+[submodule "markdig.wpf"]
+	path = markdig.wpf
+	url = https://github.com/Acorisoft/markdig.wpf.git
+[submodule "AvalonEdit"]
+	path = AvalonEdit
+	url = https://github.com/Acorisoft/AvalonEdit.git

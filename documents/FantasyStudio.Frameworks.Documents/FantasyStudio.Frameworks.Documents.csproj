@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<RootNamespace>Acorisoft.FantasyStudio</RootNamespace>
+		<NoWarn>IDE0001;</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="LiteDB" Version="4.1.4" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+	  <RootNamespace>Acorisoft.Pandora</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AvalonEdit" Version="6.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\AvalonEdit\ICSharpCode.AvalonEdit\ICSharpCode.AvalonEdit.csproj" />
+    <ProjectReference Include="..\..\markdig.wpf\src\Markdig.Wpf\Markdig.Wpf.csproj" />
+    <ProjectReference Include="..\..\markdig\src\Markdig\Markdig.csproj" />
+  </ItemGroup>
+
+</Project>

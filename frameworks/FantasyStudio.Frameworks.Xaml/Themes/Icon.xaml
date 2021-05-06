@@ -1,0 +1,128 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <GeometryGroup x:Key="Icon.User">
+        <GeometryGroup.Children>
+            <Geometry>F1 M24,24z M0,0z M20,21L20,19A4,4,0,0,0,16,15L8,15A4,4,0,0,0,4,19L4,21</Geometry>
+            <EllipseGeometry RadiusX="4" RadiusY="4" Center="12,7" />
+        </GeometryGroup.Children>
+    </GeometryGroup>
+
+    <GeometryGroup x:Key="Icon.Edit3">
+        <GeometryGroup.Children>
+            <Geometry>F1 M24,24z M0,0z M12,20L21,20</Geometry>
+            <Geometry>F1 M24,24z M0,0z M16.5,3.5A2.121,2.121,0,0,1,19.5,6.5L7,19 3,20 4,16 16.5,3.5z</Geometry>
+        </GeometryGroup.Children>
+    </GeometryGroup>
+
+    <GeometryGroup x:Key="Icon.Check">
+        <GeometryGroup.Children>
+            <Geometry>F1 M24,24z M0,0z M20,6L20,6 9,17 4,12</Geometry>
+        </GeometryGroup.Children>
+    </GeometryGroup>
+
+    <GeometryGroup x:Key="Icon.Male">
+        <GeometryGroup.Children>
+            <EllipseGeometry RadiusX="152" RadiusY="152" Center="216,296" />
+            <Geometry>F1 M512,512z M0,0z M448,160L448,64 352,64</Geometry>
+            <Geometry>F1 M512,512z M0,0z M324,188L448,64</Geometry>
+        </GeometryGroup.Children>
+    </GeometryGroup>
+
+    <GeometryGroup x:Key="Icon.Female">
+        <GeometryGroup.Children>
+            <EllipseGeometry RadiusX="152" RadiusY="152" Center="256,184" />
+            <Geometry>F1 M512,512z M0,0z M256,336L256,480</Geometry>
+            <Geometry>F1 M512,512z M0,0z M314,416L198,416</Geometry>
+        </GeometryGroup.Children>
+    </GeometryGroup>
+
+    <GeometryGroup x:Key="Icon.Transgender">
+        <GeometryGroup.Children>
+            <EllipseGeometry RadiusX="136" RadiusY="136" Center="216,200" />
+            <Geometry>F1 M512,512z M0,0z M216,352L216,480</Geometry>
+            <Geometry>F1 M512,512z M0,0z M272,416L160,416</Geometry>
+            <Geometry>F1 M512,512z M0,0z M432,112L432,32 352,32</Geometry>
+            <Geometry>F1 M512,512z M0,0z M335.28,128.72L432,32</Geometry>
+        </GeometryGroup.Children>
+    </GeometryGroup>
+
+    <GeometryGroup x:Key="Icon.Age">
+        <GeometryGroup.Children>
+            <Geometry>F1 M24,24z M0,0z M1,12C1,12 5,4 12,4 19,4 23,12 23,12 23,12 19,20 12,20 5,20 1,12 1,12z</Geometry>
+            <EllipseGeometry RadiusX="3" RadiusY="3" Center="12,12" />
+        </GeometryGroup.Children>
+    </GeometryGroup>
+
+
+    <GeometryGroup x:Key="Icon.Target">
+        <GeometryGroup.Children>
+            <EllipseGeometry RadiusX="10" RadiusY="10" Center="12,12" />
+            <EllipseGeometry RadiusX="6" RadiusY="6" Center="12,12" />
+            <EllipseGeometry RadiusX="2" RadiusY="2" Center="12,12" />
+        </GeometryGroup.Children>
+    </GeometryGroup>
+    
+    <GeometryGroup x:Key="Icon.Aperture">
+        <GeometryGroup.Children>
+            <EllipseGeometry RadiusX="10" RadiusY="10" Center="12,12" />
+            <LineGeometry StartPoint="14.31,8" EndPoint="20.05,17.94" />
+            <LineGeometry StartPoint="9.69,8" EndPoint="21.17,8" />
+            <LineGeometry StartPoint="7.38,12" EndPoint="13.12,2.06" />
+            <LineGeometry StartPoint="9.69,16" EndPoint="3.95,6.06" />
+            <LineGeometry StartPoint="14.31,16" EndPoint="2.83,16" />
+            <LineGeometry StartPoint="16.62,12" EndPoint="10.88,21.94" />
+        </GeometryGroup.Children>
+    </GeometryGroup>
+
+    <GeometryGroup x:Key="Icon.Eye.Off">
+        <GeometryGroup.Children>
+            <Geometry>F1 M24,24z M0,0z M17.94,17.94A10.07,10.07,0,0,1,12,20C5,20,1,12,1,12A18.45,18.45,0,0,1,6.06,6.06 M9.9,4.24A9.12,9.12,0,0,1,12,4C19,4,23,12,23,12A18.5,18.5,0,0,1,20.84,15.19 M14.12,14.12A3,3,0,1,1,9.88,9.88</Geometry>
+            <LineGeometry StartPoint="1,1" EndPoint="23,23" />
+        </GeometryGroup.Children>
+    </GeometryGroup>
+
+    <GeometryGroup x:Key="Icon.Watch">
+        <GeometryGroup.Children>
+            <EllipseGeometry RadiusX="7" RadiusY="7" Center="12,12" />
+            <Geometry>F1 M24,24z M0,0z M16.51,17.35L16.16,21.18A2,2,0,0,1,14.16,23L9.83,23A2,2,0,0,1,7.83,21.18L7.48,17.35 M7.49,6.65L7.84,2.82A2,2,0,0,1,9.83,1L14.18,1A2,2,0,0,1,16.18,2.82L16.53,6.65</Geometry>
+        </GeometryGroup.Children>
+    </GeometryGroup>
+    
+    <GeometryGroup x:Key="Icon.Cake">
+        <GeometryGroup.Children>
+            <Geometry>M22 16.693l-5.141 1.282l-4.82-.996l-4.935.996L2 16.687V16a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v.693zm0 2.063V23H2v-4.25l5.057 1.275l4.978-1.004l4.859 1.004L22 18.756zM9 10h6v2H9v-2zm3-.6a3 3 0 0 1-3-3c0-1.105 1-2.905 3-5.4c2 2.495 3 4.295 3 5.4a3 3 0 0 1-3 3z</Geometry>
+        </GeometryGroup.Children>
+    </GeometryGroup>
+    
+    <GeometryGroup x:Key="Icon.Weight">
+        <GeometryGroup.Children>
+            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,16,16" />
+            <Geometry>F0 M16,16z M0,0z M9,9L9.905,9 9.905,9.92 9,9.92z</Geometry>
+            <Geometry>F0 M16,16z M0,0z M12.017,4.424C12.017,3.692,11.42,3.017,10.682,3.017L9.913,3.017A2.493,2.493,0,0,0,7.486,0A2.492,2.492,0,0,0,5.059,3.017L4.315,3.017C3.58,3.017,2.983,3.692,2.983,4.424L1.008,13.674A1.33,1.33,0,0,0,2.344,15L12.657,15A1.33,1.33,0,0,0,13.99,13.674L12.017,4.424z M6,2.508C6,1.676 6.673,1 7.5,1 8.326,1 9,1.676 9,2.508A1.5,1.5,0,0,1,8.912,3L6.089,3A1.473,1.473,0,0,1,6,2.508z M7.047,9.005L6.045,9.005 6.045,9.953 7.047,9.953 7.047,11.02 5.982,11.02 5.982,10.015 5.043,10.015 5.043,11.02 3.962,11.02 3.962,5.911 5.043,5.911 5.043,8.942 5.982,8.942 5.982,7.937 7.047,7.937 7.047,9.005z M11.047,13.023L10.047,13.023 10.047,14.046 8.985,14.046 8.985,13.038 9.049,12.975 9.941,12.958 9.953,11.021 7.986,11.021 7.978,7.952 11.048,7.965 11.048,13.023 11.047,13.023z</Geometry>
+        </GeometryGroup.Children>
+    </GeometryGroup>
+    
+    <GeometryGroup x:Key="Icon.Year">
+        <GeometryGroup.Children>
+            <Geometry>M36.389 4.962h-5.906a.446.446 0 0 0-.446.446c0 .076.024.144.057.206v3.398a.947.947 0 0 1-.948.948h-1.838a.88.88 0 0 1-.88-.88V5.669a.435.435 0 0 0 .094-.261a.445.445 0 0 0-.446-.446H14.171a.446.446 0 0 0-.446.446c0 .069.019.132.047.191v3.437a.925.925 0 0 1-.925.925h-1.632a.934.934 0 0 1-.934-.934V5.624a.432.432 0 0 0 .063-.216a.445.445 0 0 0-.446-.446H3.675a.993.993 0 0 0-.992.991v29.534c0 .548.445.993.992.993h32.714a.993.993 0 0 0 .991-.993V5.953a.993.993 0 0 0-.991-.991zm0 30.626H3.675a.1.1 0 0 1-.1-.101V13.214h32.913v22.272a.1.1 0 0 1-.099.102z</Geometry>
+            <Geometry>M12.147 8.944c.246 0 .446-.2.446-.446V2.5a.446.446 0 1 0-.892 0v5.999c0 .246.2.445.446.445z</Geometry>
+            <Geometry>M28.301 8.944c.246 0 .446-.2.446-.446V2.5a.446.446 0 1 0-.892 0v5.999c0 .246.199.445.446.445z</Geometry>
+            <EllipseGeometry RadiusX="2.458" RadiusY="2.458" Center="9.842,17.503" />
+            <EllipseGeometry RadiusX="2.458" RadiusY="2.458" Center="16.906,17.503" />
+            <EllipseGeometry RadiusX="2.458" RadiusY="2.458" Center="23.969,17.503" />
+            <EllipseGeometry RadiusX="2.458" RadiusY="2.458" Center="9.842,24.348" />
+            <EllipseGeometry RadiusX="2.458" RadiusY="2.458" Center="16.906,24.348" />
+            <EllipseGeometry RadiusX="2.458" RadiusY="2.458" Center="23.969,24.348" />
+            <EllipseGeometry RadiusX="2.458" RadiusY="2.458" Center="9.842,31.193" />
+            <EllipseGeometry RadiusX="2.458" RadiusY="2.458" Center="16.906,31.193" />
+            <EllipseGeometry RadiusX="2.458" RadiusY="2.458" Center="23.969,31.193" />
+            <EllipseGeometry RadiusX="2.458" RadiusY="2.458" Center="30.867,17.503" />
+            <EllipseGeometry RadiusX="2.458" RadiusY="2.458" Center="30.867,24.348" />
+            <EllipseGeometry RadiusX="2.458" RadiusY="2.458" Center="30.867,31.193" />
+        </GeometryGroup.Children>
+    </GeometryGroup>
+    
+    <Geometry x:Key="Icon.Height">
+        M7 2c1.78 0 2.67 2.16 1.42 3.42C7.16 6.67 5 5.78 5 4a2 2 0 0 1 2-2M5.5 7h3a2 2 0 0 1 2 2v5.5H9V22H5v-7.5H3.5V9a2 2 0 0 1 2-2M19 8h2l-3-4l-3 4h2v8h-2l3 4l3-4h-2m3-14h-8v2h8m0 16h-8v2h8
+    </Geometry>
+</ResourceDictionary>
