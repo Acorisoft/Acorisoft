@@ -9,7 +9,6 @@
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type={x:Type doc:BasicCharacterDefinition},IsDesignTimeCreatable=True}">
     <UserControl.Resources>
-        
         <Style TargetType="{x:Type HeaderedContentControl}">
             <Setter Property="IsTabStop" Value="False"/>
             <Setter Property="HeaderTemplate">
@@ -24,10 +23,6 @@
     <HeaderedContentControl x:Name="PART_Title">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="128" />
-                <ColumnDefinition Width="128" />
-                <ColumnDefinition Width="128" />
-                <ColumnDefinition Width="128" />
                 <ColumnDefinition Width="128" />
                 <ColumnDefinition Width="128" />
                 <ColumnDefinition Width="128" />
@@ -49,7 +44,7 @@
 
             <character:NameLand Grid.Column="0"
                                 Grid.Row="0"
-                                Grid.ColumnSpan="10"
+                                Grid.ColumnSpan="6"
                                 Grid.RowSpan="3"
                                 DataContext="{Binding}"/>
 
@@ -62,14 +57,14 @@
 
             <character:AgeLand Grid.Column="3"
                                Grid.Row="3"
-                               Grid.ColumnSpan="2"
+                               Grid.ColumnSpan="3"
                                HorizontalAlignment="Left"
                                Grid.RowSpan="3"
                                DataContext="{Binding}"/>
 
-            <character:BirthdayLand Grid.Column="5"
-                                    Grid.Row="3"
-                                    Grid.ColumnSpan="5"
+            <character:BirthdayLand Grid.Column="0"
+                                    Grid.Row="6"
+                                    Grid.ColumnSpan="6"
                                     HorizontalAlignment="Left"
                                     Grid.RowSpan="3"
                                     DataContext="{Binding}"/>

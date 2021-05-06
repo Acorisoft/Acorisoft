@@ -8,7 +8,7 @@
              xmlns:xaml="https://github.com/Acorisoft/Xaml"
              mc:Ignorable="d"
              MaxHeight="144"
-             Width="640"
+             MinWidth="768"
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance Type={x:Type doc:BasicCharacterDefinition},IsDesignTimeCreatable=True}">
     <UserControl.Resources>
@@ -22,66 +22,57 @@
             Margin="8">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="280"/>
+                <ColumnDefinition Width="256"/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <HeaderedContentControl Grid.Column="0" x:Name="PART_Title">
-                <DockPanel Grid.Column="0" LastChildFill="True">
-                    <Path Data="{StaticResource Icon.Year}"
-                          Fill="{StaticResource Brushes.MaterialDesign.Teal}"
-                          Margin="4 0 0 0" Width="32" Height="32"
-                          Stretch="UniformToFill"
-                          VerticalAlignment="Center"
-                          DockPanel.Dock="Left" />
+            <DockPanel Grid.Column="0" LastChildFill="True">
+                <Path Data="{StaticResource Icon.Year}"
+                      Fill="{StaticResource Brushes.MaterialDesign.Teal}"
+                      Margin="4 0 0 0" Width="24" Height="24"
+                      Stretch="UniformToFill"
+                      VerticalAlignment="Center"
+                      DockPanel.Dock="Left" />
 
-                    <xaml:ToggleTextEditor
-                        Text="{Binding Birthday,Mode=TwoWay,Converter={StaticResource DateTimeConverter}}"
-                        VerticalAlignment="Center"
-                        Margin="16 0"
-                        FontSize="24"
-                        EditModeIcon="{StaticResource Icon.Check}"
-                        LockModeIcon="{StaticResource Icon.Edit3}" />
-                </DockPanel>
-            </HeaderedContentControl>
-            <HeaderedContentControl Grid.Column="1" x:Name="PART_Height">
-                <DockPanel Grid.Column="0" LastChildFill="True">
-                    <Path Data="{StaticResource Icon.Height}"
-                          Fill="{StaticResource Brushes.MaterialDesign.Teal}"
-                          Margin="4 0 0 0" Width="32" Height="32"
-                          Stretch="UniformToFill"
-                          VerticalAlignment="Center"
-                          DockPanel.Dock="Left" />
+                <xaml:ToggleTextEditor Text="{Binding Birthday,Mode=TwoWay,Converter={StaticResource DateTimeConverter}}"
+                                       VerticalAlignment="Center"
+                                       Margin="16 0"
+                                       FontSize="24"
+                                       EditModeIcon="{StaticResource Icon.Check}"
+                                       LockModeIcon="{StaticResource Icon.Edit3}" />
+            </DockPanel>
+            <DockPanel Grid.Column="1" LastChildFill="True">
+                <Path Data="{StaticResource Icon.Height}"
+                      Fill="{StaticResource Brushes.MaterialDesign.Teal}"
+                      Margin="4 0 0 0" Width="24" Height="24"
+                      Stretch="UniformToFill"
+                      VerticalAlignment="Center"
+                      DockPanel.Dock="Left" />
 
-                    <xaml:ToggleTextEditor
-                        Text="{Binding Height,Mode=TwoWay,Converter={StaticResource String2Int}}"
-                        VerticalAlignment="Center"
-                        Margin="16 0"
-                        FontSize="24"
-                        EditModeIcon="{StaticResource Icon.Check}"
-                        LockModeIcon="{StaticResource Icon.Edit3}"
-                        DockPanel.Dock="Bottom" />
-                </DockPanel>
-            </HeaderedContentControl>
-            <HeaderedContentControl Grid.Column="2" x:Name="PART_Weight">
-                <DockPanel Grid.Column="0" LastChildFill="True">
-                    <Path Data="{StaticResource Icon.Weight}"
-                          Stroke="{StaticResource Brushes.MaterialDesign.Teal}"
-                          StrokeThickness="2"
-                          Margin="4 0 0 0" Width="32" Height="32"
-                          Stretch="UniformToFill"
-                          VerticalAlignment="Center"
-                          DockPanel.Dock="Left" />
+                <xaml:ToggleTextEditor Text="{Binding Height,Mode=TwoWay,Converter={StaticResource String2Int},StringFormat=\{0\}cm}"
+                                       VerticalAlignment="Center"
+                                       Margin="16 0"
+                                       FontSize="24"
+                                       EditModeIcon="{StaticResource Icon.Check}"
+                                       LockModeIcon="{StaticResource Icon.Edit3}"
+                                       DockPanel.Dock="Bottom" />
+            </DockPanel>
+            <DockPanel Grid.Column="2" LastChildFill="True">
+                <Path Data="{StaticResource Icon.Weight}"
+                      Fill="{StaticResource Brushes.MaterialDesign.Teal}"
+                      Margin="4 0 0 0" Width="24" Height="24"
+                      Stretch="UniformToFill"
+                      VerticalAlignment="Center"
+                      DockPanel.Dock="Left" />
 
-                    <xaml:ToggleTextEditor Text="{Binding Weight,Mode=TwoWay,Converter={StaticResource String2Int}}"
-                                           VerticalAlignment="Center"
-                                           Margin="16 0"
-                                           FontSize="24"
-                                           EditModeIcon="{StaticResource Icon.Check}"
-                                           LockModeIcon="{StaticResource Icon.Edit3}"
-                                           DockPanel.Dock="Bottom" />
-                </DockPanel>
-            </HeaderedContentControl>
+                <xaml:ToggleTextEditor Text="{Binding Weight,Mode=TwoWay,Converter={StaticResource String2Int},StringFormat=\{0\}KG}"
+                                       VerticalAlignment="Center"
+                                       Margin="16 0"
+                                       FontSize="24"
+                                       EditModeIcon="{StaticResource Icon.Check}"
+                                       LockModeIcon="{StaticResource Icon.Edit3}"
+                                       DockPanel.Dock="Bottom" />
+            </DockPanel>
         </Grid>
     </Border>
 </UserControl>

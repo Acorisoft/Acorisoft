@@ -17,20 +17,30 @@
         <TabControl>
             <TabItem Header="基本设定"
                      Background="#F1F1F1">
-                <DockPanel Background="#F1F1F1">
+                <DockPanel Background="#F1F1F1" Margin="32 0">
                     <StackPanel Orientation="Horizontal"
                                 Height="32"
                                 DockPanel.Dock="Top">
                         <Button Content="add" Click="Button_Click"/>
                     </StackPanel>
-                    <ItemsControl DockPanel.Dock="Bottom"
-                                  ItemsSource="{Binding Definitions,Mode=OneWay}">
-                        <ItemsControl.Resources>
-                            <DataTemplate DataType="{x:Type doc:BasicCharacterDefinition}">
-                                <tile:BasicLand DataContext="{Binding}" Width="1280" Height="640"/>
-                            </DataTemplate>
-                        </ItemsControl.Resources>
-                    </ItemsControl>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="768"/>
+                        </Grid.ColumnDefinitions>
+                        <ItemsControl DockPanel.Dock="Bottom" Grid.Column="2"
+                                      ItemsSource="{Binding Definitions,Mode=OneWay}">
+                            <ItemsControl.Resources>
+                                <DataTemplate DataType="{x:Type doc:BasicCharacterDefinition}">
+                                    <tile:BasicLand DataContext="{Binding}"/>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type doc:CharacterZodiacDefinition}">
+                                    <tile:ZodiacLand DataContext="{Binding}"/>
+                                </DataTemplate>
+                            </ItemsControl.Resources>
+                        </ItemsControl>
+                    </Grid>
                 </DockPanel>
             </TabItem>
         </TabControl>

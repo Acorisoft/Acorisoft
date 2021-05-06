@@ -109,4 +109,62 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
+    <Style TargetType="{x:Type character:ZodiacSymbol}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="character:ZodiacSymbol">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Path x:Name="PART_Icon"
+                              Width="42" Height="42"
+                              Stretch="Uniform"
+                              Fill="#AAAAAA"
+                              DockPanel.Dock="Left"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Zodiac" Value="Aries">
+                            <Setter Property="Data" Value="{StaticResource Icon.Aries}" TargetName="PART_Icon"/>
+                        </Trigger>
+                        <Trigger Property="Zodiac" Value="Taurus">
+                            <Setter Property="Data" Value="{StaticResource Icon.Taurus}" TargetName="PART_Icon"/>
+                        </Trigger>
+                        <Trigger Property="Zodiac" Value="Gemini">
+                            <Setter Property="Data" Value="{StaticResource Icon.Gemini}" TargetName="PART_Icon"/>
+                        </Trigger>
+                        <Trigger Property="Zodiac" Value="Cancer">
+                            <Setter Property="Data" Value="{StaticResource Icon.Cancer}" TargetName="PART_Icon"/>
+                        </Trigger>
+                        <Trigger Property="Zodiac" Value="Leo">
+                            <Setter Property="Data" Value="{StaticResource Icon.Leo}" TargetName="PART_Icon"/>
+                        </Trigger>
+                        <Trigger Property="Zodiac" Value="Virgo">
+                            <Setter Property="Data" Value="{StaticResource Icon.Virgo}" TargetName="PART_Icon"/>
+                        </Trigger>
+                        <Trigger Property="Zodiac" Value="Libra">
+                            <Setter Property="Data" Value="{StaticResource Icon.Libra}" TargetName="PART_Icon"/>
+                        </Trigger>
+                        <Trigger Property="Zodiac" Value="Scorpio">
+                            <Setter Property="Data" Value="{StaticResource Icon.Scorpio}" TargetName="PART_Icon"/>
+                        </Trigger>
+                        <Trigger Property="Zodiac" Value="Sagittarius">
+                            <Setter Property="Data" Value="{StaticResource Icon.Sagittarius}" TargetName="PART_Icon"/>
+                        </Trigger>
+                        <Trigger Property="Zodiac" Value="Capricorn">
+                            <Setter Property="Data" Value="{StaticResource Icon.Capricorn}" TargetName="PART_Icon"/>
+                        </Trigger>
+                        <Trigger Property="Zodiac" Value="Aquarius">
+                            <Setter Property="Data" Value="{StaticResource Icon.Aquarius}" TargetName="PART_Icon"/>
+                        </Trigger>
+                        <Trigger Property="Zodiac" Value="Pisces">
+                            <Setter Property="Data" Value="{StaticResource Icon.Pisces}" TargetName="PART_Icon"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

@@ -24,9 +24,9 @@ namespace Acorisoft.FantasyStudio.Documents.Characters
         public BirthdayLand()
         {
             InitializeComponent();
-            PART_Title.Header = InitializeTitle();
-            PART_Height.Header = InitializeHeightTips();
-            PART_Weight.Header = InitializeWeightTips();
+            // PART_Title.Header = InitializeTitle();
+            // PART_Height.Header = InitializeHeightTips();
+            // PART_Weight.Header = InitializeWeightTips();
         }
 
         private static string InitializeTitle()

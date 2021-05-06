@@ -42,7 +42,9 @@ namespace Acorisoft.Frameworks.Converters
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (int.TryParse(value.ToString(), out var number))
+            var str = value?.ToString() ?? string.Empty;
+            var newStr = new string(str.Where(x => char.IsDigit(x)).ToArray());
+            if (int.TryParse(newStr, out var number))
             {
                 return number;
             }

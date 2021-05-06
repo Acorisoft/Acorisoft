@@ -59,4 +59,24 @@ namespace Acorisoft.FantasyStudio.Documents.Characters
             new PropertyMetadata(null));
 
     }
+    public class ZodiacSymbol : Control
+    {
+        static ZodiacSymbol()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ZodiacSymbol), new FrameworkPropertyMetadata(typeof(ZodiacSymbol)));
+        }
+
+        public Zodiac Zodiac
+        {
+            get => (Zodiac)GetValue(ZodiacProperty);
+            set => SetValue(ZodiacProperty, value);
+        }
+
+        public static readonly DependencyProperty ZodiacProperty = DependencyProperty.Register(
+            "Zodiac",
+            typeof(Zodiac),
+            typeof(ZodiacSymbol),
+            new PropertyMetadata(null));
+
+    }
 }
