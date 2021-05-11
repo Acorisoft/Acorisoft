@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0-Windows</TargetFramework>
+        <UseWpf>True</UseWpf>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.ComponentModel.Composition" Version="6.0.0-preview.3.21201.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\FantasyStudio.MEF.Core\FantasyStudio.MEF.Core.csproj" />
+    </ItemGroup>
+
+</Project>
