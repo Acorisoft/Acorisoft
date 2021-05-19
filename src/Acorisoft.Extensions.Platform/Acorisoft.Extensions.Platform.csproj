@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>Acorisoft.Extension</RootNamespace>
+        <Description>Acorisoft.Extensions.Platform类库表示一个专门用于Windows平台的核心库</Description>
+    </PropertyGroup>
+
+</Project>

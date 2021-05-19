@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="../../ioc.targets" />
+    <Import Project="../../rxui.targets" />
+    <Import Project="../../db.targets" />
+    <PropertyGroup>
+        <TargetFramework>net5.0-windows</TargetFramework>
+        <UseWPF>true</UseWPF>
+        <RootNamespace>Acorisoft.Extension</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Acorisoft.Extensions.Platform\Acorisoft.Extensions.Platform.csproj" />
+    </ItemGroup>
+
+</Project>
