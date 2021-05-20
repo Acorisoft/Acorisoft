@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="../../db.targets"/>
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>Acorisoft.Studio.Document</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Acorisoft.Studio.Documents.Core\Acorisoft.Studio.Documents.Core.csproj" />
+    </ItemGroup>
+
+</Project>

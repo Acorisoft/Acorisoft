@@ -1,0 +1,17 @@
+﻿<Application x:Class="Acorisoft.Studio.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Acorisoft.Studio"
+             xmlns:w="https://github.com/Acorisoft/Acorisoft/Windows"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Acorisoft.Extensions.Platform.Windows;component/Themes/Generic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <!-- 启动器 -->
+            <w:Bootstrapper x:Key="Bootstrapper"/>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

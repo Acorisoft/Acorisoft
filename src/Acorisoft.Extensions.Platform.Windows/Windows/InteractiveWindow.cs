@@ -20,7 +20,7 @@ namespace Acorisoft.Extensions.Windows
             _dialogContextStack = new Stack<DialogContext>();
             this.Loaded += OnLoadedCore;
             this.Unloaded += OnUnloadedCore;
-            this.DataContextChanged+= OnDataContextChanged;
+            this.DataContextChanged += OnDataContextChanged;
             DataContextProperty.OverrideMetadata(typeof(InteractiveWindow),new PropertyMetadata(null,OnDataContextChanged));
             CommandBindings.Add(new CommandBinding(WindowCommands.Cancel, OnDialogCancel));
             CommandBindings.Add(new CommandBinding(WindowCommands.Completed, OnDialogNextOrComplete,CanDialogNextOrComplete));
@@ -29,11 +29,17 @@ namespace Acorisoft.Extensions.Windows
             CommandBindings.Add(new CommandBinding(WindowCommands.Next, OnDialogNextOrComplete,CanDialogNextOrComplete));
             CommandBindings.Add(new CommandBinding(WindowCommands.Skip, OnDialogSkipOrIgnore, CanDialogSkipOrIgnore));
         }
+        
+        private readonly Stack<DialogContext> _dialogContextStack;
+
+        private DialogContext CurrentDialogContext => _dialogContextStack.Count == 0 ? null : _dialogContextStack.Peek();
 
         #region DialogCommands
         
         private void OnDialogClosing(object? sender, EventArgs e)
         {
+            //
+            // 当对话框关闭的时候弹出当前上下文。
             if (_dialogContextStack.Count == 0)
             {
                 return;
@@ -41,6 +47,8 @@ namespace Acorisoft.Extensions.Windows
             _dialogContextStack.Pop();
         }
 
+        #region Dialog Showing
+        
         private void OnWizardShowing(object sender, WizardShowingEventArgs e)
         {
             if (e is null)
@@ -72,34 +80,29 @@ namespace Acorisoft.Extensions.Windows
         }
 
 
-        private readonly Stack<DialogContext> _dialogContextStack;
-        private DialogContext CurrentDialogContext => _dialogContextStack.Count == 0 ? null : _dialogContextStack.Peek();
+        #endregion
 
         private void CanDialogLast(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = CurrentDialogContext is StackedDialogContext sdc && sdc.CanLast();
+            e.CanExecute = CurrentDialogContext is not null && CurrentDialogContext.CanLast();
             e.Handled = true;
         }
 
         private void OnDialogLast(object sender, ExecutedRoutedEventArgs e)
         {
-            if (CurrentDialogContext is not StackedDialogContext context)
+            if (CurrentDialogContext != null && !CurrentDialogContext.CanLast())
             {
-                return;
-            }
-
-            if (!context.CanLast())
-            {
-                return;
+                CurrentDialogContext.Last();
             }
             
-            context.Last();
         }
+        
         private void CanDialogNextOrComplete(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = CurrentDialogContext is not null && CurrentDialogContext.ViewModel.VerifyAccess();
             e.Handled = true;
         }
+        
         private void CanDialogSkipOrIgnore(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = (CurrentDialogContext is StackedDialogContext sdc && sdc.ViewModel.CanIgnore()) || true;
@@ -139,13 +142,7 @@ namespace Acorisoft.Extensions.Windows
 
         private void OnDialogCancel(object sender, ExecutedRoutedEventArgs e)
         {
-            if (CurrentDialogContext is null)
-            {
-                return;
-                
-            }
-            
-            CurrentDialogContext.Cancel();
+            CurrentDialogContext?.Cancel();
         }
 
         #endregion

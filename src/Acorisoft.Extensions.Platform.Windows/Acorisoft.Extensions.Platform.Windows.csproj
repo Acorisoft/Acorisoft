@@ -2,6 +2,7 @@
     <Import Project="../../ioc.targets" />
     <Import Project="../../rxui.targets" />
     <Import Project="../../db.targets" />
+    <Import Project="../../log.targets" />
     <PropertyGroup>
         <TargetFramework>net5.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>

@@ -2,6 +2,7 @@
 {
     public interface IDialogSession
     {
-        
+        bool IsCompleted { get; }
+        object Result { get; }
     }
 }

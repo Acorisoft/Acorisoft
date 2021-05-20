@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using ReactiveUI;
 
 namespace Acorisoft.Extensions.Windows.Platforms
@@ -9,6 +10,12 @@ namespace Acorisoft.Extensions.Windows.Platforms
         internal static void VerifyAccess()
         {
         }
+
+        public static string Bin => Environment.CurrentDirectory;
+        public static string Logs => Path.Combine(Directory.GetParent(Bin)?.FullName ?? Bin, "Logs");
+        public static string Plugins => Path.Combine(Directory.GetParent(Bin)?.FullName ?? Bin, "Plugins");
+        public static string Patches => Path.Combine(Directory.GetParent(Bin)?.FullName ?? Bin, "Patches");
+        public static string Cache => Path.Combine(Directory.GetParent(Bin)?.FullName ?? Bin, "Cache");
 
         #region Services Properties
 
