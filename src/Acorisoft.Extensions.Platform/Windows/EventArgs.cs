@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading.Tasks;
+using Acorisoft.Extensions.Windows.Dialogs;
 using Acorisoft.Extensions.Windows.ViewModels;
 
 namespace Acorisoft.Extensions.Windows
@@ -42,6 +44,43 @@ namespace Acorisoft.Extensions.Windows
 
     public class DialogShowingEventArgs : EventArgs
     {
-        public  IDialogViewModel ViewModel { get; }
+        internal DialogShowingEventArgs(DefaultDialogContext context)
+        {
+            Context = context ?? throw new ArgumentNullException(nameof(context));
+            ViewModel = context.ViewModel ?? throw new ArgumentNullException(nameof(context));
+        }
+        internal DefaultDialogContext Context { get; }
+        public IDialogViewModel ViewModel { get; }
+    }
+    
+    public class WizardShowingEventArgs: EventArgs
+    {
+        internal WizardShowingEventArgs(StackedDialogContext context)
+        {
+            Context = context ?? throw new ArgumentNullException(nameof(context));
+            ViewModel = context.ViewModel ?? throw new ArgumentNullException(nameof(context));
+        }
+        internal StackedDialogContext Context { get; }
+        public IDialogViewModel ViewModel { get; }
+    }
+
+    public class DialogChangedEventArgs : EventArgs
+    {
+        internal DialogChangedEventArgs(IDialogViewModel viewModel)
+        {
+            ViewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
+        }
+        public IDialogViewModel ViewModel { get; }
+    }
+
+    public class PromptShowingEventArgs : EventArgs
+    {
+        internal PromptShowingEventArgs(PromptDialogContext context)
+        {
+            Context = context ?? throw new ArgumentNullException(nameof(context));
+            ViewModel = context.ViewModel ?? throw new ArgumentNullException(nameof(context));
+        }
+        internal PromptDialogContext Context { get; }
+        public IDialogViewModel ViewModel { get; }
     }
 }

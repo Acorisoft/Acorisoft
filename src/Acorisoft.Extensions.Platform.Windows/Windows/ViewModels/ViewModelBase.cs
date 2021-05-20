@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Acorisoft.Extensions.Windows.Platforms;
 using LiteDB;
@@ -6,8 +7,44 @@ using ReactiveUI;
 
 namespace Acorisoft.Extensions.Windows.ViewModels
 {
-    public abstract class ViewModelBase : ReactiveObject, IViewModel
+    public abstract class ViewModelBase : ReactiveObject, IViewModel,IDisposable, IRoutableViewModel
     {
+        #region IViewModelLifeCycle Interface Members
+
+        
+        void IViewModelLifeCycle.Start()
+        {
+            OnStart();
+        }
+
+        protected virtual void OnStart()
+        {
+            
+        }
+
+        void IViewModelLifeCycle.Stop()
+        {
+            DisposeCore();
+        }
+
+        protected virtual void Unsubscribe()
+        {
+            
+        }
+
+        protected virtual void DisposeCore()
+        {
+            Unsubscribe();
+        }
+
+        void IDisposable.Dispose()
+        {
+            DisposeCore();
+        }
+        
+
+        #endregion
+        
         /// <summary>
         /// 设置指定字段的值并通知更改
         /// </summary>

@@ -4,6 +4,8 @@ namespace Acorisoft.Extensions.Windows
 {
     public interface IViewService
     {
+        bool CanGoBack { get; }
+        
         /// <summary>
         /// 设置显示的视图。
         /// </summary>

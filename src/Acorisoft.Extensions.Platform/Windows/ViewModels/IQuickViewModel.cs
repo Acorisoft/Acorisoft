@@ -2,6 +2,7 @@
 {
     public interface IQuickViewModel : IViewModel
     {
+        void Start(IPageViewModel parent);
         IPageViewModel Parent { get; }
     }
 }
