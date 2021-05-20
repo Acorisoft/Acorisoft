@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Acorisoft.Extensions.Windows;
 using Acorisoft.Extensions.Windows.Controls;
 
 namespace Acorisoft.Studio
@@ -19,16 +20,11 @@ namespace Acorisoft.Studio
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : InteractiveWindow
     {
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void MainWindow_OnMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            dialog.IsOpen = !dialog.IsOpen;
         }
     }
 }

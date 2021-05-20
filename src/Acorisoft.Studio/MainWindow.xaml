@@ -1,20 +1,26 @@
-﻿<Window x:Class="Acorisoft.Studio.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:app="clr-namespace:Acorisoft.Studio"
-        xmlns:w="https://github.com/Acorisoft/Acorisoft/Windows"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        MouseDown="MainWindow_OnMouseDown">
-    <Grid>
-        <w:DialogHost x:Name="dialog">
-            <w:ToastHost x:Name="toast">
-                <Grid Background="CornflowerBlue">
-                
-                </Grid>
-            </w:ToastHost>
-        </w:DialogHost>
-    </Grid>
-</Window>
+﻿<w:InteractiveWindow x:Class="Acorisoft.Studio.MainWindow"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:rx="http://reactiveui.net"
+                     xmlns:app="clr-namespace:Acorisoft.Studio"
+                     xmlns:appVM="clr-namespace:Acorisoft.Studio.ViewModels"
+                     xmlns:w="https://github.com/Acorisoft/Acorisoft/Windows"
+                     mc:Ignorable="d"
+                     Title="{Binding Title,Mode=OneWay,TargetNullValue=''}" 
+                     MinWidth="1152" MinHeight="640">
+    <Window.DataContext>
+        <appVM:AppViewModel/>
+    </Window.DataContext>
+    <w:DialogHost Dialog="{Binding Dialog,Mode=OneWay}">
+        <w:ToastHost>
+            <w:IxContentHost LeftSide="{Binding QuickView,Mode=OneWay}"
+                             TopSide="{Binding ContextualView,Mode=OneWay}"
+                             RightSide="{Binding ExtraView,Mode=OneWay}"
+                             BottomSide="{Binding ToolView,Mode=OneWay}">
+                <rx:RoutedViewHost Router="{Binding Router,Mode=OneWay}"/>
+            </w:IxContentHost>
+        </w:ToastHost>
+    </w:DialogHost>
+</w:InteractiveWindow>

@@ -10,7 +10,7 @@ namespace Acorisoft.Extensions.Windows
     /// </summary>
     public class NavigateToViewEventArgs : EventArgs
     {
-        public NavigateToViewEventArgs(IPageViewModel lastViewModel, IPageViewModel currentViewModel)
+        internal NavigateToViewEventArgs(IPageViewModel lastViewModel, IViewModel currentViewModel)
         {
             Last = lastViewModel;
             Current = currentViewModel;
@@ -24,7 +24,7 @@ namespace Acorisoft.Extensions.Windows
         /// <summary>
         /// 获取当前导航的视图模型。
         /// </summary>
-        public IPageViewModel Current { get; }
+        public IViewModel Current { get; }
     }
 
     public sealed class IxContentChangedEventArgs : EventArgs

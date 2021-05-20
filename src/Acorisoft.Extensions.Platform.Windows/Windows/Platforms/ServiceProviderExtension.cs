@@ -36,6 +36,15 @@ namespace Acorisoft.Extensions.Windows.Platforms
             ServiceProvider.SetServiceProvider(container);
             return container;
         }
+        
+        public static IContainer EnableStartup(this IContainer container, Func<IStartup> factory)
+        {
+            if (factory is not null)
+            {
+                container.RegisterInstance<IStartup>(factory());
+            }
+            return container;
+        }
 
         public static void EnableLogger()
         {

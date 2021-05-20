@@ -15,3 +15,4 @@ using System.Windows;
 [assembly: XmlnsDefinition("https://github.com/Acorisoft/Acorisoft/Windows", "Acorisoft.Extensions.Windows.Controls")]
 [assembly: XmlnsDefinition("https://github.com/Acorisoft/Acorisoft/Windows", "Acorisoft.Extensions.Windows.ViewModels")]
 [assembly: XmlnsDefinition("https://github.com/Acorisoft/Acorisoft/Windows", "Acorisoft.Extensions.Windows.Views")]
+[assembly: XmlnsDefinition("https://github.com/Acorisoft/Acorisoft/Windows", "Acorisoft.Extensions.Windows.Platforms")]

@@ -2,6 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:c="clr-namespace:Acorisoft.Extensions.Windows.Controls"
                     xmlns:rx="http://reactiveui.net">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Acorisoft.Extensions.Platform.Windows;component/Windows/Controls/IxContentHost.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
     <SolidColorBrush x:Key="App.Dark.Mask">#90000000</SolidColorBrush>
     
     <Style TargetType="{x:Type c:DialogHost}">

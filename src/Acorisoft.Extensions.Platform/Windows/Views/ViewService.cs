@@ -43,6 +43,15 @@ namespace Acorisoft.Extensions.Windows
             }
         }
 
+        public void NavigateTo(ISplashViewModel vm)
+        {
+            //
+            // 构建事件参数
+            var eventArgs = new NavigateToViewEventArgs(_lastViewModel, vm);
+
+            Navigating?.Invoke(this, eventArgs);
+        }
+
         public void NavigateTo(IPageViewModel vm)
         {
             //

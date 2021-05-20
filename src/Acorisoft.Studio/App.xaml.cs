@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Acorisoft.Extensions.Windows.Platforms;
+using Acorisoft.Studio.ViewModels;
 
 namespace Acorisoft.Studio
 {
@@ -20,7 +21,12 @@ namespace Acorisoft.Studio
     {
         public StudioBootstrapper() : base()
         {
-            
+            Container.EnableStartup(() => this);
+        }
+
+        protected override async void OnStartup()
+        {
+            await Await<
         }
     }
 }

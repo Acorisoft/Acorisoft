@@ -12,7 +12,7 @@ namespace Acorisoft.Extensions.Windows.ViewModels
     public abstract class AppViewModelBase : ViewModelBase, IScreen, IAppViewModel
     {
         private readonly CompositeDisposable _disposable;
-        
+
         private readonly Subject<IPageViewModel> _currentViewModelStream;
         private readonly Subject<IQuickViewModel> _quickViewStream;
         private readonly Subject<IQuickViewModel> _toolViewStream;
@@ -93,6 +93,7 @@ namespace Acorisoft.Extensions.Windows.ViewModels
         {
             _dialogStream.OnNext(e.ViewModel);
         }
+
         protected override void DisposeCore()
         {
             base.DisposeCore();
@@ -102,7 +103,7 @@ namespace Acorisoft.Extensions.Windows.ViewModels
         protected override void Unsubscribe()
         {
             Platform.ViewService.Navigating -= OnNavigatingCore;
-            Platform.IxService.Changed -= OnIxContentChanged;    
+            Platform.IxService.Changed -= OnIxContentChanged;
             Platform.DialogService.PromptShowing -= OnPromptShowing;
             Platform.DialogService.DialogShowing -= OnDialogShowing;
             Platform.DialogService.WizardShowing -= OnWizardShowing;
@@ -135,13 +136,19 @@ namespace Acorisoft.Extensions.Windows.ViewModels
                 e.ToolView.Start(_currentViewModel.Value);
                 _toolViewStream.OnNext(e.ToolView);
             }
-            
         }
 
         private void OnNavigatingCore(object sender, NavigateToViewEventArgs e)
         {
-            _currentViewModelStream.OnNext(e.Current);
-            OnNavigating(sender, e);
+            if (e.Current is IPageViewModel page)
+            {
+                _currentViewModelStream.OnNext(page);
+                OnNavigating(sender, e);
+            }
+            else if (e.Current is SplashViewModel splash)
+            {
+                Router.Navigate.Execute((ViewModelBase) splash);
+            }
         }
 
         protected virtual void OnNavigating(object sender, NavigateToViewEventArgs e)

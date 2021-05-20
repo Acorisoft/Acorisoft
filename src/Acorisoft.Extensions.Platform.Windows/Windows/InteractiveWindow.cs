@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Windows;
 using System.Windows.Input;
 using Acorisoft.Extensions.Windows.Commands;
+using Acorisoft.Extensions.Windows.Controls;
 using Acorisoft.Extensions.Windows.Dialogs;
 using Acorisoft.Extensions.Windows.Platforms;
 using Acorisoft.Extensions.Windows.ViewModels;
@@ -15,25 +16,78 @@ namespace Acorisoft.Extensions.Windows
 {
     public abstract class InteractiveWindow : Window
     {
+        static InteractiveWindow()
+        {
+            DataContextProperty.OverrideMetadata(typeof(InteractiveWindow),new PropertyMetadata(null,OnDataContextChanged));
+        }
+        
         protected InteractiveWindow()
         {
             _dialogContextStack = new Stack<DialogContext>();
             this.Loaded += OnLoadedCore;
             this.Unloaded += OnUnloadedCore;
             this.DataContextChanged += OnDataContextChanged;
-            DataContextProperty.OverrideMetadata(typeof(InteractiveWindow),new PropertyMetadata(null,OnDataContextChanged));
+            
+            
+            
             CommandBindings.Add(new CommandBinding(WindowCommands.Cancel, OnDialogCancel));
             CommandBindings.Add(new CommandBinding(WindowCommands.Completed, OnDialogNextOrComplete,CanDialogNextOrComplete));
             CommandBindings.Add(new CommandBinding(WindowCommands.Ignore, OnDialogSkipOrIgnore, CanDialogSkipOrIgnore));
             CommandBindings.Add(new CommandBinding(WindowCommands.Last, OnDialogLast,CanDialogLast));
             CommandBindings.Add(new CommandBinding(WindowCommands.Next, OnDialogNextOrComplete,CanDialogNextOrComplete));
             CommandBindings.Add(new CommandBinding(WindowCommands.Skip, OnDialogSkipOrIgnore, CanDialogSkipOrIgnore));
+            
+            CommandBindings.Add(new CommandBinding(SystemCommands.CloseWindowCommand, OnWindowClose));
+            CommandBindings.Add(new CommandBinding(SystemCommands.MinimizeWindowCommand, OnWindowMinimum));
+            CommandBindings.Add(new CommandBinding(SystemCommands.MaximizeWindowCommand, OnWindowRestore));
+            CommandBindings.Add(new CommandBinding(SystemCommands.RestoreWindowCommand, OnWindowRestore));
+            CommandBindings.Add(new CommandBinding(IxContentHostCommands.ToggleEnable, ToggleEnable));
         }
         
         private readonly Stack<DialogContext> _dialogContextStack;
 
         private DialogContext CurrentDialogContext => _dialogContextStack.Count == 0 ? null : _dialogContextStack.Peek();
 
+        #region Startup
+
+        protected override void OnInitialized(EventArgs e)
+        {
+            Platform.StartupService.Startup();
+            base.OnInitialized(e);
+        }
+
+        #endregion
+        
+        #region ToggleEnable
+
+        void ToggleEnable(object sender, ExecutedRoutedEventArgs e)
+        {
+            SwipeRecognitor.IsEnable = !SwipeRecognitor.IsEnable;
+        }
+
+        #endregion
+        
+        #region SystemCommands
+
+
+        private void OnWindowClose(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void OnWindowMinimum(object sender, ExecutedRoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void OnWindowRestore(object sender, ExecutedRoutedEventArgs e)
+        {
+            WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+        }
+
+
+        #endregion SystemCommands
+        
         #region DialogCommands
         
         private void OnDialogClosing(object? sender, EventArgs e)
@@ -148,7 +202,7 @@ namespace Acorisoft.Extensions.Windows
         #endregion
 
         #region DataContextChanged
-        private void OnDataContextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnDataContextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (e.OldValue is IViewModelLifeCycle oldImpl)
             {
