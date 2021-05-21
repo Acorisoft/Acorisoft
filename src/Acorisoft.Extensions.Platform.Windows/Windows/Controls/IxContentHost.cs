@@ -22,7 +22,7 @@ namespace Acorisoft.Extensions.Windows.Controls
     /// <summary>
     /// 
     /// </summary>
-    public partial class IxContentHost : ContentControl
+    public partial class IxContentHost : ContentControl,IIxContentView
     {
         public const string IxLeftName      = "PART_IxLeft";
         public const string IxRightName     = "PART_IxRight";

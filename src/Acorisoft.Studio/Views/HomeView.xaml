@@ -10,8 +10,23 @@
            xmlns:rx="http://reactiveui.net"
            mc:Ignorable="d"
            d:DesignHeight="300" d:DesignWidth="300"
-           d:DataContext="{d:DesignInstance Type={x:Type appVM:HomeViewModel},IsDesignTimeCreatable=True}">
-    <Grid>
-        <Border />
-    </Grid>
+           d:DataContext="{d:DesignInstance Type={x:Type appVM:HomeViewModel},IsDesignTimeCreatable=True}"
+           MouseDown="HomeView_OnMouseDown">
+    <w:EmptyStateView HasContentState="{Binding IsOpenProject,Mode=OneWay}">
+        <w:EmptyStateView.EmptyState>
+            <Border Background="Chocolate" Padding="32">
+                <Border Background="White"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Height="640"
+                      Width="480"
+                      Padding="16">
+                    <Button Content="新建"/>
+                </Border>
+            </Border>
+        </w:EmptyStateView.EmptyState>
+        <Grid Background="Transparent">
+            
+        </Grid>
+    </w:EmptyStateView>
 </w:SpaPage>

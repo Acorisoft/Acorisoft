@@ -57,14 +57,6 @@ namespace Acorisoft.Studio
             await ViewAware.Waiting<SplashViewModel>(new ObservableOperation[]
             {
                 new ObservableOperation(()=>Thread.Sleep(1500),"Operation Loading"),
-                new ObservableOperation(()=>Thread.Sleep(1500),"Operation1"),
-                new ObservableOperation(()=>Thread.Sleep(1500),"Operation3"),
-                new ObservableOperation(()=>Thread.Sleep(1500),"Operation4"),
-                new ObservableOperation(()=>Thread.Sleep(1500),"Operation4"),
-                new ObservableOperation(()=>Thread.Sleep(1500),"Operation5"),
-                new ObservableOperation(()=>Thread.Sleep(1500),"Operation6"),
-                new ObservableOperation(()=>Thread.Sleep(1500),"Operation7"),
-                new ObservableOperation(()=>Thread.Sleep(1500),"Operation8"),
             });
             ViewAware.NavigateTo<HomeViewModel>();
         }

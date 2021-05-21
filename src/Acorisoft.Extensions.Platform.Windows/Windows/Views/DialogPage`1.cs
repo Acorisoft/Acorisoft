@@ -6,7 +6,7 @@ using ReactiveUI;
 
 namespace Acorisoft.Extensions.Windows.Views
 {
-    public class DialogPage<TViewModel> : ReactiveUserControl<TViewModel> where TViewModel : QuickViewModel, IQuickViewModel
+    public class DialogPage<TViewModel> : ReactiveUserControl<TViewModel> where TViewModel : DialogViewModel, IQuickViewModel
     {
         protected DialogPage()
         {

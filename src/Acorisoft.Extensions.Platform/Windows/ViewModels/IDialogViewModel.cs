@@ -4,7 +4,5 @@
     {
         bool VerifyAccess();
         bool CanIgnore();
-        
-        string Subtitle { get; }
     }
 }

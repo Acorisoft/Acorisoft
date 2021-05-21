@@ -17,6 +17,7 @@
     <ItemGroup>
       <Folder Include="Commands" />
       <Folder Include="Models" />
+      <Folder Include="ViewModels\Home" />
     </ItemGroup>
     <ItemGroup>
       <Page Remove="Views\SampleQuickPage.xaml" />

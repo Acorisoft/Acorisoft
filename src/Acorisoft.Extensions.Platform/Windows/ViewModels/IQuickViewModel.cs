@@ -1,8 +1,7 @@
 ﻿namespace Acorisoft.Extensions.Windows.ViewModels
 {
-    public interface IQuickViewModel : IViewModel
+    public interface IQuickViewModel : IViewModel 
     {
         void Start(IPageViewModel parent);
-        IPageViewModel Parent { get; }
     }
 }

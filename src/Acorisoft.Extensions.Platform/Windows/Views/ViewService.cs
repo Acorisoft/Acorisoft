@@ -130,9 +130,8 @@ namespace Acorisoft.Extensions.Windows
                     {
                         continue;
                     }
-
-                    operation.Item1?.Invoke();
                     BusyStateChanged?.Invoke(this, operation.Item2);
+                    operation.Item1?.Invoke();
                 }
 
                 mre.Set();

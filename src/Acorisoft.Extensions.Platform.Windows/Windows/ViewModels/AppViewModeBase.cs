@@ -84,9 +84,9 @@ namespace Acorisoft.Extensions.Windows.ViewModels
 
         private void OnIsBusy(object sender, IsBusyEventArgs e)
         {
-            _isBusyStream.OnNext(true);
             _descriptionStream.OnNext(CultureInfo.CurrentCulture.LCID == 2052 ?  "正在等待" : "Waiting");
-            Task.Factory.StartNew(() =>
+            _isBusyStream.OnNext(true);
+            Task.Run(() =>
             {
                 e.Signal.Wait();
                 _isBusyStream.OnNext(false);

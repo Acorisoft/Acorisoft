@@ -9,7 +9,6 @@
                      xmlns:w="https://github.com/Acorisoft/Acorisoft/Windows"
                      mc:Ignorable="d"
                      Title="{Binding Title,Mode=OneWay,TargetNullValue=''}"
-                     MouseDown="MainWindow_OnMouseDown"
                      MinWidth="1152" MinHeight="640">
     <Window.DataContext>
         <appVM:AppViewModel/>

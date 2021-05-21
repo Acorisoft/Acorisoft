@@ -2,7 +2,7 @@
 
 namespace Acorisoft.Extensions.Windows.ViewModels
 {
-    public abstract class QuickViewModel : ViewModelBase, IQuickViewModel
+    public abstract class QuickViewModel : ViewModelBase, IQuickViewModel 
     {
         private IPageViewModel _parent;
 

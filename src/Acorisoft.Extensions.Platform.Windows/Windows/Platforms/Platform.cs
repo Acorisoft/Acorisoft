@@ -28,6 +28,7 @@ namespace Acorisoft.Extensions.Windows.Platforms
         private static readonly Lazy<IScreen> LazyScreeen = CreateLazyMode<IScreen>();
         private static readonly Lazy<IInteractiveService> LazyIxService = CreateLazyMode<IInteractiveService>();
         private static readonly Lazy<IStartup> LazyStartupService = CreateLazyMode<IStartup>();
+        private static readonly Lazy<IInteractiveService> LazyInteractiveService = CreateLazyMode<IInteractiveService>();
 
 
         [NotNull] public static IScreen ScreenService => LazyScreeen.Value;
@@ -38,6 +39,7 @@ namespace Acorisoft.Extensions.Windows.Platforms
         [NotNull] public static IToastService ToastService => LazyToastService.Value;
         [NotNull] public static IInteractiveService IxService => LazyIxService.Value;
         [NotNull]public static IStartup StartupService => LazyStartupService.Value;
+        [NotNull]public static IInteractiveService InteractiveService => LazyInteractiveService.Value;
         #endregion
     }
 }

@@ -29,10 +29,5 @@ namespace Acorisoft.Studio
         {
             InitializeComponent();
         }
-
-        private async void MainWindow_OnMouseDown(object sender, MouseButtonEventArgs e)
-        {
-           
-        }
     }
 }
