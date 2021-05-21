@@ -13,16 +13,6 @@ namespace Acorisoft.Extensions.Windows
 {
     public static class Xaml
     {
-        public static void NavigateTo<TViewModel>() where TViewModel : PageViewModel
-        {
-            Platform.ViewService.NavigateTo(Locator.Current.GetService<TViewModel>());
-        }
-
-        public static void Splash<TViewModel>() where TViewModel : SplashViewModel
-        {
-            Platform.ViewService.NavigateTo(Locator.Current.GetService<TViewModel>());
-        }
-
         public static TElement FindAncestor<TElement>(this FrameworkElement element) where TElement : FrameworkElement
         {
             var parent = VisualTreeHelper.GetParent(element) ?? throw new ArgumentNullException("element");
@@ -39,23 +29,5 @@ namespace Acorisoft.Extensions.Windows
 
             return default(TElement);
         }
-
-        #region Waiting
-
-        public static Task Waiting<TBackground,TCo>(ObservableOperation operation)
-            where TBackground : SplashViewModel, ISplashViewModel
-        {
-            Splash<TBackground>();
-            return Platform.ViewService.Waiting(operation.Operation, operation.Description);
-        }
-        
-        public static Task Waiting<TBackground>(IEnumerable<ObservableOperation> operation)
-            where TBackground : SplashViewModel, ISplashViewModel
-        {
-            Splash<TBackground>();
-            return Platform.ViewService.Waiting(operation.Operation, operation.Description);
-        }
-
-        #endregion
     }
 }

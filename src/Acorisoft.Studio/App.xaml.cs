@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Acorisoft.Extensions.Windows;
 using Acorisoft.Extensions.Windows.Platforms;
+using Acorisoft.Extensions.Windows.Threadings;
 using Acorisoft.Extensions.Windows.ViewModels;
 using Acorisoft.Extensions.Windows.Views;
 using Acorisoft.Studio.ViewModels;
@@ -44,6 +45,7 @@ namespace Acorisoft.Studio
         protected void Wire<TViewModel, TView>() where TViewModel : PageViewModel, IPageViewModel
             where TView : SpaPage<TViewModel>
         {
+            Container.Register<TViewModel>();
             Container.Register<IViewFor<TViewModel>,TView>();
         }
 
@@ -52,19 +54,19 @@ namespace Acorisoft.Studio
             //
             // Navigate to an mock view model,and do not show any real view when waiting startup operation done.
             //
-            Xaml.Splash<SplashViewModel>();
-            await Platform.ViewService.Waiting(new Tuple<Action,string>[]
+            await ViewAware.Waiting<SplashViewModel>(new ObservableOperation[]
             {
-                new Tuple<Action, string>(()=> Thread.Sleep(1500), "Operation 1"),
-                new Tuple<Action, string>(()=> Thread.Sleep(1500), "Operation 2"),
-                new Tuple<Action, string>(()=> Thread.Sleep(1500), "Operation 3"),
-                new Tuple<Action, string>(()=> Thread.Sleep(1500), "Operation 4"),
-                new Tuple<Action, string>(()=> Thread.Sleep(1500), "Operation 5"),
-                new Tuple<Action, string>(()=> Thread.Sleep(1500), "Operation 6"),
-                new Tuple<Action, string>(()=> Thread.Sleep(1500), "Operation 7"),
-                new Tuple<Action, string>(()=> Thread.Sleep(1500), "Operation 8"),
+                new ObservableOperation(()=>Thread.Sleep(1500),"Operation Loading"),
+                new ObservableOperation(()=>Thread.Sleep(1500),"Operation1"),
+                new ObservableOperation(()=>Thread.Sleep(1500),"Operation3"),
+                new ObservableOperation(()=>Thread.Sleep(1500),"Operation4"),
+                new ObservableOperation(()=>Thread.Sleep(1500),"Operation4"),
+                new ObservableOperation(()=>Thread.Sleep(1500),"Operation5"),
+                new ObservableOperation(()=>Thread.Sleep(1500),"Operation6"),
+                new ObservableOperation(()=>Thread.Sleep(1500),"Operation7"),
+                new ObservableOperation(()=>Thread.Sleep(1500),"Operation8"),
             });
-            Xaml.NavigateTo<HomeViewModel>();
+            ViewAware.NavigateTo<HomeViewModel>();
         }
     }
 }

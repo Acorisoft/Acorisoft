@@ -18,5 +18,11 @@
       <Folder Include="Commands" />
       <Folder Include="Models" />
     </ItemGroup>
+    <ItemGroup>
+      <Page Remove="Views\SampleQuickPage.xaml" />
+      <None Include="Views\SampleQuickPage.xamla">
+        <XamlRuntime>Wpf</XamlRuntime>
+      </None>
+    </ItemGroup>
 
 </Project>

@@ -56,6 +56,10 @@ namespace Acorisoft.Extensions.Windows
 
         public void NavigateTo(IPageViewModel vm)
         {
+            if (vm is null)
+            {
+                return;
+            }
             //
             // 进入 IPageController 控制器中过滤无效的请求。
             var controller = (IPageController) ServiceProvider.Provider.GetService(typeof(IPageController));

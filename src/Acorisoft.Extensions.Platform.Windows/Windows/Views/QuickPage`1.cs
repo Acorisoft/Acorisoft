@@ -14,7 +14,7 @@ namespace Acorisoft.Extensions.Windows.Views
             this.Unloaded += OnUnloadedCore;
             this.DataContextChanged+= OnDataContextChanged;
             this.WhenActivated(d => d(this.WhenAnyValue(x => x.ViewModel).Do(OnDataContextHasValue).BindTo(this, x => x.DataContext)));
-            DataContextProperty.OverrideMetadata(typeof(InteractiveWindow),new FrameworkPropertyMetadata(null,OnDataContextChanged));
+            DataContextProperty.OverrideMetadata(typeof(QuickPage<>),new FrameworkPropertyMetadata(null,OnDataContextChanged));
         }
 
         #region DataContextChanged

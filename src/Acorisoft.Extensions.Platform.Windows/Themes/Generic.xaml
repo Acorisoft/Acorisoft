@@ -90,7 +90,8 @@
                                 <StackPanel>
                                     <TextBlock Text="{TemplateBinding Description}"
                                                Padding="0 0 0 8"
-                                               FontSize="15"/>
+                                               FontSize="13"
+                                               TextWrapping="Wrap"/>
                                     <ProgressBar x:Name="PART_Indicator"
                                                  IsIndeterminate="True" 
                                                  MinHeight="6"/>
