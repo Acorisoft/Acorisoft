@@ -8,5 +8,8 @@
 
     public delegate void PromptShowingEventHandler(object sender, PromptShowingEventArgs e);
     public delegate void WizardShowingEventHandler(object sender, WizardShowingEventArgs e);
-    
+
+    public delegate void IsBusyEventHandler(object sender, IsBusyEventArgs e);
+
+    public delegate void BusyStateChangedEventHandler(object sender, string newDescription);
 }

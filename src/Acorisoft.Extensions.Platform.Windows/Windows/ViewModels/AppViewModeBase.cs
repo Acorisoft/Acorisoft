@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Globalization;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Acorisoft.Extensions.Windows.Platforms;
 using ReactiveUI;
@@ -19,12 +21,17 @@ namespace Acorisoft.Extensions.Windows.ViewModels
         private readonly Subject<IQuickViewModel> _contextualViewStream;
         private readonly Subject<IQuickViewModel> _extraViewStream;
         private readonly Subject<IDialogViewModel> _dialogStream;
+        private readonly Subject<bool> _isBusyStream;
+        private readonly Subject<string> _descriptionStream;
+        
         private readonly ObservableAsPropertyHelper<IDialogViewModel> _dialog;
         private readonly ObservableAsPropertyHelper<IPageViewModel> _currentViewModel;
         private readonly ObservableAsPropertyHelper<IQuickViewModel> _quickView;
         private readonly ObservableAsPropertyHelper<IQuickViewModel> _toolView;
         private readonly ObservableAsPropertyHelper<IQuickViewModel> _extraView;
         private readonly ObservableAsPropertyHelper<IQuickViewModel> _contextualView;
+        private readonly ObservableAsPropertyHelper<bool> _isBusy;
+        private readonly ObservableAsPropertyHelper<string> _description;
 
         protected AppViewModelBase()
         {
@@ -35,6 +42,8 @@ namespace Acorisoft.Extensions.Windows.ViewModels
             _contextualViewStream = new Subject<IQuickViewModel>();
             _extraViewStream = new Subject<IQuickViewModel>();
             _dialogStream = new Subject<IDialogViewModel>();
+            _isBusyStream = new Subject<bool>();
+            _descriptionStream = new Subject<string>();
 
             _dialog = _dialogStream.ToProperty(this, nameof(Dialog)).DisposeWith(_disposable);
             _currentViewModel = _currentViewModelStream.ToProperty(this, nameof(Current)).DisposeWith(_disposable);
@@ -42,6 +51,8 @@ namespace Acorisoft.Extensions.Windows.ViewModels
             _toolView = _toolViewStream.ToProperty(this, nameof(ToolView)).DisposeWith(_disposable);
             _extraView = _contextualViewStream.ToProperty(this, nameof(ExtraView)).DisposeWith(_disposable);
             _contextualView = _extraViewStream.ToProperty(this, nameof(ContextualView)).DisposeWith(_disposable);
+            _isBusy = _isBusyStream.ToProperty(this, nameof(IsBusy)).DisposeWith(_disposable);
+            _description = _descriptionStream.ToProperty(this, nameof(Description)).DisposeWith(_disposable);
 
             Router = new RoutingState();
 
@@ -49,6 +60,8 @@ namespace Acorisoft.Extensions.Windows.ViewModels
             Locator.CurrentMutable.RegisterConstant<IScreen>(this);
 
             Platform.ViewService.Navigating += OnNavigatingCore;
+            Platform.ViewService.IsBusy += OnIsBusy;
+            Platform.ViewService.BusyStateChanged += OnBusyStateChanged;
             Platform.IxService.Changed += OnIxContentChanged;
             Platform.DialogService.PromptShowing += OnPromptShowing;
             Platform.DialogService.DialogShowing += OnDialogShowing;
@@ -65,8 +78,27 @@ namespace Acorisoft.Extensions.Windows.ViewModels
             _contextualViewStream.DisposeWith(_disposable);
             _extraViewStream.DisposeWith(_disposable);
             _dialogStream.DisposeWith(_disposable);
+            _isBusyStream.DisposeWith(_disposable);
+            _descriptionStream.DisposeWith(_disposable);
         }
 
+        private void OnIsBusy(object sender, IsBusyEventArgs e)
+        {
+            _isBusyStream.OnNext(true);
+            _descriptionStream.OnNext(CultureInfo.CurrentCulture.LCID == 2052 ?  "正在等待" : "Waiting");
+            Task.Factory.StartNew(() =>
+            {
+                e.Signal.Wait();
+                _isBusyStream.OnNext(false);
+            });
+        }
+        
+        private void OnBusyStateChanged(object sender, string description)
+        {
+            _descriptionStream.OnNext(description);
+        }
+
+        #region Dialog Events
         private void OnDialogClosing(object? sender, EventArgs e)
         {
             _dialogStream.OnNext(null);
@@ -93,6 +125,8 @@ namespace Acorisoft.Extensions.Windows.ViewModels
         {
             _dialogStream.OnNext(e.ViewModel);
         }
+        
+        #endregion
 
         protected override void DisposeCore()
         {
@@ -103,6 +137,8 @@ namespace Acorisoft.Extensions.Windows.ViewModels
         protected override void Unsubscribe()
         {
             Platform.ViewService.Navigating -= OnNavigatingCore;
+            Platform.ViewService.IsBusy -= OnIsBusy;
+            Platform.ViewService.BusyStateChanged -= OnBusyStateChanged;
             Platform.IxService.Changed -= OnIxContentChanged;
             Platform.DialogService.PromptShowing -= OnPromptShowing;
             Platform.DialogService.DialogShowing -= OnDialogShowing;
@@ -140,14 +176,16 @@ namespace Acorisoft.Extensions.Windows.ViewModels
 
         private void OnNavigatingCore(object sender, NavigateToViewEventArgs e)
         {
-            if (e.Current is IPageViewModel page)
+            switch (e.Current)
             {
-                _currentViewModelStream.OnNext(page);
-                OnNavigating(sender, e);
-            }
-            else if (e.Current is SplashViewModel splash)
-            {
-                Router.Navigate.Execute((ViewModelBase) splash);
+                case PageViewModel page:
+                    _currentViewModelStream.OnNext(page);
+                    OnNavigating(sender, e);
+                    Router.Navigate.Execute(page);
+                    break;
+                case SplashViewModel splash:
+                    Router.Navigate.Execute(splash);
+                    break;
             }
         }
 
@@ -155,6 +193,8 @@ namespace Acorisoft.Extensions.Windows.ViewModels
         {
         }
 
+        public bool IsBusy => _isBusy.Value;
+        public string Description => _description.Value;
         public IDialogViewModel Dialog => _dialog.Value;
         public IQuickViewModel ToolView => _toolView.Value;
         public IQuickViewModel QuickView => _quickView.Value;

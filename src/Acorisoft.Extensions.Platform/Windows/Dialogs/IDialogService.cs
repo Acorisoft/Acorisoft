@@ -10,7 +10,6 @@ namespace Acorisoft.Extensions.Windows
         Task<bool?> Prompt(IDialogViewModel viewModel);
         Task<IDialogSession> ShowDialog(IDialogViewModel viewModel);
         Task<IDialogSession> ShowWizard(IDialogContext context);
-        
         event EventHandler<DialogChangedEventArgs> DialogChanged; 
         event DialogShowingEventHandler DialogShowing;
         event WizardShowingEventHandler WizardShowing;

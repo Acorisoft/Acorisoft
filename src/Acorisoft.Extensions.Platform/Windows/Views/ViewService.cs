@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Acorisoft.Extensions.Windows.Platforms;
 using Acorisoft.Extensions.Windows.ViewModels;
 
@@ -21,13 +24,12 @@ namespace Acorisoft.Extensions.Windows
 
         public void GoBack()
         {
-            
             //
             // 构建事件参数
             var lastViewModel = _viewModelStack.Pop();
             var currentViewModel = _lastViewModel;
             var eventArgs = new NavigateToViewEventArgs(lastViewModel, currentViewModel);
-            
+
             //
             // 进入 IPageController 控制器中过滤无效的请求。
             var controller = (IPageController) ServiceProvider.Provider.GetService(typeof(IPageController));
@@ -36,7 +38,7 @@ namespace Acorisoft.Extensions.Windows
             {
                 _lastViewModel = lastViewModel;
             }
-            
+
             if (controller is not null && controller.CanNavigate(eventArgs))
             {
                 Navigating?.Invoke(this, eventArgs);
@@ -95,6 +97,52 @@ namespace Acorisoft.Extensions.Windows
 
             Navigating?.Invoke(this, eventArgs);
         }
+
+        public Task Waiting(Action operation, string description)
+        {
+            var mre = new ManualResetEventSlim();
+            var args = new IsBusyEventArgs(mre);
+            IsBusy?.Invoke(this, args);
+            BusyStateChanged?.Invoke(this, description);
+
+            return Task.Run(() =>
+            {
+                operation?.Invoke();
+                mre.Set();
+                mre.Dispose();
+            });
+        }
+
+        public Task Waiting(IEnumerable<Tuple<Action, string>> operations)
+        {
+            var mre = new ManualResetEventSlim();
+            var args = new IsBusyEventArgs(mre);
+            IsBusy?.Invoke(this, args);
+            return Task.Run(() =>
+            {
+                foreach (var operation in operations)
+                {
+                    if (operation is null)
+                    {
+                        continue;
+                    }
+
+                    operation.Item1?.Invoke();
+                    BusyStateChanged?.Invoke(this, operation.Item2);
+                }
+
+                mre.Set();
+                mre.Dispose();
+            });
+        }
+
+        /*
+         * service part:
+         * return Task.Run(()=>{ operation?.Invoke(); mre.Set();};
+         * 
+         */
+        public event IsBusyEventHandler IsBusy;
+        public event BusyStateChangedEventHandler BusyStateChanged;
 
         public event NavigateToViewEventHandler Navigating;
     }

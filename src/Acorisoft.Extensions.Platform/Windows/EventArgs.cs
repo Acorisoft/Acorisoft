@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Acorisoft.Extensions.Windows.Dialogs;
 using Acorisoft.Extensions.Windows.ViewModels;
@@ -82,5 +83,14 @@ namespace Acorisoft.Extensions.Windows
         }
         internal PromptDialogContext Context { get; }
         public IDialogViewModel ViewModel { get; }
+    }
+
+    public class IsBusyEventArgs : EventArgs
+    {
+        internal IsBusyEventArgs(ManualResetEventSlim signal)
+        {
+            Signal = signal ?? throw new ArgumentNullException(nameof(signal));
+        }
+        public ManualResetEventSlim Signal { get; }
     }
 }

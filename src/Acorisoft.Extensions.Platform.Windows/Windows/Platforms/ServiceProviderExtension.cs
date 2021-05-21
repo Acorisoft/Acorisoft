@@ -15,6 +15,8 @@ using Splat.NLog;
 using System;
 using System.Collections;
 using System.IO;
+using Acorisoft.Extensions.Windows.ViewModels;
+using Acorisoft.Extensions.Windows.Views;
 using LogLevel = NLog.LogLevel;
 
 namespace Acorisoft.Extensions.Windows.Platforms
@@ -33,6 +35,8 @@ namespace Acorisoft.Extensions.Windows.Platforms
             container.RegisterInstance<IDialogService>(new DialogService());
             container.RegisterInstance<IToastService>(new ToastService());
             container.RegisterInstance<IInteractiveService>(new InteractiveService());
+            container.Register<SplashViewModel>();
+            container.Register<IViewFor<SplashViewModel>,MockupView>();
             ServiceProvider.SetServiceProvider(container);
             return container;
         }

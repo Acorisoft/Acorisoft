@@ -8,19 +8,23 @@
                      xmlns:appVM="clr-namespace:Acorisoft.Studio.ViewModels"
                      xmlns:w="https://github.com/Acorisoft/Acorisoft/Windows"
                      mc:Ignorable="d"
-                     Title="{Binding Title,Mode=OneWay,TargetNullValue=''}" 
+                     Title="{Binding Title,Mode=OneWay,TargetNullValue=''}"
+                     MouseDown="MainWindow_OnMouseDown"
                      MinWidth="1152" MinHeight="640">
     <Window.DataContext>
         <appVM:AppViewModel/>
     </Window.DataContext>
-    <w:DialogHost Dialog="{Binding Dialog,Mode=OneWay}">
-        <w:ToastHost>
-            <w:IxContentHost LeftSide="{Binding QuickView,Mode=OneWay}"
-                             TopSide="{Binding ContextualView,Mode=OneWay}"
-                             RightSide="{Binding ExtraView,Mode=OneWay}"
-                             BottomSide="{Binding ToolView,Mode=OneWay}">
-                <rx:RoutedViewHost Router="{Binding Router,Mode=OneWay}"/>
-            </w:IxContentHost>
-        </w:ToastHost>
-    </w:DialogHost>
+    <w:BusyIndicator IsBusy="{Binding IsBusy,Mode=OneWay}"
+                     Description="{Binding Description,Mode=OneWay}">
+        <w:DialogHost Dialog="{Binding Dialog,Mode=OneWay}">
+            <w:ToastHost>
+                <w:IxContentHost LeftSide="{Binding QuickView,Mode=OneWay}"
+                                 TopSide="{Binding ContextualView,Mode=OneWay}"
+                                 RightSide="{Binding ExtraView,Mode=OneWay}"
+                                 BottomSide="{Binding ToolView,Mode=OneWay}">
+                    <rx:RoutedViewHost Router="{Binding Router,Mode=OneWay}"/>
+                </w:IxContentHost>
+            </w:ToastHost>
+        </w:DialogHost>
+    </w:BusyIndicator>
 </w:InteractiveWindow>

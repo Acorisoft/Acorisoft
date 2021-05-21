@@ -9,9 +9,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Acorisoft.Extensions.Platform.Windows;component/Themes/Generic.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            
-            <!-- 启动器 -->
-            <w:Bootstrapper x:Key="Bootstrapper"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

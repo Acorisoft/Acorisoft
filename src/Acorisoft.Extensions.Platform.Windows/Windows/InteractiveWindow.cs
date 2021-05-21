@@ -18,7 +18,7 @@ namespace Acorisoft.Extensions.Windows
     {
         static InteractiveWindow()
         {
-            DataContextProperty.OverrideMetadata(typeof(InteractiveWindow),new PropertyMetadata(null,OnDataContextChanged));
+            DataContextProperty.OverrideMetadata(typeof(InteractiveWindow),new FrameworkPropertyMetadata(null,OnDataContextChanged));
         }
         
         protected InteractiveWindow()
@@ -50,10 +50,10 @@ namespace Acorisoft.Extensions.Windows
 
         #region Startup
 
-        protected override void OnInitialized(EventArgs e)
+        protected override void OnContentRendered(EventArgs e)
         {
             Platform.StartupService.Startup();
-            base.OnInitialized(e);
+            base.OnContentRendered(e);
         }
 
         #endregion
@@ -229,7 +229,6 @@ namespace Acorisoft.Extensions.Windows
             this.Loaded -= OnLoadedCore;
             this.Unloaded -= OnUnloadedCore;
             this.DataContextChanged -= OnDataContextChanged;
-            Platform.ViewService.Navigating -= OnNavigating;
             Platform.DialogService.PromptShowing -= OnPromptShowing;
             Platform.DialogService.DialogShowing -= OnDialogShowing;
             Platform.DialogService.WizardShowing -= OnWizardShowing;
@@ -240,7 +239,6 @@ namespace Acorisoft.Extensions.Windows
 
         private void OnLoadedCore(object sender, RoutedEventArgs e)
         {
-            Platform.ViewService.Navigating += OnNavigating;
             Platform.DialogService.PromptShowing += OnPromptShowing;
             Platform.DialogService.DialogShowing += OnDialogShowing;
             Platform.DialogService.WizardShowing += OnWizardShowing;
@@ -254,18 +252,6 @@ namespace Acorisoft.Extensions.Windows
 
         protected virtual void OnLoaded(object sender, RoutedEventArgs e)
         {
-        }
-
-        #endregion
-        
-        #region ViewService Impl
-
-        protected virtual void OnNavigating(object sender, NavigateToViewEventArgs e)
-        {
-            Platform.ScreenService
-                    .Router
-                    .Navigate
-                    .Execute((PageViewModel)e.Current);
         }
 
         #endregion
