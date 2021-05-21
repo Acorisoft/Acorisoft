@@ -14,5 +14,9 @@
       <ProjectReference Include="..\Acorisoft.Studio.Documents.Core\Acorisoft.Studio.Documents.Core.csproj" />
       <ProjectReference Include="..\Acorisoft.Studio.Documents\Acorisoft.Studio.Documents.csproj" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Commands" />
+      <Folder Include="Models" />
+    </ItemGroup>
 
 </Project>
