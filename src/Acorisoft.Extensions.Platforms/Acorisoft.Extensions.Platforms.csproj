@@ -1,28 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <Import Project="../../rx.targets" />
     <PropertyGroup>
-        <TargetFramework>net5.0-windows</TargetFramework>
-        <UseWPF>true</UseWPF>
+        <TargetFramework>net5.0</TargetFramework>
         <RootNamespace>Acorisoft.Extensions.Platforms</RootNamespace>
     </PropertyGroup>
-
     <ItemGroup>
-        <Folder Include="Windows\Services" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\Acorisoft.Extensions.Platforms\Acorisoft.Extensions.Platforms.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <EmbeddedResource Update="Properties\SR.resx">
+      <EmbeddedResource Update="SR.resx">
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>SR.Designer.cs</LastGenOutput>
       </EmbeddedResource>
     </ItemGroup>
-
     <ItemGroup>
-      <Compile Update="Properties\SR.Designer.cs">
+      <Compile Update="SR.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>SR.resx</DependentUpon>

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Acorisoft.Extensions.Platform
+namespace Acorisoft.Extensions.Platforms
 {
     public class Class1
     {
