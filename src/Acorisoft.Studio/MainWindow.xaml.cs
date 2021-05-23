@@ -35,19 +35,19 @@ namespace Acorisoft.Studio
 
         protected override void OnContentRendered(EventArgs e)
         {
-            // ServiceLocator.ViewService.NavigateTo(new HomeViewModel());
+            ServiceLocator.ViewService.NavigateTo(new HomeViewModel());
             base.OnContentRendered(e);
         }
 
         private async void OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            // var service = (IViewService) ServiceProvider.GetService(typeof(IViewService)) ?? new ViewService();
-            // await service.ForceBusyState(new ObservableOperation(() => Thread.Sleep(3000), "Waiting"));
-            // // await service.ShowDialog(new MockupDialogViewModel());
-            // service.Toast("Hello", null,TimeSpan.FromSeconds(1));
+            var service = (IViewService) ServiceProvider.GetService(typeof(IViewService)) ?? new ViewService();
+            await service.ForceBusyState(new ObservableOperation(() => Thread.Sleep(3000), "Waiting"));
+            // await service.ShowDialog(new MockupDialogViewModel());
+            service.Toast("Hello", null,TimeSpan.FromSeconds(1));
             
-            // var pm = (IProjectManager) ServiceProvider.GetService(typeof(IProjectManager));
-            // pm.MockupOpen();
+            var pm = (IProjectManager) ServiceProvider.GetService(typeof(IProjectManager));
+            pm.MockupOpen();
         }
     }
 }

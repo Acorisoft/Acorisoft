@@ -264,7 +264,7 @@
 <Style x:Key="Windows" TargetType="{x:Type w:SpaWindow}">
         <Setter Property="WindowStyle" Value="None" />
         <Setter Property="Background" Value="{StaticResource Brushes.Paper}" />
-        <Setter Property="Color" Value="{StaticResource Brushes.MaterialDesign.Indigo}" />
+        <Setter Property="Color" Value="{StaticResource Brushes.White}" />
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
                 <WindowChrome ResizeBorderThickness="7"
