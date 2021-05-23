@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reactive;
 using System.Threading.Tasks;
+using Acorisoft.Extensions.Platforms.Dialogs;
 using Acorisoft.Extensions.Platforms.Windows.Controls;
+using Acorisoft.Extensions.Platforms.Windows.ViewModels;
 
 namespace Acorisoft.Extensions.Platforms.Services
 {
@@ -57,6 +59,54 @@ namespace Acorisoft.Extensions.Platforms.Services
         /// 控制繁忙状态结束的流。
         /// </summary>
         IObservable<Unit> BusyStateEnd { get; }
+
+        #endregion
+
+        #region Dialog
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dialogHostCore"></param>
+        void SetDialog(IDialogHostCore dialogHostCore);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <returns></returns>
+        Task<IDialogSession> ShowDialog(IDialogViewModel viewModel);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="viewModels"></param>
+        /// <param name="share"></param>
+        /// <returns></returns>
+        Task<IDialogSession> ShowWizard(IEnumerable<IDialogViewModel> viewModels, IViewModel share);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <returns></returns>
+        Task<bool?> ShowPrompt(IDialogViewModel viewModel);
+        
+        /// <summary>
+        /// 对话框改变的流。
+        /// </summary>
+        IObservable<object> DialogChanged { get; }
+        
+        /// <summary>
+        /// 对话框开始的流。
+        /// </summary>
+        IObservable<Unit> DialogOpening { get; }
+        
+        
+        /// <summary>
+        /// 对话框结束的流。
+        /// </summary>
+        IObservable<Unit> DialogClosing { get; }
 
         #endregion
     }

@@ -11,10 +11,11 @@ using Acorisoft.Extensions.Platforms.Services;
 using Acorisoft.Extensions.Platforms.Windows.Controls;
 using Acorisoft.Extensions.Platforms.Windows.Windows;
 using Acorisoft.Extensions.Windows.Threadings;
+using ReactiveUI;
 
 namespace Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator
 {
-    public class BusyIndicator : ContentControl,IBusyIndicator, IBusyIndicatorCore
+    public class BusyIndicator : ContentControl, IBusyIndicator, IBusyIndicatorCore
     {
         private static readonly DispatcherTimer ProgressRunner;
         
@@ -53,7 +54,6 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator
 
         // ReSharper disable once InconsistentNaming
         private ProgressBar PART_Progress;
-        
         public BusyIndicator()
         {
             this.Loaded += OnLoadedCore;
@@ -117,8 +117,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator
 
         IDisposable IBusyIndicatorCore.SubscribeBusyStateChanged(IObservable<string> observable)
         {
-            return observable.ObserveOn(CurrentThreadScheduler.Instance)
-                             .SubscribeOn(Xaml.MainThreadScheduler)
+            return observable.ObserveOn(RxApp.MainThreadScheduler)
                              .Subscribe(x =>
                              {
                                  Description = string.IsNullOrEmpty(x) ? SR.BusyIndicator_DefaultDescription : x;
@@ -127,8 +126,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator
 
         IDisposable IBusyIndicatorCore.SubscribeBusyStateBegin(IObservable<Unit> observable)
         {
-            return observable.ObserveOn(CurrentThreadScheduler.Instance)
-                .SubscribeOn(Xaml.MainThreadScheduler)
+            return observable.ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(x =>
                 {
                     IsBusy = true;
@@ -136,8 +134,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator
         }
 
         IDisposable IBusyIndicatorCore.SubscribeBusyStateEnd(IObservable<Unit> observable) {
-            return observable.ObserveOn(CurrentThreadScheduler.Instance)
-                .SubscribeOn(Xaml.MainThreadScheduler)
+            return observable.ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(x =>
                 {
                     IsBusy = false;

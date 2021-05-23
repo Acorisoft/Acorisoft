@@ -77,6 +77,10 @@ namespace Acorisoft.Extensions.Platforms.Services
 
         public void SetBusyIndicator(IBusyIndicatorCore indicator)
         {
+            if (indicator == null)
+            {
+                return;
+            }
             DisposeBusyState();
             
             var newInstance = indicator ?? throw new ArgumentNullException(nameof(indicator));

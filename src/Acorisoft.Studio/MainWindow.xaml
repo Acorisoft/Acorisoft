@@ -4,9 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Acorisoft.Studio"
+        xmlns:w="https://github.com/Acorisoft/Acorisoft/Windows"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <w:BusyIndicator x:Name="Indicator">
+            <w:DialogHost x:Name="Dialog">
+                <Grid>
+                </Grid>
+            </w:DialogHost>
+        </w:BusyIndicator>
     </Grid>
 </Window>

@@ -1,9 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <Import Project="../../rx.targets"/>
+    <Import Project="../../rx.targets" />
+    <Import Project="../../ioc.targets" />
+    <Import Project="../../rxui.targets" />
+    <Import Project="../../db.targets" />
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
         <TargetFramework>net5.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>
     </PropertyGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Acorisoft.Extensions.Platforms.Windows\Acorisoft.Extensions.Platforms.Windows.csproj" />
+      <ProjectReference Include="..\Acorisoft.Extensions.Platforms\Acorisoft.Extensions.Platforms.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Views" />
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="LiteDB" Version="4.1.4" />
+    </ItemGroup>
 
 </Project>
