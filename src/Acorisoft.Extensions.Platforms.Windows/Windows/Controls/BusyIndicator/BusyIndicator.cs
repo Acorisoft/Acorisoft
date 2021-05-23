@@ -6,11 +6,10 @@ using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using Acorisoft.Extensions.Platform;
 using Acorisoft.Extensions.Platforms.Services;
 using Acorisoft.Extensions.Platforms.Windows.Controls;
 using Acorisoft.Extensions.Platforms.Windows.Windows;
-using Acorisoft.Extensions.Windows.Threadings;
+using Acorisoft.Extensions.Platforms.Windows.Threadings;
 using ReactiveUI;
 
 namespace Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator
@@ -22,8 +21,6 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator
         static BusyIndicator()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(BusyIndicator),new FrameworkPropertyMetadata(typeof(BusyIndicator)));
-            ProgressRunner = DispatcherTimerFactory.Create(DispatcherPriority.Normal, Dispatcher.CurrentDispatcher);
-            ProgressRunner.Interval = TimeSpan.FromMilliseconds(10);
         }
         
 
@@ -53,22 +50,14 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator
         public static readonly RoutedEvent DialogClosingEvent = EventManager.RegisterRoutedEvent("DialogClosing",RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(BusyIndicator));
 
         // ReSharper disable once InconsistentNaming
-        private ProgressBar PART_Progress;
         public BusyIndicator()
         {
             this.Loaded += OnLoadedCore;
             this.Unloaded += OnUnloadedCore;
         }
-
-        public override void OnApplyTemplate()
-        {
-            PART_Progress = (ProgressBar) GetTemplateChild("PART_Progress");
-            base.OnApplyTemplate();
-        }
-
+        
         private void OnUnloadedCore(object sender, RoutedEventArgs e)
         {
-            ProgressRunner.Tick -= OnTick;
         }
 
         private void OnLoadedCore(object sender, RoutedEventArgs e)
@@ -79,17 +68,8 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator
                 // 设置默认的实现。
                 viewService.SetBusyIndicator(this);
             }
-            
-            ProgressRunner.Tick += OnTick;
         }
-
-        private void OnTick(object? sender, EventArgs e)
-        {
-            if (PART_Progress != null)
-            {
-                PART_Progress.Value += 1;
-            }
-        }
+        
 
         public string Description
         {

@@ -11,6 +11,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Acorisoft.Extensions.Platforms.Windows\Acorisoft.Extensions.Platforms.Windows.csproj" />
       <ProjectReference Include="..\Acorisoft.Extensions.Platforms\Acorisoft.Extensions.Platforms.csproj" />
+      <ProjectReference Include="..\Acorisoft.Studio.Documents\Acorisoft.Studio.Documents.csproj" />
     </ItemGroup>
     <ItemGroup>
       <PackageReference Include="LiteDB" Version="4.1.4" />

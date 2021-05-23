@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Acorisoft.Extensions.Windows.Controls
+namespace Acorisoft.Extensions.Platforms.Windows.Controls
 {
     public static class IxContentHostCommands 
     {

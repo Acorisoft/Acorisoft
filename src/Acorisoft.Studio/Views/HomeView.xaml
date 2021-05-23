@@ -1,0 +1,25 @@
+﻿<w:SpaPage x:Class="Acorisoft.Studio.Views.HomeView"
+           x:TypeArguments="appViewModels:HomeViewModel"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:w="https://github.com/Acorisoft/Acorisoft/Windows"
+           xmlns:app="clr-namespace:Acorisoft.Studio"
+           xmlns:appViews="clr-namespace:Acorisoft.Studio.Views"
+           xmlns:appViewModels="clr-namespace:Acorisoft.Studio.ViewModels"
+           mc:Ignorable="d"
+           d:DesignHeight="300" d:DesignWidth="300"
+           d:DataContext="{d:DesignInstance Type={x:Type appViewModels:HomeViewModel},IsDesignTimeCreatable =True}">
+    <w:EmptyStateView>
+        <w:EmptyStateView.EmptyState>
+            <!--
+            空状态下的内容 
+         -->
+        </w:EmptyStateView.EmptyState>
+        
+        <!--
+         非空状态下的内容 
+         -->
+    </w:EmptyStateView>
+</w:SpaPage>

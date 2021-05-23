@@ -7,6 +7,7 @@
             InitializeBusyState();
             InitializeDialog();
             InitializeToast();
+            InitializeViewAware();
         }
     }
 }

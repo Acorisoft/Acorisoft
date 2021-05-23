@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using System.Windows.Threading;
 
-namespace Acorisoft.Extensions.Windows.Threadings
+namespace Acorisoft.Extensions.Platforms.Windows.Threadings
 {
     
     /// <summary>

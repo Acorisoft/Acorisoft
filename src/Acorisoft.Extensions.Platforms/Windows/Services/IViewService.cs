@@ -119,5 +119,19 @@ namespace Acorisoft.Extensions.Platforms.Services
         void SetToast(IToastHostCore dialogHostCore);
 
         #endregion
+
+        #region ViewAware
+        void NavigateTo(IPageViewModel page);
+
+        void NavigateTo(IQuickViewModel quickView, IQuickViewModel toolView, IQuickViewModel contextView,
+            IQuickViewModel extraView);
+
+        
+        IObservable<IPageViewModel> Page { get; }
+        IObservable<IQuickViewModel> QuickView { get; }
+        IObservable<IQuickViewModel> ToolView { get; }
+        IObservable<IQuickViewModel> ContextView { get; }
+        IObservable<IQuickViewModel> ExtraView { get; }
+        #endregion
     }
 }

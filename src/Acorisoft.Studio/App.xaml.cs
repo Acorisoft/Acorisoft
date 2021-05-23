@@ -27,6 +27,7 @@ namespace Acorisoft.Studio
             container.RegisterInstance<IViewService>(new ViewService());
             container.UseDryIocDependencyResolver();
             container.Register<IViewFor<MockupDialogViewModel>,MockupView>();
+            container.Register<AppViewModel>();
             
             ServiceProvider.SetServiceProvider(container);
         }

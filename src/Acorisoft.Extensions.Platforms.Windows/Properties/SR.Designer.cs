@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Acorisoft.Extensions.Platform {
+namespace Acorisoft.Extensions.Platforms {
     using System;
     
     

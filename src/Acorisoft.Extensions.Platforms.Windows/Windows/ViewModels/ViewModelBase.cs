@@ -47,8 +47,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.ViewModels
         {
             this.RaisePropertyChanged(name);
         }
-
-        public string Title => UrlPathSegment;
+        
         [BsonIgnore] public virtual string UrlPathSegment => string.Empty;
 
         [BsonIgnore] public IScreen HostScreen { get; }

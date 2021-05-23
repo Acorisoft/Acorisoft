@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 
 
-namespace Acorisoft.Extensions.Windows.Controls
+namespace Acorisoft.Extensions.Platforms.Windows.Controls
 {
     /// <summary>
     /// 
@@ -80,12 +80,17 @@ namespace Acorisoft.Extensions.Windows.Controls
             }
         }
 
-        private void OnSwipeCompleted(object sender, EventArgs e)
+        public void SetContentState(InteractiveContentState state)
         {
             _IxLeft.IxState =
-            _IxUp.IxState =
-            _IxRight.IxState =
-            _IxDown.IxState = InteractiveContentState.Idle;
+                _IxUp.IxState =
+                    _IxRight.IxState =
+                        _IxDown.IxState = state;
+        }
+
+        private void OnSwipeCompleted(object sender, EventArgs e)
+        {
+            SetContentState(InteractiveContentState.Idle);
         }
 
         private void OnSwipeProcessing(double delta, SwipeDirection direction)

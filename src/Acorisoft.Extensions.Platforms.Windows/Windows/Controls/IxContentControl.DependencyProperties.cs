@@ -18,7 +18,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using Acorisoft.Extensions.Platforms.Windows;
 
-namespace Acorisoft.Extensions.Windows.Controls
+namespace Acorisoft.Extensions.Platforms.Windows.Controls
 {
     partial class IxContentControl
     {
