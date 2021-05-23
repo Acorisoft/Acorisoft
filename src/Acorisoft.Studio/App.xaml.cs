@@ -7,6 +7,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using Acorisoft.Extensions.Platforms.Services;
+using Acorisoft.Studio.ViewModels;
+using Acorisoft.Studio.Views;
 using DryIoc;
 using ReactiveUI;
 using Splat;
@@ -24,6 +26,7 @@ namespace Acorisoft.Studio
             var container = new Container();
             container.RegisterInstance<IViewService>(new ViewService());
             container.UseDryIocDependencyResolver();
+            container.Register<IViewFor<MockupDialogViewModel>,MockupView>();
             
             ServiceProvider.SetServiceProvider(container);
         }

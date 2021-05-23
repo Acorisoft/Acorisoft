@@ -33,7 +33,8 @@ namespace Acorisoft.Studio
         private async void OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var service = (IViewService) ServiceProvider.GetService(typeof(IViewService)) ?? new ViewService();
-            await service.ShowDialog(new MockupDialogViewModel());
+            // await service.ShowDialog(new MockupDialogViewModel());
+            service.Toast("Hello", null,TimeSpan.FromSeconds(1));
         }
     }
 }

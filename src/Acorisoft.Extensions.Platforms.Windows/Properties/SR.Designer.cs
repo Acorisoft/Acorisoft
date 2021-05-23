@@ -39,7 +39,7 @@ namespace Acorisoft.Extensions.Platform {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Acorisoft.Extensions.Platform.SR", typeof(SR).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Acorisoft.Extensions.Platforms.SR", typeof(SR).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

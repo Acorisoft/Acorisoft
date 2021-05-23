@@ -109,5 +109,15 @@ namespace Acorisoft.Extensions.Platforms.Services
         IObservable<Unit> DialogClosing { get; }
 
         #endregion
+
+        #region Toast
+
+        void Toast(string content);
+        void Toast(string content, object icon);
+        void Toast(string content, object icon, TimeSpan duration);
+        
+        void SetToast(IToastHostCore dialogHostCore);
+
+        #endregion
     }
 }

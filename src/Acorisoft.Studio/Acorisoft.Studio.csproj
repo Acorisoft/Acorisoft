@@ -13,9 +13,6 @@
       <ProjectReference Include="..\Acorisoft.Extensions.Platforms\Acorisoft.Extensions.Platforms.csproj" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Views" />
-    </ItemGroup>
-    <ItemGroup>
       <PackageReference Include="LiteDB" Version="4.1.4" />
     </ItemGroup>
 

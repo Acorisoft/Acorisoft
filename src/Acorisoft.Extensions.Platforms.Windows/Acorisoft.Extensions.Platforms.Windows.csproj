@@ -1,6 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <Import Project="../../rx.targets" />
     <Import Project="../../rxui.targets" />
+    <Import Project="../../db.targets" />
+    <Import Project="../../ioc.targets" />
     <PropertyGroup>
         <TargetFramework>net5.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>

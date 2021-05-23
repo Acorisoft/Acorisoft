@@ -117,7 +117,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator
 
         IDisposable IBusyIndicatorCore.SubscribeBusyStateChanged(IObservable<string> observable)
         {
-            return observable.ObserveOn(RxApp.MainThreadScheduler)
+            return observable?.ObserveOn(RxApp.MainThreadScheduler)
                              .Subscribe(x =>
                              {
                                  Description = string.IsNullOrEmpty(x) ? SR.BusyIndicator_DefaultDescription : x;
@@ -126,7 +126,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator
 
         IDisposable IBusyIndicatorCore.SubscribeBusyStateBegin(IObservable<Unit> observable)
         {
-            return observable.ObserveOn(RxApp.MainThreadScheduler)
+            return observable?.ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(x =>
                 {
                     IsBusy = true;
@@ -134,7 +134,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator
         }
 
         IDisposable IBusyIndicatorCore.SubscribeBusyStateEnd(IObservable<Unit> observable) {
-            return observable.ObserveOn(RxApp.MainThreadScheduler)
+            return observable?.ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(x =>
                 {
                     IsBusy = false;

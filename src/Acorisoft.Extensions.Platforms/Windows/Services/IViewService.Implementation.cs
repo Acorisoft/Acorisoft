@@ -6,6 +6,7 @@
         {
             InitializeBusyState();
             InitializeDialog();
+            InitializeToast();
         }
     }
 }
