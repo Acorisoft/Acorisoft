@@ -28,7 +28,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.ViewModels
             _contextView = viewService.QuickView.ToProperty(this, nameof(ContextView));
             _titleStream = new Subject<string>();
             _title = _titleStream.ToProperty(this, nameof(Title));
-            viewService.Page.ObserveOn(RxApp.MainThreadScheduler).Subscribe(SubscribePageChanged);
+            viewService.Page.Subscribe(SubscribePageChanged);
             Router = new RoutingState();
         }
 

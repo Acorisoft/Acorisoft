@@ -10,10 +10,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Folder Include="Windows\Services" />
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="..\Acorisoft.Extensions.Platforms\Acorisoft.Extensions.Platforms.csproj" />
     </ItemGroup>
 

@@ -22,5 +22,8 @@
         <!--
          非空状态下的内容 
          -->
+        <StackPanel>
+            <w:WindowGoBackButton/>
+        </StackPanel>
     </w:EmptyStateView>
 </w:SpaPage>

@@ -1,4 +1,4 @@
-﻿namespace Acorisoft.Extensions.Platforms.Windows.Windows
+﻿namespace Acorisoft.Extensions.Platforms.Windows
 {
     public static class ViewAware
     {

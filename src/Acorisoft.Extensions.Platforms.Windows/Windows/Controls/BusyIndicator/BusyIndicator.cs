@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using Acorisoft.Extensions.Platforms.Services;
 using Acorisoft.Extensions.Platforms.Windows.Controls;
-using Acorisoft.Extensions.Platforms.Windows.Windows;
+using Acorisoft.Extensions.Platforms.Windows;
 using Acorisoft.Extensions.Platforms.Windows.Threadings;
 using ReactiveUI;
 

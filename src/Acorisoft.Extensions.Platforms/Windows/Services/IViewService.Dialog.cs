@@ -17,7 +17,7 @@ namespace Acorisoft.Extensions.Platforms.Services
         void Update(IDialogViewModel content);
     }
 
-    public partial class ViewService : IDialogEventRaiser
+    public partial class ViewService : IDialogEventRaiser, IDialogService
     {
         private IDisposable _dialogDo, _dialogDci, _dialogDce;
         private Subject<Unit> _dialogOpening;

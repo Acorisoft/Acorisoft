@@ -9,11 +9,6 @@ namespace Acorisoft.Extensions.Platforms.Windows.Views
     public class SpaPage<TViewModel> : ReactiveUserControl<TViewModel>
         where TViewModel : class, IPageViewModel, IRoutableViewModel
     {
-        static SpaPage()
-        {
-            DataContextProperty.OverrideMetadata(typeof(SpaPage<>),
-                new FrameworkPropertyMetadata(null, OnDataContextChanged));
-        }
 
         protected SpaPage()
         {
