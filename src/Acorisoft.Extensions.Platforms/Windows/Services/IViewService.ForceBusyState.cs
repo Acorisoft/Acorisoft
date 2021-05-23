@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reactive;
+using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
@@ -52,6 +53,17 @@ namespace Acorisoft.Extensions.Platforms.Services
             return SR.ViewService_ArgumentNull;
         }
 
+        public void ManualStartBusyState(string description)
+        {
+            _busyStateBegin.OnNext(Unit.Default);
+            _busyStateChanged.OnNext(description);
+        }
+        
+        public void ManualEndBusyState()
+        {
+            _busyStateEnd.OnNext(Unit.Default);
+        }
+        
         public Task ForceBusyState(IEnumerable<ObservableOperation> operations)
         {
             if (operations is null)

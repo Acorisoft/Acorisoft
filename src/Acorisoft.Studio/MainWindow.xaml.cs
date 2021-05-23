@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Acorisoft.Extensions.Platforms.Services;
 using Acorisoft.Extensions.Platforms.Windows.Controls;
+using Acorisoft.Studio.Documents.ProjectSystem;
 using Acorisoft.Studio.ViewModels;
 
 namespace Acorisoft.Studio
@@ -32,10 +33,13 @@ namespace Acorisoft.Studio
 
         private async void OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var service = (IViewService) ServiceProvider.GetService(typeof(IViewService)) ?? new ViewService();
-            await service.ForceBusyState(new ObservableOperation(() => Thread.Sleep(3000), "Waiting"));
-            // await service.ShowDialog(new MockupDialogViewModel());
-            service.Toast("Hello", null,TimeSpan.FromSeconds(1));
+            // var service = (IViewService) ServiceProvider.GetService(typeof(IViewService)) ?? new ViewService();
+            // await service.ForceBusyState(new ObservableOperation(() => Thread.Sleep(3000), "Waiting"));
+            // // await service.ShowDialog(new MockupDialogViewModel());
+            // service.Toast("Hello", null,TimeSpan.FromSeconds(1));
+            
+            var pm = (IProjectManager) ServiceProvider.GetService(typeof(IProjectManager));
+            pm.MockupOpen();
         }
     }
 }

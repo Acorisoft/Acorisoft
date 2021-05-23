@@ -1,11 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+    <Import Project="../../rx.targets" />
+    <Import Project="../../log.targets" />
+    <Import Project="../../ioc.targets" />
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
-
     <ItemGroup>
-      <ProjectReference Include="..\Acorisoft.Extensions.Platforms\Acorisoft.Extensions.Platforms.csproj" />
+        <PackageReference Include="MediatR" Version="9.0.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Acorisoft.Extensions.Platforms\Acorisoft.Extensions.Platforms.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="DocumentSystem" />
     </ItemGroup>
 
 </Project>

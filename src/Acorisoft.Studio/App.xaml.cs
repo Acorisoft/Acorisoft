@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using Acorisoft.Extensions.Platforms.Services;
+using Acorisoft.Studio.Documents;
 using Acorisoft.Studio.ViewModels;
 using Acorisoft.Studio.Views;
 using DryIoc;
@@ -23,11 +24,12 @@ namespace Acorisoft.Studio
     {
         public App()
         {
-            var container = new Container();
+            var container = new Container(Rules.Default.WithTrackingDisposableTransients());
             container.RegisterInstance<IViewService>(new ViewService());
             container.UseDryIocDependencyResolver();
             container.Register<IViewFor<MockupDialogViewModel>,MockupView>();
             container.Register<AppViewModel>();
+            container.UseMorisa();
             
             ServiceProvider.SetServiceProvider(container);
         }

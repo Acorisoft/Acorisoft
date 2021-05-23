@@ -43,6 +43,10 @@ namespace Acorisoft.Extensions.Platforms.Services
         /// <param name="indicator">默认的繁忙状态指示器，实例要求不能为空。</param>
         /// <exception cref="ArgumentNullException">传递的参数为空时引发该异常。</exception>
         void SetBusyIndicator(IBusyIndicatorCore indicator);
+
+        void ManualStartBusyState(string description);
+
+        void ManualEndBusyState();
         
         /// <summary>
         /// 繁忙状态的流。
