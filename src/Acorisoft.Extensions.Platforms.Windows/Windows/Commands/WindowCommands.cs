@@ -1,14 +1,15 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 
 namespace Acorisoft.Extensions.Platforms.Windows.Commands
 {
-    public class WindowCommands
+    public static class WindowCommands
     {
-        public static RoutedCommand Next => new RoutedCommand("Dialog.Next", typeof(WindowCommands));
-        public static RoutedCommand Last => new RoutedCommand("Dialog.Last", typeof(WindowCommands));
-        public static RoutedCommand Completed => new RoutedCommand("Dialog.Completed", typeof(WindowCommands));
-        public static RoutedCommand Ignore => new RoutedCommand("Dialog.Ignore", typeof(WindowCommands));
-        public static RoutedCommand Cancel => new RoutedCommand("Dialog.Cancel", typeof(WindowCommands));
-        public static RoutedCommand Skip => new RoutedCommand("Dialog.Skip", typeof(WindowCommands));
+        public static RoutedCommand Next { get; } = new RoutedUICommand("Next", "Next", typeof(WindowCommands));
+        public static RoutedCommand Last { get; } = new RoutedUICommand("Last", "Last", typeof(WindowCommands));
+        public static RoutedCommand Completed { get; } = new RoutedUICommand("Completed", "Completed", typeof(WindowCommands));
+        public static RoutedCommand Ignore { get; } = new RoutedUICommand("Ignore", "Ignore", typeof(WindowCommands));
+        public static RoutedCommand Cancel { get; } = new RoutedUICommand("Cancel", "Cancel", typeof(WindowCommands));
+        public static RoutedCommand Skip { get; } = new RoutedUICommand("Skip", "Skip", typeof(WindowCommands));
     }   
 }

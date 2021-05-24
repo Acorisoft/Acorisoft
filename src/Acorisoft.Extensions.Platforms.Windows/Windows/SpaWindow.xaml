@@ -3,8 +3,8 @@
                     xmlns:w="clr-namespace:Acorisoft.Extensions.Platforms.Windows"
                     xmlns:p="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Controls.Primitives"
                     xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
-<!-- 常用色 -->
-   
+    <!-- 常用色 -->
+
     <Color x:Key="Colors.Black">#000000</Color>
     <Color x:Key="Colors.White">#FFFFFF</Color>
     <Color x:Key="Colors.Paper">#F5F5F5</Color>
@@ -14,7 +14,7 @@
     <Color x:Key="Colors.Accent.Dark">#303F9F</Color>
     <Color x:Key="Colors.Text.Primary">#3c4858</Color>
     <Color x:Key="Colors.Text.Secondary">#8492a6</Color>
-    
+
     <!-- MaterialDesignColor -->
     <Color x:Key="Colors.MaterialDesign.Red">#F44336</Color>
     <Color x:Key="Colors.MaterialDesign.Red.Dark">#D32F2F</Color>
@@ -48,7 +48,7 @@
     <Color x:Key="Colors.MaterialDesign.Orange.Dark">#F57C00</Color>
     <Color x:Key="Colors.MaterialDesign.DeepOrange">#FF5722</Color>
     <Color x:Key="Colors.MaterialDesign.DeepOrange.Dark">#E64A19</Color>
-    
+
     <SolidColorBrush x:Key="Brushes.MaterialDesign.Red" Color="{StaticResource Colors.MaterialDesign.Red}"/>
     <SolidColorBrush x:Key="Brushes.MaterialDesign.Red.Dark" Color="{StaticResource Colors.MaterialDesign.Red.Dark}"/>
     <SolidColorBrush x:Key="Brushes.MaterialDesign.Pink" Color="{StaticResource Colors.MaterialDesign.Pink}"/>
@@ -81,7 +81,7 @@
     <SolidColorBrush x:Key="Brushes.MaterialDesign.Orange.Dark" Color="{StaticResource Colors.MaterialDesign.Orange.Dark}"/>
     <SolidColorBrush x:Key="Brushes.MaterialDesign.DeepOrange" Color="{StaticResource Colors.MaterialDesign.DeepOrange}"/>
     <SolidColorBrush x:Key="Brushes.MaterialDesign.DeepOrange.Dark" Color="{StaticResource Colors.MaterialDesign.DeepOrange.Dark}"/>
-    
+
     <!-- 常用画刷 -->
     <SolidColorBrush x:Key="Brushes.Black" Color="{StaticResource Colors.Black}"/>
     <SolidColorBrush x:Key="Brushes.White" Color="{StaticResource Colors.White}"/>
@@ -91,7 +91,7 @@
     <SolidColorBrush x:Key="Brushes.Transparent" Color="Transparent"/>
     <SolidColorBrush x:Key="Brushes.Mask.Dark">#30000000</SolidColorBrush>
     <SolidColorBrush x:Key="Brushes.Mask.Light">#30FFFFFF</SolidColorBrush>
-    
+
     <!-- 阴影 -->
     <DropShadowEffect x:Key="Effect.Shadow1" BlurRadius="5" ShadowDepth="1" Direction="270" Color="{StaticResource Colors.Shadow}" Opacity=".2" RenderingBias="Performance" o:Freeze="True" />
     <DropShadowEffect x:Key="Effect.Shadow2" BlurRadius="8" ShadowDepth="1.5" Direction="270" Color="{StaticResource Colors.Shadow}" Opacity=".2" RenderingBias="Performance" o:Freeze="True" />
@@ -261,7 +261,7 @@
         </Setter>
     </Style>
 
-<Style x:Key="Windows" TargetType="{x:Type w:SpaWindow}">
+    <Style x:Key="Windows" TargetType="{x:Type w:SpaWindow}">
         <Setter Property="WindowStyle" Value="None" />
         <Setter Property="Background" Value="{StaticResource Brushes.Paper}" />
         <Setter Property="Color" Value="{StaticResource Brushes.White}" />
@@ -330,7 +330,7 @@
                                              HorizontalAlignment="Stretch"
                                              ClipToBounds="True"/>
                         </AdornerDecorator>
-                        
+
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="WindowState" Value="Maximized">

@@ -12,7 +12,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+using Acorisoft.Extensions.Platforms.Windows.Commands;
 using Acorisoft.Extensions.Platforms.Windows.Controls;
+using Acorisoft.Extensions.Platforms.Windows.Services;
+using Acorisoft.Extensions.Platforms.Windows.Threadings;
 
 namespace Acorisoft.Extensions.Platforms.Windows
 {
@@ -21,16 +25,87 @@ namespace Acorisoft.Extensions.Platforms.Windows
         static SpaWindow()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SpaWindow),new FrameworkPropertyMetadata(typeof(SpaWindow)));
-            
+            //CommandRefresher = DispatcherTimerFactory.Create(DispatcherPriority.Normal);
+            //CommandRefresher.Tick += (_, _) =>
+            //{
+            //    CommandManager.InvalidateRequerySuggested();
+
+            //};
+            //CommandRefresher.Interval = TimeSpan.FromMilliseconds(300);
+            //CommandRefresher.Start();
+
         }
+
+        private static readonly DispatcherTimer CommandRefresher;
+
         protected SpaWindow() : base()
         {
+            
+            CommandBindings.Add(new CommandBinding(WindowCommands.Cancel, OnDialogCancel, CanDialogCancel));
+            CommandBindings.Add(new CommandBinding(WindowCommands.Completed, OnDialogNextOrComplete, CanDialogNextOrComplete));
+            CommandBindings.Add(new CommandBinding(WindowCommands.Ignore, OnDialogIgnoreOrSkip, CanDialogIgnoreOrSkip));
+            CommandBindings.Add(new CommandBinding(WindowCommands.Last, OnDialogLast, CanDialogLast));
+            CommandBindings.Add(new CommandBinding(WindowCommands.Next, OnDialogNextOrComplete, CanDialogNextOrComplete));
+            CommandBindings.Add(new CommandBinding(WindowCommands.Skip, OnDialogIgnoreOrSkip, CanDialogIgnoreOrSkip));
+
             CommandBindings.Add(new CommandBinding(SystemCommands.CloseWindowCommand, OnWindowClose));
             CommandBindings.Add(new CommandBinding(SystemCommands.MinimizeWindowCommand, OnWindowMinimum));
             CommandBindings.Add(new CommandBinding(SystemCommands.MaximizeWindowCommand, OnWindowRestore));
             CommandBindings.Add(new CommandBinding(SystemCommands.RestoreWindowCommand, OnWindowRestore));
             CommandBindings.Add(new CommandBinding(IxContentHostCommands.ToggleEnable, ToggleEnable));
         }
+
+
+        #region WindowCommands
+
+
+        private void OnDialogCancel(object sender, ExecutedRoutedEventArgs e)
+        {
+            ServiceLocator.DialogService.Cancel();
+        }
+
+        private void OnDialogNextOrComplete(object sender, ExecutedRoutedEventArgs e)
+        {
+
+            ServiceLocator.DialogService.NextOrComplete();
+        }
+
+        private void OnDialogIgnoreOrSkip(object sender, ExecutedRoutedEventArgs e)
+        {
+            ServiceLocator.DialogService.IgnoreOrSkip();
+        }
+
+
+        private void OnDialogLast(object sender, ExecutedRoutedEventArgs e)
+        {
+            ServiceLocator.DialogService.Last();
+        }
+
+
+        private void CanDialogCancel(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = ServiceLocator.DialogService.CanCancel();
+            e.Handled = true;
+        }
+
+        private void CanDialogNextOrComplete(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = ServiceLocator.DialogService.CanNextOrComplete();
+            e.Handled = true;
+        }
+
+        private void CanDialogIgnoreOrSkip(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = ServiceLocator.DialogService.CanIgnoreOrSkip();
+            e.Handled = true;
+        }
+
+        private void CanDialogLast(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = ServiceLocator.DialogService.CanLast();
+            e.Handled = true;
+        }
+        #endregion
 
         #region DependencyProperties
 

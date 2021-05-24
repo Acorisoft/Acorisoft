@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Acorisoft.Extensions.Platforms.Windows.Threadings;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -44,7 +45,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
 
         public IxContentHost()
         {
-            _Sampler = new DispatcherTimer(DispatcherPriority.Render, Dispatcher);
+            _Sampler = DispatcherTimerFactory.Create(DispatcherPriority.Normal, Dispatcher);
             _Recognitor = new SwipeRecognitor(this);
             _Recognitor.SetSampler(_Sampler);
             _Recognitor.SwipeStarting += OnSwipeStarting;
@@ -184,8 +185,6 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
 
         public override void OnApplyTemplate()
         {
-            base.OnApplyTemplate();
-
             _IxLeft = (IxContentControl)GetTemplateChild(IxLeftName);
             _IxRight = (IxContentControl)GetTemplateChild(IxRightName);
             _IxUp = (IxContentControl)GetTemplateChild(IxUpName);

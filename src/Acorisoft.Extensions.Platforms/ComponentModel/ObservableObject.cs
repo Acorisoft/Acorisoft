@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Acorisoft.Extension.ComponentModels
+namespace Acorisoft.Extensions.Platforms.ComponentModel
 {
     public abstract class ObservableObject : INotifyPropertyChanged
     {

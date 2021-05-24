@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Subjects;
-using Acorisoft.Extension.ComponentModels;
+using Acorisoft.Extensions.Platforms.ComponentModel;
 using Acorisoft.Studio.Documents.Engines;
 using DynamicData;
 using MediatR;

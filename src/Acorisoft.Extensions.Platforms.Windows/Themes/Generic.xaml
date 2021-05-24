@@ -13,6 +13,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Acorisoft.Extensions.Platforms.Windows;component/Windows/SpaWindow.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Acorisoft.Extensions.Platforms.Windows;component/Windows/Controls/IxContentHost.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Acorisoft.Extensions.Platforms.Windows;component/Themes/Banner.xaml" />
     </ResourceDictionary.MergedDictionaries>
     
     <SolidColorBrush x:Key="App.Dark.Mask">#90000000</SolidColorBrush>
@@ -203,7 +204,8 @@
                                                   HorizontalContentAlignment="Center"
                                                   VerticalContentAlignment="Center"
                                                   MinWidth="96"
-                                                  MinHeight="96" />
+                                                  MinHeight="96"
+                                                  Duration="0:0:0"/>
                         </Border>
                     </p:TiledPanel>
                     <ControlTemplate.Triggers>
@@ -337,4 +339,6 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+
 </ResourceDictionary>

@@ -8,7 +8,7 @@
                      xmlns:appViewModel="clr-namespace:Acorisoft.Studio.ViewModels"
                      xmlns:rx="http://reactiveui.net"
                      mc:Ignorable="d"
-                     Style="{StaticResource Windows}"
+        Style="{StaticResource Windows}"
                      DataContext="{x:Static app:ViewModelLocator.AppViewModel}"
                      d:DataContext="{d:DesignInstance Type={x:Type appViewModel:AppViewModel}}"
                      Title="{Binding Title,Mode=OneWay}" 

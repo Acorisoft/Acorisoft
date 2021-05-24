@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Acorisoft.Extensions.Platforms.Dialogs;
 using Acorisoft.Extensions.Platforms.Windows.Controls;
 using Acorisoft.Extensions.Platforms.Windows.Dialogs;
@@ -24,6 +25,30 @@ namespace Acorisoft.Extensions.Platforms.Services
         private Subject<Unit> _dialogClosing;
         private Subject<object> _dialogChanged;
         private Stack<IDialogContext> _dialogContextStack;
+
+        private class CommandImpl : ICommand
+        {
+            private Action _execute;
+            private Func<bool> _canExecute;
+
+            public CommandImpl(Action execute,Func<bool> canExecute)
+            {
+                _execute = execute;
+                _canExecute = canExecute;
+            }
+
+            public event EventHandler CanExecuteChanged;
+
+            public bool CanExecute(object parameter)
+            {
+                return _canExecute();
+            }
+
+            public void Execute(object parameter)
+            {
+                _execute();
+            }
+        }
 
         private void InitializeDialog()
         {
