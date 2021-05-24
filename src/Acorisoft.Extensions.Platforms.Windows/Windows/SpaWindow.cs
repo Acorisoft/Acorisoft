@@ -25,18 +25,8 @@ namespace Acorisoft.Extensions.Platforms.Windows
         static SpaWindow()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SpaWindow),new FrameworkPropertyMetadata(typeof(SpaWindow)));
-            //CommandRefresher = DispatcherTimerFactory.Create(DispatcherPriority.Normal);
-            //CommandRefresher.Tick += (_, _) =>
-            //{
-            //    CommandManager.InvalidateRequerySuggested();
-
-            //};
-            //CommandRefresher.Interval = TimeSpan.FromMilliseconds(300);
-            //CommandRefresher.Start();
 
         }
-
-        private static readonly DispatcherTimer CommandRefresher;
 
         protected SpaWindow() : base()
         {

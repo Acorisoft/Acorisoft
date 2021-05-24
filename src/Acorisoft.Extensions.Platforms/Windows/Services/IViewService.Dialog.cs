@@ -153,7 +153,7 @@ namespace Acorisoft.Extensions.Platforms.Services
 
         public void Cancel()
         {
-            GetCurrentContext()?.CanCancel();
+            GetCurrentContext()?.Cancel();
         }
 
         public void NextOrComplete()

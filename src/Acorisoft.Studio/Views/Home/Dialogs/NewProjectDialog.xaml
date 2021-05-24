@@ -17,28 +17,22 @@
     <UserControl.Resources>
         <w:BindingProxy x:Key="This" Data="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window},Mode=FindAncestor}}"/>
     </UserControl.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="256"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-
-        <Border Grid.Row="0"
-                Background="{StaticResource Brushes.MaterialDesign.Blue.Dark}">
-            <Image Source="{StaticResource Banners.NewIdea}"/>
-        </Border>
-
-        <StackPanel Grid.Row="1"
-                    Margin="24 0">
-            <TextBlock Text="创建项目"
-                       FontSize="24"
-                       HorizontalAlignment="Center"/>
-            <TextBox Text="{Binding Name,Mode=TwoWay}" Margin="0 8" FontSize="14"/>
-            <TextBox Text="{Binding Path,Mode=TwoWay}" Margin="0 8" FontSize="14"/>
+    <w:BannerContentHost Banner="{StaticResource Banners.NewIdea}"
+                         BannerHeight="256"
+                         BannerWidth="256"
+                         Title="创建项目"
+                         Subtitle="asdadasdadadadadadasd">
+        <w:BannerContentHost.Toolbar>
             <UniformGrid Columns="2">
                 <Button Content="Ok" Command="{x:Static w:WindowCommands.Completed}" />
                 <Button Content="Cancel" Command="{x:Static w:WindowCommands.Cancel}" />
             </UniformGrid>
+        </w:BannerContentHost.Toolbar>
+        <StackPanel Grid.Row="1"
+                    Margin="24 0">
+            <TextBox Text="{Binding Name,Mode=TwoWay}" FontSize="14"/>
+            <TextBox Text="{Binding Path,Mode=TwoWay}" FontSize="14"/>
+            
         </StackPanel>
-    </Grid>
+    </w:BannerContentHost>
 </w:DialogPage>

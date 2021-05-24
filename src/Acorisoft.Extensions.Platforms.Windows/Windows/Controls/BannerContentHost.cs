@@ -11,7 +11,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
     {
         static BannerContentHost()
         {
-            OverridesDefaultStyleProperty.OverrideMetadata(typeof(BannerContentHost), new FrameworkPropertyMetadata(typeof(BannerContentHost)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(BannerContentHost), new FrameworkPropertyMetadata(typeof(BannerContentHost)));
         }
 
         public double BannerHeight
@@ -78,6 +78,104 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
             get => (Brush)GetValue(ColorProperty);
             set => SetValue(ColorProperty, value);
         }
+
+
+        public object Title
+        {
+            get => (object)GetValue(TitleProperty);
+            set => SetValue(TitleProperty, value);
+        }
+
+        public DataTemplate TitleTemplate
+        {
+            get => (DataTemplate)GetValue(TitleTemplateProperty);
+            set => SetValue(TitleTemplateProperty, value);
+        }
+
+        public DataTemplateSelector TitleTemplateSelector
+        {
+            get => (DataTemplateSelector)GetValue(TitleTemplateSelectorProperty);
+            set => SetValue(TitleTemplateSelectorProperty, value);
+        }
+
+        public string TitleStringFormat
+        {
+            get => (string)GetValue(TitleStringFormatProperty);
+            set => SetValue(TitleStringFormatProperty, value);
+        }
+
+
+        public object Subtitle
+        {
+            get => (object)GetValue(SubtitleProperty);
+            set => SetValue(SubtitleProperty, value);
+        }
+
+        public DataTemplate SubtitleTemplate
+        {
+            get => (DataTemplate)GetValue(SubtitleTemplateProperty);
+            set => SetValue(SubtitleTemplateProperty, value);
+        }
+
+        public DataTemplateSelector SubtitleTemplateSelector
+        {
+            get => (DataTemplateSelector)GetValue(SubtitleTemplateSelectorProperty);
+            set => SetValue(SubtitleTemplateSelectorProperty, value);
+        }
+
+        public string SubtitleStringFormat
+        {
+            get => (string)GetValue(SubtitleStringFormatProperty);
+            set => SetValue(SubtitleStringFormatProperty, value);
+        }
+
+        public static readonly DependencyProperty SubtitleStringFormatProperty = DependencyProperty.Register(
+            "SubtitleStringFormat",
+            typeof(string),
+            typeof(BannerContentHost),
+            new PropertyMetadata(null));
+
+        public static readonly DependencyProperty SubtitleTemplateSelectorProperty = DependencyProperty.Register(
+            "SubtitleTemplateSelector",
+            typeof(DataTemplateSelector),
+            typeof(BannerContentHost),
+            new PropertyMetadata(null));
+
+        public static readonly DependencyProperty SubtitleTemplateProperty = DependencyProperty.Register(
+            "SubtitleTemplate",
+            typeof(DataTemplate),
+            typeof(BannerContentHost),
+            new PropertyMetadata(null));
+
+        public static readonly DependencyProperty SubtitleProperty = DependencyProperty.Register(
+            "Subtitle",
+            typeof(object),
+            typeof(BannerContentHost),
+            new PropertyMetadata(null));
+
+        public static readonly DependencyProperty TitleStringFormatProperty = DependencyProperty.Register(
+            "TitleStringFormat",
+            typeof(string),
+            typeof(BannerContentHost),
+            new PropertyMetadata(null));
+
+        public static readonly DependencyProperty TitleTemplateSelectorProperty = DependencyProperty.Register(
+            "TitleTemplateSelector",
+            typeof(DataTemplateSelector),
+            typeof(BannerContentHost),
+            new PropertyMetadata(null));
+
+        public static readonly DependencyProperty TitleTemplateProperty = DependencyProperty.Register(
+            "TitleTemplate",
+            typeof(DataTemplate),
+            typeof(BannerContentHost),
+            new PropertyMetadata(null));
+
+        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(
+            "Title",
+            typeof(object),
+            typeof(BannerContentHost),
+            new PropertyMetadata(null));
 
         public static readonly DependencyProperty BannerWidthProperty = DependencyProperty.Register(
             "BannerWidth", typeof(double), typeof(BannerContentHost), new PropertyMetadata(default(double)));

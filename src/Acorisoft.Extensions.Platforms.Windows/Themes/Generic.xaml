@@ -13,6 +13,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Acorisoft.Extensions.Platforms.Windows;component/Windows/SpaWindow.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Acorisoft.Extensions.Platforms.Windows;component/Windows/Controls/IxContentHost.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Acorisoft.Extensions.Platforms.Windows;component/Themes/Banner.xaml" />
     </ResourceDictionary.MergedDictionaries>
     
     <SolidColorBrush x:Key="App.Dark.Mask">#90000000</SolidColorBrush>
@@ -203,7 +204,8 @@
                                                   HorizontalContentAlignment="Center"
                                                   VerticalContentAlignment="Center"
                                                   MinWidth="96"
-                                                  MinHeight="96" />
+                                                  MinHeight="96"
+                                                  Duration="0:0:0"/>
                         </Border>
                     </p:TiledPanel>
                     <ControlTemplate.Triggers>
@@ -339,11 +341,32 @@
     </Style>
     
     <Style TargetType="{x:Type c:BannerContentHost}">
+        <Setter Property="Color" Value="{StaticResource Brushes.MaterialDesign.LightBlue}"/>
         <Setter Property="BannerTemplate">
             <Setter.Value>
                 <DataTemplate>
                     <Image Source="{Binding}"
                            Stretch="UniformToFill"/>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="TitleTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}"
+                               FontSize="28"
+                               FontWeight="Bold"
+                               TextWrapping="Wrap"/>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="SubtitleTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}"
+                               Foreground="#A1A1A1"
+                               FontSize="14"
+                               TextWrapping="Wrap"/>
                 </DataTemplate>
             </Setter.Value>
         </Setter>
@@ -356,6 +379,8 @@
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="{TemplateBinding BannerHeight}"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition/>
                                 <RowDefinition Height="48"/>
                             </Grid.RowDefinitions>
@@ -365,14 +390,26 @@
                                 <ContentPresenter ContentSource="Banner"/>
                             </Border>
                             
-                            
                             <ContentPresenter Grid.Row="1"
-                                              ContentSource="Content"
-                                              HorizontalAlignment="Stretch"
-                                              VerticalAlignment="Stretch"/>
+                                              ContentSource="Title"
+                                              HorizontalAlignment="Left"
+                                              VerticalAlignment="Stretch"
+                                              Margin="32 8"/>
                             
                             <ContentPresenter Grid.Row="2"
-                                              ContentSource="ToolBar"
+                                              ContentSource="Subtitle"
+                                              HorizontalAlignment="Left"
+                                              VerticalAlignment="Stretch"
+                                              Margin="32 8"/>
+                            
+                            <ContentPresenter Grid.Row="3"
+                                              ContentSource="Content"
+                                              HorizontalAlignment="Stretch"
+                                              VerticalAlignment="Stretch"
+                                              Margin="32 8"/>
+                            
+                            <ContentPresenter Grid.Row="4"
+                                              ContentSource="Toolbar"
                                               HorizontalAlignment="Stretch"
                                               VerticalAlignment="Stretch"/>
                         </Grid>
