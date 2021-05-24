@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Acorisoft.Studio.Documents.ProjectSystem
 {
-    public interface INewProjectInfo
+    public interface INewProjectInfo : ICompositionSetProperty
     {
-        string Name { get; }
         string Path { get; }
     }
 }

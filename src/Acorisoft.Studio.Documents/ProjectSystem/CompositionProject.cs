@@ -7,18 +7,35 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
     /// <summary>
     /// <see cref="CompositionProject"/> 类型表示一个创作项目。
     /// </summary>
-    public class CompositionProject : ObservableObject, ICompositionProject
+    public class CompositionProject : ObservableObject, ICompositionProject, IEquatable<CompositionProject>, IDisposable
     {
         private string _name;
         private string _path;
         private Guid _id;
+        public sealed override int GetHashCode()
+        {
+            return HashCode.Combine(Name, Path);
+        }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [BsonIgnore]
-        public LiteDatabase Database { get; set; }
+        public bool Equals(CompositionProject y)
+        {
+            if (y is not null)
+            {
+                return y.Name == Name && y.Path == Path;
+            }
 
+            return false;
+        }
+        public sealed override bool Equals(object? obj)
+        {
+            if (obj is CompositionProject compositionProject)
+            {
+                return Equals(compositionProject);
+            }
+            return base.Equals(obj);
+        }
+
+        [BsonId]
         public Guid Id
         {
             get => _id;

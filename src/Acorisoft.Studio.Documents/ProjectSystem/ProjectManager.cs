@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Reactive.Disposables;
 using System.Reactive.Subjects;
 using Acorisoft.Extensions.Platforms.ComponentModel;
 using Acorisoft.Studio.Documents.Engines;
@@ -21,8 +24,12 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
         public const long MorisaDocumentDatabaseInitSize = 32 * 1024 * 1024;
         public const int MorisaDocumentDatabaseCacheSize = 32 * 1024 * 1024;
 
-        private protected readonly SourceList<CompositionProject> Source;
-
+        public const string ArgumentNullProjectName = "ProjectName";
+        public const string ArgumentNullPath = "Path";
+        public const string InvalidOperationProjectExists = "Project Exists";
+        public const string InvalidOperationCannotAddProject = "Cannot add project";
+        public const string InvalidOperationDuplicateProject = "Cannot add project, project duplicate";
+        public const string InvalidOperationAlreadyOpenProject = "Cannot open project, project already opened";
 
         #region IDocumentEngineAquirement
 
@@ -43,6 +50,12 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             {
                 _queue.Enqueue(Unit.Default);
                 _openStarting.OnNext(Unit.Default);
+            }
+
+            public void Clear()
+            {
+                _queue.Clear();
+                _openEnding.OnNext(Unit.Default);
             }
 
             public void Unset()
@@ -66,158 +79,274 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
 
         #endregion
 
-        //
-        // Project
-        // <Root>
-        // <Root>\Images
-        // <Root>\Videos
-        // <Root>\Brushes
-        // <Root>\Maps
-        // <Root>\Images
+        #region PropertyManager
+
+        internal class CompositionSetPropertyManager : ICompositionSetPropertyManager
+        {
+            private ICompositionSetDatabase _composition;
+            public void SetCompositionSet(ICompositionSet set)
+            {
+                _composition = set as ICompositionSetDatabase ?? throw new InvalidOperationException(nameof(set));
+            }
+
+            public void SetProperty(ICompositionSetProperty property)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        #endregion
+
+        private readonly HashSet<ICompositionSet> _projectDistinct;
+        private protected readonly SourceList<ICompositionSet> Editable;
+        private protected readonly ReadOnlyObservableCollection<ICompositionSet> Bindable;
+        private protected readonly Subject<ICompositionSet> CurrentProjectStream;
 
         private readonly RequestQueue _queue;
         private readonly IMediator _mediator;
+        private CompositionSet _current;
 
         public ProjectManager(IMediator mediator)
         {
             //
-            // 这是从数据库中加载项目
-            Source = new SourceList<CompositionProject>();
-            // Source.Connect()
-            //     .Filter(x => x != null)
-            //     .Page();
+            // 创建基础字段
             _queue = new RequestQueue();
             _mediator = mediator;
+
+            _projectDistinct = new HashSet<ICompositionSet>();
+
+            Editable = new SourceList<ICompositionSet>();
+            CurrentProjectStream = new Subject<ICompositionSet>();
+
+            Editable.Connect().Bind(out Bindable).Subscribe();
         }
 
-        //
-        // ProjectManager 
-        internal IDocumentEngineAquirement Aquirement => _queue;
-
-        public void MockupOpen()
-        {
-            _mediator.Publish(new DocumentSwitchNotification());
-        }
-
-        internal static LiteDatabase GetProjectDatabase(string path)
+        private static LiteDatabase GetDatabaseFromPath(string path)
         {
             return new LiteDatabase(new ConnectionString
             {
-                Filename = Path.Combine(path, MorisaDocumentDatabaseVersion1Suffix),
-                InitialSize = MorisaDocumentDatabaseInitSize,
-                Mode = LiteDBFileMode.Exclusive,
-                CacheSize = MorisaDocumentDatabaseCacheSize,
+              InitialSize  = MorisaDocumentDatabaseInitSize,
+              CacheSize = MorisaDocumentDatabaseCacheSize,
+              Filename = GetDatabaseConnectString(path),
+              Mode = LiteDBFileMode.Exclusive
             });
         }
-
-        /// <summary>
-        /// 创建一个新的设定集项目。
-        /// </summary>
-        /// <param name="newProjectInfo">传递一个 <see cref="INewProjectInfo"/> 类型实例作为参数。该参数要求不能为空</param>
-        /// <exception cref="ArgumentNullException">当传递的参数为空时抛出该异常。</exception>
-        /// <exception cref="InvalidOperationException">当传递的参数中</exception>
-        public static ICompositionProject NewProject(INewProjectInfo newProjectInfo)
+        
+        private static string GetDatabaseConnectString(string path)
         {
-            if (newProjectInfo == null)
-            {
-                throw new ArgumentNullException(nameof(newProjectInfo));
-            }
-
-            if (!string.IsNullOrEmpty(newProjectInfo.Name))
-            {
-                throw new InvalidOperationException("项目名为空");
-            }
-
-            if (!string.IsNullOrEmpty(newProjectInfo.Path))
-            {
-                throw new InvalidOperationException("路径为空");
-            }
-
-            if (Directory.Exists(newProjectInfo.Path))
-            {
-                throw new InvalidOperationException("路径错误");
-            }
-
-            try
-            {
-                //
-                //
-                return new CompositionProject
-                {
-                    Path = newProjectInfo.Path,
-                    Name = newProjectInfo.Name,
-                    Database = GetProjectDatabase(newProjectInfo.Path)
-                };
-            }
-            catch
-            {
-                throw new InvalidOperationException("创建项目时失败");
-            }
-
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="project"></param>
-        /// <returns></returns>
-        public Task OpenProject(ICompositionProject project)
-        {
-            if (project == null)
-            {
-                throw new ArgumentNullException(nameof(project));
-            }
-
-            if (!string.IsNullOrEmpty(project.Name))
-            {
-                throw new InvalidOperationException("项目名为空");
-            }
-
-            if (!string.IsNullOrEmpty(project.Path))
-            {
-                throw new InvalidOperationException("路径为空");
-            }
-
-            if (Directory.Exists(project.Path))
-            {
-                throw new InvalidOperationException("路径错误");
-            }
-
-            //
-            // 
-            try
-            {
-                //
-                //
-                CompositionProject compositionProject = project as CompositionProject ?? null;
-
-                //
-                // 打开一个项目或者创建新的项目
-                var database = compositionProject.Database ?? GetProjectDatabase(project.Path);
-
-                //
-                // 推送通知
-                var notification = new DocumentSwitchNotification
-                {
-                    Database = database
-                };
-
-                return _mediator.Publish(notification);
-            }
-            catch
-            {
-                throw new InvalidOperationException(nameof(project));
-            }
-
-        }
-
-        public static string GetDatabaseFromProjectInformation(INewProjectInfo info)
-        {
-            return Path.Combine(info.Path, MorisaDocumentDatabaseVersion1Suffix);
+            return Path.Combine(path,MorisaDocumentDatabaseVersion1Suffix);
         }
 
         public void Dispose()
         {
+            foreach (var project in Editable.Items)
+            {
+                project.Dispose();
+            }
+            _queue.Clear();
+            _current?.Dispose();
+            Editable?.Dispose();
+            
         }
+
+        /// <summary>
+        /// 创建项目并加载。
+        /// </summary>
+        public async Task NewProject(INewProjectInfo newProjectInfo)
+        {
+            if (newProjectInfo == null)
+            {
+                throw new ArgumentNullException(string.Format(SR.ProjectManager_NewProject_ArgumentNull, nameof(newProjectInfo)));
+            }
+
+            if (string.IsNullOrEmpty(newProjectInfo.Name))
+            {
+                throw new ArgumentNullException(string.Format(SR.ProjectManager_NewProject_ArgumentNull, ArgumentNullProjectName));
+            }
+            
+            if (string.IsNullOrEmpty(newProjectInfo.Path))
+            {
+                throw new ArgumentNullException(string.Format(SR.ProjectManager_NewProject_ArgumentNull, ArgumentNullPath));
+            }
+
+            if (!Directory.Exists(newProjectInfo.Path))
+            {
+                //
+                // throw
+                try
+                {
+                    Directory.CreateDirectory(newProjectInfo.Path);
+                }
+                catch (Exception ex)
+                {
+                    throw new InvalidOperationException(string.Format(SR.ProjectManager_NewProject_InvalidOperation, ex.Message), ex);
+                } 
+            }
+
+            if (File.Exists(GetDatabaseConnectString(newProjectInfo.Path)))
+            {
+                throw new InvalidOperationException(string.Format(SR.ProjectManager_NewProject_InvalidOperation, InvalidOperationProjectExists));
+            }
+            
+            //
+            //
+            try
+            {
+                //
+                // 创建项目
+                var compositionProject = new CompositionSet(newProjectInfo.Path)
+                {
+                    Name = newProjectInfo.Name,
+                    MainDatabase = GetDatabaseFromPath(newProjectInfo.Path)
+                };
+
+                if (!_projectDistinct.Add(compositionProject))
+                {
+                    throw new InvalidOperationException(string.Format(SR.ProjectManager_NewProject_InvalidOperation, InvalidOperationCannotAddProject));
+                }
+
+                if (_current is not null)
+                {
+                    //
+                    // 释放之前的内容
+                    await _mediator.Publish(new DocumentCloseNotification());
+                    _current.Dispose();
+                }
+                
+                //
+                // 添加到集合当中
+                Editable.Add(compositionProject);
+                
+                //
+                //
+                _current = compositionProject;
+
+                //
+                // 推送更改
+                await _mediator.Publish(new DocumentOpenNotification(compositionProject));
+                
+                //
+                //
+                CurrentProjectStream.OnNext(compositionProject);
+            }
+            catch(Exception ex)
+            {
+                throw new InvalidOperationException(string.Format(SR.ProjectManager_NewProject_InvalidOperation, ex.Message), ex);
+            } 
+        }
+
+        /// <summary>
+        /// 加载项目
+        /// </summary>
+        /// <param name="compositionProject"></param>
+        /// <param name="isOpen"></param>
+        public async Task LoadProject(CompositionProject compositionProject, bool isOpen = false)
+        {
+            if (compositionProject == null)
+            {
+                throw new ArgumentNullException(string.Format(SR.ProjectManager_LoadProject_ArgumentNull, nameof(compositionProject)));
+            }
+
+            if (compositionProject.Equals(_current))
+            {
+                throw new ArgumentNullException(string.Format(SR.ProjectManager_LoadProject_InvalidOperation, InvalidOperationAlreadyOpenProject));
+            }
+            
+            if (string.IsNullOrEmpty(compositionProject.Name))
+            {
+                throw new ArgumentNullException(string.Format(SR.ProjectManager_LoadProject_InvalidOperation, ArgumentNullProjectName));
+            }
+            
+            if (string.IsNullOrEmpty(compositionProject.Path))
+            {
+                throw new ArgumentNullException(string.Format(SR.ProjectManager_LoadProject_InvalidOperation, ArgumentNullPath));
+            }
+
+            if (!Directory.Exists(compositionProject.Path))
+            {
+                //
+                // throw
+                try
+                {
+                    Directory.CreateDirectory(compositionProject.Path);
+                }
+                catch (Exception ex)
+                {
+                    throw new InvalidOperationException(string.Format(SR.ProjectManager_LoadProject_InvalidOperation, ex.Message), ex);
+                } 
+            }
+
+            if (!File.Exists(GetDatabaseConnectString(compositionProject.Path)))
+            {
+                throw new InvalidOperationException(string.Format(SR.ProjectManager_LoadProject_InvalidOperation, InvalidOperationProjectExists));
+            }
+
+            if (_projectDistinct.Contains(compositionProject))
+            {
+                throw new InvalidOperationException(string.Format(SR.ProjectManager_LoadProject_InvalidOperation, InvalidOperationDuplicateProject));
+            }
+
+            //
+            // 今天加到目录
+            _projectDistinct.Add(compositionProject);
+            
+            //
+            //
+            Editable.Add(compositionProject);
+
+            if (!isOpen)
+            {
+                return;
+            }
+            
+            if (_current is not null)
+            {
+                //
+                // 释放之前的内容
+                await _mediator.Publish(new DocumentCloseNotification());
+                _current.Dispose();
+            }
+                
+            //
+            // 添加到集合当中
+            Editable.Add(compositionProject);
+                
+            //
+            //
+            _current = compositionProject;
+
+            //
+            // 推送更改
+            await _mediator.Publish(new DocumentOpenNotification(compositionProject));
+            
+            //
+            //
+            CurrentProjectStream.OnNext(compositionProject);
+        }
+
+        public async Task CloseProject()
+        {
+            if (_current is null)
+            {
+                return;
+            }
+
+            //
+            // 通知注销
+            await _mediator.Publish(new DocumentCloseNotification());
+
+            //
+            //
+            _current?.Dispose();
+            _current = null;
+            
+            //
+            //
+            CurrentProjectStream.OnNext(null);
+        }
+
+        internal IDocumentEngineAquirement Aquirement => _queue;
+
+        public IObservable<ICompositionSet> CurrentProject => CurrentProjectStream;
     }
 }

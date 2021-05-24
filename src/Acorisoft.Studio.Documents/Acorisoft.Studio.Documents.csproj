@@ -5,6 +5,7 @@
 	<Import Project="../../db.targets" />
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
+        <NoWarn>CS8632</NoWarn>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="MediatR" Version="9.0.0" />
@@ -14,6 +15,19 @@
     </ItemGroup>
     <ItemGroup>
       <Folder Include="DocumentSystem" />
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Update="SR.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>SR.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Update="SR.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>SR.resx</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>
