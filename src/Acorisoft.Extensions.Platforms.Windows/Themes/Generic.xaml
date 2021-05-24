@@ -337,4 +337,48 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
+    <Style TargetType="{x:Type c:BannerContentHost}">
+        <Setter Property="BannerTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Image Source="{Binding}"
+                           Stretch="UniformToFill"/>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type c:BannerContentHost}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="{TemplateBinding BannerHeight}"/>
+                                <RowDefinition/>
+                                <RowDefinition Height="48"/>
+                            </Grid.RowDefinitions>
+                            
+                            <Border Grid.Row="0"
+                                    Background="{TemplateBinding Color}">
+                                <ContentPresenter ContentSource="Banner"/>
+                            </Border>
+                            
+                            
+                            <ContentPresenter Grid.Row="1"
+                                              ContentSource="Content"
+                                              HorizontalAlignment="Stretch"
+                                              VerticalAlignment="Stretch"/>
+                            
+                            <ContentPresenter Grid.Row="2"
+                                              ContentSource="ToolBar"
+                                              HorizontalAlignment="Stretch"
+                                              VerticalAlignment="Stretch"/>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
