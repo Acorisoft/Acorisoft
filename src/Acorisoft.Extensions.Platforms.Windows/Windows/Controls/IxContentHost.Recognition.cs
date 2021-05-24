@@ -208,7 +208,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
 
             _Timer = sampler ?? throw new ArgumentNullException(nameof(sampler));
             _Timer.Tick += Sampling;
-            _Timer.Start();
+            // _Timer.Start();
         }
 
         public event EventHandler SwipeCompleted;

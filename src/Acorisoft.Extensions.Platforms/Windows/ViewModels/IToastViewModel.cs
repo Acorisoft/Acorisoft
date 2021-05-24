@@ -1,5 +1,4 @@
 ﻿using System;
-using Acorisoft.Extension.ComponentModels;
 
 namespace Acorisoft.Extensions.Platforms.Windows.ViewModels
 {

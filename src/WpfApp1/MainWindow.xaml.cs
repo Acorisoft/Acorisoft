@@ -16,6 +16,16 @@ using Acorisoft.Extensions.Platforms.Windows;
 
 namespace WpfApp1
 {
+    public static class WindowCommands
+    {
+        public static RoutedCommand Next { get; } = new RoutedUICommand("Next", "Next", typeof(SpaWindow));
+        public static RoutedCommand Last { get; } = new RoutedUICommand("Last", "Last", typeof(SpaWindow));
+        public static RoutedCommand Completed { get; } = new RoutedUICommand("Completed", "Completed", typeof(SpaWindow));
+        public static RoutedCommand Ignore { get; } = new RoutedUICommand("Ignore", "Ignore", typeof(SpaWindow));
+        public static RoutedCommand Cancel { get; } = new RoutedUICommand("Cancel", "Cancel", typeof(SpaWindow));
+        public static RoutedCommand Skip { get; } = new RoutedUICommand("Skip", "Skip", typeof(SpaWindow));
+    }
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -24,6 +34,16 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+
+        }
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
         }
     }
 }

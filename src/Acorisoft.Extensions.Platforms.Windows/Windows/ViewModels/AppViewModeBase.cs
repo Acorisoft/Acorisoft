@@ -23,9 +23,9 @@ namespace Acorisoft.Extensions.Platforms.Windows.ViewModels
         protected AppViewModelBase(IViewService viewService)
         {
             _quickView = viewService.QuickView.ToProperty(this, nameof(QuickView));
-            _toolView = viewService.QuickView.ToProperty(this, nameof(ToolView));
-            _extraView = viewService.QuickView.ToProperty(this, nameof(ExtraView));
-            _contextView = viewService.QuickView.ToProperty(this, nameof(ContextView));
+            _toolView = viewService.ToolView.ToProperty(this, nameof(ToolView));
+            _extraView = viewService.ExtraView.ToProperty(this, nameof(ExtraView));
+            _contextView = viewService.ContextView.ToProperty(this, nameof(ContextView));
             _titleStream = new Subject<string>();
             _title = _titleStream.ToProperty(this, nameof(Title));
             viewService.Page.Subscribe(SubscribePageChanged);

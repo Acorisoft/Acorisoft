@@ -3,18 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31025.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Extensions.Platforms", "src\Acorisoft.Extensions.Platforms\Acorisoft.Extensions.Platforms.csproj", "{1A7DC178-7E42-4189-AA87-1FDA33E0243A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Extensions.Platforms", "src\Acorisoft.Extensions.Platforms\Acorisoft.Extensions.Platforms.csproj", "{1A7DC178-7E42-4189-AA87-1FDA33E0243A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Extensions.Platforms.Windows", "src\Acorisoft.Extensions.Platforms.Windows\Acorisoft.Extensions.Platforms.Windows.csproj", "{2B6D9A0F-31D5-404E-9A2D-BA42C7C6A0DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Extensions.Platforms.Windows", "src\Acorisoft.Extensions.Platforms.Windows\Acorisoft.Extensions.Platforms.Windows.csproj", "{2B6D9A0F-31D5-404E-9A2D-BA42C7C6A0DE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Targets", "Targets", "{0CE18765-E224-4E9F-AE14-808FFE67E176}"
-ProjectSection(SolutionItems) = preProject
-	rx.targets = rx.targets
-EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		rx.targets = rx.targets
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Studio", "src\Acorisoft.Studio\Acorisoft.Studio.csproj", "{94B1F7E8-F4BA-471B-9D38-863231A111EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Studio", "src\Acorisoft.Studio\Acorisoft.Studio.csproj", "{94B1F7E8-F4BA-471B-9D38-863231A111EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Studio.Documents", "src\Acorisoft.Studio.Documents\Acorisoft.Studio.Documents.csproj", "{E28B7EA3-5D2C-4C2E-88C5-9D21159E3254}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Studio.Documents", "src\Acorisoft.Studio.Documents\Acorisoft.Studio.Documents.csproj", "{E28B7EA3-5D2C-4C2E-88C5-9D21159E3254}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfApp1", "src\WpfApp1\WpfApp1.csproj", "{926FDFFB-DDC7-4D6F-86FC-69C1517F3F74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +40,10 @@ Global
 		{E28B7EA3-5D2C-4C2E-88C5-9D21159E3254}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E28B7EA3-5D2C-4C2E-88C5-9D21159E3254}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E28B7EA3-5D2C-4C2E-88C5-9D21159E3254}.Release|Any CPU.Build.0 = Release|Any CPU
+		{926FDFFB-DDC7-4D6F-86FC-69C1517F3F74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{926FDFFB-DDC7-4D6F-86FC-69C1517F3F74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{926FDFFB-DDC7-4D6F-86FC-69C1517F3F74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{926FDFFB-DDC7-4D6F-86FC-69C1517F3F74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -27,9 +27,17 @@ namespace Acorisoft.Studio
         {
             var container = Platform.Init();
             container.Register<IViewFor<MockupDialogViewModel>,MockupView>();
-            container.Register<IViewFor<HomeViewModel>, HomeView>();
             container.Register<AppViewModel>();
+
+            //
+            // HomeViews
+
+            container.Register<IViewFor<HomeViewModel>, HomeView>();
+            container.Register<IViewFor<NewProjectDialogViewModel>, NewProjectDialog>();
             container.Register<HomeViewModel>();
+            container.Register<NewProjectDialogViewModel>();
+
+
             container.UseMorisa();
         }
     }
