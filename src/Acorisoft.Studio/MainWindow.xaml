@@ -11,7 +11,7 @@
         Style="{StaticResource Windows}"
                      DataContext="{x:Static app:ViewModelLocator.AppViewModel}"
                      d:DataContext="{d:DesignInstance Type={x:Type appViewModel:AppViewModel}}"
-                     Title="{Binding Title,Mode=OneWay}" 
+                     Title="{Binding Title,TargetNullValue='首页',Mode=OneWay}" 
                      MinWidth="1366" MinHeight="768"
                      Width="1920" Height="1080">
     <Grid>

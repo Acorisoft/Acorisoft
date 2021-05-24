@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using LiteDB;
+using MediatR;
 
 namespace Acorisoft.Studio.Documents.Engines
 {
@@ -12,5 +13,6 @@ namespace Acorisoft.Studio.Documents.Engines
 
     public class DocumentSwitchNotification : INotification, IRequest
     {
+        public LiteDatabase Database { get; internal set; }
     }
 }

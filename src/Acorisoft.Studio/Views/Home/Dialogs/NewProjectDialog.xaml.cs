@@ -14,6 +14,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ReactiveUI;
+using ReactiveUI.Validation;
+using ReactiveUI.Validation.Abstractions;
+using ReactiveUI.Validation.Extensions;
 
 namespace Acorisoft.Studio.Views
 {
@@ -21,10 +25,13 @@ namespace Acorisoft.Studio.Views
     /// NewProjectDialog.xaml 的交互逻辑
     /// </summary>
     public partial class NewProjectDialog : DialogPage<NewProjectDialogViewModel>
-    {
+    { 
         public NewProjectDialog()
         {
             InitializeComponent();
+
+            this.BindValidation(ViewModel, x => x.Name, v => v.ProjectName.Text);
+            
         }
     }
 }

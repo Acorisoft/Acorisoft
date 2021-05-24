@@ -76,6 +76,14 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.Primitives
 
     }
 
+    public class CloseButton : PrimitiveButton
+    {
+        static CloseButton()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(CloseButton), new FrameworkPropertyMetadata(typeof(CloseButton)));
+        }
+    }
+
     public class WindowCloseButton : PrimitiveButton
     {
         static WindowCloseButton()

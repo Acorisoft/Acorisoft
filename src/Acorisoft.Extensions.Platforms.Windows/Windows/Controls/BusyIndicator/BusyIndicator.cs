@@ -16,8 +16,6 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator
 {
     public class BusyIndicator : ContentControl, IBusyIndicator, IBusyIndicatorCore
     {
-        private static readonly DispatcherTimer ProgressRunner;
-        
         static BusyIndicator()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(BusyIndicator),new FrameworkPropertyMetadata(typeof(BusyIndicator)));

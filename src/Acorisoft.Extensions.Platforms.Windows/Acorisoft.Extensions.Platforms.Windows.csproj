@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="../../rx.targets" />
 	<Import Project="../../rxui.targets" />
 	<Import Project="../../db.targets" />
@@ -7,7 +7,11 @@
 		<TargetFramework>net5.0-windows</TargetFramework>
 		<UseWPF>true</UseWPF>
 		<RootNamespace>Acorisoft.Extensions.Platforms</RootNamespace>
+		<NoWarn>CS8632;IDE0001</NoWarn>
 	</PropertyGroup>
+	<ItemGroup>
+	  <PackageReference Include="ReactiveUI.Validation" Version="2.1.1" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Acorisoft.Extensions.Platforms\Acorisoft.Extensions.Platforms.csproj" />

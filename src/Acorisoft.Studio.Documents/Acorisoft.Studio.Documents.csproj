@@ -2,6 +2,7 @@
     <Import Project="../../rx.targets" />
     <Import Project="../../log.targets" />
     <Import Project="../../ioc.targets" />
+	<Import Project="../../db.targets" />
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>

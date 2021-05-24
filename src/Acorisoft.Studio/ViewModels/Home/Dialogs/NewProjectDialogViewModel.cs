@@ -6,13 +6,21 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ReactiveUI.Validation.Extensions;
+using ReactiveUI;
+using Acorisoft.Studio.Documents.ProjectSystem;
 
 namespace Acorisoft.Studio.ViewModels
 {
-    public class NewProjectDialogViewModel : DialogViewModelBase
+    public class NewProjectDialogViewModel : DialogViewModelBase, INewProjectInfo
     {
         private string _name;
         private string _path;
+
+        public NewProjectDialogViewModel() : base()
+        {
+            var observable = this.WhenAnyValue(x => x.Name, (name) => !string.IsNullOrEmpty(name));
+        }
 
         public override sealed bool CanCancel()
         {
@@ -29,7 +37,8 @@ namespace Acorisoft.Studio.ViewModels
         /// <summary>
         /// 获取或设置新的项目名称。
         /// </summary>
-        public string Name {
+        public string Name
+        {
             get => _name;
             set => Set(ref _name, value);
         }
