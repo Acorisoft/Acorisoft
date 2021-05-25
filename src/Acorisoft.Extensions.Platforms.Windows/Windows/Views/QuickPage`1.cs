@@ -6,7 +6,7 @@ using ReactiveUI;
 
 namespace Acorisoft.Extensions.Platforms.Windows.Views
 {
-    public class QuickPage<TViewModel> : ReactiveUserControl<TViewModel> where TViewModel : class,IRoutableViewModel, IQuickViewModel
+    public class QuickPage<TViewModel> : ReactiveUserControl<TViewModel> where TViewModel : class, IRoutableViewModel, IQuickViewModel
     {
         static QuickPage()
         {

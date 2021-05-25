@@ -162,11 +162,7 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
 
             try
             {
-                var composition = new CompositionSet
-                {
-                    Name = project.Name,
-                    Path = project.Path
-                };
+                var composition = new CompositionSet(project.Name, project.Path);
 
                 if (_current.Equals(composition))
                 {
@@ -192,6 +188,10 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
                 //
                 // 打开数据库
                 var database = GetDatabaseFromPath(project.Path);
+                
+                //
+                // 设置数据库
+                composition.MainDatabase = database;
                 
                 //
                 // 设置数据库
@@ -264,7 +264,7 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
                 
                 //
                 // 创建创作。
-                var composition = new CompositionSet
+                var composition = new CompositionSet(newProjectInfo.Name, newProjectInfo.Path)
                 {
                     MainDatabase = GetDatabaseFromPath(newProjectInfo.Path)
                 };

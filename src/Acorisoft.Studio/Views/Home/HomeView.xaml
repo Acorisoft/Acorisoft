@@ -16,14 +16,32 @@
             <!--
             空状态下的内容 
          -->
-            <Grid></Grid>
+            <Grid />
         </w:EmptyStateView.EmptyState>
-        
+
         <!--
          非空状态下的内容 
          -->
-        <StackPanel>
-            <w:WindowGoBackButton/>
-        </StackPanel>
+        <ScrollViewer>
+            <StackPanel>
+                <!-- Banner -->
+                <Border Background="{StaticResource Brushes.White}"
+                        CornerRadius="9" Height="256"
+                        Margin="32">
+                    <w:TiledPanel>
+                        <Image Source="{StaticResource Banners.Started}"
+                               HorizontalAlignment="Left"
+                               Stretch="Uniform" />
+                        <UniformGrid Columns="2"
+                                     HorizontalAlignment="Right"
+                                     VerticalAlignment="Bottom"
+                                     Margin="32">
+                            <Button Content="学习如何使用" />
+                            <Button Content="快速开始" />
+                        </UniformGrid>
+                    </w:TiledPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
     </w:EmptyStateView>
 </w:SpaPage>

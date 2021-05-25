@@ -36,7 +36,143 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
         {
             return Path.Combine(_composition.GetCompositionSetImagesDirectory(), fileName);
         }
+        
+        private string GetVideoFromCompositionSet(string fileName)
+        {
+            return Path.Combine(_composition.GetCompositionSetVideosDirectory(), fileName);
+        }
+        
+        private string GetFileFromCompositionSet(string fileName)
+        {
+            return Path.Combine(_composition.GetCompositionSetFilesDirectory(), fileName);
+        }
 
+        public async Task<Uri> UploadVideo(string fileName)
+        {
+            if (string.IsNullOrEmpty(fileName))
+            {
+                throw new ArgumentNullException(nameof(fileName));
+            }
+
+            if (!File.Exists(fileName))
+            {
+                throw new InvalidOperationException("无法上传不存在的文件");
+            }
+            
+            //
+            // 创建 ID
+            var id = Guid.NewGuid().ToString("N");
+            
+            //
+            // 创建URI
+            var uri = new Uri($"Morisa://acorisoft.tech/Videos/{id}", UriKind.Relative);
+            
+            //
+            // 设置文件名
+            var targetVideoName = GetVideoFromCompositionSet(id);
+            
+            //
+            // 复制到指定目录
+            await Task.Run(() => File.Copy(fileName, targetVideoName));
+            
+            return uri;
+        }
+        public async Task<Uri> UploadVideo(Stream stream)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
+            if (!stream.CanRead)
+            {
+                throw new InvalidOperationException("无法上传无效的流");
+            }
+            
+            //
+            // 创建 ID
+            var id = Guid.NewGuid().ToString("N");
+            
+            //
+            // 创建URI
+            var uri = new Uri($"Morisa://acorisoft.tech/Videos/{id}", UriKind.Relative);
+            
+            //
+            // 设置文件名
+            var targetVideoName = GetVideoFromCompositionSet(id);
+            
+            //
+            // 复制到指定目录
+            using (var newVideoStream = new FileStream(targetVideoName, FileMode.Create))
+            {
+                await stream.CopyToAsync(newVideoStream);
+            }
+            
+            return uri;
+        }
+        public async Task<Uri> UploadFile(string fileName)
+        {
+            if (string.IsNullOrEmpty(fileName))
+            {
+                throw new ArgumentNullException(nameof(fileName));
+            }
+
+            if (!File.Exists(fileName))
+            {
+                throw new InvalidOperationException("无法上传不存在的文件");
+            }
+            
+            //
+            // 创建 ID
+            var id = Guid.NewGuid().ToString("N");
+            
+            //
+            // 创建URI
+            var uri = new Uri($"Morisa://acorisoft.tech/Files/{id}", UriKind.Relative);
+            
+            //
+            // 设置文件名
+            var targetFileName = GetFileFromCompositionSet(id);
+            
+            //
+            // 复制到指定目录
+            await Task.Run(() => File.Copy(fileName, targetFileName));
+            
+            return uri;
+        }
+        public async Task<Uri> UploadFile(Stream stream)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
+            if (!stream.CanRead)
+            {
+                throw new InvalidOperationException("无法上传无效的流");
+            }
+            
+            //
+            // 创建 ID
+            var id = Guid.NewGuid().ToString("N");
+            
+            //
+            // 创建URI
+            var uri = new Uri($"Morisa://acorisoft.tech/Files/{id}", UriKind.Relative);
+            
+            //
+            // 设置文件名
+            var targetFileName = GetFileFromCompositionSet(id);
+            
+            //
+            // 复制到指定目录
+            using (var newFileStream = new FileStream(targetFileName, FileMode.Create))
+            {
+                await stream.CopyToAsync(newFileStream);
+            }
+            
+            return uri;
+        }
         public async Task<Uri> UploadImage(string fileName)
         {
             if (string.IsNullOrEmpty(fileName))
@@ -67,7 +203,6 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             
             return uri;
         }
-        
         public async Task<Uri> UploadImage(Stream stream)
         {
             if (stream == null)

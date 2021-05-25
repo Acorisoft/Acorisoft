@@ -33,8 +33,10 @@ namespace Acorisoft.Studio
             // HomeViews
 
             container.Register<IViewFor<HomeViewModel>, HomeView>();
+            container.Register<IViewFor<HomeContextViewModel>, HomeContextView>();
             container.Register<IViewFor<NewProjectDialogViewModel>, NewProjectDialog>();
             container.Register<HomeViewModel>();
+            container.Register<HomeContextViewModel>();
             container.Register<NewProjectDialogViewModel>();
         }
     }

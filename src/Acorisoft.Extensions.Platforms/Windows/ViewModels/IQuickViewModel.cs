@@ -2,6 +2,6 @@
 {
     public interface IQuickViewModel : IViewModel
     {
-        
+        void Start(IPageViewModel currentViewModel);
     }
 }

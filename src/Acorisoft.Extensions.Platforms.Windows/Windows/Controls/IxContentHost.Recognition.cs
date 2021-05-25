@@ -84,7 +84,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
 
         void Sampling(object sender, EventArgs e)
         {
-            if (IsEnable)
+            if (!IsEnable)
             {
                 return;
             }

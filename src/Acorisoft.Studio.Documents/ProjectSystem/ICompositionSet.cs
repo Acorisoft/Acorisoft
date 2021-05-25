@@ -12,8 +12,9 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
         public string GetCompositionSetBrushesDirectory();
 
         public string GetCompositionSetMapsDirectory();
-        string Name { get; set; }
-        string Path { get; set; }
+        public string GetCompositionSetFilesDirectory();
+        string Name { get;  }
+        string Path { get;  }
         ICompositionSetProperty Property { get; set; }
     }
 

@@ -96,7 +96,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
 
         private void OnSwipeProcessing(double delta, SwipeDirection direction)
         {
-            //Debug.WriteLine(delta);
+            Debug.WriteLine(delta);
             switch (direction)
             {
                 case SwipeDirection.ToRight:
