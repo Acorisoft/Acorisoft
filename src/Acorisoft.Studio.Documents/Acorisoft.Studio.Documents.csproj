@@ -14,9 +14,6 @@
         <ProjectReference Include="..\Acorisoft.Extensions.Platforms\Acorisoft.Extensions.Platforms.csproj" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="DocumentSystem" />
-    </ItemGroup>
-    <ItemGroup>
       <EmbeddedResource Update="SR.resx">
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>SR.Designer.cs</LastGenOutput>

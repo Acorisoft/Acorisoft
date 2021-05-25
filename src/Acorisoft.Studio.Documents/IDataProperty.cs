@@ -1,7 +1,7 @@
-﻿namespace Acorisoft.Studio.Documents
+namespace Acorisoft.Studio.Documents
 {
     public interface IDataProperty
     {
-        string Name { get; }
+        string Name { get; set; }
     }
 }

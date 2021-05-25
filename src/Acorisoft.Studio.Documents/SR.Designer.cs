@@ -59,41 +59,5 @@ namespace Acorisoft.Studio.Documents {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 加载项目失败,参数为空:{0}.
-        /// </summary>
-        internal static string ProjectManager_LoadProject_ArgumentNull {
-            get {
-                return ResourceManager.GetString("ProjectManager_LoadProject_ArgumentNull", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 新建项目失败,无效操作:{0}.
-        /// </summary>
-        internal static string ProjectManager_LoadProject_InvalidOperation {
-            get {
-                return ResourceManager.GetString("ProjectManager_LoadProject_InvalidOperation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 新建项目失败,参数为空:{0}.
-        /// </summary>
-        internal static string ProjectManager_NewProject_ArgumentNull {
-            get {
-                return ResourceManager.GetString("ProjectManager_NewProject_ArgumentNull", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 新建项目失败,无效操作:{0}.
-        /// </summary>
-        internal static string ProjectManager_NewProject_InvalidOperation {
-            get {
-                return ResourceManager.GetString("ProjectManager_NewProject_InvalidOperation", resourceCulture);
-            }
-        }
     }
 }

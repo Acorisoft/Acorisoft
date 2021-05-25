@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 using LiteDB;
 
 namespace Acorisoft.Studio.Documents.ProjectSystem
 {
-    internal interface ICompositionSetDatabase
-    {
-        LiteDatabase MainDatabase { get; }
-    }
     public interface ICompositionSet : IDisposable
     {
+        string Name { get; set; }
+        string Path { get; set; }
+        ICompositionSetProperty Property { get; set; }
+    }
+
+    interface ICompositionSetDatabase
+    {
+        LiteDatabase MainDatabase { get; }
     }
 }

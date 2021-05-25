@@ -1,8 +1,7 @@
-﻿namespace Acorisoft.Studio.Documents.ProjectSystem
+namespace Acorisoft.Studio.Documents.ProjectSystem
 {
-    public interface ICompositionSetPropertyManager
+    public interface ICompositionSetPropertyManager : IDataPropertyManager<ICompositionSetProperty>
     {
-        void SetCompositionSet(ICompositionSet set);
-        void SetProperty(ICompositionSetProperty property);
+        
     }
 }

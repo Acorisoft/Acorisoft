@@ -36,9 +36,6 @@ namespace Acorisoft.Studio
             container.Register<IViewFor<NewProjectDialogViewModel>, NewProjectDialog>();
             container.Register<HomeViewModel>();
             container.Register<NewProjectDialogViewModel>();
-
-
-            container.UseMorisa();
         }
     }
 }
