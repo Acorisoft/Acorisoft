@@ -18,6 +18,7 @@ using Acorisoft.Extensions.Platforms.Windows;
 using Acorisoft.Extensions.Platforms.Windows.Commands;
 using Acorisoft.Extensions.Platforms.Windows.Controls;
 using Acorisoft.Extensions.Platforms.Windows.Services;
+using Acorisoft.Studio.Documents.ProjectSystem;
 using Acorisoft.Studio.ViewModels;
 
 namespace Acorisoft.Studio
@@ -98,7 +99,12 @@ namespace Acorisoft.Studio
         private async void OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var service = (IViewService) ServiceProvider.GetService(typeof(IViewService)) ?? new ViewService();
+            var csm = (ICompositionSetManager) ServiceProvider.GetService(typeof(ICompositionSetManager));
             var session = await service.ShowDialog(new NewProjectDialogViewModel());
+            if (session.IsCompleted && session.Result is INewProjectInfo projectInfo)
+            {
+                await csm.NewProject(projectInfo);
+            }
         }
     }
 }

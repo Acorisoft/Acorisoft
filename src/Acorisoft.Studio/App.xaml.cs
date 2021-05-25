@@ -25,7 +25,7 @@ namespace Acorisoft.Studio
     {
         public App()
         {
-            var container = Platform.Init();
+            var container = Platform.Init().UseMorisa();
             container.Register<IViewFor<MockupDialogViewModel>,MockupView>();
             container.Register<AppViewModel>();
 
