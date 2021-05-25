@@ -27,8 +27,10 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
         private protected readonly ReadOnlyObservableCollection<ICompositionSet> Bindable;
         private protected readonly Subject<ICompositionSet> CurrentComposition;
         private protected readonly Subject<ICompositionSetProperty> CurrentCompositionProperty;
+        private protected readonly Subject<bool> IsOpenStream;
         
         private ICompositionSet _current;
+        private bool _isOpen;
         
         public CompositionSetManager(IMediator mediator, ICompositionSetPropertyManager propertyManager)
         {
@@ -40,6 +42,7 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             Editable.Connect().Bind(out Bindable).Subscribe();
             HashSet = new HashSet<ICompositionSet>();
             PropertyManager = propertyManager;
+            IsOpenStream = new Subject<bool>();
         }
 
         private static string GetDatabaseFileNameFromPath(string path)
@@ -60,22 +63,22 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
 
         private static string GetCompositionSetImagesDirectory(string path)
         {
-            return Path.Combine(path, ImagesDirectory);
+            return Path.Combine(path, CompositionSet.ImagesDirectory);
         }
         
         private static string GetCompositionSetVideosDirectory(string path)
         {
-            return Path.Combine(path, VideosDirectory);
+            return Path.Combine(path, CompositionSet.VideosDirectory);
         }
         
         private static string GetCompositionSetBrushesDirectory(string path)
         {
-            return Path.Combine(path, BrushesDirectory);
+            return Path.Combine(path, CompositionSet.BrushesDirectory);
         }
         
         private static string GetCompositionSetMapsDirectory(string path)
         {
-            return Path.Combine(path, MapsDirectory);
+            return Path.Combine(path, CompositionSet.MapsDirectory);
         }
         
         private static void MaintainProjectDirectory(string path)
@@ -121,6 +124,8 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             }
 
             _current = null;
+            _isOpen = false;
+            IsOpenStream.OnNext(false);
         }
 
         /// <summary>
@@ -199,6 +204,8 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
                 //
                 //
                 _current = composition;
+                _isOpen = true;
+                IsOpenStream.OnNext(true);
                 
                 
                 CurrentComposition.OnNext(composition);
@@ -262,7 +269,9 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
                     MainDatabase = GetDatabaseFromPath(newProjectInfo.Path)
                 };
 
-                var compositionProeprty = new CompositionSetProperty(newProjectInfo);
+                var compositionProperty = new CompositionSetProperty(newProjectInfo);
+                
+                composition.Property = compositionProperty;
 
                 if (!HashSet.Add(composition))
                 {
@@ -274,6 +283,8 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
                 //
                 // 设置当前
                 _current = composition;
+                _isOpen = true;
+                IsOpenStream.OnNext(true);
                 
                 //
                 // 
@@ -281,11 +292,10 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
                 
                 //
                 // 设置属性
-                PropertyManager.SetProperty(compositionProeprty);
+                PropertyManager.SetProperty(compositionProperty);
                 
                 CurrentComposition.OnNext(composition);
-                
-                CurrentCompositionProperty.OnNext(compositionProeprty);
+                CurrentCompositionProperty.OnNext(compositionProperty);
                 
                 //
                 // 通知更改
@@ -298,11 +308,32 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             }
         }
 
-        void SetProperty(ICompositionSetProperty property)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="property"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public async Task SetProperty(ICompositionSetProperty property)
         {
+            if (property is null)
+            {
+                throw new ArgumentNullException(nameof(property));
+            }
             
+            
+
+            await PropertyManager.SetProperty(property);
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+
+        public IObservable<bool> IsOpen => IsOpenStream;
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public ICompositionSetPropertyManager PropertyManager { get; }
         
         /// <summary>

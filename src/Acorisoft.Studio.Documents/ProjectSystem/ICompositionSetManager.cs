@@ -26,6 +26,13 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
         /// <param name="newProjectInfo">要传递的参数，要求不能为空。</param>
         /// <returns>返回等待此次操作完成的任务。</returns>
         Task NewProject(INewProjectInfo newProjectInfo);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns></returns>
+        Task SetProperty(ICompositionSetProperty property);
         
         /// <summary>
         /// 获取当前创作集的请求队列。
@@ -36,6 +43,16 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
         /// 获取当前用户创建的所有创作集。
         /// </summary>
         ReadOnlyObservableCollection<ICompositionSet> CompositionSets { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ICompositionSetPropertyManager PropertyManager { get; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        IObservable<bool> IsOpen { get; }
 
         /// <summary>
         /// 获取当前正在打开的创作集。

@@ -2,9 +2,9 @@ using LiteDB;
 
 namespace Acorisoft.Studio.Documents
 {
-    public interface IDataPropertyManager<TProperty> : IMetadataManager where TProperty : IDataProperty
+    public interface IDataPropertyManager<out TProperty> : IMetadataManager where TProperty : IDataProperty
     {
-        TProperty SetProperty(TProperty property);
+        IDataProperty SetProperty(IDataProperty property);
         TProperty GetProperty();
     }
 }
