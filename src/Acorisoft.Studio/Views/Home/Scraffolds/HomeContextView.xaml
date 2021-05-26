@@ -9,9 +9,13 @@
              xmlns:appViews="clr-namespace:Acorisoft.Studio.Views"
              xmlns:appViewModels="clr-namespace:Acorisoft.Studio.ViewModels"
              mc:Ignorable="d"
+             Background="{StaticResource Brushes.White}"
              d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance Type={x:Type appViewModels:HomeContextViewModel},IsDesignTimeCreatable =True}">
-    <w:EmptyStateView>
+    <UserControl.Resources>
+        <w:BindingProxy x:Key="This" Data="{Binding}"/>
+    </UserControl.Resources>
+    <w:EmptyStateView DataContext="{Binding Parent,Mode=OneWay}">
         <w:EmptyStateView.EmptyState>
             <!--
             空状态下的内容 
@@ -20,8 +24,7 @@
         </w:EmptyStateView.EmptyState>
 
         <!-- 上下文菜单视图 -->
-        <Border Background="{StaticResource Brushes.MaterialDesign.Purple}"
-                Padding="32">
+        <Border Padding="32">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="384"/>
@@ -30,18 +33,46 @@
                 </Grid.ColumnDefinitions>
                 
                 <!-- 封面-->
-                <Border Grid.Column="0"
-                        Background="Gray">
+                <w:OverlayButton Grid.Column="0"
+                                 Height="384"
+                                 VerticalAlignment="Top"
+                                 DataContext="{Binding Property,Mode=OneWay}"
+                                 Command="{Binding Source={StaticResource This},Path=Data.PickCoverCommand,Mode=OneWay}">
+                    <w:OverlayButton.Background>
+                        <ImageBrush ImageSource="{Binding Cover,Mode=OneWay}"/>
+                    </w:OverlayButton.Background>
+                    <w:OverlayButton.Overlay>
+                        <Border Background="#323232"
+                                CornerRadius="999"
+                                Height="192"
+                                Width="192">
+                            <Path Stretch="Uniform"
+                                  Stroke="White"
+                                  StrokeThickness="1"
+                                  Data="{StaticResource Icon.Camera}"
+                                  Width="48"
+                                  Height="48"/>
+                        </Border>
+                    </w:OverlayButton.Overlay>
                     <Image Stretch="Uniform"/>
-                </Border>
+                </w:OverlayButton>
                 
                 <!-- 作品介绍-->
-                <StackPanel Grid.Column="1">
+                <StackPanel Grid.Column="1" 
+                            DataContext="{Binding Property,Mode=OneWay}">
                     <TextBlock FontSize="32"
                                FontWeight="Bold"
                                Text="{Binding Path=Name,Mode=OneWay,TargetNullValue='未命名项目'}"/>
                     <TextBlock Text="{Binding Path=Summary,Mode=OneWay,TargetNullValue='未命名项目'}"/>
                 </StackPanel>
+                
+                <ListBox Grid.Column="2"
+                         DisplayMemberPath="Name"
+                         BorderThickness="0"
+                         ItemsSource="{Binding CompositionSets,Mode=OneWay}"
+                         SelectedItem="{Binding SelectedCompositionSet,Mode=TwoWay}">
+                
+                </ListBox>
             </Grid>
         </Border>
     </w:EmptyStateView>

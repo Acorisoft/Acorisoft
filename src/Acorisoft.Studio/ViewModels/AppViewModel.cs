@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
@@ -18,6 +19,10 @@ namespace Acorisoft.Studio.ViewModels
         private readonly ICompositionSetManager _compositionSetManager;
         private readonly ICompositionSetFileManager _fileManager;
         private readonly ObservableAsPropertyHelper<bool> _isOpen;
+        private readonly LiteDatabase _database;
+        
+        
+        
         public AppViewModel(IViewService service,
             ICompositionSetRequestQueue requestQueue, 
             ICompositionSetFileManager fileManager,
@@ -28,6 +33,11 @@ namespace Acorisoft.Studio.ViewModels
                 throw new ArgumentNullException(nameof(requestQueue));
             }
 
+            _database = new LiteDatabase(new ConnectionString
+            {
+                Filename = "App.Setting"
+            });
+            
             var disposablePos = requestQueue.Requesting
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(x => { service.ManualStartBusyState("打开项目"); });
@@ -42,10 +52,42 @@ namespace Acorisoft.Studio.ViewModels
             _isOpen = _compositionSetManager.IsOpen.ToProperty(this,nameof(IsOpen));
             
             
-            
+            _disposable.Add(_database);
             _disposable.Add(_compositionSetManager);
             disposablePoe.DisposeWith(_disposable);
             disposablePos.DisposeWith(_disposable);
+        }
+
+        protected override void OnStart()
+        {
+            var projects = _database.GetCollection<CompositionProject>().FindAll();
+            var compositionProjects = projects as CompositionProject[] ?? projects.ToArray();
+            if (compositionProjects.Length <= 0)
+            {
+                return;
+            }
+            
+            foreach (var project in compositionProjects)
+            {
+                _compositionSetManager.LoadProject(project, false);
+            }
+
+            // _compositionSetManager.LoadProject(compositionProjects.FirstOrDefault(), true);
+        }
+
+        protected override void OnStop()
+        {
+            var collection = _database.GetCollection<CompositionProject>();
+            foreach (var project in CompositionSets.Select(x => new CompositionProject
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Path = x.Path
+            }))
+            {
+                collection.Upsert(project);
+            }
+            _disposable.Dispose();
         }
 
         /// <summary>

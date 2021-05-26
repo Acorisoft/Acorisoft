@@ -15,6 +15,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Acorisoft.Extensions.Platforms\Acorisoft.Extensions.Platforms.csproj" />
+		<ProjectReference Include="..\Acorisoft.Studio.Documents\Acorisoft.Studio.Documents.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

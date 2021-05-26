@@ -239,5 +239,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
             typeof(object),
             typeof(BannerContentHost),
             new PropertyMetadata(null));
+        
+        
     }
 }

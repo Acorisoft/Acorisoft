@@ -31,76 +31,21 @@ namespace Acorisoft.Studio
         public MainWindow() : base()
         {
             InitializeComponent();
-
-
-
             this.MouseDoubleClick += OnMouseDoubleClick;
         }
 
-
-
-        #region WindowCommands
-
-
-        private void OnDialogCancel(object sender, ExecutedRoutedEventArgs e)
-        {
-            ServiceLocator.DialogService.Cancel();
-        }
-
-        private void OnDialogNextOrComplete(object sender, ExecutedRoutedEventArgs e)
-        {
-
-            ServiceLocator.DialogService.NextOrComplete();
-        }
-
-        private void OnDialogIgnoreOrSkip(object sender, ExecutedRoutedEventArgs e)
-        {
-            ServiceLocator.DialogService.IgnoreOrSkip();
-        }
-
-
-        private void OnDialogLast(object sender, ExecutedRoutedEventArgs e)
-        {
-            ServiceLocator.DialogService.Last();
-        }
-
-
-        private void CanDialogCancel(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = ServiceLocator.DialogService.CanCancel();
-            e.Handled = true;
-        }
-
-        private void CanDialogNextOrComplete(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = ServiceLocator.DialogService.CanNextOrComplete();
-            e.Handled = true;
-        }
-
-        private void CanDialogIgnoreOrSkip(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = ServiceLocator.DialogService.CanIgnoreOrSkip();
-            e.Handled = true;
-        }
-
-        private void CanDialogLast(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = ServiceLocator.DialogService.CanLast();
-            e.Handled = true;
-        }
-        #endregion
-
         protected override void OnContentRendered(EventArgs e)
         {
-            ServiceLocator.ViewService.NavigateTo(new HomeViewModel());
+            ViewAware.NavigateTo<HomeViewModel>();
             base.OnContentRendered(e);
         }
 
         private async void OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var service = (IViewService) ServiceProvider.GetService(typeof(IViewService)) ?? new ViewService();
-            var csm = (ICompositionSetManager) ServiceProvider.GetService(typeof(ICompositionSetManager));
-            var session = await service.ShowDialog(new NewProjectDialogViewModel());
+            var service = ServiceLocator.ViewService;
+            var csm = ServiceLocator.CompositionSetManager;
+            
+            var session = await ViewAware.ShowDialog<NewProjectDialogViewModel>();
             if (session.IsCompleted && session.Result is INewProjectInfo projectInfo)
             {
                 await csm.NewProject(projectInfo);

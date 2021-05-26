@@ -1,6 +1,6 @@
 ﻿namespace Acorisoft.Extensions.Platforms.Windows.ViewModels
 {
-    public interface IViewModel
+    public interface IViewModel : IViewModelLifetime
     {
         
     }

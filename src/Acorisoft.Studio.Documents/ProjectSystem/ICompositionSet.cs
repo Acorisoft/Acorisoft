@@ -15,6 +15,7 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
         public string GetCompositionSetFilesDirectory();
         string Name { get;  }
         string Path { get;  }
+        Guid Id { get; }
         ICompositionSetProperty Property { get; set; }
     }
 

@@ -12,10 +12,11 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
         public const string MapsDirectory = "Maps";
         public const string FilesDirectory = "Files";
 
-        public CompositionSet(string name,string path)
+        public CompositionSet(string name,string path, Guid id)
         {
             Path = path;
             Name = name;
+            Id = id;
         }
 
         public bool Equals(CompositionSet? y)
@@ -67,6 +68,7 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             return System.IO.Path.Combine(Path, FilesDirectory);
         }
         
+        public Guid Id { get; }
         public string Name { get; }
         public string Path { get; }
         public LiteDatabase MainDatabase { get; set; }

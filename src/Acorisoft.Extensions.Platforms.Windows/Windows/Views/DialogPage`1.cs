@@ -13,6 +13,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Views
         {
             DataContextProperty.OverrideMetadata(typeof(DialogPage<>),new FrameworkPropertyMetadata(null,OnDataContextChanged));
         }
+        
         protected DialogPage()
         {
             this.Loaded += OnLoadedCore;
@@ -46,11 +47,13 @@ namespace Acorisoft.Extensions.Platforms.Windows.Views
             this.Loaded -= OnLoadedCore;
             this.Unloaded -= OnUnloadedCore;
             this.DataContextChanged -= OnDataContextChanged;
+            ViewModel?.Stop();
             OnUnloaded(sender, e);
         }
 
         private void OnLoadedCore(object sender, RoutedEventArgs e)
         {
+            ViewModel?.Start();
             OnLoaded(sender, e);
         }
 

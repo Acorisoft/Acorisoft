@@ -17,6 +17,7 @@ using Acorisoft.Extensions.Platforms.Windows.Commands;
 using Acorisoft.Extensions.Platforms.Windows.Controls;
 using Acorisoft.Extensions.Platforms.Windows.Services;
 using Acorisoft.Extensions.Platforms.Windows.Threadings;
+using Acorisoft.Extensions.Platforms.Windows.ViewModels;
 
 namespace Acorisoft.Extensions.Platforms.Windows
 {
@@ -43,6 +44,33 @@ namespace Acorisoft.Extensions.Platforms.Windows
             CommandBindings.Add(new CommandBinding(SystemCommands.MaximizeWindowCommand, OnWindowRestore));
             CommandBindings.Add(new CommandBinding(SystemCommands.RestoreWindowCommand, OnWindowRestore));
             CommandBindings.Add(new CommandBinding(IxContentHostCommands.ToggleEnable, ToggleEnable));
+            this.Loaded += OnLoadedCore;
+            this.Closed += OnClosedCore;
+            this.Unloaded += OnUnloadedCore;
+        }
+
+        private void OnClosedCore(object? sender, EventArgs e)
+        {
+            if (DataContext is IViewModel vm)
+            {
+                vm.Stop();
+            }
+        }
+
+        private void OnLoadedCore(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is IViewModel vm)
+            {
+                vm.Start();
+            }
+        }
+
+        private void OnUnloadedCore(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is IViewModel vm)
+            {
+                vm.Stop();
+            }
         }
 
 

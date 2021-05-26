@@ -21,17 +21,17 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
         public const string VideosDirectory = "Videos";
         public const string BrushesDirectory = "Brushes";
         public const string MapsDirectory = "Maps";
-        
+
         private protected readonly SourceList<ICompositionSet> Editable;
         private protected readonly HashSet<ICompositionSet> HashSet;
         private protected readonly ReadOnlyObservableCollection<ICompositionSet> Bindable;
         private protected readonly Subject<ICompositionSet> CurrentComposition;
         private protected readonly Subject<ICompositionSetProperty> CurrentCompositionProperty;
         private protected readonly Subject<bool> IsOpenStream;
-        
+
         private ICompositionSet _current;
         private bool _isOpen;
-        
+
         public CompositionSetManager(IMediator mediator, ICompositionSetPropertyManager propertyManager)
         {
             Queue = new CompositionSetRequestQueue();
@@ -56,7 +56,7 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             {
                 Filename = GetDatabaseFileNameFromPath(path),
                 InitialSize = DocumentMainDatabaseSize,
-                CacheSize =  DocumentMainDatabaseCacheSize,
+                CacheSize = DocumentMainDatabaseCacheSize,
                 Mode = LiteDB.FileMode.Exclusive
             });
         }
@@ -65,22 +65,22 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
         {
             return Path.Combine(path, CompositionSet.ImagesDirectory);
         }
-        
+
         private static string GetCompositionSetVideosDirectory(string path)
         {
             return Path.Combine(path, CompositionSet.VideosDirectory);
         }
-        
+
         private static string GetCompositionSetBrushesDirectory(string path)
         {
             return Path.Combine(path, CompositionSet.BrushesDirectory);
         }
-        
+
         private static string GetCompositionSetMapsDirectory(string path)
         {
             return Path.Combine(path, CompositionSet.MapsDirectory);
         }
-        
+
         private static void MaintainProjectDirectory(string path)
         {
             var directories = new[]
@@ -100,22 +100,22 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             }
         }
 
-        public void Dispose()
+        public async void Dispose()
         {
-            CloseProject();
+            await CloseProject();
 
             foreach (var compositionSet in HashSet)
             {
                 compositionSet.Dispose();
             }
-            
+
             Editable.Clear();
         }
 
         /// <summary>
         /// 关闭当前正在打开的项目。
         /// </summary>
-        public void CloseProject()
+        public async Task CloseProject()
         {
             if (_current is CompositionSet compositionSet)
             {
@@ -126,6 +126,7 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             _current = null;
             _isOpen = false;
             IsOpenStream.OnNext(false);
+            await Mediator.Publish(new CompositionSetCloseNotification());
         }
 
         /// <summary>
@@ -133,7 +134,7 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
         /// </summary>
         /// <param name="project">指示要加载的项目。</param>
         /// <param name="isOpen">指示是否打开。</param>
-        public async void LoadProject(ICompositionProject project, bool isOpen)
+        public async Task LoadProject(ICompositionProject project, bool isOpen)
         {
             if (project == null)
             {
@@ -142,19 +143,17 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
 
             if (string.IsNullOrEmpty(project.Name))
             {
-                
             }
-            
+
             if (string.IsNullOrEmpty(project.Path))
             {
-                
             }
-            
+
             if (!Directory.Exists(project.Path))
             {
                 throw new InvalidOperationException("无法打开创作集，路径为空");
             }
-            
+
             if (!File.Exists(GetDatabaseFileNameFromPath(project.Path)))
             {
                 throw new InvalidOperationException("无法打开一个空的创作集");
@@ -162,9 +161,9 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
 
             try
             {
-                var composition = new CompositionSet(project.Name, project.Path);
+                var composition = new CompositionSet(project.Name, project.Path, project.Id);
 
-                if (_current.Equals(composition))
+                if (composition.Equals(_current))
                 {
                     throw new InvalidOperationException("无法打开已经打开的项目");
                 }
@@ -180,41 +179,132 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
                 {
                     return;
                 }
-                
+
                 //
                 // 关闭之前项目
-                CloseProject();
-                
+                await CloseProject();
+
                 //
                 // 打开数据库
                 var database = GetDatabaseFromPath(project.Path);
-                
+
                 //
                 // 设置数据库
                 composition.MainDatabase = database;
-                
+
                 //
                 // 设置数据库
                 PropertyManager.SetDatabase(database);
-                    
+
                 //
                 // 获取属性
-                composition.Property = PropertyManager.GetProperty();
+                composition.Property = PropertyManager.GetProperty<CompositionSetProperty>();
 
                 //
                 //
                 _current = composition;
                 _isOpen = true;
                 IsOpenStream.OnNext(true);
-                
-                
+
+
                 CurrentComposition.OnNext(composition);
-                
+
                 CurrentCompositionProperty.OnNext(composition.Property);
                 //
                 // 通知更改
                 await Mediator.Publish(new CompositionSetCloseNotification());
                 await Mediator.Publish(new CompositionSetOpenNotification(composition));
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("无法加载项目", ex);
+            }
+        }
+
+
+        /// <summary>
+        /// 加载并打开一个项目。
+        /// </summary>
+        /// <param name="composition">指示要加载的项目。</param>
+        public async Task LoadProject(ICompositionSet composition)
+        {
+            if (composition == null)
+            {
+                throw new ArgumentNullException(nameof(composition));
+            }
+
+            if (string.IsNullOrEmpty(composition.Name))
+            {
+            }
+
+            if (string.IsNullOrEmpty(composition.Path))
+            {
+            }
+
+            if (!Directory.Exists(composition.Path))
+            {
+                throw new InvalidOperationException("无法打开创作集，路径为空");
+            }
+
+            if (!File.Exists(GetDatabaseFileNameFromPath(composition.Path)))
+            {
+                throw new InvalidOperationException("无法打开一个空的创作集");
+            }
+
+            try
+            {
+                if (composition.Equals(_current))
+                {
+                    throw new InvalidOperationException("无法打开已经打开的项目");
+                }
+
+                if (!HashSet.Contains(composition))
+                {
+                    Editable.Add(composition);
+                    HashSet.Add(composition);
+                }
+
+                //
+                // 关闭之前项目
+                await CloseProject();
+
+                //
+                // 打开数据库
+                var database = GetDatabaseFromPath(composition.Path);
+
+                //
+                // 设置数据库
+                var composition1 = composition as CompositionSet;
+
+                if (composition1 == null)
+                {
+                    return;
+                }
+
+                composition1.MainDatabase = database;
+
+                //
+                // 设置数据库
+                PropertyManager.SetDatabase(database);
+
+                //
+                // 获取属性
+                composition.Property = PropertyManager.GetProperty<CompositionSetProperty>();
+
+                //
+                //
+                _current = composition;
+                _isOpen = true;
+                IsOpenStream.OnNext(true);
+
+
+                CurrentComposition.OnNext(composition);
+
+                CurrentCompositionProperty.OnNext(composition.Property);
+                //
+                // 通知更改
+                await Mediator.Publish(new CompositionSetCloseNotification());
+                await Mediator.Publish(new CompositionSetOpenNotification(composition1));
             }
             catch (Exception ex)
             {
@@ -238,7 +328,7 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             {
                 throw new ArgumentNullException("project name");
             }
-            
+
             if (string.IsNullOrEmpty(newProjectInfo.Path))
             {
                 throw new ArgumentNullException("project path");
@@ -261,23 +351,27 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
                 //
                 // 创建项目目录结构
                 MaintainProjectDirectory(newProjectInfo.Path);
-                
+
+                //
+                // 关闭之前的项目
+                await CloseProject();
+
                 //
                 // 创建创作。
-                var composition = new CompositionSet(newProjectInfo.Name, newProjectInfo.Path)
+                var composition = new CompositionSet(newProjectInfo.Name, newProjectInfo.Path, Guid.NewGuid())
                 {
                     MainDatabase = GetDatabaseFromPath(newProjectInfo.Path)
                 };
 
                 var compositionProperty = new CompositionSetProperty(newProjectInfo);
-                
+
                 composition.Property = compositionProperty;
 
                 if (!HashSet.Add(composition))
                 {
                     throw new InvalidOperationException("无法添加当前创作集到已打开的创作集集合当中");
                 }
-                
+
                 Editable.Add(composition);
 
                 //
@@ -285,18 +379,18 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
                 _current = composition;
                 _isOpen = true;
                 IsOpenStream.OnNext(true);
-                
+
                 //
                 // 
                 PropertyManager.SetDatabase(composition.MainDatabase);
-                
+
                 //
                 // 设置属性
-                PropertyManager.SetProperty(compositionProperty);
-                
+                await PropertyManager.SetProperty(compositionProperty);
+
                 CurrentComposition.OnNext(composition);
                 CurrentCompositionProperty.OnNext(compositionProperty);
-                
+
                 //
                 // 通知更改
                 await Mediator.Publish(new CompositionSetCloseNotification());
@@ -319,23 +413,26 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             {
                 throw new ArgumentNullException(nameof(property));
             }
-            
-            
+
+            if (!_isOpen)
+            {
+                return;
+            }
 
             await PropertyManager.SetProperty(property);
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
 
         public IObservable<bool> IsOpen => IsOpenStream;
-        
+
         /// <summary>
         /// 
         /// </summary>
         public ICompositionSetPropertyManager PropertyManager { get; }
-        
+
         /// <summary>
         /// 获取当前创作集的请求队列。
         /// </summary>
@@ -351,12 +448,12 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
         /// </summary>
         public IObservable<ICompositionSet> Composition => CurrentComposition;
 
-        
+
         /// <summary>
         /// 获取或设置当前 <see cref="ICompositionSet"/> 的属性。
         /// </summary>
         public IObservable<ICompositionSetProperty> Property => CurrentCompositionProperty;
-        
+
         /// <summary>
         /// 获取中介者
         /// </summary>

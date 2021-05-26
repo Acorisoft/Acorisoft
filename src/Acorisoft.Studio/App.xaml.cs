@@ -12,6 +12,7 @@ using Acorisoft.Studio.Documents;
 using Acorisoft.Studio.ViewModels;
 using Acorisoft.Studio.Views;
 using DryIoc;
+using LiteDB;
 using ReactiveUI;
 using Splat;
 using Splat.DryIoc;

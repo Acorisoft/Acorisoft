@@ -1,6 +1,6 @@
 namespace Acorisoft.Studio.Documents
 {
-    public abstract class DataPropertyManager<TProperty> : MetadataManager, IDataPropertyManager<TProperty> where TProperty : IDataProperty
+    public abstract class DataPropertyManager<TProperty> : MetadataManager, IDataPropertyManager where TProperty : IDataProperty
     {
         /// <summary>
         /// 设置属性。完成基础的序列化操作。
@@ -13,7 +13,7 @@ namespace Acorisoft.Studio.Documents
             return SetObject<IDataProperty>(property);
         }
 
-        public TProperty GetProperty()
+        public TProperty GetProperty<TProperty>() where TProperty : IDataProperty
         {
             return GetObject<TProperty>();
         }

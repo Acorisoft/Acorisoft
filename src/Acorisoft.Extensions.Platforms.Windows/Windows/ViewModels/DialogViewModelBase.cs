@@ -15,6 +15,19 @@ namespace Acorisoft.Extensions.Platforms.Windows.ViewModels
         protected DialogViewModelBase() : base()
         {
         }
+        
+        void IViewModelLifetime.Start() => OnStart();
+        void IViewModelLifetime.Stop() => OnStop();
+        
+        protected virtual void OnStart()
+        {
+            
+        }
+
+        protected virtual void OnStop()
+        {
+            
+        }
 
 
         public virtual bool VerifyAccess()

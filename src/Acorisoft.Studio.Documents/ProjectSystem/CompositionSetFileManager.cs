@@ -12,6 +12,9 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
     public class CompositionSetFileManager : ProjectSystemHandler, ICompositionSetFileManager
     {
         private ICompositionSet _composition;
+        public const string ImageScheme = "morisa-image";
+        public const string VideoScheme = "morisa-video";
+        public const string FileScheme = "morisa-file";
         
         public CompositionSetFileManager(ICompositionSetRequestQueue requestQueue) : base(requestQueue)
         {
@@ -30,8 +33,15 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             _composition = null;
         }
 
+        protected override void OnCompositionSetSaving(CompositionSetSaveNotification notification)
+        {
+            
+        }
+
         #endregion
 
+        #region GetPathFromCompositionSet
+        
         private string GetImageFromCompositionSet(string fileName)
         {
             return Path.Combine(_composition.GetCompositionSetImagesDirectory(), fileName);
@@ -46,6 +56,8 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
         {
             return Path.Combine(_composition.GetCompositionSetFilesDirectory(), fileName);
         }
+        
+        #endregion
 
         public async Task<Uri> UploadVideo(string fileName)
         {
@@ -65,7 +77,7 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             
             //
             // 创建URI
-            var uri = new Uri($"Morisa://acorisoft.tech/Videos/{id}", UriKind.Relative);
+            var uri = new Uri($"Morisa-Video://{id}", UriKind.Relative);
             
             //
             // 设置文件名
@@ -95,7 +107,7 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             
             //
             // 创建URI
-            var uri = new Uri($"Morisa://acorisoft.tech/Videos/{id}", UriKind.Relative);
+            var uri = new Uri($"Morisa-Video://{id}", UriKind.Relative);
             
             //
             // 设置文件名
@@ -128,7 +140,7 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             
             //
             // 创建URI
-            var uri = new Uri($"Morisa://acorisoft.tech/Files/{id}", UriKind.Relative);
+            var uri = new Uri($"Morisa-File://{id}", UriKind.Relative);
             
             //
             // 设置文件名
@@ -158,7 +170,7 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             
             //
             // 创建URI
-            var uri = new Uri($"Morisa://acorisoft.tech/Files/{id}", UriKind.Relative);
+            var uri = new Uri($"Morisa-File://{id}", UriKind.Relative);
             
             //
             // 设置文件名
@@ -191,7 +203,7 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             
             //
             // 创建URI
-            var uri = new Uri($"Morisa://acorisoft.tech/Images/{id}", UriKind.Relative);
+            var uri = new Uri($"{ImageScheme}://{id}", UriKind.Relative);
             
             //
             // 设置文件名
@@ -221,7 +233,7 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             
             //
             // 创建URI
-            var uri = new Uri($"Morisa://acorisoft.tech/Images/{id}", UriKind.Relative);
+            var uri = new Uri($"{ImageScheme}://{id}", UriKind.Relative);
             
             //
             // 设置文件名
@@ -235,6 +247,33 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             }
             
             return uri;
+        }
+
+        public Stream GetStream(Uri uri)
+        {
+            if (uri == null)
+            {
+                return null;
+            }
+
+            var scheme = uri.Scheme;
+            var id = uri.DnsSafeHost;
+            
+            if (string.Compare(scheme,ImageScheme, StringComparison.CurrentCultureIgnoreCase) == 0)
+            {
+                return GetImageStream(id);
+            }
+            else if (string.Compare(scheme,ImageScheme, StringComparison.CurrentCultureIgnoreCase) == 0)
+            {
+                return GetImageStream(id);
+            }
+            
+            return null;
+        }
+
+        private Stream GetImageStream(string id)
+        {
+            return new FileStream(GetImageFromCompositionSet(id), FileMode.Open);
         }
     }
 }

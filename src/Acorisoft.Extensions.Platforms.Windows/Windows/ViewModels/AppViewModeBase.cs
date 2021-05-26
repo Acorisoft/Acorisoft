@@ -41,14 +41,14 @@ namespace Acorisoft.Extensions.Platforms.Windows.ViewModels
             Router = new RoutingState();
         }
 
+        protected override void OnStop()
+        {
+            _diposable?.Dispose();
+        }
+
         private void SubscribeQuickViewChanged(IQuickViewModel page)
         {
-            if (page is null)
-            {
-                return;
-            }
-
-            page.Start(CurrentViewModel);
+            page?.Start(CurrentViewModel);
         }
         private void SubscribePageChanged(IPageViewModel page)
         {

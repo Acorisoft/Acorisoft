@@ -25,9 +25,17 @@ namespace Acorisoft.Studio.Documents.Engines
             OnCompositionSetClosing(notification);
             RequestQueue.Unset();
         }
+        private void HandleCompositionSetSave(CompositionSetSaveNotification notification)
+        {
+            RequestQueue.Set();
+            OnCompositionSetSaving(notification);
+            RequestQueue.Unset();
+        }
 
         protected abstract void OnCompositionSetOpening(CompositionSetOpenNotification notification);
         protected abstract void OnCompositionSetClosing(CompositionSetCloseNotification notification);
+        protected abstract void OnCompositionSetSaving(CompositionSetSaveNotification notification);
+        protected ICompositionSetRequestQueue RequestQueue { get; }
         
         public Task Handle(CompositionSetOpenNotification notification, CancellationToken cancellationToken)
         {
@@ -38,6 +46,8 @@ namespace Acorisoft.Studio.Documents.Engines
         {
             return Task.Run(()=>HandleCompositionSetClose(notification), cancellationToken);
         }
-        protected ICompositionSetRequestQueue RequestQueue { get; }
+        public Task Handle(CompositionSetSaveNotification notification, CancellationToken cancellationToken)
+        {return Task.Run(() => HandleCompositionSetSave(notification), cancellationToken);
+        }
     }
 }

@@ -10,14 +10,21 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
         /// <summary>
         /// 关闭当前正在打开的项目。
         /// </summary>
-        void CloseProject();
+        Task CloseProject();
         
         /// <summary>
         /// 加载一个项目。
         /// </summary>
         /// <param name="project">指示要加载的项目。</param>
         /// <param name="isOpen">指示是否打开。</param>
-        void LoadProject(ICompositionProject project, bool isOpen);
+        Task LoadProject(ICompositionProject project, bool isOpen);
+        
+        
+        /// <summary>
+        /// 加载一个项目。
+        /// </summary>
+        /// <param name="compositionSet">指示要加载的项目。</param>
+        Task LoadProject(ICompositionSet compositionSet);
         
 
         /// <summary>

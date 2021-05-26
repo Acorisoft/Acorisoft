@@ -8,6 +8,20 @@ namespace Acorisoft.Extensions.Platforms.Windows.ViewModels
 {
     public abstract class ViewModelBase : ReactiveObject, IViewModel, IRoutableViewModel
     {
+        void IViewModelLifetime.Start() => OnStart();
+        void IViewModelLifetime.Stop() => OnStop();
+        
+        protected virtual void OnStart()
+        {
+            
+        }
+
+        protected virtual void OnStop()
+        {
+            
+        }
+        
+        
         /// <summary>
         /// 设置指定字段的值并通知更改
         /// </summary>
@@ -38,12 +52,11 @@ namespace Acorisoft.Extensions.Platforms.Windows.ViewModels
         {
             this.RaisePropertyChanging(name);
         }
-
         /// <summary>
         /// 手动推送属性值变化的通知。
         /// </summary>
         /// <param name="name">指定属性值发生变化的属性名。</param>
-        protected void RaiseUpdated(string name)
+        protected void RaiseUpdated([CallerMemberName]string name = "")
         {
             this.RaisePropertyChanged(name);
         }

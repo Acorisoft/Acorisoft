@@ -16,6 +16,19 @@ namespace Acorisoft.Extensions.Platforms.Windows.ViewModels
         {
             Offset = duration;
         }
+        
+        void IViewModelLifetime.Start() => OnStart();
+        void IViewModelLifetime.Stop() => OnStop();
+        
+        protected virtual void OnStart()
+        {
+            
+        }
+
+        protected virtual void OnStop()
+        {
+            
+        }
         public DateTime LastAccessBy { get; set; }
         public TimeSpan Offset { get; }
     
