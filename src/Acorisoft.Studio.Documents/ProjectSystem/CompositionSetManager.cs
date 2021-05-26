@@ -202,8 +202,8 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
                 //
                 _current = composition;
                 _isOpen = true;
+                
                 IsOpenStream.OnNext(true);
-
                 CurrentComposition.OnNext(composition);
 
                 //

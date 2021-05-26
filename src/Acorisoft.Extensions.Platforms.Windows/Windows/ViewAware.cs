@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Acorisoft.Extensions.Platforms.Dialogs;
 using Acorisoft.Extensions.Platforms.Windows.Services;
 using Acorisoft.Extensions.Platforms.Windows.ViewModels;
@@ -61,6 +62,19 @@ namespace Acorisoft.Extensions.Platforms.Windows
 
         #endregion
 
+        class ManualBusyState : IDisposable
+        {
+            public ManualBusyState(string description)
+            {
+                ServiceLocator.ViewService.ManualStartBusyState(description);
+            }
+
+            public void Dispose()
+            {
+                ServiceLocator.ViewService.ManualEndBusyState();
+            }
+        }
+        
         public static void NavigateTo<TViewModel>() where TViewModel : PageViewModelBase, IPageViewModel
         {
             var vm = Locator.Current.GetService<TViewModel>();
@@ -71,6 +85,21 @@ namespace Acorisoft.Extensions.Platforms.Windows
         {
             var vm = Locator.Current.GetService<TViewModel>();
             return ServiceLocator.ViewService.ShowDialog(vm);
+        }
+
+        public static void Toast(string message)
+        {
+            ServiceLocator.ViewService.Toast(message);
+        }
+        
+        public static void Toast(Exception ex)
+        {
+            ServiceLocator.ViewService.Toast(ex.Message);
+        }
+
+        public static IDisposable ForceBusyState(string description)
+        {
+            return new ManualBusyState(description);
         }
     }
 }

@@ -67,15 +67,20 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
         {
             return System.IO.Path.Combine(Path, FilesDirectory);
         }
-        
+        public void Dispose()
+        {
+            MainDatabase?.Dispose();
+        }
+
+        public sealed override string ToString()
+        {
+            return $"{Name},Id@{Id}";
+        }
+
         public Guid Id { get; }
         public string Name { get; }
         public string Path { get; }
         public LiteDatabase MainDatabase { get; set; }
         public ICompositionSetProperty Property { get; set; }
-        public void Dispose()
-        {
-            MainDatabase?.Dispose();
-        }
     }
 }

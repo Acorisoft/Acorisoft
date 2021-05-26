@@ -50,18 +50,16 @@ namespace Acorisoft.Studio.ViewModels
                 return;
             }
 
-            try
+            using (ViewAware.ForceBusyState("正在打开项目"))
             {
-                ServiceLocator.ViewService.ManualStartBusyState("正在打开项目");
-                await _compositionSetManager.LoadProject(compositionSet);
-            }
-            catch
-            {
-                ServiceLocator.ViewService.Toast("打开失败");
-            }
-            finally
-            {
-                ServiceLocator.ViewService.ManualEndBusyState();
+                try
+                {
+                    await _compositionSetManager.LoadProject(compositionSet);
+                }
+                catch
+                {
+                    ViewAware.Toast("打开失败");
+                }
             }
         }
         
@@ -69,21 +67,17 @@ namespace Acorisoft.Studio.ViewModels
         {
             ViewAware.SetContextView<HomeContextViewModel>();
 
-            try
+            using (ViewAware.ForceBusyState("打开项目"))
             {
-                ServiceLocator.ViewService.ManualStartBusyState("打开项目");
-                
-                await _compositionSetManager.LoadProject(_compositionSetManager.CompositionSets.FirstOrDefault());
+                try
+                {
+                    await _compositionSetManager.LoadProject(_compositionSetManager.CompositionSets.FirstOrDefault());
+                }
+                catch
+                {
+                    ViewAware.Toast("打开失败");
+                }
             }
-            catch
-            {
-
-            }
-            finally
-            {
-                ServiceLocator.ViewService.ManualEndBusyState();
-            }
-            base.OnStart();
         }
 
         protected override void OnStop()

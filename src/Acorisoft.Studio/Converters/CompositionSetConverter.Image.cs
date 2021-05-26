@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using System.IO;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Acorisoft.Extensions.Platforms.Windows.Converters;
@@ -11,12 +12,18 @@ namespace Acorisoft.Studio.Converters
     {
         protected override ImageSource ConvertTo(Uri source, object parameter, CultureInfo cultureInfo)
         {
-            var stream = ServiceLocator.FileManagerService.GetStream(source);
-            var bi = new BitmapImage();
-            bi.BeginInit();
-            bi.StreamSource = stream;
-            bi.EndInit();
-            return bi;
+            using (var stream = ServiceLocator.FileManagerService.GetStream(source))
+            {
+                var ms = new MemoryStream();
+                stream.CopyTo(ms);
+                ms.Seek(0, SeekOrigin.Begin);
+                var bi = new BitmapImage();
+                bi.BeginInit();
+                bi.StreamSource = ms;
+                bi.CacheOption = BitmapCacheOption.OnDemand;
+                bi.EndInit();
+                return bi;
+            }
         }
 
         protected override ImageSource FallbackValue(object source, object parameter, CultureInfo cultureInfo)

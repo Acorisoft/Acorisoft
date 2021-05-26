@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 using System.Windows.Input;
+using Acorisoft.Extensions.Platforms.Windows;
 using Acorisoft.Extensions.Platforms.Windows.Services;
 using Acorisoft.Extensions.Platforms.Windows.ViewModels;
 using Acorisoft.Studio.Documents.ProjectSystem;
@@ -27,14 +28,22 @@ namespace Acorisoft.Studio.ViewModels
             {
                 return;
             }
-            
-            ServiceLocator.ViewService.ManualStartBusyState("正在加载封面");
-            var targetName = await ServiceLocator.FileManagerService.UploadImage(opendlg.FileName);
-            ServiceLocator.ViewService.ManualEndBusyState();
-            CompositionSet.Property.Cover = targetName;
-            await ServiceLocator.CompositionSetManager
-                                .PropertyManager
-                                .SetProperty(CompositionSet.Property);
+
+            using (ViewAware.ForceBusyState("正在加载封面"))
+            {
+                try
+                {
+                    var targetName = await ServiceLocator.FileManagerService.UploadImage(opendlg.FileName);
+                    CompositionSet.Property.Cover = targetName;
+                    await ServiceLocator.CompositionSetManager
+                        .PropertyManager
+                        .SetProperty(CompositionSet.Property);
+                }
+                catch(Exception ex)
+                {
+                    ViewAware.Toast(ex);
+                }
+            }
         }
         
         protected override void OnStart(IPageViewModel currentViewModel)

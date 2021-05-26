@@ -14,8 +14,9 @@
              d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance Type={x:Type appViewModels:HomeContextViewModel},IsDesignTimeCreatable =True}">
     <UserControl.Resources>
-        <w:BindingProxy x:Key="This" Data="{Binding}"/>
-        <appConvs:CompositionSetImageConverter x:Key="ImageConverter"/>
+        <w:BindingProxy x:Key="This" Data="{Binding}" />
+        <appConvs:CompositionSetImageConverter x:Key="ImageConverter" />
+        <appConvs:CompositionSetNameConverter x:Key="NameConverter" />
     </UserControl.Resources>
     <w:EmptyStateView DataContext="{Binding Parent,Mode=OneWay}">
         <w:EmptyStateView.EmptyState>
@@ -29,18 +30,18 @@
         <Border Padding="32">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="384"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="384"/>
+                    <ColumnDefinition Width="384" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="384" />
                 </Grid.ColumnDefinitions>
-                
+
                 <!-- 封面-->
                 <w:OverlayButton Grid.Column="0"
                                  Height="384"
                                  VerticalAlignment="Top"
                                  Command="{Binding Source={StaticResource This},Path=Data.PickCoverCommand,Mode=OneWay}">
                     <w:OverlayButton.Background>
-                        <ImageBrush ImageSource="{Binding Cover,Converter={StaticResource ImageConverter},Mode=OneWay}"/>
+                        <ImageBrush ImageSource="{Binding Cover,Converter={StaticResource ImageConverter},Mode=OneWay}" />
                     </w:OverlayButton.Background>
                     <w:OverlayButton.Overlay>
                         <Border Background="#323232"
@@ -52,27 +53,33 @@
                                   StrokeThickness="1"
                                   Data="{StaticResource Icon.Camera}"
                                   Width="48"
-                                  Height="48"/>
+                                  Height="48" />
                         </Border>
                     </w:OverlayButton.Overlay>
-                    <Image Stretch="Uniform"/>
+                    <Image Stretch="Uniform" />
                 </w:OverlayButton>
-                
+
                 <!-- 作品介绍-->
-                <StackPanel Grid.Column="1">
+                <StackPanel Grid.Column="1"
+                            Margin="16 0">
                     <TextBlock FontSize="32"
                                FontWeight="Bold"
-                               Text="{Binding Path=Name,Mode=OneWay,TargetNullValue='未命名项目'}"/>
-                    <TextBlock Text="{Binding Path=Summary,Mode=OneWay,TargetNullValue='未命名项目'}"/>
+                               Text="{Binding Path=Name,Mode=OneWay,TargetNullValue='未命名项目'}" />
+                    <TextBlock Text="{Binding Path=Summary,Mode=OneWay,TargetNullValue='未命名项目'}" />
                 </StackPanel>
-                
-                <ListBox Grid.Column="2"
-                         DisplayMemberPath="Name"
-                         BorderThickness="0"
-                         ItemsSource="{Binding CompositionSets,Mode=OneWay}"
-                         SelectedItem="{Binding SelectedCompositionSet,Mode=TwoWay}">
-                
-                </ListBox>
+
+                <w:Headline2HeaderToolbar Grid.Column="2"
+                                          Title="项目"
+                                          Subtitle="{Binding CompositionSet,Mode=OneWay,Converter={StaticResource NameConverter},StringFormat=当前项目:\{0\}}">
+                    <w:Headline2HeaderToolbar.ToolBar>
+                        <StackPanel Orientation="Horizontal" />
+                    </w:Headline2HeaderToolbar.ToolBar>
+                    <ListBox DisplayMemberPath="Name"
+                             BorderThickness="0"
+                             ItemsSource="{Binding CompositionSets,Mode=OneWay}"
+                             SelectedItem="{Binding SelectedCompositionSet,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             VerticalAlignment="Stretch"/>
+                </w:Headline2HeaderToolbar>
             </Grid>
         </Border>
     </w:EmptyStateView>
