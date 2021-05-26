@@ -77,7 +77,7 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             
             //
             // 创建URI
-            var uri = new Uri($"Morisa-Video://{id}", UriKind.Relative);
+            var uri = new Uri($"Morisa-Video://{id}");
             
             //
             // 设置文件名
@@ -107,7 +107,7 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             
             //
             // 创建URI
-            var uri = new Uri($"Morisa-Video://{id}", UriKind.Relative);
+            var uri = new Uri($"Morisa-Video://{id}");
             
             //
             // 设置文件名
@@ -140,7 +140,7 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             
             //
             // 创建URI
-            var uri = new Uri($"Morisa-File://{id}", UriKind.Relative);
+            var uri = new Uri($"Morisa-File://{id}");
             
             //
             // 设置文件名
@@ -170,7 +170,7 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             
             //
             // 创建URI
-            var uri = new Uri($"Morisa-File://{id}", UriKind.Relative);
+            var uri = new Uri($"Morisa-File://{id}");
             
             //
             // 设置文件名
@@ -203,7 +203,7 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             
             //
             // 创建URI
-            var uri = new Uri($"{ImageScheme}://{id}", UriKind.Relative);
+            var uri = new Uri($"{ImageScheme}://{id}");
             
             //
             // 设置文件名
@@ -233,7 +233,7 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             
             //
             // 创建URI
-            var uri = new Uri($"{ImageScheme}://{id}", UriKind.Relative);
+            var uri = new Uri($"{ImageScheme}://{id}");
             
             //
             // 设置文件名
