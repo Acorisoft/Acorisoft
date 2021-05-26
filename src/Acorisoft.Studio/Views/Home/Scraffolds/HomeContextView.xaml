@@ -7,6 +7,7 @@
              xmlns:w="https://github.com/Acorisoft/Acorisoft/Windows"
              xmlns:app="clr-namespace:Acorisoft.Studio"
              xmlns:appViews="clr-namespace:Acorisoft.Studio.Views"
+             xmlns:appConvs="clr-namespace:Acorisoft.Studio.Converters"
              xmlns:appViewModels="clr-namespace:Acorisoft.Studio.ViewModels"
              mc:Ignorable="d"
              Background="{StaticResource Brushes.White}"
@@ -14,6 +15,7 @@
              d:DataContext="{d:DesignInstance Type={x:Type appViewModels:HomeContextViewModel},IsDesignTimeCreatable =True}">
     <UserControl.Resources>
         <w:BindingProxy x:Key="This" Data="{Binding}"/>
+        <appConvs:CompositionSetImageConverter x:Key="ImageConverter"/>
     </UserControl.Resources>
     <w:EmptyStateView DataContext="{Binding Parent,Mode=OneWay}">
         <w:EmptyStateView.EmptyState>
@@ -36,10 +38,9 @@
                 <w:OverlayButton Grid.Column="0"
                                  Height="384"
                                  VerticalAlignment="Top"
-                                 DataContext="{Binding Property,Mode=OneWay}"
                                  Command="{Binding Source={StaticResource This},Path=Data.PickCoverCommand,Mode=OneWay}">
                     <w:OverlayButton.Background>
-                        <ImageBrush ImageSource="{Binding Cover,Mode=OneWay}"/>
+                        <ImageBrush ImageSource="{Binding Cover,Converter={StaticResource ImageConverter},Mode=OneWay}"/>
                     </w:OverlayButton.Background>
                     <w:OverlayButton.Overlay>
                         <Border Background="#323232"
@@ -58,8 +59,7 @@
                 </w:OverlayButton>
                 
                 <!-- 作品介绍-->
-                <StackPanel Grid.Column="1" 
-                            DataContext="{Binding Property,Mode=OneWay}">
+                <StackPanel Grid.Column="1">
                     <TextBlock FontSize="32"
                                FontWeight="Bold"
                                Text="{Binding Path=Name,Mode=OneWay,TargetNullValue='未命名项目'}"/>

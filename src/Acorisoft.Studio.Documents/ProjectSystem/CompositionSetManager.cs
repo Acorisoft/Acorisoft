@@ -26,7 +26,6 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
         private protected readonly HashSet<ICompositionSet> HashSet;
         private protected readonly ReadOnlyObservableCollection<ICompositionSet> Bindable;
         private protected readonly Subject<ICompositionSet> CurrentComposition;
-        private protected readonly Subject<ICompositionSetProperty> CurrentCompositionProperty;
         private protected readonly Subject<bool> IsOpenStream;
 
         private ICompositionSet _current;
@@ -37,7 +36,6 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
             Queue = new CompositionSetRequestQueue();
             Mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             CurrentComposition = new Subject<ICompositionSet>();
-            CurrentCompositionProperty = new Subject<ICompositionSetProperty>();
             Editable = new SourceList<ICompositionSet>();
             Editable.Connect().Bind(out Bindable).Subscribe();
             HashSet = new HashSet<ICompositionSet>();
@@ -198,7 +196,7 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
 
                 //
                 // 获取属性
-                composition.Property = PropertyManager.GetProperty<CompositionSetProperty>();
+                composition.Property = PropertyManager.GetProperty();
 
                 //
                 //
@@ -206,10 +204,8 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
                 _isOpen = true;
                 IsOpenStream.OnNext(true);
 
-
                 CurrentComposition.OnNext(composition);
 
-                CurrentCompositionProperty.OnNext(composition.Property);
                 //
                 // 通知更改
                 await Mediator.Publish(new CompositionSetCloseNotification());
@@ -289,7 +285,7 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
 
                 //
                 // 获取属性
-                composition.Property = PropertyManager.GetProperty<CompositionSetProperty>();
+                composition.Property = PropertyManager.GetProperty();
 
                 //
                 //
@@ -299,8 +295,6 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
 
 
                 CurrentComposition.OnNext(composition);
-
-                CurrentCompositionProperty.OnNext(composition.Property);
                 //
                 // 通知更改
                 await Mediator.Publish(new CompositionSetCloseNotification());
@@ -389,7 +383,6 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
                 await PropertyManager.SetProperty(compositionProperty);
 
                 CurrentComposition.OnNext(composition);
-                CurrentCompositionProperty.OnNext(compositionProperty);
 
                 //
                 // 通知更改
@@ -452,7 +445,7 @@ namespace Acorisoft.Studio.Documents.ProjectSystem
         /// <summary>
         /// 获取或设置当前 <see cref="ICompositionSet"/> 的属性。
         /// </summary>
-        public IObservable<ICompositionSetProperty> Property => CurrentCompositionProperty;
+        public IObservable<ICompositionSetProperty> Property => PropertyManager.Property;
 
         /// <summary>
         /// 获取中介者

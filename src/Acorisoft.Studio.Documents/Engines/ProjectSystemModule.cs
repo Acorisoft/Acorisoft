@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Acorisoft.Studio.Documents.Engines
 {
-    public abstract class ProjectSystemHandler : IProjectSystemHandler
+    public abstract class ProjectSystemHandler : IProjectSystemModule
     {
         protected ProjectSystemHandler(ICompositionSetRequestQueue requestQueue)
         {

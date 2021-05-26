@@ -1,4 +1,5 @@
 using System.Data;
+using Acorisoft.Studio.Documents.Engines;
 using Acorisoft.Studio.Documents.ProjectSystem;
 using DryIoc;
 using MediatR;
@@ -16,13 +17,22 @@ namespace Acorisoft.Studio.Documents
             container.RegisterInstance<ICompositionSetRequestQueue>(csQueue);
             container.RegisterInstance<IMediator>(mediator);
             container.RegisterInstance<ICompositionSetFileManager>(csFileManager);
+            container.RegisterProjectSystemHandler(csFileManager);
             container.RegisterInstance<ICompositionSetPropertyManager>(new CompositionSetPropertyManager(csFileManager));
 
             var csm = new CompositionSetManager(container.Resolve<IMediator>(), container.Resolve<ICompositionSetPropertyManager>());
+            
             //
             //
             container.RegisterInstance<ICompositionSetManager>(csm);
             return container;
+        }
+
+        private static void RegisterProjectSystemHandler<TInstance>(this IContainer container, TInstance instance) where TInstance : IProjectSystemModule
+        {
+            container.UseInstance<INotificationHandler<CompositionSetOpenNotification>>(instance);
+            container.UseInstance<INotificationHandler<CompositionSetCloseNotification>>(instance);
+            container.UseInstance<INotificationHandler<CompositionSetSaveNotification>>(instance);
         }
     }
 }

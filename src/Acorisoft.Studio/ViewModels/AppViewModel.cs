@@ -72,7 +72,6 @@ namespace Acorisoft.Studio.ViewModels
                 _compositionSetManager.LoadProject(project, false);
             }
 
-            // _compositionSetManager.LoadProject(compositionProjects.FirstOrDefault(), true);
         }
 
         protected override void OnStop()

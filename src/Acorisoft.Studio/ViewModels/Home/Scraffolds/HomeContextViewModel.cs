@@ -51,31 +51,6 @@ namespace Acorisoft.Studio.ViewModels
 
         public Uri Cover => CompositionSet.Property.Cover;
 
-        public string Name
-        {
-            get => CompositionSet.Property.Name;
-            set
-            {
-                CompositionSet.Property.Name = value;
-                RaiseUpdated();
-                ServiceLocator.CompositionSetManager
-                              .PropertyManager
-                              .SetProperty(CompositionSet.Property);
-            }
-            
-        }
-        
-        public string Summary
-        {
-            get => CompositionSet.Property.Summary;
-            set
-            {
-                CompositionSet.Property.Summary = value;
-                RaiseUpdated();
-                ServiceLocator.CompositionSetManager
-                              .PropertyManager
-                              .SetProperty(CompositionSet.Property);
-            }
-        }
+
     }
 }

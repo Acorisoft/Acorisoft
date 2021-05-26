@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Joins;
@@ -37,7 +38,9 @@ namespace Acorisoft.Studio.ViewModels
 
         private void OnPropertyChanged(ICompositionSetProperty property)
         {
-            
+            RaiseUpdated(nameof(Summary));
+            RaiseUpdated(nameof(Name));
+            RaiseUpdated(nameof(Cover));
         }
 
         private async void OpenCompositionSet(ICompositionSet compositionSet)
@@ -51,17 +54,35 @@ namespace Acorisoft.Studio.ViewModels
             {
                 ServiceLocator.ViewService.ManualStartBusyState("正在打开项目");
                 await _compositionSetManager.LoadProject(compositionSet);
-                ServiceLocator.ViewService.ManualEndBusyState();
             }
             catch
             {
                 ServiceLocator.ViewService.Toast("打开失败");
             }
+            finally
+            {
+                ServiceLocator.ViewService.ManualEndBusyState();
+            }
         }
         
-        protected override void OnStart()
+        protected override async void OnStart()
         {
             ViewAware.SetContextView<HomeContextViewModel>();
+
+            try
+            {
+                ServiceLocator.ViewService.ManualStartBusyState("打开项目");
+                
+                await _compositionSetManager.LoadProject(_compositionSetManager.CompositionSets.FirstOrDefault());
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                ServiceLocator.ViewService.ManualEndBusyState();
+            }
             base.OnStart();
         }
 
@@ -79,5 +100,36 @@ namespace Acorisoft.Studio.ViewModels
         public ReadOnlyObservableCollection<ICompositionSet> CompositionSets => _compositionSetManager.CompositionSets; 
         public ICompositionSetProperty Property => _compositionSetProperty.Value;
         public ICompositionSet CompositionSet => _compositionSet.Value;
+        public string Name
+        {
+            get => CompositionSet?.Property?.Name;
+            set
+            {
+                CompositionSet.Property.Name = value;
+                RaiseUpdated();
+                ServiceLocator.CompositionSetManager
+                    .PropertyManager
+                    .SetProperty(CompositionSet.Property);
+            }
+            
+        }
+        
+        public string Summary
+        {
+            get => CompositionSet?.Property?.Summary;
+            set
+            {
+                CompositionSet.Property.Summary = value;
+                RaiseUpdated();
+                ServiceLocator.CompositionSetManager
+                    .PropertyManager
+                    .SetProperty(CompositionSet.Property);
+            }
+        }
+        
+        public Uri Cover
+        {
+            get => CompositionSet?.Property?.Cover;
+        }
     }
 }

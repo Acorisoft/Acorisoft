@@ -183,6 +183,15 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
             _Sampler.Stop();
         }
 
+        protected override Size ArrangeOverride(Size arrangeBounds)
+        {
+            _IxDown.Arrange(new Rect(Xaml.ZeroPoint, arrangeBounds));
+            _IxRight.Arrange(new Rect(Xaml.ZeroPoint, arrangeBounds));
+            _IxLeft.Arrange(new Rect(Xaml.ZeroPoint, arrangeBounds));
+            _IxUp.Arrange(new Rect(Xaml.ZeroPoint, arrangeBounds));
+            return base.ArrangeOverride(arrangeBounds);
+        }
+
         public override void OnApplyTemplate()
         {
             _IxLeft = (IxContentControl)GetTemplateChild(IxLeftName);
