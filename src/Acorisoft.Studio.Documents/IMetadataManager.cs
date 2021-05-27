@@ -1,7 +1,7 @@
 using System;
 using LiteDB;
 
-namespace Acorisoft.Studio.Documents
+namespace Acorisoft.Studio
 {
     public interface IMetadataManager
     {

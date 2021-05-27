@@ -1,6 +1,7 @@
 using System;
+using Acorisoft.Studio;
 
-namespace Acorisoft.Studio.Documents.ProjectSystem
+namespace Acorisoft.Studio.ProjectSystem
 {
     public interface ICompositionSetProperty : IDataProperty
     {

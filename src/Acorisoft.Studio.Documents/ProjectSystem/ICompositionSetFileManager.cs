@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using MediatR;
 
-namespace Acorisoft.Studio.Documents.ProjectSystem
+namespace Acorisoft.Studio.ProjectSystem
 {
     public interface ICompositionSetFileManager : INotificationHandler<CompositionSetOpenNotification>, INotificationHandler<CompositionSetCloseNotification>
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace Acorisoft.Studio.Documents.ProjectSystem
+namespace Acorisoft.Studio.ProjectSystem
 {
     public class CompositionSetProperty : ICompositionSetProperty
     {

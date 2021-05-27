@@ -1,6 +1,6 @@
 using LiteDB;
 
-namespace Acorisoft.Studio.Documents
+namespace Acorisoft.Studio
 {
     internal static class Helper
     {

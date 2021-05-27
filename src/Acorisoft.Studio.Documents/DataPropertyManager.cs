@@ -1,4 +1,4 @@
-namespace Acorisoft.Studio.Documents
+namespace Acorisoft.Studio
 {
     public abstract class DataPropertyManager : MetadataManager, IDataPropertyManager
     {

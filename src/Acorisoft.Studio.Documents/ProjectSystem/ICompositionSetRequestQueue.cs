@@ -1,7 +1,7 @@
 using System;
 using System.Reactive;
 
-namespace Acorisoft.Studio.Documents.ProjectSystem
+namespace Acorisoft.Studio.ProjectSystem
 {
     /// <summary>
     /// <see cref="ICompositionSetRequestQueue"/> 接口表示的是文档请求队列，用于完成用户界面

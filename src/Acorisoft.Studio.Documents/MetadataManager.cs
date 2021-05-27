@@ -2,7 +2,7 @@ using System;
 using DryIoc;
 using LiteDB;
 
-namespace Acorisoft.Studio.Documents
+namespace Acorisoft.Studio
 {
     public abstract class MetadataManager : IMetadataManager
     {

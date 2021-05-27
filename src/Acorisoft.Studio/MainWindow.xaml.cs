@@ -18,7 +18,7 @@ using Acorisoft.Extensions.Platforms.Windows;
 using Acorisoft.Extensions.Platforms.Windows.Commands;
 using Acorisoft.Extensions.Platforms.Windows.Controls;
 using Acorisoft.Extensions.Platforms.Windows.Services;
-using Acorisoft.Studio.Documents.ProjectSystem;
+using Acorisoft.Studio.ProjectSystem;
 using Acorisoft.Studio.ViewModels;
 
 namespace Acorisoft.Studio

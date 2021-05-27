@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Acorisoft.Studio.Documents
+namespace Acorisoft.Studio
 {
     public class CompositionSetSaveNotification :INotification
     {

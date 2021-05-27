@@ -10,7 +10,7 @@ using Acorisoft.Extensions.Platforms.Services;
 using Acorisoft.Extensions.Platforms.Windows;
 using Acorisoft.Extensions.Platforms.Windows.Services;
 using Acorisoft.Extensions.Platforms.Windows.ViewModels;
-using Acorisoft.Studio.Documents.ProjectSystem;
+using Acorisoft.Studio.ProjectSystem;
 using ReactiveUI;
 
 namespace Acorisoft.Studio.ViewModels

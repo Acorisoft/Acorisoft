@@ -2,7 +2,7 @@ using System;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Studio.Documents.ProjectSystem
+namespace Acorisoft.Studio.ProjectSystem
 {
     public class CompositionSetPropertyManager : DataPropertyManager, ICompositionSetPropertyManager
     {

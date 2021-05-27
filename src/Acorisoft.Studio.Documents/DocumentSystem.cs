@@ -1,10 +1,10 @@
 using System.Data;
-using Acorisoft.Studio.Documents.Engines;
-using Acorisoft.Studio.Documents.ProjectSystem;
+using Acorisoft.Studio.Engines;
+using Acorisoft.Studio.ProjectSystem;
 using DryIoc;
 using MediatR;
 
-namespace Acorisoft.Studio.Documents
+namespace Acorisoft.Studio
 {
     public static class DocumentSystem
     {

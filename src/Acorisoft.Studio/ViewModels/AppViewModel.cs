@@ -7,7 +7,7 @@ using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
 using Acorisoft.Extensions.Platforms.Services;
 using Acorisoft.Extensions.Platforms.Windows.ViewModels;
-using Acorisoft.Studio.Documents.ProjectSystem;
+using Acorisoft.Studio.ProjectSystem;
 using LiteDB;
 using ReactiveUI;
 

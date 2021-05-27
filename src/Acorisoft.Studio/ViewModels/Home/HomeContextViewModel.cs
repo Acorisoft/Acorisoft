@@ -4,7 +4,7 @@ using System.Windows.Input;
 using Acorisoft.Extensions.Platforms.Windows;
 using Acorisoft.Extensions.Platforms.Windows.Services;
 using Acorisoft.Extensions.Platforms.Windows.ViewModels;
-using Acorisoft.Studio.Documents.ProjectSystem;
+using Acorisoft.Studio.ProjectSystem;
 using Microsoft.Win32;
 using ReactiveUI;
 

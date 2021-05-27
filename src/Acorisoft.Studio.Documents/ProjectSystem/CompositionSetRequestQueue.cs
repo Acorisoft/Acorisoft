@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Subjects;
 
-namespace Acorisoft.Studio.Documents.ProjectSystem
+namespace Acorisoft.Studio.ProjectSystem
 {
     public class CompositionSetRequestQueue : ICompositionSetRequestQueue
     {

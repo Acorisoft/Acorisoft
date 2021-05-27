@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Studio.Documents.ProjectSystem
+namespace Acorisoft.Studio.ProjectSystem
 {
     public interface ICompositionSetPropertyManager : IDataPropertyManager
     {

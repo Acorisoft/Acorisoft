@@ -1,9 +1,9 @@
 using System;
-using Acorisoft.Studio.Documents.ProjectSystem;
+using Acorisoft.Studio.ProjectSystem;
 using LiteDB;
 using MediatR;
 
-namespace Acorisoft.Studio.Documents
+namespace Acorisoft.Studio
 {
     public class CompositionSetOpenNotification : INotification
     {

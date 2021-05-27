@@ -1,6 +1,6 @@
 ﻿using System;
 using Acorisoft.Extensions.Platforms.Services;
-using Acorisoft.Studio.Documents.ProjectSystem;
+using Acorisoft.Studio.ProjectSystem;
 using Splat;
 
 namespace Acorisoft.Extensions.Platforms.Windows.Services

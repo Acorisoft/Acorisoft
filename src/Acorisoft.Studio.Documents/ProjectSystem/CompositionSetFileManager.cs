@@ -1,15 +1,16 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Acorisoft.Studio.Documents.Engines;
+using Acorisoft.Studio.Documents;
+using Acorisoft.Studio.Engines;
 using NLog.Internal;
 
-namespace Acorisoft.Studio.Documents.ProjectSystem
+namespace Acorisoft.Studio.ProjectSystem
 {
     /// <summary>
     /// <see cref="CompositionSetFileManager"/> 类型用于表示一个创作集文件管理器，用于为应用程序提供统一的文件访问、文件存储功能。
     /// </summary>
-    public class CompositionSetFileManager : ProjectSystemHandler, ICompositionSetFileManager
+    public class CompositionSetFileManager : ProjectSystemModule, ICompositionSetFileManager
     {
         private ICompositionSet _composition;
         public const string ImageScheme = "morisa-image";

@@ -2,7 +2,7 @@ using System;
 using LiteDB;
 using System.IO;
 
-namespace Acorisoft.Studio.Documents.ProjectSystem
+namespace Acorisoft.Studio.ProjectSystem
 {
     public class CompositionSet : ICompositionSet, ICompositionSetDatabase, IDisposable,IEquatable<CompositionSet>
     {

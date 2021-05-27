@@ -1,6 +1,6 @@
 using System.Globalization;
 using Acorisoft.Extensions.Platforms.Windows.Converters;
-using Acorisoft.Studio.Documents.ProjectSystem;
+using Acorisoft.Studio.ProjectSystem;
 
 namespace Acorisoft.Studio.Converters
 {

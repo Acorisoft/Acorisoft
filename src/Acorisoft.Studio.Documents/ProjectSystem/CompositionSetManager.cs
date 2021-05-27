@@ -8,7 +8,7 @@ using DynamicData;
 using LiteDB;
 using MediatR;
 
-namespace Acorisoft.Studio.Documents.ProjectSystem
+namespace Acorisoft.Studio.ProjectSystem
 {
     public class CompositionSetManager : ICompositionSetManager
     {
