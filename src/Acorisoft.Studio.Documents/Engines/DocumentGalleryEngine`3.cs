@@ -13,7 +13,7 @@ using LiteDB;
 namespace Acorisoft.Studio.Engines
 {
     /// <summary>
-    /// <see cref="DocumentGalleryEngine"/> 表示一个文档画廊引擎。用于为应用程序提供画廊功能支持。
+    /// <see cref="DocumentGalleryEngine{TIndex,TIndexWrapper,TDocument}"/> 表示一个文档画廊引擎。用于为应用程序提供画廊功能支持。
     /// </summary>
     public abstract class DocumentGalleryEngine<TIndex, TIndexWrapper, TDocument> : ProjectSystemModule,
         IDocumentGalleryEngine<TIndex, TIndexWrapper, TDocument>, IDisposable
@@ -56,6 +56,7 @@ namespace Acorisoft.Studio.Engines
         private protected LiteCollection<TDocument> DocumentCollection;
         private protected Func<TIndexWrapper, bool> _Filter;
         private protected IComparer<TIndexWrapper> _Sorter;
+        private protected IEnumerable<TIndex> Enumerator;
 
         //-----------------------------------------------------------------------
         //
@@ -287,8 +288,46 @@ namespace Acorisoft.Studio.Engines
 
             NewCore(info);
         }
+
+        private void FindImpl(string keyword)
+        {
+            if (!_IsOpen)
+            {
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                return;
+            }
+
+            //
+            //
+            Enumerator = IndexCollection.Find(ConstructFindExpression(keyword));
+            
+            //
+            // 
+            DemandRefreshDataSourceImpl(_PerPageCount, 1);
+        }
         
         
+        protected void ResetFindImpl()
+        {
+            if (!_IsOpen)
+            {
+                return;
+            }
+
+            //
+            // 清空当前页面内容 
+            EditableCollection.Clear();
+
+            
+            Enumerator ??= IndexCollection.FindAll();
+
+
+            DemandRefreshDataSourceImpl(_PerPageCount, _PageIndex);
+        }
         
         //-----------------------------------------------------------------------
         //
@@ -324,13 +363,15 @@ namespace Acorisoft.Studio.Engines
         /// <param name="pageIndex"></param>
         protected virtual void DemandRefreshDataSource(int perPageCount, int pageIndex)
         {
+            Enumerator ??= IndexCollection.FindAll();
+            
             //
             // 清空集合
             EditableCollection.Clear();
 
             //
             // 获取内容
-            var thisPageEnumeration = IndexCollection.FindAll()
+            var thisPageEnumeration = Enumerator
                 .Skip(perPageCount * pageIndex)
                 .Take(perPageCount)
                 .ToArray();
@@ -476,6 +517,11 @@ namespace Acorisoft.Studio.Engines
             IndexCollection.Insert(index);
             DocumentCollection.Insert(document);
         }
+
+        protected virtual Query ConstructFindExpression(string keyword)
+        {
+            return Query.Contains("Name", keyword);
+        }
         
         
         
@@ -509,6 +555,10 @@ namespace Acorisoft.Studio.Engines
             Disposable?.Dispose();
         }
 
+        public Task ResetFindAsync()
+        {
+            return Task.Run(ResetFindImpl);
+        }
 
         /// <summary>
         /// 
@@ -518,7 +568,7 @@ namespace Acorisoft.Studio.Engines
         /// <exception cref="NotImplementedException"></exception>
         public Task FindAsync(string keyword)
         {
-            throw new NotImplementedException();
+            return Task.Run(() => FindImpl(keyword));
         }
 
         /// <summary>

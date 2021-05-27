@@ -16,6 +16,20 @@ namespace Acorisoft.Studio.Engines
         {
         }
 
+        #region Override Methods
+
+        
+
+        protected override void ExtractIndex(StickyNoteIndex index, StickyNoteDocument document)
+        {
+            base.ExtractIndex(index, document);
+        }
+
+        protected override Query ConstructFindExpression(string keyword)
+        {
+            return base.ConstructFindExpression(keyword);
+        }
+
         private static StickyNoteIndexWrapper Transform(StickyNoteIndex index)
         {
             return new StickyNoteIndexWrapper(index);
@@ -51,6 +65,8 @@ namespace Acorisoft.Studio.Engines
             throw new NotImplementedException();
         }
 
+        #endregion
+        
         public static IComparer<StickyNoteIndexWrapper> Sorter { get; }
     }
 }
