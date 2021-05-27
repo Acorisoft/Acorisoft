@@ -11,6 +11,7 @@ namespace Acorisoft.Studio.ProjectSystem
         public const string BrushesDirectory = "Brushes";
         public const string MapsDirectory = "Maps";
         public const string FilesDirectory = "Files";
+        public const string AutoSaveDirectory = "AutoSave";
 
         public CompositionSet(string name,string path, Guid id)
         {
@@ -66,6 +67,11 @@ namespace Acorisoft.Studio.ProjectSystem
         public string GetCompositionSetFilesDirectory()
         {
             return System.IO.Path.Combine(Path, FilesDirectory);
+        }
+        
+        public string GetCompositionSetAutoSaveDirectory()
+        {
+            return System.IO.Path.Combine(Path, AutoSaveDirectory);
         }
         public void Dispose()
         {

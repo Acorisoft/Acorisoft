@@ -21,6 +21,7 @@ namespace Acorisoft.Studio.ProjectSystem
         public const string VideosDirectory = "Videos";
         public const string BrushesDirectory = "Brushes";
         public const string MapsDirectory = "Maps";
+        public const string AutoSaveDirectory = "AutoSave";
 
         private protected readonly SourceList<ICompositionSet> Editable;
         private protected readonly HashSet<ICompositionSet> HashSet;
@@ -88,6 +89,11 @@ namespace Acorisoft.Studio.ProjectSystem
         {
             return Path.Combine(path, CompositionSet.MapsDirectory);
         }
+        
+        private static string GetCompositionSetAutoSaveDirectory(string path)
+        {
+            return Path.Combine(path, CompositionSet.AutoSaveDirectory);
+        }
 
         private static void MaintainProjectDirectory(string path)
         {
@@ -96,7 +102,8 @@ namespace Acorisoft.Studio.ProjectSystem
                 GetCompositionSetBrushesDirectory(path),
                 GetCompositionSetImagesDirectory(path),
                 GetCompositionSetMapsDirectory(path),
-                GetCompositionSetVideosDirectory(path)
+                GetCompositionSetVideosDirectory(path),
+                GetCompositionSetAutoSaveDirectory(path),
             };
 
             foreach (var directory in directories)

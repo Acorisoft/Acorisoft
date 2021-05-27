@@ -16,59 +16,54 @@ namespace Acorisoft.Studio.ViewModels
     {
         private readonly CompositeDisposable _disposable;
         private readonly StickyNoteEngine _engine;
-        
+
         public StickyNoteGalleryViewModel(StickyNoteEngine engine)
         {
             _disposable = new CompositeDisposable();
             _engine = engine ?? throw new ArgumentNullException(nameof(engine));
-            
+
             OpenThisCommand = ReactiveCommand.Create<StickyNoteIndex>(
-                OpenStickyNote,
-                ServiceLocator.CompositionSetManager.IsOpen)
+                    OpenStickyNote,
+                    ServiceLocator.CompositionSetManager.IsOpen)
                 .DisposeWith(_disposable);
         }
 
         private async void OpenStickyNote(StickyNoteIndex index)
         {
-            if (index == null)
+            if (index == null || index.Id == Guid.Empty)
             {
+                ViewAware.Toast("无法打开文档");
                 return;
             }
 
-            if (index.Id == Guid.Empty)
+            using (ViewAware.ForceBusyState("正在打开标签"))
             {
-
-            }
-
-            //
-            // 打开文档。
-            try
-            {
-                using (ViewAware.ForceBusyState("正在打开标签"))
+                //
+                // 打开文档。
+                try
                 {
                     //
                     // 获取文档
                     var document = await _engine.Open(index);
-                    
+
                     //
                     // 跳转
                     ViewAware.NavigateTo<StickyNoteViewModel>(new Hashtable
                     {
-                        { "arg1", document }
+                        {"arg1", document}
                     });
                 }
-            }
-            catch(Exception ex)
-            {
-
+                catch (Exception ex)
+                {
+                }
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
         public ISearchViewModel<StickyNoteIndex> Search { get; }
-        
+
         /// <summary>
         /// 新建便签命令
         /// </summary>
@@ -123,12 +118,12 @@ namespace Acorisoft.Studio.ViewModels
         /// 跳转到指定页面命令
         /// </summary>
         public ICommand GotoPageCommand { get; }
-        
+
         /// <summary>
         /// 
         /// </summary>
         public ReadOnlyObservableCollection<StickyNoteIndex> Collection { get; }
-        
+
         /// <summary>
         /// 获取或设置当前的
         /// </summary>

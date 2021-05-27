@@ -1,4 +1,5 @@
 using System.Collections;
+using Acorisoft.Extensions.Platforms.Windows;
 using Acorisoft.Extensions.Platforms.Windows.ViewModels;
 using Acorisoft.Studio.Documents.StickyNote;
 
@@ -13,9 +14,9 @@ namespace Acorisoft.Studio.ViewModels
 
         protected override void OnParameterReceiving(Hashtable parameters)
         {
-            if (parameters.ContainsKey("arg1"))
+            if (parameters.ContainsKey(ViewAware.Arg1))
             {
-                Parameter(parameters["arg1"] as StickyNoteDocument);
+                Parameter(parameters[ViewAware.Arg1] as StickyNoteDocument);
             }
         }
 
