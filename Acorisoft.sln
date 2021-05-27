@@ -18,6 +18,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Studio.Documents"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfApp1", "src\WpfApp1\WpfApp1.csproj", "{926FDFFB-DDC7-4D6F-86FC-69C1517F3F74}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Studio.Tests", "src\Acorisoft.Studio.Tests\Acorisoft.Studio.Tests.csproj", "{C76EF884-EAE6-415A-991D-01811D8FDF7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{926FDFFB-DDC7-4D6F-86FC-69C1517F3F74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{926FDFFB-DDC7-4D6F-86FC-69C1517F3F74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{926FDFFB-DDC7-4D6F-86FC-69C1517F3F74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C76EF884-EAE6-415A-991D-01811D8FDF7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C76EF884-EAE6-415A-991D-01811D8FDF7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C76EF884-EAE6-415A-991D-01811D8FDF7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C76EF884-EAE6-415A-991D-01811D8FDF7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

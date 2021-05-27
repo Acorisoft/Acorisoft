@@ -1,4 +1,4 @@
-namespace Acorisoft.Studio.Documents.StickyNote
+namespace Acorisoft.Studio.Documents.StickyNotes
 {
     public class StickyNoteIndex : DocumentIndex
     {

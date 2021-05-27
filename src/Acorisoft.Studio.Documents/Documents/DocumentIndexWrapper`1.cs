@@ -7,12 +7,20 @@ namespace Acorisoft.Studio.Documents
         private bool _isLocked;
         private bool _isSelected;
 
-        public DocumentIndexWrapper(TIndex index)
+        protected DocumentIndexWrapper(TIndex index)
         {
             Source = index;
         }
+
+        public virtual void RaiseUpdated()
+        {
+            //
+            // 更新
+            RaiseUpdated(nameof(IsSelected));
+            RaiseUpdated(nameof(IsLocked));
+        }
         
-        protected TIndex Source { get; }
+        protected internal TIndex Source { get; private set; }
 
         public bool IsSelected
         {

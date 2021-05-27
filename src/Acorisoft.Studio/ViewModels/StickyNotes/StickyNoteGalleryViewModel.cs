@@ -6,7 +6,7 @@ using System.Windows.Input;
 using Acorisoft.Extensions.Platforms.Windows;
 using Acorisoft.Extensions.Platforms.Windows.Services;
 using Acorisoft.Extensions.Platforms.Windows.ViewModels;
-using Acorisoft.Studio.Documents.StickyNote;
+using Acorisoft.Studio.Documents.StickyNotes;
 using Acorisoft.Studio.Engines;
 using ReactiveUI;
 
@@ -42,16 +42,7 @@ namespace Acorisoft.Studio.ViewModels
                 // 打开文档。
                 try
                 {
-                    //
-                    // 获取文档
-                    var document = await _engine.Open(index);
-
-                    //
-                    // 跳转
-                    ViewAware.NavigateTo<StickyNoteViewModel>(new Hashtable
-                    {
-                        {"arg1", document}
-                    });
+                  
                 }
                 catch (Exception ex)
                 {

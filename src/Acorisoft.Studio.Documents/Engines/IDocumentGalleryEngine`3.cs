@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Acorisoft.Studio.Documents;
+using DynamicData;
 
 namespace Acorisoft.Studio.Engines
 {
@@ -16,6 +18,13 @@ namespace Acorisoft.Studio.Engines
         where TIndexWrapper : DocumentIndexWrapper<TIndex>
         where TDocument : Document
     {
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        Task UpdateAsync(TDocument document);
+        
         /// <summary>
         /// 搜索
         /// </summary>
@@ -58,12 +67,12 @@ namespace Acorisoft.Studio.Engines
         Task DeleteThisAsync(TDocument document);
 
         /// <summary>
-        /// 
+        /// 删除这个页面
         /// </summary>
         Task DeleteThisPageAsync();
 
         /// <summary>
-        /// 
+        /// 删除全部数据
         /// </summary>
         Task DeleteAllAsync();
 
@@ -74,6 +83,11 @@ namespace Acorisoft.Studio.Engines
         /// <para>这个属性值必须在[1,65536]之间</para>
         /// </remarks>
         IObservable<int> PageCount { get; }
+        
+        /// <summary>
+        /// 获取当前画廊的操作状态
+        /// </summary>
+        IObservable<bool> IsOpen { get; }
 
         /// <summary>
         /// 获取或设置当前画廊中每个页面中元素的数量。
@@ -94,9 +108,12 @@ namespace Acorisoft.Studio.Engines
         /// <summary>
         /// 获取或设置当前画廊的过滤器。
         /// </summary>
-        Func<TIndex, bool> Filter { get; set; }
+        Func<TIndexWrapper, bool> Filter { get; set; }
         
-        
+        /// <summary>
+        /// 获取或设置当前画廊的排序器。
+        /// </summary>
+        IComparer<TIndexWrapper> Sorter { get; set; }
 
         /// <summary>
         /// 

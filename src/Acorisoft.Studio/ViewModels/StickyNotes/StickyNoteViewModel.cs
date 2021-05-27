@@ -1,7 +1,7 @@
 using System.Collections;
 using Acorisoft.Extensions.Platforms.Windows;
 using Acorisoft.Extensions.Platforms.Windows.ViewModels;
-using Acorisoft.Studio.Documents.StickyNote;
+using Acorisoft.Studio.Documents.StickyNotes;
 
 namespace Acorisoft.Studio.ViewModels
 {

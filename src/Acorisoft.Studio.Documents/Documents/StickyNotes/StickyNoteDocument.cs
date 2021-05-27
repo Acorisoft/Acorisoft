@@ -1,4 +1,4 @@
-namespace Acorisoft.Studio.Documents.StickyNote
+namespace Acorisoft.Studio.Documents.StickyNotes
 {
     /// <summary>
     /// <see cref="StickyNoteDocument"/> 类型表示一个便签文档。

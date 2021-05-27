@@ -10,5 +10,13 @@ namespace Acorisoft.Studio
         {
             return collection.Exists(Query.EQ(Id, new BsonValue(key)));
         }
+
+        public static bool ValidateOpenNotification(CompositionSetOpenNotification notification)
+        {
+            //
+            //
+
+            return notification?.MainDatabase != null;
+        }
     }
 }
