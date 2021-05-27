@@ -1,7 +1,19 @@
-﻿namespace Acorisoft.Extensions.Platforms.Windows.ViewModels
+﻿using System.Collections;
+
+namespace Acorisoft.Extensions.Platforms.Windows.ViewModels
 {
-    public class PageViewModelBase : ViewModelBase,IPageViewModel
+    public class PageViewModelBase : ViewModelBase, IPageViewModel
     {
-        public virtual string Title { get;  }
+        void IViewModelParameter.Parameter(Hashtable hashtable)
+        {
+            OnParameterReceiving(hashtable);
+        }
+
+        protected virtual void OnParameterReceiving(Hashtable parameters)
+        {
+            
+        }
+        
+        public virtual string Title { get; }
     }
 }

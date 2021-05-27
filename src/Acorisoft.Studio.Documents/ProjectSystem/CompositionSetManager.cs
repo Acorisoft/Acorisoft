@@ -59,6 +59,16 @@ namespace Acorisoft.Studio.ProjectSystem
             });
         }
 
+        public async Task Save()
+        {
+            if (!_isOpen)
+            {
+                return;
+            }
+
+            await Mediator.Publish(new CompositionSetSaveNotification());
+        }
+
         private static string GetCompositionSetImagesDirectory(string path)
         {
             return Path.Combine(path, CompositionSet.ImagesDirectory);

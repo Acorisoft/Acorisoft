@@ -7,6 +7,8 @@ namespace Acorisoft.Studio.ProjectSystem
 {
     public interface ICompositionSetManager : IDisposable
     {
+        Task Save();
+        
         /// <summary>
         /// 关闭当前正在打开的项目。
         /// </summary>

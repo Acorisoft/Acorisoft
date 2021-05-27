@@ -6,6 +6,7 @@
              xmlns:w="https://github.com/Acorisoft/Acorisoft/Windows"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:appViewModel="clr-namespace:Acorisoft.Studio.ViewModels"
+             xmlns:appCommands="clr-namespace:Acorisoft.Studio.Commands"
              xmlns:rx="http://reactiveui.net"
              mc:Ignorable="d"
              Style="{StaticResource Windows}"
@@ -14,6 +15,20 @@
              Title="{Binding Title,TargetNullValue='首页',Mode=OneWay}"
              MinWidth="1366" MinHeight="768"
              Width="1920" Height="1080">
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static appCommands:StudioCommands.NewProject}" CanExecute="CanExecute_NewProjectCommand" Executed="OnExecuted_NewProjectCommand"/>
+        <CommandBinding Command="{x:Static appCommands:StudioCommands.Save}" CanExecute="CanExecute_SaveCommand" Executed="OnExecuted_SaveCommand"/>
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <!-- 新建项目，Ctrl+Shift+N -->
+        <KeyBinding Command="{x:Static appCommands:StudioCommands.NewProject}" Key="LeftCtrl,LeftShift,N"/>
+        <KeyBinding Command="{x:Static appCommands:StudioCommands.NewProject}" Key="RightCtrl,RightShift,N"/>
+        
+        
+        <!-- 保存项目，Ctrl+S -->
+        <KeyBinding Command="{x:Static appCommands:StudioCommands.Save}" Key="LeftCtrl,S"/>
+        <KeyBinding Command="{x:Static appCommands:StudioCommands.Save}" Key="RightCtrl,S"/>
+    </Window.InputBindings>
     <Grid>
         <w:BusyIndicator x:Name="Indicator">
             <w:ToastHost x:Name="Toast">

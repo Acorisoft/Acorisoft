@@ -1,12 +1,13 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Acorisoft.Extensions.Platforms.ComponentModel;
 using Acorisoft.Studio.Documents;
 using Acorisoft.Studio.ProjectSystem;
 using MediatR;
 
 namespace Acorisoft.Studio.Engines
 {
-    public abstract class ProjectSystemModule : IProjectSystemModule
+    public abstract class ProjectSystemModule : ObservableObject, IProjectSystemModule
     {
         protected ProjectSystemModule(ICompositionSetRequestQueue requestQueue)
         {

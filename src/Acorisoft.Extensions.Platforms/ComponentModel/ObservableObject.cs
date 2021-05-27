@@ -20,7 +20,7 @@ namespace Acorisoft.Extensions.Platforms.ComponentModel
             return true;
         }
         
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected void RaiseUpdated([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

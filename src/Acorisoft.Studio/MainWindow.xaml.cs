@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,16 +32,24 @@ namespace Acorisoft.Studio
         public MainWindow() : base()
         {
             InitializeComponent();
-            this.MouseDoubleClick += OnMouseDoubleClick;
         }
 
-        protected override void OnContentRendered(EventArgs e)
+        protected sealed override void OnContentRendered(EventArgs e)
         {
             ViewAware.NavigateTo<HomeViewModel>();
             base.OnContentRendered(e);
         }
 
-        private async void OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        #region NewProject
+
+        
+        private void CanExecute_NewProjectCommand(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+            e.Handled = true;
+        }
+
+        private async void OnExecuted_NewProjectCommand(object sender, ExecutedRoutedEventArgs e)
         {
             var service = ServiceLocator.ViewService;
             var csm = ServiceLocator.CompositionSetManager;
@@ -51,5 +60,23 @@ namespace Acorisoft.Studio
                 await csm.NewProject(projectInfo);
             }
         }
+
+        #endregion
+        
+        #region Save
+
+        
+        private void CanExecute_SaveCommand(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = DataContext is AppViewModel viewModel && viewModel.IsOpen;
+            e.Handled = true;
+        }
+
+        private async void OnExecuted_SaveCommand(object sender, ExecutedRoutedEventArgs e)
+        {
+            await ServiceLocator.CompositionSetManager.Save();
+        }
+
+        #endregion
     }
 }
