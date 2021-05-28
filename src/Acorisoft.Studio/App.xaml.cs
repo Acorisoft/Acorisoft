@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Acorisoft.Extensions.Platforms.Services;
 using Acorisoft.Extensions.Platforms.Windows.Services;
+using Acorisoft.Extensions.Platforms.Windows.ViewModels;
 using Acorisoft.Studio.Documents;
 using Acorisoft.Studio.ViewModels;
 using Acorisoft.Studio.Views;
@@ -24,21 +25,36 @@ namespace Acorisoft.Studio
     /// </summary>
     public partial class App : Application
     {
+        private readonly IContainer _container;
         public App()
         {
             var container = Platform.Init().UseMorisa();
+            _container = container;
             container.Register<IViewFor<MockupDialogViewModel>,MockupView>();
             container.Register<AppViewModel>();
 
             //
             // HomeViews
 
-            container.Register<IViewFor<HomeViewModel>, HomeView>();
-            container.Register<IViewFor<HomeContextViewModel>, HomeContextView>();
-            container.Register<IViewFor<NewProjectDialogViewModel>, NewProjectDialog>();
-            container.Register<HomeViewModel>();
-            container.Register<HomeContextViewModel>();
-            container.Register<NewProjectDialogViewModel>();
+            RegisterViewAndViewModel<HomeView,HomeViewModel>();
+            RegisterViewAndViewModel<StickyNoteGalleryView,StickyNoteGalleryViewModel>();
+            RegisterViewAndViewModel<StickyNoteView,StickyNoteViewModel>();
+            RegisterViewAndViewModel<HomeContextView,HomeContextViewModel>();
+            RegisterDialogAndViewModel<NewProjectDialog,NewProjectDialogViewModel>();
+        }
+
+        protected void RegisterViewAndViewModel<TView, TViewModel>() where TViewModel : ViewModelBase where TView : IViewFor<TViewModel>
+        {
+            
+            _container.Register<IViewFor<TViewModel>, TView>();
+            _container.Register<TViewModel>();
+        }
+        
+        protected void RegisterDialogAndViewModel<TView, TViewModel>() where TViewModel : DialogViewModelBase where TView : IViewFor<TViewModel>
+        {
+            
+            _container.Register<IViewFor<TViewModel>, TView>();
+            _container.Register<TViewModel>();
         }
     }
 }

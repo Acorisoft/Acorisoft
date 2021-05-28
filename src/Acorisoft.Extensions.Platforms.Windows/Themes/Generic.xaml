@@ -538,6 +538,9 @@
                         </p:TiledPanel>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value=".5" TargetName="PART_Border"/>
+                        </Trigger>
                         <EventTrigger RoutedEvent="MouseEnter">
                             <BeginStoryboard>
                                 <Storyboard>
@@ -592,6 +595,96 @@
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+     <Style TargetType="{x:Type b:HighlightSymbolContentButton}">
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="MinWidth" Value="32" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Background" Value="{StaticResource Brushes.Commons.Background}" />
+        <Setter Property="Foreground" Value="{StaticResource Brushes.Commons.Foreground}" />
+        <Setter Property="Highlight" Value="{StaticResource  Brushes.MaterialDesign.Blue}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type b:HighlightSymbolContentButton}">
+                    <Border x:Name="PART_Border" 
+                            Background="{TemplateBinding Background}" 
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="PART_Content"
+                                          ContentSource="Content"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          HorizontalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                       <Trigger Property="IsMouseOver" Value="True">
+                           <Setter Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}" TargetName="PART_Content"/>
+                       </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}" TargetName="PART_Content"/>
+                            <Setter Property="Background" Value="{StaticResource App.White.Darken.Mask}" TargetName="PART_Border"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value=".5" TargetName="PART_Border"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style TargetType="{x:Type b:HighlightSymbolButton}">
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="MinWidth" Value="32" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Background" Value="{StaticResource Brushes.Commons.Background}" />
+        <Setter Property="Foreground" Value="{StaticResource Brushes.Commons.Foreground}" />
+        <Setter Property="Highlight" Value="{StaticResource  Brushes.MaterialDesign.Blue}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type b:HighlightSymbolButton}">
+                    <Border x:Name="PART_Border" Background="{TemplateBinding Background}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="48"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <ContentPresenter x:Name="PART_Content"
+                                               Grid.Column="1" 
+                                               ContentSource="Content"
+                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                               HorizontalAlignment="Left" />
+
+                            <Path Grid.Column="0" x:Name="PART_Icon"
+                                  Data="{TemplateBinding Symbol}"
+                                  Width="24"
+                                  Height="24"
+                                  Stroke="{TemplateBinding Foreground}"
+                                  StrokeThickness="1"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                       <Trigger Property="IsMouseOver" Value="True">
+                           <Setter Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}" TargetName="PART_Content"/>
+                           <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}" TargetName="PART_Icon"/>
+                       </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}" TargetName="PART_Content"/>
+                            <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}" TargetName="PART_Icon"/>
+                            <Setter Property="Background" Value="{StaticResource App.White.Darken.Mask}" TargetName="PART_Border"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value=".5" TargetName="PART_Border"/>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -730,7 +823,7 @@
             <Setter.Value>
                 <DataTemplate>
                     <TextBlock Text="{Binding Mode=OneWay}"
-                               FontSize="18"
+                               FontSize="24"
                                FontWeight="Bold"
                                Foreground="{StaticResource App.Text.Primary}" />
                 </DataTemplate>
@@ -753,16 +846,18 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <ContentPresenter Grid.Row="0" ContentSource="Title"
-                                          Margin="0 32" />
+                        <ContentPresenter Grid.Row="0" ContentSource="Title"/>
                         <ContentPresenter Grid.Row="1" ContentSource="Subtitle"
-                                          Margin="0 10" />
-                        <ContentPresenter Grid.Row="2" ContentSource="ToolBar"
-                                          Margin="0 10" />
-                        <ContentPresenter Grid.Row="3" ContentSource="Content" />
+                                          Margin="0 10"
+                                          HorizontalAlignment="Left"
+                                          VerticalAlignment="Top"/>
+                        <ContentPresenter Grid.Row="1"
+                                          ContentSource="ToolBar"
+                                          HorizontalAlignment="Right"
+                                          VerticalAlignment="Top"/>
+                        <ContentPresenter Grid.Row="2" ContentSource="Content" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -775,7 +870,7 @@
             <Setter.Value>
                 <DataTemplate>
                     <TextBlock Text="{Binding Mode=OneWay}"
-                               FontSize="18"
+                               FontSize="24"
                                FontWeight="Bold"
                                Foreground="{StaticResource App.Text.Primary}" />
                 </DataTemplate>
@@ -798,16 +893,18 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <ContentPresenter Grid.Row="0" ContentSource="Title"
-                                          Margin="0 16" />
+                        <ContentPresenter Grid.Row="0" ContentSource="Title"/>
                         <ContentPresenter Grid.Row="1" ContentSource="Subtitle"
-                                          Margin="0 10" />
-                        <ContentPresenter Grid.Row="2" ContentSource="ToolBar"
-                                          Margin="0 10" />
-                        <ContentPresenter Grid.Row="3" ContentSource="Content" />
+                                          Margin="0 10"
+                                          HorizontalAlignment="Left"
+                                          VerticalAlignment="Top"/>
+                        <ContentPresenter Grid.Row="1"
+                                          ContentSource="ToolBar"
+                                          HorizontalAlignment="Right"
+                                          VerticalAlignment="Top"/>
+                        <ContentPresenter Grid.Row="2" ContentSource="Content" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -843,16 +940,18 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <ContentPresenter Grid.Row="0" ContentSource="Title"
-                                          Margin="0 24" />
+                        <ContentPresenter Grid.Row="0" ContentSource="Title"/>
                         <ContentPresenter Grid.Row="1" ContentSource="Subtitle"
-                                          Margin="0 10" />
-                        <ContentPresenter Grid.Row="2" ContentSource="ToolBar"
-                                          Margin="0 10" />
-                        <ContentPresenter Grid.Row="3" ContentSource="Content" />
+                                          Margin="0 10"
+                                          HorizontalAlignment="Left"
+                                          VerticalAlignment="Top"/>
+                        <ContentPresenter Grid.Row="1"
+                                          ContentSource="ToolBar"
+                                          HorizontalAlignment="Right"
+                                          VerticalAlignment="Top"/>
+                        <ContentPresenter Grid.Row="2" ContentSource="Content" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -955,6 +1054,51 @@
                         <TextBlock Grid.Column="7" Text="跳转到:"/>
                         <TextBox x:Name="PART_Goto" Grid.Column="8"/>
                     </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style TargetType="{x:Type c:SearchBox}">
+        <Setter Property="Background" Value="{StaticResource Brushes.White}"/>
+        <Setter Property="BorderBrush" Value="Gray"/>
+        <Setter Property="BorderThickness" Value="1"/>
+         <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type c:SearchBox}">
+                    <Border x:Name="PART_Border" 
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="8"
+                            SnapsToDevicePixels="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="32"/>
+                                <ColumnDefinition Width="48"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="PART_Text" 
+                                     Grid.Column="0"
+                                     Background="{StaticResource Brushes.Transparent}"
+                                     Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                     Padding="{TemplateBinding Padding}"
+                                     BorderThickness="0" BorderBrush="{x:Null}"
+                                     HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <b:HighlightSymbolButton x:Name="PART_Clear" Symbol="{StaticResource Icon.Clear}" Grid.Column="1" Visibility="Collapsed"/>
+                            <b:HighlightSymbolButton x:Name="PART_Search" Symbol="{StaticResource Icon.Search}" Grid.Column="2" Margin="0 0 16 0"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="{StaticResource Brushes.MaterialDesign.Blue}" TargetName="PART_Border"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True" SourceName="PART_Text">
+                            <Setter Property="Effect" Value="{StaticResource Effect.Shadow2}" TargetName="PART_Border"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource Brushes.MaterialDesign.Blue}" TargetName="PART_Border"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

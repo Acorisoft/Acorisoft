@@ -17,37 +17,13 @@ namespace Acorisoft.Studio.ViewModels
         private readonly CompositeDisposable _disposable;
         private readonly StickyNoteEngine _engine;
 
-        public StickyNoteGalleryViewModel(StickyNoteEngine engine)
+        public StickyNoteGalleryViewModel(/*StickyNoteEngine engine*/)
         {
             _disposable = new CompositeDisposable();
-            _engine = engine ?? throw new ArgumentNullException(nameof(engine));
-
-            OpenThisCommand = ReactiveCommand.Create<StickyNoteIndex>(
-                    OpenStickyNote,
-                    ServiceLocator.CompositionSetManager.IsOpen)
-                .DisposeWith(_disposable);
-        }
-
-        private async void OpenStickyNote(StickyNoteIndex index)
-        {
-            if (index == null || index.Id == Guid.Empty)
-            {
-                ViewAware.Toast("无法打开文档");
-                return;
-            }
-
-            using (ViewAware.ForceBusyState("正在打开标签"))
-            {
-                //
-                // 打开文档。
-                try
-                {
-                  
-                }
-                catch (Exception ex)
-                {
-                }
-            }
+            // _engine = engine ?? throw new ArgumentNullException(nameof(engine));
+            
+            //
+            // 按创建时间排序 按修改时间排序 
         }
 
         /// <summary>
