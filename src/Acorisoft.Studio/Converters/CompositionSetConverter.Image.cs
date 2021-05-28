@@ -8,7 +8,7 @@ using Acorisoft.Extensions.Platforms.Windows.Services;
 
 namespace Acorisoft.Studio.Converters
 {
-    public class CompositionSetImageConverter : OneWayConverter<Uri,ImageSource>
+    public class CompositionSetImageConverter : OneWayConverter<Uri, ImageSource>
     {
         protected override ImageSource ConvertTo(Uri source, object parameter, CultureInfo cultureInfo)
         {

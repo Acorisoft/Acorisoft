@@ -41,6 +41,8 @@
                         </UniformGrid>
                     </w:TiledPanel>
                 </Border>
+                
+                <w:Pagination PageCount="12" GenerateCount="5" PageIndex="1"/>
             </StackPanel>
         </ScrollViewer>
     </w:EmptyStateView>

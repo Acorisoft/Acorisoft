@@ -150,7 +150,7 @@ namespace Acorisoft.Studio.Engines
 
             //
             // 所有页面数
-            _PageCount = (_TotalItemCount + _PerPageCount) / _PerPageCount;
+            _PageCount = (_TotalItemCount + _PerPageCount - 1) / _PerPageCount;
             PageCountStream.OnNext(_PageCount);
 
             //
@@ -363,6 +363,11 @@ namespace Acorisoft.Studio.Engines
         /// <param name="pageIndex"></param>
         protected virtual void DemandRefreshDataSource(int perPageCount, int pageIndex)
         {
+            if (pageIndex == 0)
+            {
+                return;
+            }
+            
             Enumerator ??= IndexCollection.FindAll();
             
             //
@@ -372,7 +377,7 @@ namespace Acorisoft.Studio.Engines
             //
             // 获取内容
             var thisPageEnumeration = Enumerator
-                .Skip(perPageCount * pageIndex)
+                .Skip(perPageCount * (pageIndex - 1))
                 .Take(perPageCount)
                 .ToArray();
 
@@ -402,7 +407,7 @@ namespace Acorisoft.Studio.Engines
         protected virtual void DeleteThisPageCore()
         {
             var thisPageItems = IndexCollection.FindAll()
-                .Skip(_PerPageCount * _PageIndex)
+                .Skip(_PerPageCount * (_PageIndex - 1))
                 .Take(_PerPageCount)
                 .ToArray();
 

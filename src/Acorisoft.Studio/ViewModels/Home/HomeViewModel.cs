@@ -121,9 +121,6 @@ namespace Acorisoft.Studio.ViewModels
             }
         }
         
-        public Uri Cover
-        {
-            get => CompositionSet?.Property?.Cover;
-        }
+        public Uri Cover => CompositionSet?.Property?.Cover;
     }
 }
