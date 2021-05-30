@@ -39,7 +39,7 @@ namespace Acorisoft.Studio.Documents {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Acorisoft.Studio.Documents.SR", typeof(SR).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Acorisoft.Studio.SR", typeof(SR).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,16 @@ namespace Acorisoft.Studio.Documents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to 未命名.
+        /// </summary>
+        internal static string ComposeSetSystem_EmptyName {
+            get {
+                return ResourceManager.GetString("ComposeSetSystem_EmptyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 未命名.
         /// </summary>
         internal static string StickyNoteEngine_EmptyDocumentName {
             get {

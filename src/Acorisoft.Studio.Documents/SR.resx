@@ -22,6 +22,9 @@
         <value>暂无描述</value>
     </data>
     <data name="StickyNoteEngine.EmptyDocumentName" xml:space="preserve">
-        <value />
+        <value>未命名</value>
+    </data>
+    <data name="ComposeSetSystem_EmptyName" xml:space="preserve">
+        <value>未命名</value>
     </data>
 </root>

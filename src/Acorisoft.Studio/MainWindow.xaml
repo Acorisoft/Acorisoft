@@ -30,7 +30,7 @@
         <KeyBinding Command="{x:Static appCommands:StudioCommands.Save}" Key="RightCtrl,S"/>
     </Window.InputBindings>
     <Grid>
-        <w:BusyIndicator x:Name="Indicator">
+        <w:ActivityIndicator x:Name="Indicator">
             <w:ToastHost x:Name="Toast">
                 <w:DialogHost x:Name="Dialog">
                     <w:IxContentHost>
@@ -62,6 +62,6 @@
                     </w:IxContentHost>
                 </w:DialogHost>
             </w:ToastHost>
-        </w:BusyIndicator>
+        </w:ActivityIndicator>
     </Grid>
 </w:SpaWindow>

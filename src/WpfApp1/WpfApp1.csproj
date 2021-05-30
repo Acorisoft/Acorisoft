@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+    <Import Project="../../rx.targets"/>
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
         <TargetFramework>net5.0-windows</TargetFramework>
@@ -7,8 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Acorisoft.Extensions.Platforms.Windows\Acorisoft.Extensions.Platforms.Windows.csproj" />
-      <ProjectReference Include="..\Acorisoft.Extensions.Platforms\Acorisoft.Extensions.Platforms.csproj" />
+        <ProjectReference Include="..\Acorisoft.Extensions.Platforms.Windows\Acorisoft.Extensions.Platforms.Windows.csproj"/>
+        <ProjectReference Include="..\Acorisoft.Extensions.Platforms\Acorisoft.Extensions.Platforms.csproj"/>
     </ItemGroup>
 
 </Project>

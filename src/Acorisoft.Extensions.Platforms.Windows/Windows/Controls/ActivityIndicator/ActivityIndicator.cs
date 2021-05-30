@@ -14,17 +14,17 @@ using ReactiveUI;
 
 namespace Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator
 {
-    public class BusyIndicator : ContentControl, IBusyIndicator, IBusyIndicatorCore
+    public class ActivityIndicator : ContentControl, IActivityIndicator, IBusyIndicatorCore
     {
-        static BusyIndicator()
+        static ActivityIndicator()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(BusyIndicator),new FrameworkPropertyMetadata(typeof(BusyIndicator)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ActivityIndicator),new FrameworkPropertyMetadata(typeof(ActivityIndicator)));
         }
         
 
         private static void OnIsBusyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var host = (BusyIndicator) d;
+            var host = (ActivityIndicator) d;
             
             if ((bool) e.NewValue)
             {
@@ -42,13 +42,13 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator
             }
         }
 
-        public static readonly DependencyProperty IsBusyProperty = DependencyProperty.Register("IsBusy", typeof(bool), typeof(BusyIndicator), new PropertyMetadata(Xaml.Box(false),OnIsBusyChanged));
-        public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(BusyIndicator), new PropertyMetadata(string.Empty));
-        public static readonly RoutedEvent DialogOpeningEvent = EventManager.RegisterRoutedEvent("DialogOpening",RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(BusyIndicator));
-        public static readonly RoutedEvent DialogClosingEvent = EventManager.RegisterRoutedEvent("DialogClosing",RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(BusyIndicator));
+        public static readonly DependencyProperty IsBusyProperty = DependencyProperty.Register("IsBusy", typeof(bool), typeof(ActivityIndicator), new PropertyMetadata(Xaml.Box(false),OnIsBusyChanged));
+        public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(ActivityIndicator), new PropertyMetadata(string.Empty));
+        public static readonly RoutedEvent DialogOpeningEvent = EventManager.RegisterRoutedEvent("DialogOpening",RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ActivityIndicator));
+        public static readonly RoutedEvent DialogClosingEvent = EventManager.RegisterRoutedEvent("DialogClosing",RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ActivityIndicator));
 
         // ReSharper disable once InconsistentNaming
-        public BusyIndicator()
+        public ActivityIndicator()
         {
             this.Loaded += OnLoadedCore;
             this.Unloaded += OnUnloadedCore;

@@ -82,11 +82,11 @@
         @ 用来给用户制造烦躁感的指示器。
     -->
 
-    <Style TargetType="{x:Type bi:BusyIndicator}">
+    <Style TargetType="{x:Type bi:ActivityIndicator}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type bi:BusyIndicator}">
+                <ControlTemplate TargetType="{x:Type bi:ActivityIndicator}">
                     <p:TiledPanel>
                         <ContentPresenter ContentSource="Content" />
 

@@ -3,15 +3,15 @@ using System.Reactive;
 
 namespace Acorisoft.Extensions.Platforms.Windows.Controls
 {
-    public interface IBusyIndicator
+    public interface IActivityIndicator
     {
         /// <summary>
-        /// 设置当前 <see cref="IBusyIndicator"/> 的繁忙状态。
+        /// 设置当前 <see cref="IActivityIndicator"/> 的繁忙状态。
         /// </summary>
         bool IsBusy { get; set; }
 
         /// <summary>
-        /// 获取或设置当前 <see cref="IBusyIndicator"/> 实例对于繁忙状态的描述。
+        /// 获取或设置当前 <see cref="IActivityIndicator"/> 实例对于繁忙状态的描述。
         /// </summary>
         string Description { get; set; }
     }

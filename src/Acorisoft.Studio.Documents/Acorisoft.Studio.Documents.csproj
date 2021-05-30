@@ -5,6 +5,7 @@
     <Import Project="../../db.targets" />
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>Acorisoft.Studio</RootNamespace>
         <NoWarn>CS8632</NoWarn>
     </PropertyGroup>
     <ItemGroup>
