@@ -115,13 +115,14 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
 
         void Sampling(object sender, EventArgs e)
         {
+            if (_Delta == 0)
+            {
+                return;
+            }
+
             switch (_state)
             {
-                case InteractiveContentState.Idle:
-                    if(_Delta == 0)
-                    {
-                        return;
-                    }
+                case InteractiveContentState.Idle:                    
                     if(_Delta > .65)
                     {
                         IxState = InteractiveContentState.Expanding;
@@ -190,10 +191,10 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
                 {
                     _Presenter = presenter;
                     _Transformer?.Transform(this, presenter, Delta);
-                }
+                }  
             }
 
-            Sampler.Start();
+            Sampler?.Start();
             base.OnApplyTemplate();
         }
 
