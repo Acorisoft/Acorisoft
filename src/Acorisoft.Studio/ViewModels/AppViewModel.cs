@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -8,6 +9,7 @@ using System.Runtime.CompilerServices;
 using Acorisoft.Extensions.Platforms.Services;
 using Acorisoft.Extensions.Platforms.Windows.ViewModels;
 using Acorisoft.Studio.ProjectSystem;
+using Acorisoft.Studio.ProjectSystems;
 using LiteDB;
 using ReactiveUI;
 
@@ -16,17 +18,17 @@ namespace Acorisoft.Studio.ViewModels
     public class AppViewModel : AppViewModelBase
     {
         private readonly CompositeDisposable _disposable;
-        private readonly ICompositionSetManager _compositionSetManager;
-        private readonly ICompositionSetFileManager _fileManager;
+        private readonly IComposeSetSystem _css;
+        private readonly IComposeSetFileSystem _fileManager;
         private readonly ObservableAsPropertyHelper<bool> _isOpen;
         private readonly LiteDatabase _database;
         
         
         
         public AppViewModel(IViewService service,
-            ICompositionSetRequestQueue requestQueue, 
-            ICompositionSetFileManager fileManager,
-            ICompositionSetManager compositionSetManager) : base(service)
+            IComposeSetRequestQueue requestQueue, 
+            IComposeSetFileSystem fileManager,
+            IComposeSetSystem composeSetSystem) : base(service)
         {
             if (requestQueue == null)
             {
@@ -48,51 +50,45 @@ namespace Acorisoft.Studio.ViewModels
 
             _disposable = new CompositeDisposable();
             _fileManager = fileManager;
-            _compositionSetManager = compositionSetManager;
-            _isOpen = _compositionSetManager.IsOpen.ToProperty(this,nameof(IsOpen));
+            _css = composeSetSystem;
+            _isOpen = _css.IsOpen.ToProperty(this,nameof(IsOpen));
             
             
             _disposable.Add(_database);
-            _disposable.Add(_compositionSetManager);
+            _disposable.Add(_css);
             disposablePoe.DisposeWith(_disposable);
             disposablePos.DisposeWith(_disposable);
         }
 
-        protected override void OnStart()
+        protected override async void OnStart()
         {
-            var compositionProjects = _database.GetCollection<CompositionProject>().FindAll().ToArray();
-            if (compositionProjects.Length <= 0)
-            {
-                return;
-            }
+            const string path = @"D:\BT\Hosting";
             
-            foreach (var project in compositionProjects)
+            //
+            // Create
+            if (!Directory.Exists(path))
             {
-                _compositionSetManager.LoadProject(project, false);
+                await _css.NewAsync(new NewItemInfo<IComposeSetProperty>(new ComposeSetProperty())
+                {
+                    Path = path,
+                    Name = "测试"
+                });
             }
-
+            else
+            {
+                await _css.OpenAsync(new ComposeProject
+                {
+                    Path = path,
+                });
+            }
         }
 
-        protected override void OnStop()
+        protected override async void OnStop()
         {
-            var collection = _database.GetCollection<CompositionProject>();
-            foreach (var project in CompositionSets.Select(x => new CompositionProject
-            {
-                Id = x.Id,
-                Name = x.Name,
-                Path = x.Path
-            }))
-            {
-                collection.Upsert(project);
-            }
+            await _css.CloseAsync();
             _disposable.Dispose();
         }
 
-        /// <summary>
-        /// 获取或设置当前打开的项目
-        /// </summary>
-        public ReadOnlyObservableCollection<ICompositionSet> CompositionSets => _compositionSetManager.CompositionSets;
-        
         /// <summary>
         /// 获取或设置当前的可打开项目。
         /// </summary>

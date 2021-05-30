@@ -32,13 +32,23 @@ namespace Acorisoft.Studio.ProjectSystems
         {
             return folder switch
             {
-                ComposeSetKnownFolder.Brush => Path.Combine(_path, BrushFolder),
-                ComposeSetKnownFolder.Cache => Path.Combine(_path, CacheFolder),
-                ComposeSetKnownFolder.File => Path.Combine(_path, FileFolder),
-                ComposeSetKnownFolder.Git => Path.Combine(_path, GitFolder),
-                ComposeSetKnownFolder.Video => Path.Combine(_path, VideoFolder),
-                _ => Path.Combine(_path, ImageFolder),
+                ComposeSetKnownFolder.Brush => GetDirectoryAndCreate(Path.Combine(_path, BrushFolder)),
+                ComposeSetKnownFolder.Cache => GetDirectoryAndCreate(Path.Combine(_path, CacheFolder)),
+                ComposeSetKnownFolder.File => GetDirectoryAndCreate(Path.Combine(_path, FileFolder)),
+                ComposeSetKnownFolder.Git => GetDirectoryAndCreate(Path.Combine(_path, GitFolder)),
+                ComposeSetKnownFolder.Video => GetDirectoryAndCreate(Path.Combine(_path, VideoFolder)),
+                _ => GetDirectoryAndCreate(Path.Combine(_path, ImageFolder)),
             };
+        }
+
+        private static string GetDirectoryAndCreate(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            return path;
         }
 
         public LiteDatabase MainDatabase { get; internal set; }

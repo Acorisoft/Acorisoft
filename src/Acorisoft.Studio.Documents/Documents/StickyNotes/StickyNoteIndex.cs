@@ -1,6 +1,6 @@
 namespace Acorisoft.Studio.Documents.StickyNotes
 {
-    public class StickyNoteIndex : DocumentIndex
+    public class StickyNoteIndex : Acorisoft.Studio.DocumentIndex
     {
         /// <summary>
         /// 获取或设置当前便签的颜色。

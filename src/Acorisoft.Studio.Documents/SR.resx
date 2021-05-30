@@ -27,4 +27,7 @@
     <data name="ComposeSetSystem_EmptyName" xml:space="preserve">
         <value>未命名</value>
     </data>
+    <data name="ComposeSetSystemModule_EmptyName" xml:space="preserve">
+        <value>未命名</value>
+    </data>
 </root>

@@ -11,6 +11,7 @@
              xmlns:appCommands="clr-namespace:Acorisoft.Studio.Commands"
              xmlns:appConverters="clr-namespace:Acorisoft.Studio.Converters"
              xmlns:appBehaviors="clr-namespace:Acorisoft.Studio.Behaviors"
+             xmlns:index="clr-namespace:Acorisoft.Studio.Documents.StickyNotes;assembly=Acorisoft.Studio.Documents"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance Type={x:Type appViewModels:StickyNoteGalleryViewModel},IsDesignTimeCreatable =True}">
@@ -34,7 +35,7 @@
                      Height="32" FontSize="16"/>
         
         <w:Headline1HeaderToolbar Grid.Row="1"
-                                  Title="当前画廊存在10个项目"
+                                  Title="{Binding Count,Mode=OneWay,StringFormat=当前画廊存在\{0\}个项目}"
                                   Subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                                   Margin="32 0">
             <w:Headline1HeaderToolbar.ToolBar>
@@ -43,14 +44,26 @@
                                              Content="新建" 
                                              Margin="8 0" 
                                              Command="{Binding NewCommand}"/>
-                    <w:HighlightSymbolButton Symbol="{StaticResource Icon.Trash}" Content="删除本页" Margin="8 0"/>
-                    <w:HighlightSymbolButton Symbol="{StaticResource Icon.Trash2}" Content="删除全部" Margin="8 0"/>
+                    <w:HighlightSymbolButton Symbol="{StaticResource Icon.Trash}" 
+                                             Content="删除本页"
+                                             Margin="8 0"/>
+                    <w:HighlightSymbolButton Symbol="{StaticResource Icon.Trash2}"
+                                             Content="删除全部"
+                                             Margin="8 0"
+                                             Command="{Binding DeleteAllCommand}"/>
                     <w:HighlightSymbolButton Symbol="{StaticResource Icon.Sliders}" Content="设置" Margin="8 0"/>
                     <ComboBox Height="32" MinWidth="128" Margin="8 0"/>
                 </StackPanel>
             </w:Headline1HeaderToolbar.ToolBar>
             <ItemsControl x:Name="Items">
-                
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type index:StickyNoteIndexWrapper}">
+                        <Border Background="#FFAB12" Padding="16" Margin="4">
+                            <TextBlock Text="{Binding Name,Mode=OneWay}"
+                                       Foreground="White"/>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
             </ItemsControl>
         </w:Headline1HeaderToolbar>
     </Grid>

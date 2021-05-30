@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Acorisoft.Extensions.Platforms;
 using Acorisoft.Studio.Documents;
 using Acorisoft.Studio.Documents.Resources;
+using Acorisoft.Studio.Engines;
 using DryIoc;
 using LiteDB;
 using MediatR;
@@ -28,15 +29,15 @@ namespace Acorisoft.Studio.ProjectSystems
         protected readonly BehaviorSubject<bool> IsOpenStream;
         protected readonly BehaviorSubject<IComposeSet> ComposeSetStream;
         protected readonly BehaviorSubject<IComposeSetProperty> PropertyStream;
-        protected readonly BehaviorSubject<Unit> EndOpeningStream;
-        protected readonly BehaviorSubject<Unit> BeginOpeningStream;
-        protected readonly IMediator MediatorInstance;
+        protected readonly BehaviorSubject<Unit> RespondingStream;
+        protected readonly BehaviorSubject<Unit> RequestingStream;
+        protected readonly IMediator MediatorField;
         protected readonly CompositeDisposable Disposable;
         
         private readonly ConcurrentQueue<Unit> _queue;
 
         protected IComposeSet CurrentComposite;
-        protected bool IsOpenInstance;
+        protected bool IsOpenField;
         
         #endregion
         
@@ -47,9 +48,9 @@ namespace Acorisoft.Studio.ProjectSystems
             IsOpenStream = new BehaviorSubject<bool>(false);
             ComposeSetStream = new BehaviorSubject<IComposeSet>(null);
             PropertyStream = new BehaviorSubject<IComposeSetProperty>(null);
-            EndOpeningStream = new BehaviorSubject<Unit>(Unit.Default);
-            BeginOpeningStream = new BehaviorSubject<Unit>(Unit.Default);
-            MediatorInstance = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            RespondingStream = new BehaviorSubject<Unit>(Unit.Default);
+            RequestingStream = new BehaviorSubject<Unit>(Unit.Default);
+            MediatorField = mediator ?? throw new ArgumentNullException(nameof(mediator));
             
             //
             // 初始化组合可释放收集器
@@ -58,13 +59,20 @@ namespace Acorisoft.Studio.ProjectSystems
                 IsOpenStream,
                 ComposeSetStream,
                 PropertyStream,
-                EndOpeningStream,
-                BeginOpeningStream
+                RespondingStream,
+                RequestingStream
             };
 
 
         }
 
+        private static void RegisterComposeSetSystemModule<TInstance>(IContainer container, TInstance instance) where TInstance : IComposeSetSystemModule
+        {
+            container.UseInstance<INotificationHandler<ComposeSetOpenInstruction>>(instance);
+            container.UseInstance<INotificationHandler<ComposeSetSaveInstruction>>(instance);
+            container.UseInstance<INotificationHandler<ComposeSetCloseInstruction>>(instance);
+        }
+        
         public static IComposeSetSystem Create(IContainer container)
         {
             if (container.IsRegistered<IComposeSetSystem>())
@@ -88,6 +96,11 @@ namespace Acorisoft.Studio.ProjectSystems
                 container.UseInstance<IComposeSetRequestQueue>(instance);
                 container.UseInstance<IComposeSetPropertySystem>(instance);
 
+                var stickyNoteEngine = new StickyNoteEngine(instance);
+                
+                container.RegisterInstance<StickyNoteEngine>(stickyNoteEngine);
+                container.UseInstance<IStickyNoteEngine>(stickyNoteEngine);
+                RegisterComposeSetSystemModule(container, stickyNoteEngine);
                 return instance;
             }
         }
@@ -103,14 +116,14 @@ namespace Acorisoft.Studio.ProjectSystems
             }
             
             Disposable.Dispose();
-            IsOpenInstance = false;
+            IsOpenField = false;
             
         }
 
         protected override void OnDisposeUnmanagedCore()
         {
             CurrentComposite?.Dispose();
-            IsOpenInstance = false;
+            IsOpenField = false;
         }
 
         #region IComposeSetSystem Implementations
@@ -151,7 +164,7 @@ namespace Acorisoft.Studio.ProjectSystems
             // 创建 compose
             var compose = new ComposeSet(project.Path)
             {
-                MainDatabase = GetDatabaseFromPath(GetDatabaseFileNameFromPath(project.Path)),
+                MainDatabase = GetDatabaseFromPath(project.Path)
             };
 
             await OpenAsync(compose);
@@ -180,16 +193,16 @@ namespace Acorisoft.Studio.ProjectSystems
             
             //
             // 设置打开状态
-            IsOpenInstance = true;
-            IsOpenStream.OnNext(IsOpenInstance);
+            IsOpenField = true;
+            IsOpenStream.OnNext(IsOpenField);
             
             //
             // 更新属性
             var property = await GetPropertyAsync();
             PropertyStream.OnNext(property);
 
-            await MediatorInstance.Publish(new ComposeSetCloseInstruction());
-            await MediatorInstance.Publish(new ComposeSetOpenInstruction(composeSet));
+            await MediatorField.Publish(new ComposeSetCloseInstruction());
+            await MediatorField.Publish(new ComposeSetOpenInstruction(composeSet));
         }
 
         /// <summary>
@@ -224,6 +237,11 @@ namespace Acorisoft.Studio.ProjectSystems
             {
                 throw new InvalidOperationException("path");
             }
+
+            if (!Directory.Exists(info.Path))
+            {
+                Directory.CreateDirectory(info.Path);
+            }
             
             //
             // 创建 compose
@@ -247,7 +265,7 @@ namespace Acorisoft.Studio.ProjectSystems
 
         private void UploadImpl(string sourceFileName, string targetFileName)
         {
-            if (!IsOpenInstance || string.IsNullOrEmpty(targetFileName))
+            if (!IsOpenField || string.IsNullOrEmpty(targetFileName))
             {
                 throw new InvalidOperationException("创作集未打开");
             }
@@ -273,7 +291,7 @@ namespace Acorisoft.Studio.ProjectSystems
         /// <returns>返回此次操作的 <see cref="Task"/> 实例</returns>
         public Task<Stream> OpenAsync(Resource resource, bool isCache)
         {
-            if (!IsOpenInstance || resource == null) throw new InvalidOperationException("创作集未打开");
+            if (!IsOpenField || resource == null) throw new InvalidOperationException("创作集未打开");
             try
             {
                 return Task.Run(()=> Open(resource.GetResourceFileName(CurrentComposite)));
@@ -295,7 +313,7 @@ namespace Acorisoft.Studio.ProjectSystems
         /// <returns>返回此次操作的 <see cref="Task"/> 实例</returns>
         public Task<Stream[]> OpenAsync(AlbumResource resource, bool isCache)
         {
-            if (!IsOpenInstance || resource == null)
+            if (!IsOpenField || resource == null)
             {
                 throw new InvalidOperationException("创作集未打开");
             }
@@ -360,7 +378,7 @@ namespace Acorisoft.Studio.ProjectSystems
         
         private void SetPropertyImpl(ComposeSetProperty property)
         {
-            if (!IsOpenInstance || property == null)
+            if (!IsOpenField || property == null)
             {
                 return;
             }
@@ -374,7 +392,7 @@ namespace Acorisoft.Studio.ProjectSystems
         
         private IComposeSetProperty GetPropertyImpl()
         {
-            if (!IsOpenInstance)
+            if (!IsOpenField)
             {
                 throw new InvalidOperationException("无法获取属性，因为创作集未打开。");
             }
@@ -393,7 +411,7 @@ namespace Acorisoft.Studio.ProjectSystems
         protected TObject GetObject<TObject>()
         {
             // ReSharper disable once InvertIf
-            if (IsOpenInstance)
+            if (IsOpenField)
             {
                 var key = typeof(TObject).FullName;
                 var database = ((IComposeSetDatabase) CurrentComposite).MainDatabase;
@@ -453,7 +471,7 @@ namespace Acorisoft.Studio.ProjectSystems
             {
                 //
                 // 推送通知。
-                BeginOpeningStream.OnNext(Unit.Default);
+                RequestingStream.OnNext(Unit.Default);
             }
             _queue.Enqueue(Unit.Default);
         }
@@ -465,7 +483,7 @@ namespace Acorisoft.Studio.ProjectSystems
         {
             if (_queue.TryDequeue(out _) && _queue.IsEmpty)
             {
-                EndOpeningStream.OnNext(Unit.Default);
+                RespondingStream.OnNext(Unit.Default);
             }
         }
 
@@ -475,7 +493,7 @@ namespace Acorisoft.Studio.ProjectSystems
         public void Clear()
         {
             _queue.Clear();
-            EndOpeningStream.OnNext(Unit.Default);
+            RespondingStream.OnNext(Unit.Default);
         }
 
         #endregion
@@ -499,7 +517,7 @@ namespace Acorisoft.Studio.ProjectSystems
         /// <summary>
         /// 获取当前创作集系统集成的中介者。
         /// </summary>
-        public IMediator Mediator => MediatorInstance;
+        public IMediator Mediator => MediatorField;
 
         #endregion
 
@@ -517,12 +535,12 @@ namespace Acorisoft.Studio.ProjectSystems
         /// <summary>
         /// 获取当前创作集请求队列的一个数据流，当前数据流用于表示创作集请求队列是否正在打开。
         /// </summary>
-        public IObservable<Unit> EndOpening => EndOpeningStream;
+        public IObservable<Unit> Responding => RespondingStream;
 
         /// <summary>
         /// 获取当前创作集请求队列的一个数据流，当前数据流用于表示创作集请求队列是否正在关闭。
         /// </summary>
-        public IObservable<Unit> BeginOpening => BeginOpeningStream;
+        public IObservable<Unit> Requesting => RequestingStream;
 
         #endregion
 

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Reactive.Disposables;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Acorisoft.Extensions.Platforms.Windows;
 using Acorisoft.Extensions.Platforms.Windows.Services;
@@ -10,6 +11,7 @@ using Acorisoft.Extensions.Platforms.Windows.ViewModels;
 using Acorisoft.Studio.Documents.StickyNotes;
 using Acorisoft.Studio.Engines;
 using Acorisoft.Studio.ProjectSystem;
+using Acorisoft.Studio.ProjectSystems;
 using Acorisoft.Studio.Properties;
 using ReactiveUI;
 
@@ -19,37 +21,55 @@ namespace Acorisoft.Studio.ViewModels
     {
         private readonly CompositeDisposable _disposable;
         private readonly StickyNoteEngine _engine;
-        private readonly ICompositionSetManager _compositionSetManager;
-        public StickyNoteGalleryViewModel(ICompositionSetManager compositionSetManager, StickyNoteEngine engine)
+        private readonly IComposeSetSystem _css;
+
+        private readonly ObservableAsPropertyHelper<int> CountProperty;
+        public StickyNoteGalleryViewModel(IComposeSetSystem css, StickyNoteEngine engine)
         {
             _disposable = new CompositeDisposable();
-            _compositionSetManager = compositionSetManager;
+            _css = css;
             _engine = engine ?? throw new ArgumentNullException(nameof(engine));
+            CountProperty = _engine.Count.ToProperty(this, nameof(Count));
 
             //
             // 按创建时间排序 按修改时间排序 
-            NewCommand = ReactiveCommand.Create(OnNewItem, _compositionSetManager.IsOpen);
+            NewCommand = ReactiveCommand.Create(OnNewItem, _engine.IsOpen);
+            DeleteThisCommand = ReactiveCommand.Create<StickyNoteIndexWrapper>(OnDeleteThis, _engine.IsOpen);
+            DeleteAllCommand = ReactiveCommand.Create(OnDeleteAll, _engine.IsOpen);
+            _disposable.Add((IDisposable)NewCommand);
+            _disposable.Add((IDisposable)DeleteThisCommand);
+            _disposable.Add((IDisposable)DeleteAllCommand);
+        }
+
+        public async Task SearchAsync(string keyword)
+        {
+            await _engine.FindAsync(keyword);
         }
 
         protected override async void OnStart()
         {
-            using (ViewAware.ForceBusyState("打开项目"))
-            {
-                var compositionSetManager = ServiceLocator.CompositionSetManager;
-                try
-                {
-                    await compositionSetManager.LoadProject(compositionSetManager.CompositionSets.FirstOrDefault());
-                }
-                catch
-                {
-                    ViewAware.Toast("打开失败");
-                }
-            }
+            // using (ViewAware.ForceBusyState("打开项目"))
+            // {
+            //     var compositionSetManager = ServiceLocator.CompositionSetManager;
+            //     try
+            //     {
+            //         await compositionSetManager.LoadProject(compositionSetManager.CompositionSets.FirstOrDefault());
+            //     }
+            //     catch
+            //     {
+            //         ViewAware.Toast("打开失败");
+            //     }
+            // }
+        }
+
+        protected override void OnStop()
+        {
+            _disposable.Dispose();
         }
 
         protected async void OnNewItem()
         {
-            var newInfo = new NewStickyNoteDocumentInfo
+            var newInfo = new NewItemInfo<StickyNoteDocument>(new StickyNoteDocument())
             {
                 Name = SR.StickyNoteEngine_EmptyDocumentName
             };
@@ -57,16 +77,34 @@ namespace Acorisoft.Studio.ViewModels
             //
             // 等待创建
             await _engine.NewAsync(newInfo);
-            
+
+            //
+            // 跳转
+        }
+        
+        protected async void OnDeleteThis(StickyNoteIndexWrapper item)
+        {
+            await _engine.DeleteThisAsync(item.Source);
+
+            //
+            // 跳转
+        }
+        
+        protected async void OnDeleteAll()
+        {
+            //
+            // 等待创建
+            await _engine.DeleteAllAsync();
+
             //
             // 跳转
         }
 
         protected async void OnOpenItem(StickyNoteIndexWrapper wrapper)
         {
-            
         }
 
+        public int Count => CountProperty.Value;
 
         /// <summary>
         /// 

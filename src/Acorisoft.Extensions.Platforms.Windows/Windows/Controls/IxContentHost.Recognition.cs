@@ -208,6 +208,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
 
             _Timer = sampler ?? throw new ArgumentNullException(nameof(sampler));
             _Timer.Tick += Sampling;
+            _Timer.Interval = TimeSpan.FromMilliseconds(16);
             // _Timer.Start();
         }
 

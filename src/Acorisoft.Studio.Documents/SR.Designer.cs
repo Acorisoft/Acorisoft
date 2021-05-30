@@ -72,6 +72,15 @@ namespace Acorisoft.Studio.Documents {
         /// <summary>
         ///   Looks up a localized string similar to 未命名.
         /// </summary>
+        internal static string ComposeSetSystemModule_EmptyName {
+            get {
+                return ResourceManager.GetString("ComposeSetSystemModule_EmptyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 未命名.
+        /// </summary>
         internal static string StickyNoteEngine_EmptyDocumentName {
             get {
                 return ResourceManager.GetString("StickyNoteEngine.EmptyDocumentName", resourceCulture);

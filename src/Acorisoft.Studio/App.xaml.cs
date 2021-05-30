@@ -10,6 +10,7 @@ using Acorisoft.Extensions.Platforms.Services;
 using Acorisoft.Extensions.Platforms.Windows.Services;
 using Acorisoft.Extensions.Platforms.Windows.ViewModels;
 using Acorisoft.Studio.Documents;
+using Acorisoft.Studio.ProjectSystems;
 using Acorisoft.Studio.ViewModels;
 using Acorisoft.Studio.Views;
 using DryIoc;
@@ -29,6 +30,7 @@ namespace Acorisoft.Studio
         public App()
         {
             var container = Platform.Init().UseMorisa();
+            var css = ComposeSetSystem.Create(container);
             _container = container;
             container.Register<IViewFor<MockupDialogViewModel>,MockupView>();
             container.Register<AppViewModel>();

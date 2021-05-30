@@ -117,6 +117,10 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
             switch (IxState)
             {
                 case InteractiveContentState.Idle:
+                    if(_Delta == 0)
+                    {
+                        return;
+                    }
                     if(_Delta > .65)
                     {
                         IxState = InteractiveContentState.Expanding;

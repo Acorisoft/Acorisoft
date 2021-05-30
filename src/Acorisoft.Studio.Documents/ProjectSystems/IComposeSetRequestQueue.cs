@@ -26,11 +26,11 @@ namespace Acorisoft.Studio.ProjectSystems
         /// <summary>
         /// 获取当前创作集请求队列的一个数据流，当前数据流用于表示创作集请求队列是否正在打开。
         /// </summary>
-        IObservable<Unit> EndOpening { get; }
+        IObservable<Unit> Responding { get; }
         
         /// <summary>
         /// 获取当前创作集请求队列的一个数据流，当前数据流用于表示创作集请求队列是否正在关闭。
         /// </summary>
-        IObservable<Unit> BeginOpening { get; }
+        IObservable<Unit> Requesting { get; }
     }
 }
