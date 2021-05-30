@@ -220,7 +220,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
         /// <summary>
         /// 获取或设置一个值，该值用于指示全局 <see cref="SwipeRecognitor"/> 实例，跳过手势识别。
         /// </summary>
-        public static bool IsEnable { get; set; } = true;
+        public static bool IsEnable { get; set; } = false;
         public int Threshould { get; set; }
     }
 }

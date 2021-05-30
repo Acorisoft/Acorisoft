@@ -208,7 +208,6 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
             _IxUp.ParentElement =
             _IxDown.ParentElement = this;
 
-            _Sampler.Interval = TimeSpan.FromMilliseconds(8);
             _Sampler.Start();
         }
     }

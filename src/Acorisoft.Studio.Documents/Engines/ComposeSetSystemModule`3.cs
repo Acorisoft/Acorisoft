@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Subjects;
 using System.Threading;
@@ -777,7 +778,16 @@ namespace Acorisoft.Studio.Engines
             OnComposeSetClosing(instruction);
             RequestQueue.Unset();
             IsOpenField = false;
-            IsOpenStream.OnNext(IsOpenField);
+            try
+            {
+                //
+                // 这里发生线程切换。Subject的赋值会出现错误。
+                CurrentThreadScheduler.Instance.Schedule(() => IsOpenStream.OnNext(IsOpenField));
+            }
+            finally
+            {
+                
+            }
         }
 
         private void HandleComposeSetSave(ComposeSetSaveInstruction instruction)

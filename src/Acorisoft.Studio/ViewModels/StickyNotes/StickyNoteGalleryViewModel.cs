@@ -23,22 +23,19 @@ namespace Acorisoft.Studio.ViewModels
         private readonly StickyNoteEngine _engine;
         private readonly IComposeSetSystem _css;
 
-        private readonly ObservableAsPropertyHelper<int> CountProperty;
+        private readonly ObservableAsPropertyHelper<int> _countProperty;
         public StickyNoteGalleryViewModel(IComposeSetSystem css, StickyNoteEngine engine)
         {
             _disposable = new CompositeDisposable();
             _css = css;
             _engine = engine ?? throw new ArgumentNullException(nameof(engine));
-            CountProperty = _engine.Count.ToProperty(this, nameof(Count));
+            _countProperty = _engine.Count.ToProperty(this, nameof(Count));
 
             //
             // 按创建时间排序 按修改时间排序 
-            NewCommand = ReactiveCommand.Create(OnNewItem, _engine.IsOpen);
-            DeleteThisCommand = ReactiveCommand.Create<StickyNoteIndexWrapper>(OnDeleteThis, _engine.IsOpen);
-            DeleteAllCommand = ReactiveCommand.Create(OnDeleteAll, _engine.IsOpen);
-            _disposable.Add((IDisposable)NewCommand);
-            _disposable.Add((IDisposable)DeleteThisCommand);
-            _disposable.Add((IDisposable)DeleteAllCommand);
+            NewCommand = ReactiveCommand.Create(OnNewItem, _css.IsOpen).DisposeWith(_disposable);
+            DeleteThisCommand = ReactiveCommand.Create<StickyNoteIndexWrapper>(OnDeleteThis, _engine.IsOpen).DisposeWith(_disposable);
+            DeleteAllCommand = ReactiveCommand.Create(OnDeleteAll, _css.IsOpen).DisposeWith(_disposable);
         }
 
         public async Task SearchAsync(string keyword)
@@ -104,7 +101,7 @@ namespace Acorisoft.Studio.ViewModels
         {
         }
 
-        public int Count => CountProperty.Value;
+        public int Count => _countProperty.Value;
 
         /// <summary>
         /// 

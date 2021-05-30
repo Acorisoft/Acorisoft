@@ -105,6 +105,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
         private TranslateTransformer    _Transformer;
         private double                  _Delta;
         private ContentPresenter        _Presenter;
+        private InteractiveContentState _state;
 
         public IxContentControl()
         {
@@ -114,7 +115,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
 
         void Sampling(object sender, EventArgs e)
         {
-            switch (IxState)
+            switch (_state)
             {
                 case InteractiveContentState.Idle:
                     if(_Delta == 0)
@@ -209,7 +210,6 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
         protected void OnSamplerChanged(DispatcherTimer newSampler, DispatcherTimer oldSampler)
         {
             newSampler.Tick += Sampling;
-            newSampler.Interval = TimeSpan.FromMilliseconds(8);
 
             if (oldSampler != null)
             {

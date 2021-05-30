@@ -35,7 +35,7 @@
                      Height="32" FontSize="16"/>
         
         <w:Headline1HeaderToolbar Grid.Row="1"
-                                  Title="{Binding Count,Mode=OneWay,StringFormat=当前画廊存在\{0\}个项目}"
+                                  Title="{Binding Count,Mode=OneWay,StringFormat=当前画廊存在{0}个项目}"
                                   Subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                                   Margin="32 0">
             <w:Headline1HeaderToolbar.ToolBar>

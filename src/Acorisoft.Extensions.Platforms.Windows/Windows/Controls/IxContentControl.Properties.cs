@@ -43,7 +43,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
         /// <summary>
         /// 获取或设置当前状态。
         /// </summary>
-        public InteractiveContentState IxState { get; set; }
+        public InteractiveContentState IxState { get => _state; set => _state = value; }
 
         /// <summary>
         /// 
