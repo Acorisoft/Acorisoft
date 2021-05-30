@@ -1,5 +1,8 @@
+using System;
+
 namespace Acorisoft.Studio
 {
+    [Obsolete]
     public abstract class DataPropertyManager : MetadataManager, IDataPropertyManager
     {
         /// <summary>

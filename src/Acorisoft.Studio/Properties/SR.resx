@@ -120,4 +120,7 @@
   <data name="Home.NewProject" xml:space="preserve">
     <value>新建项目</value>
   </data>
+  <data name="StickyNoteEngine.EmptyDocumentName" xml:space="preserve">
+        <value>未命名</value>
+    </data>
 </root>

@@ -60,8 +60,7 @@ namespace Acorisoft.Studio.ViewModels
 
         protected override void OnStart()
         {
-            var projects = _database.GetCollection<CompositionProject>().FindAll();
-            var compositionProjects = projects as CompositionProject[] ?? projects.ToArray();
+            var compositionProjects = _database.GetCollection<CompositionProject>().FindAll().ToArray();
             if (compositionProjects.Length <= 0)
             {
                 return;

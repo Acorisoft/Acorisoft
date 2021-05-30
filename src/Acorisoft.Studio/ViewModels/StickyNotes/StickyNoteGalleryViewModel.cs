@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Reactive.Disposables;
@@ -8,6 +9,8 @@ using Acorisoft.Extensions.Platforms.Windows.Services;
 using Acorisoft.Extensions.Platforms.Windows.ViewModels;
 using Acorisoft.Studio.Documents.StickyNotes;
 using Acorisoft.Studio.Engines;
+using Acorisoft.Studio.ProjectSystem;
+using Acorisoft.Studio.Properties;
 using ReactiveUI;
 
 namespace Acorisoft.Studio.ViewModels
@@ -16,15 +19,54 @@ namespace Acorisoft.Studio.ViewModels
     {
         private readonly CompositeDisposable _disposable;
         private readonly StickyNoteEngine _engine;
-
-        public StickyNoteGalleryViewModel(/*StickyNoteEngine engine*/)
+        private readonly ICompositionSetManager _compositionSetManager;
+        public StickyNoteGalleryViewModel(ICompositionSetManager compositionSetManager, StickyNoteEngine engine)
         {
             _disposable = new CompositeDisposable();
-            // _engine = engine ?? throw new ArgumentNullException(nameof(engine));
-            
+            _compositionSetManager = compositionSetManager;
+            _engine = engine ?? throw new ArgumentNullException(nameof(engine));
+
             //
             // 按创建时间排序 按修改时间排序 
+            NewCommand = ReactiveCommand.Create(OnNewItem, _compositionSetManager.IsOpen);
         }
+
+        protected override async void OnStart()
+        {
+            using (ViewAware.ForceBusyState("打开项目"))
+            {
+                var compositionSetManager = ServiceLocator.CompositionSetManager;
+                try
+                {
+                    await compositionSetManager.LoadProject(compositionSetManager.CompositionSets.FirstOrDefault());
+                }
+                catch
+                {
+                    ViewAware.Toast("打开失败");
+                }
+            }
+        }
+
+        protected async void OnNewItem()
+        {
+            var newInfo = new NewStickyNoteDocumentInfo
+            {
+                Name = SR.StickyNoteEngine_EmptyDocumentName
+            };
+
+            //
+            // 等待创建
+            await _engine.NewAsync(newInfo);
+            
+            //
+            // 跳转
+        }
+
+        protected async void OnOpenItem(StickyNoteIndexWrapper wrapper)
+        {
+            
+        }
+
 
         /// <summary>
         /// 
@@ -89,7 +131,7 @@ namespace Acorisoft.Studio.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        public ReadOnlyObservableCollection<StickyNoteIndex> Collection { get; }
+        public ReadOnlyObservableCollection<StickyNoteIndexWrapper> Collection => _engine.Collection;
 
         /// <summary>
         /// 获取或设置当前的

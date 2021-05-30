@@ -5,6 +5,7 @@ using MediatR;
 
 namespace Acorisoft.Studio
 {
+    [Obsolete]
     public class CompositionSetOpenNotification : INotification
     {
         internal CompositionSetOpenNotification(CompositionSet compositionSet)
