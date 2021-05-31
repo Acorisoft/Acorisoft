@@ -72,9 +72,72 @@ namespace Acorisoft.Studio.Properties {
         /// <summary>
         ///   Looks up a localized string similar to 未命名.
         /// </summary>
-        internal static string StickyNoteEngine_EmptyDocumentName {
+        internal static string StickyNoteGalleryViewModel_EmptyDocumentName {
             get {
-                return ResourceManager.GetString("StickyNoteEngine.EmptyDocumentName", resourceCulture);
+                return ResourceManager.GetString("StickyNoteGalleryViewModel_EmptyDocumentName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 按创建时间升序.
+        /// </summary>
+        internal static string StickyNoteGalleryViewModel_Sort_Ascending_CreationTimestamp {
+            get {
+                return ResourceManager.GetString("StickyNoteGalleryViewModel_Sort_Ascending_CreationTimestamp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 按最后修改时间升序.
+        /// </summary>
+        internal static string StickyNoteGalleryViewModel_Sort_Ascending_LastAccessTimestamp {
+            get {
+                return ResourceManager.GetString("StickyNoteGalleryViewModel_Sort_Ascending_LastAccessTimestamp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 按名字升序.
+        /// </summary>
+        internal static string StickyNoteGalleryViewModel_Sort_Ascending_Name {
+            get {
+                return ResourceManager.GetString("StickyNoteGalleryViewModel_Sort_Ascending_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 无.
+        /// </summary>
+        internal static string StickyNoteGalleryViewModel_Sort_Default {
+            get {
+                return ResourceManager.GetString("StickyNoteGalleryViewModel_Sort_Default", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 按创建时间降序.
+        /// </summary>
+        internal static string StickyNoteGalleryViewModel_Sort_Descending_CreationTimestamp {
+            get {
+                return ResourceManager.GetString("StickyNoteGalleryViewModel_Sort_Descending_CreationTimestamp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 按修改时间降序.
+        /// </summary>
+        internal static string StickyNoteGalleryViewModel_Sort_Descending_LastAccessTimestamp {
+            get {
+                return ResourceManager.GetString("StickyNoteGalleryViewModel_Sort_Descending_LastAccessTimestamp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 按名字降序.
+        /// </summary>
+        internal static string StickyNoteGalleryViewModel_Sort_Descending_Name {
+            get {
+                return ResourceManager.GetString("StickyNoteGalleryViewModel_Sort_Descending_Name", resourceCulture);
             }
         }
     }

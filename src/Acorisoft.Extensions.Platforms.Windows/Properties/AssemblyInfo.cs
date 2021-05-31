@@ -9,5 +9,7 @@
 [assembly: XmlnsDefinition("https://github.com/Acorisoft/Acorisoft/Windows", "Acorisoft.Extensions.Platforms.Windows.Controls.Toasts")]
 [assembly: XmlnsDefinition("https://github.com/Acorisoft/Acorisoft/Windows", "Acorisoft.Extensions.Platforms.Windows.Controls.Primitives")]
 [assembly: XmlnsDefinition("https://github.com/Acorisoft/Acorisoft/Windows", "Acorisoft.Extensions.Platforms.Windows.Commands")]
+[assembly: XmlnsDefinition("https://github.com/Acorisoft/Acorisoft/Windows", "Acorisoft.Extensions.Platforms.Windows.Markups")]
+[assembly: XmlnsDefinition("https://github.com/Acorisoft/Acorisoft/Windows", "Acorisoft.Extensions.Platforms.Languages")]
 [assembly: XmlnsDefinition("https://github.com/Acorisoft/Acorisoft/Windows", "Acorisoft.Extensions.Platforms.Windows.Views")]
 [assembly: XmlnsDefinition("https://github.com/Acorisoft/Acorisoft/Windows", "Acorisoft.Extensions.Platforms.Windows.ViewModels")]

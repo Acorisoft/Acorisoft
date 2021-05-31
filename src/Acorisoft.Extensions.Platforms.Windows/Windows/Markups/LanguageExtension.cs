@@ -1,10 +1,14 @@
 using System;
 using System.Windows.Markup;
+using Acorisoft.Extensions.Platforms.Languages;
+using Splat;
 
 namespace Acorisoft.Extensions.Platforms.Windows.Markups
 {
     public class LanguageExtension : MarkupExtension
     {
+        private static readonly Lazy<ILanguageService> LanguageInstance =
+            new Lazy<ILanguageService>(() => Locator.Current.GetService<ILanguageService>());
         public LanguageExtension()
         {
             
@@ -14,7 +18,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Markups
         
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            return Key;
+            return LanguageInstance.Value.GetString(Key);
         }
         
         public string Key { get; set; }

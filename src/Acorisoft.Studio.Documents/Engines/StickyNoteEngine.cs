@@ -192,13 +192,14 @@ namespace Acorisoft.Studio.Engines
 
         #endregion
 
-        public static IComparer<StickyNoteIndexWrapper> AscendingByCreateBy { get; } = new AscendingByCreatedTimeSorter();
+        public static IComparer<StickyNoteIndexWrapper> Normal { get; } = Comparer<StickyNoteIndexWrapper>.Default;
+        public static IComparer<StickyNoteIndexWrapper> AscendingByCreationTimestamp { get; } = new AscendingByCreatedTimeSorter();
         public static IComparer<StickyNoteIndexWrapper> AscendingByName { get; } = new AscendingByNameSorter();
 
         public static IComparer<StickyNoteIndexWrapper> AscendingByLastAccessTimestamp { get; } =
             new AscendingByLastAccessTimeSorter();
 
-        public static IComparer<StickyNoteIndexWrapper> DescendingByCreateBy { get; } = new DescendingByCreatedTimeSorter();
+        public static IComparer<StickyNoteIndexWrapper> DescendingByCreationTimestamp { get; } = new DescendingByCreatedTimeSorter();
         public static IComparer<StickyNoteIndexWrapper> DescendingByName { get; } = new DescendingByNameSorter();
 
         public static IComparer<StickyNoteIndexWrapper> DescendingByLastAccessTimestamp { get; } =

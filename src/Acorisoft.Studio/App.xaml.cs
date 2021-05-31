@@ -6,11 +6,13 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
+using Acorisoft.Extensions.Platforms.Languages;
 using Acorisoft.Extensions.Platforms.Services;
 using Acorisoft.Extensions.Platforms.Windows.Services;
 using Acorisoft.Extensions.Platforms.Windows.ViewModels;
 using Acorisoft.Studio.Documents;
 using Acorisoft.Studio.ProjectSystems;
+using Acorisoft.Studio.Properties;
 using Acorisoft.Studio.ViewModels;
 using Acorisoft.Studio.Views;
 using DryIoc;
@@ -34,6 +36,7 @@ namespace Acorisoft.Studio
             _container = container;
             container.Register<IViewFor<MockupDialogViewModel>,MockupView>();
             container.Register<AppViewModel>();
+            container.RegisterInstance<ILanguageService>(new LanguageService(SR.ResourceManager));
 
             //
             // HomeViews

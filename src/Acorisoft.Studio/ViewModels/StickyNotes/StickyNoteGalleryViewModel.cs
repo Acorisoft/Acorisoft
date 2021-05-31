@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reactive.Disposables;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace Acorisoft.Studio.ViewModels
         private readonly CompositeDisposable _disposable;
         private readonly StickyNoteEngine _engine;
         private readonly IComposeSetSystem _css;
-
+        private IComparer<StickyNoteIndexWrapper> _Sorter;
         private readonly ObservableAsPropertyHelper<int> _countProperty;
 
         public StickyNoteGalleryViewModel(IComposeSetSystem css, StickyNoteEngine engine)
@@ -82,7 +83,7 @@ namespace Acorisoft.Studio.ViewModels
         {
             var newInfo = new NewItemInfo<StickyNoteDocument>(new StickyNoteDocument())
             {
-                Name = SR.StickyNoteEngine_EmptyDocumentName
+                Name = SR.StickyNoteGalleryViewModel_EmptyDocumentName
             };
 
             //
@@ -140,7 +141,18 @@ namespace Acorisoft.Studio.ViewModels
         }
 
         public int Count => _countProperty.Value;
-        
+
+        public IComparer<StickyNoteIndexWrapper> Sorter
+        {
+            get => _Sorter;
+            set
+            {
+                if (Set(ref _Sorter, value))
+                {
+                    _engine.Sorter = value;
+                }   
+            }
+        }
         public ICommand ChoosePerPageCountCommand { get; }
 
         /// <summary>

@@ -15,7 +15,8 @@ using PlatformDisposable = Acorisoft.Extensions.Platforms.Disposable;
 
 namespace Acorisoft.Studio.Engines
 {
-    public abstract class ComposeSetSystemModule<TIndex, TIndexWrapper, TComposition> : PlatformDisposable, IComposeSetSystemModule, IComposeSetSystemModule<TIndex, TIndexWrapper, TComposition>
+    public abstract class ComposeSetSystemModule<TIndex, TIndexWrapper, TComposition> : PlatformDisposable,
+        IComposeSetSystemModule, IComposeSetSystemModule<TIndex, TIndexWrapper, TComposition>
         where TIndex : DocumentIndex
         where TIndexWrapper : DocumentIndexWrapper<TIndex>
         where TComposition : Document
@@ -43,13 +44,14 @@ namespace Acorisoft.Studio.Engines
         //
         //-----------------------------------------------------------------------
 
-        protected ComposeSetSystemModule(Func<TIndex, TIndexWrapper> transformer, IComposeSetRequestQueue requestQueue, string indexName,string documentName)
+        protected ComposeSetSystemModule(Func<TIndex, TIndexWrapper> transformer, IComposeSetRequestQueue requestQueue,
+            string indexName, string documentName)
         {
             if (string.IsNullOrEmpty(indexName))
             {
                 throw new ArgumentNullException(nameof(indexName));
             }
-            
+
             if (string.IsNullOrEmpty(documentName))
             {
                 throw new ArgumentNullException(nameof(documentName));
@@ -79,7 +81,6 @@ namespace Acorisoft.Studio.Engines
                 .Filter(PageFilterStream)
                 .Sort(PageSorterStream)
                 .Bind(out BindableCollection).Subscribe();
-
             var disposable1 = PageIndexStream.Subscribe(x => DemandRefreshDataSource());
             var disposable2 = PerPageItemCountStream.Subscribe(x => DemandRefreshDataSource());
 
@@ -213,9 +214,6 @@ namespace Acorisoft.Studio.Engines
 
         #region OpenAsync
 
-        
-
-        
         private TComposition OpenImpl(TIndex index)
         {
             //
@@ -237,7 +235,7 @@ namespace Acorisoft.Studio.Engines
         {
             return DocumentCollection.FindById(index.Id);
         }
-        
+
         /// <summary>
         /// 打开文档
         /// </summary>
@@ -249,7 +247,7 @@ namespace Acorisoft.Studio.Engines
         }
 
         #endregion
-        
+
         //-----------------------------------------------------------------------
         //
         //  FindAsync / ResetAsync
@@ -260,7 +258,6 @@ namespace Acorisoft.Studio.Engines
 
         private void FindImpl(string keyword)
         {
-            
             if (!IsOpenField)
             {
                 return;
@@ -278,10 +275,9 @@ namespace Acorisoft.Studio.Engines
 
             FindCore(keyword);
         }
-        
+
         private void ResetImpl()
         {
-            
             if (!IsOpenField)
             {
                 return;
@@ -296,21 +292,20 @@ namespace Acorisoft.Studio.Engines
 
             ResetCore();
         }
-        
+
         protected virtual Query ConstructFindExpression(string keyword)
         {
             return Query.Contains("Name", keyword);
         }
-        
-       
+
+
         protected void ResetCore()
         {
-            
             //
             // 清空当前页面内容 
             EditableCollection.Clear();
 
-            
+
             CollectionEnumerator ??= IndexCollection.FindAll();
 
 
@@ -322,10 +317,9 @@ namespace Acorisoft.Studio.Engines
             // 刷新内容
             DemandRefreshDataSource();
         }
-        
+
         protected virtual void FindCore(string keyword)
         {
-
             //
             //
             CollectionEnumerator = IndexCollection.Find(ConstructFindExpression(keyword));
@@ -358,11 +352,10 @@ namespace Acorisoft.Studio.Engines
         {
             return Task.Run(() => FindImpl(keyword));
         }
-        
-        
+
         #endregion
-        
-        
+
+
         //-----------------------------------------------------------------------
         //
         //  UpdateAsync
@@ -371,28 +364,26 @@ namespace Acorisoft.Studio.Engines
 
         #region UpdateAsync
 
-        
-
-        
         private void UpdateImpl(TIndexWrapper wrapper, TIndex index, TComposition document)
         {
             if (!IsOpenField)
             {
                 return;
             }
-            
+
             UpdateCore(wrapper, index, document);
         }
-        
+
         private void UpdateImpl(TComposition document)
         {
             if (!IsOpenField)
             {
                 return;
             }
+
             UpdateCore(document);
         }
-        
+
         protected virtual void UpdateCore(TIndexWrapper wrapper, TIndex index, TComposition document)
         {
             //
@@ -406,16 +397,16 @@ namespace Acorisoft.Studio.Engines
             //
             // 更新索引
             IndexCollection.Upsert(index);
-            
+
             //
             // 更新文档
             DocumentCollection.Upsert(document);
         }
-        
+
         protected virtual void UpdateCore(TComposition document)
         {
             var index = IndexCollection.FindById(document.Id);
-            
+
             //
             // 从文档中提取内容
             ExtractIndex(index, document);
@@ -427,12 +418,12 @@ namespace Acorisoft.Studio.Engines
             //
             // 更新索引
             IndexCollection.Upsert(index);
-            
+
             //
             // 更新文档
             DocumentCollection.Upsert(document);
         }
-        
+
         /// <summary>
         /// 更新
         /// </summary>
@@ -442,7 +433,7 @@ namespace Acorisoft.Studio.Engines
         {
             return Task.Run(() => UpdateImpl(document));
         }
-        
+
         /// <summary>
         /// 更新
         /// </summary>
@@ -454,14 +445,10 @@ namespace Acorisoft.Studio.Engines
         {
             return Task.Run(() => UpdateImpl(wrapper, index, document));
         }
-        
+
         #endregion
-        
-        
-        
-        
-        
-        
+
+
         //-----------------------------------------------------------------------
         //
         //  DeleteThisAsync / DeleteThisPageAsync / DeleteAllAsync
@@ -470,9 +457,6 @@ namespace Acorisoft.Studio.Engines
 
         #region DeleteThisAsync / DeleteThisPageAsync / DeleteAllAsync
 
-        
-
-        
         private void DeleteThisImpl(TIndex index)
         {
             if (!IsOpenField)
@@ -490,6 +474,7 @@ namespace Acorisoft.Studio.Engines
             {
                 return;
             }
+
             DeleteThisCore(document.Id);
             DemandRefreshDataSource();
         }
@@ -500,6 +485,7 @@ namespace Acorisoft.Studio.Engines
             {
                 return;
             }
+
             DeleteThisPageCore();
             DemandRefreshDataSource();
         }
@@ -510,11 +496,11 @@ namespace Acorisoft.Studio.Engines
             {
                 return;
             }
-            
+
             DeleteAllCore();
             DemandRefreshDataSource();
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -536,8 +522,8 @@ namespace Acorisoft.Studio.Engines
         protected virtual void DeleteThisPageCore()
         {
             var thisPageItems = IndexCollection.FindAll()
-                .Skip(PerPageItemCountField * (PageIndexField - 1))
-                .Take(PerPageItemCountField)
+                .Skip(Math.Min(PerPageItemCountField * (PageIndexField - 1), CountField))
+                .Take(Math.Min(PerPageItemCountField, CountField))
                 .ToArray();
 
             foreach (var item in thisPageItems)
@@ -569,7 +555,7 @@ namespace Acorisoft.Studio.Engines
             // 清除所有文档
             DocumentCollection.Delete(Query.All());
         }
-        
+
 
         /// <summary>
         /// 删除这个文档
@@ -580,6 +566,7 @@ namespace Acorisoft.Studio.Engines
         {
             return Task.Run(() => DeleteThisImpl(index));
         }
+
         /// <summary>
         /// 删除这个文档
         /// </summary>
@@ -607,10 +594,9 @@ namespace Acorisoft.Studio.Engines
         {
             return Task.Run(DeleteAllImpl);
         }
-        
-        
+
         #endregion
-        
+
         //-----------------------------------------------------------------------
         //
         //  DemandRefreshDataSource
@@ -651,8 +637,8 @@ namespace Acorisoft.Studio.Engines
         {
             //
             // 保证页面的数量处于正常的范围内
-            pageIndex = Math.Clamp(pageIndex, 1, ushort.MaxValue);
-            perPageItemCount = Math.Clamp(perPageItemCount, 1, byte.MaxValue);
+            pageIndex = Math.Min(Math.Clamp(pageIndex, 1, ushort.MaxValue), CountField);
+            perPageItemCount = Math.Min(Math.Clamp(perPageItemCount, 1, byte.MaxValue), CountField);
 
             //
             // 所有内容的数量
@@ -679,7 +665,6 @@ namespace Acorisoft.Studio.Engines
                 .Skip(perPageItemCount * (pageIndex - 1))
                 .Take(perPageItemCount)
                 .ToArray();
-
             //
             // 添加内容
             EditableCollection.AddRange(thisPageEnumeration);
@@ -699,19 +684,19 @@ namespace Acorisoft.Studio.Engines
             {
                 throw new InvalidOperationException();
             }
-            
+
             //
             // 获取数据库
             var database = instruction.ComposeSetDatabase.MainDatabase;
-            
+
             IndexCollection = database.GetCollection<TIndex>(IndexCollectionName);
             DocumentCollection = database.GetCollection<TComposition>(DocumentCollectionName);
-            
+
             //
             // 初始化页面
             PageIndexField = 1;
             PageIndexStream.OnNext(PageIndexField);
-            
+
             //
             // 刷新内容
             DemandRefreshDataSource();
@@ -724,23 +709,23 @@ namespace Acorisoft.Studio.Engines
             DocumentCollection = null;
             IndexCollection = null;
             EditableCollection.Clear();
-            
+
             //
             // 所有内容的数量
             CountField = 0;
             CountStream.OnNext(CountField);
-            
+
             //
             // 初始化页面
             PageIndexField = 0;
             PageIndexStream.OnNext(PageIndexField);
-            
-            
+
+
             //
             // 所有页面数
             PageCountField = 0;
             PageCountStream.OnNext(PageCountField);
-            
+
             //
             // 刷新内容
             DemandRefreshDataSource();
@@ -832,7 +817,6 @@ namespace Acorisoft.Studio.Engines
         protected string DocumentCollectionName { get; }
         protected LiteCollection<TIndex> IndexCollection { get; private set; }
         protected LiteCollection<TComposition> DocumentCollection { get; private set; }
-
         protected IEnumerable<TIndex> CollectionEnumerator { get; private set; }
         protected IComposeSetRequestQueue RequestQueue { get; }
         protected int PerPageItemCountField { get; private set; }
@@ -854,7 +838,7 @@ namespace Acorisoft.Studio.Engines
         #region Properties
 
         public IObservable<int> Count => CountStream;
-        
+
         /// <summary>
         /// 获取当前画廊的页面数量
         /// </summary>

@@ -9,11 +9,6 @@ namespace Acorisoft.Extensions.Platforms.Windows.Views
 {
     public class DialogPage<TViewModel> : ReactiveUserControl<TViewModel> where TViewModel : DialogViewModelBase, IDialogViewModel
     {
-        static DialogPage()
-        {
-            DataContextProperty.OverrideMetadata(typeof(DialogPage<>),new FrameworkPropertyMetadata(null,OnDataContextChanged));
-        }
-        
         protected DialogPage()
         {
             this.Loaded += OnLoadedCore;

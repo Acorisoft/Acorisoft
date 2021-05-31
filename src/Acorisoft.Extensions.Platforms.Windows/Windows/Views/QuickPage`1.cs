@@ -8,11 +8,6 @@ namespace Acorisoft.Extensions.Platforms.Windows.Views
 {
     public class QuickPage<TViewModel> : ReactiveUserControl<TViewModel> where TViewModel : class, IRoutableViewModel, IQuickViewModel
     {
-        static QuickPage()
-        {
-            DataContextProperty.OverrideMetadata(typeof(QuickPage<>),
-                new FrameworkPropertyMetadata(null, OnDataContextChanged));
-        }
 
         protected QuickPage()
         {
