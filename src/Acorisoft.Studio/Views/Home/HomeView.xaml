@@ -8,42 +8,62 @@
            xmlns:app="clr-namespace:Acorisoft.Studio"
            xmlns:appViews="clr-namespace:Acorisoft.Studio.Views"
            xmlns:appViewModels="clr-namespace:Acorisoft.Studio.ViewModels"
+           xmlns:appCommands="clr-namespace:Acorisoft.Studio.Commands"
            mc:Ignorable="d"
            d:DesignHeight="300" d:DesignWidth="300"
            d:DataContext="{d:DesignInstance Type={x:Type appViewModels:HomeViewModel},IsDesignTimeCreatable =True}">
-    <w:EmptyStateView>
+    <w:EmptyStateView x:Name="RootView">
         <w:EmptyStateView.EmptyState>
-            <!--
-            空状态下的内容 
-         -->
-            <Grid />
-        </w:EmptyStateView.EmptyState>
-
-        <!--
-         非空状态下的内容 
-         -->
-        <ScrollViewer>
-            <StackPanel>
-                <!-- Banner -->
-                <Border Background="{StaticResource Brushes.White}"
-                        CornerRadius="9" Height="256"
-                        Margin="32">
-                    <w:TiledPanel>
-                        <Image Source="{StaticResource Banners.Started}"
-                               HorizontalAlignment="Left"
-                               Stretch="Uniform" />
-                        <UniformGrid Columns="2"
-                                     HorizontalAlignment="Right"
-                                     VerticalAlignment="Bottom"
-                                     Margin="32">
-                            <Button Content="学习如何使用" />
-                            <Button Content="快速开始" />
-                        </UniformGrid>
-                    </w:TiledPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0"
+                        Background="{StaticResource Brushes.MaterialDesign.Blue}">
+                    <Image Source="{StaticResource Banners.RunnerStart}" />
                 </Border>
-                
-                <w:Pagination PageCount="12" GenerateCount="5" PageIndex="1"/>
-            </StackPanel>
-        </ScrollViewer>
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="1"
+                               Text="{w:Language Home_EmptyState_Title}"
+                               FontSize="32"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource App.Text.Primary}"
+                               Padding="32 0"
+                               Margin="0 32 0 8" />
+
+                    <TextBlock Grid.Row="2"
+                               Text="{w:Language Home_EmptyState_Subtitle}"
+                               FontSize="15"
+                               Padding="32 0"
+                               Foreground="{StaticResource App.Text.Primary}"
+                               Margin="0 8" />
+
+                    <UniformGrid Grid.Row="3" Columns="3"
+                                 HorizontalAlignment="Center"
+                                 Width="420"
+                                 Margin="0 8">
+                        <w:SymbolButton Background="{StaticResource Brushes.Mask.Dark}"
+                                        Symbol="{StaticResource Icon.File.Plus}"
+                                        Style="{StaticResource SymbolButton.VeryLarge}"
+                                        Command="{x:Static appCommands:StudioCommands.NewProject}" />
+                        <w:SymbolButton Background="{StaticResource Brushes.Mask.Dark}"
+                                        Symbol="{StaticResource Icon.Folder}"
+                                        Style="{StaticResource SymbolButton.VeryLarge}"
+                                        Command="{x:Static appCommands:StudioCommands.OpenProject}" />
+                        <w:SymbolButton Background="{StaticResource Brushes.Mask.Dark}"
+                                        Symbol="{StaticResource Icon.Github}"
+                                        Style="{StaticResource SymbolButton.VeryLarge}" />
+                    </UniformGrid>
+                </Grid>
+            </Grid>
+        </w:EmptyStateView.EmptyState>
     </w:EmptyStateView>
 </w:SpaPage>

@@ -2,6 +2,12 @@
 
 namespace Acorisoft.Studio
 {
+    public interface INewItemInfo<TItem, TFeedBack1, TFeedBack2> : INewItemInfo<TItem>
+    {
+        TFeedBack1 FeedBackValue1 { get; set; } 
+        TFeedBack2 FeedBackValue2 { get; set; }
+    }
+    
     public interface INewItemInfo<TItem>
     {
         /// <summary>
@@ -30,6 +36,11 @@ namespace Acorisoft.Studio
 
     public class NewItemInfo<TItem> : INewItemInfo<TItem>
     {
+        public NewItemInfo()
+        {
+            Id = Guid.NewGuid();
+        }
+        
         public NewItemInfo(TItem item)
         {
             Id = Guid.NewGuid();
@@ -57,5 +68,11 @@ namespace Acorisoft.Studio
         /// 获取或设置当前 <see cref="INewItemInfo{TItem}"/> 的项目路径。
         /// </summary>
         public string Path { get; set; }
+    }
+
+    public class NewItemInfo<TItem, TFeedBack1, TFeedBack2> : NewItemInfo<TItem>, INewItemInfo<TItem, TFeedBack1, TFeedBack2>
+    {
+        public TFeedBack1 FeedBackValue1 { get; set; } 
+        public TFeedBack2 FeedBackValue2 { get; set; }
     }
 }

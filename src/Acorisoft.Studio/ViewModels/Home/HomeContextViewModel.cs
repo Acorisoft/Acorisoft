@@ -31,18 +31,7 @@ namespace Acorisoft.Studio.ViewModels
 
             using (ViewAware.ForceBusyState("正在加载封面"))
             {
-                try
-                {
-                    var targetName = await ServiceLocator.FileManagerService.UploadImage(opendlg.FileName);
-                    CompositionSet.Property.Cover = targetName;
-                    await ServiceLocator.CompositionSetManager
-                        .PropertyManager
-                        .SetProperty(CompositionSet.Property);
-                }
-                catch(Exception ex)
-                {
-                    ViewAware.Toast(ex);
-                }
+                
             }
         }
         
@@ -56,9 +45,7 @@ namespace Acorisoft.Studio.ViewModels
         public ICommand PickCoverCommand { get; }
         public IPageViewModel Ancestor { get; private set; }
         public HomeViewModel Parent { get; private set; }
-        public ICompositionSet CompositionSet => Parent.CompositionSet;
 
-        public Uri Cover => CompositionSet.Property.Cover;
 
 
     }

@@ -37,7 +37,7 @@ namespace Acorisoft.Studio
         
         protected sealed override void OnContentRendered(EventArgs e)
         {
-            ViewAware.NavigateTo<StickyNoteGalleryViewModel>();
+            ViewAware.NavigateTo<HomeViewModel>();
             base.OnContentRendered(e);
         }
 

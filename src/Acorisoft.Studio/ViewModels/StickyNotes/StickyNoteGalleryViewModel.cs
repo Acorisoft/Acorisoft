@@ -18,7 +18,7 @@ using ReactiveUI;
 
 namespace Acorisoft.Studio.ViewModels
 {
-    public class StickyNoteGalleryViewModel : PageViewModelBase, IGalleryViewModel<StickyNoteIndex>
+    public class StickyNoteGallery : PageViewModelBase, IGalleryViewModel<StickyNoteIndex>
     {
         private readonly CompositeDisposable _disposable;
         private readonly StickyNoteEngine _engine;
@@ -26,7 +26,7 @@ namespace Acorisoft.Studio.ViewModels
         private IComparer<StickyNoteIndexWrapper> _Sorter;
         private readonly ObservableAsPropertyHelper<int> _countProperty;
 
-        public StickyNoteGalleryViewModel(IComposeSetSystem css, StickyNoteEngine engine)
+        public StickyNoteGallery(IComposeSetSystem css, StickyNoteEngine engine)
         {
             _disposable = new CompositeDisposable();
             _css = css;
@@ -42,7 +42,7 @@ namespace Acorisoft.Studio.ViewModels
             DeleteThisPageCommand = ReactiveCommand.Create(OnDeleteThisPage, _css.IsOpen);
             OpenThisCommand = ReactiveCommand.Create<StickyNoteIndexWrapper>(OnOpenItem, _css.IsOpen);
         }
-        
+
         public async Task OnChoosePerPageCount()
         {
             var session = await ViewAware.ShowDialog<PageItemCountViewModel>();
@@ -81,7 +81,7 @@ namespace Acorisoft.Studio.ViewModels
 
         protected async void OnNewItem()
         {
-            var newInfo = new NewItemInfo<StickyNoteDocument>(new StickyNoteDocument())
+            var newInfo = new NewItemInfo<StickyNoteDocument, StickyNoteIndex, StickyNoteDocument>()
             {
                 Name = DateTime.Now.ToLongTimeString()
             };
@@ -92,6 +92,11 @@ namespace Acorisoft.Studio.ViewModels
 
             //
             // 跳转
+            ViewAware.NavigateTo<StickyNoteViewModel>(
+                new StickyNoteParameter(
+                    new StickyNoteIndexWrapper(newInfo.FeedBackValue1), 
+                        newInfo.FeedBackValue1,
+                        newInfo.FeedBackValue2));
         }
 
         protected async void OnDeleteThisPage()
@@ -137,7 +142,11 @@ namespace Acorisoft.Studio.ViewModels
 
             //
             // 跳转
-            ViewAware.NavigateTo<StickyNoteViewModel>(document);
+            ViewAware.NavigateTo<StickyNoteViewModel>(
+                new StickyNoteParameter(
+                    item, 
+                    item.Source,
+                    document));
         }
 
         public int Count => _countProperty.Value;
@@ -150,9 +159,10 @@ namespace Acorisoft.Studio.ViewModels
                 if (Set(ref _Sorter, value))
                 {
                     _engine.Sorter = value;
-                }   
+                }
             }
         }
+
         public ICommand ChoosePerPageCountCommand { get; }
 
         /// <summary>

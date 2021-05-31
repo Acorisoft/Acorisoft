@@ -20,9 +20,13 @@
         <ResourceDictionary
             Source="pack://application:,,,/Acorisoft.Extensions.Platforms.Windows;component/Windows/Controls/IxContentHost.xaml" />
         <ResourceDictionary
+            Source="pack://application:,,,/Acorisoft.Extensions.Platforms.Windows;component/Windows/Controls/FormFields.xaml"/>
+        <ResourceDictionary
             Source="pack://application:,,,/Acorisoft.Extensions.Platforms.Windows;component/Themes/Banner.xaml" />
         <ResourceDictionary
             Source="pack://application:,,,/Acorisoft.Extensions.Platforms.Windows;component/Themes/Icon.xaml" />
+        <ResourceDictionary
+            Source="pack://application:,,,/Acorisoft.Extensions.Platforms.Windows;component/Themes/Colors.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <SolidColorBrush x:Key="App.Dark.Mask">#90000000</SolidColorBrush>
@@ -821,6 +825,49 @@
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value=".5" TargetName="PART_Border"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+        <Style x:Key="SymbolButton.VeryLarge" TargetType="{x:Type b:SymbolButton}">
+        <Setter Property="Height" Value="128" />
+        <Setter Property="Width" Value="128" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Background" Value="{StaticResource Brushes.Commons.Background}" />
+        <Setter Property="Foreground" Value="{StaticResource Brushes.Commons.Foreground}" />
+        <Setter Property="Highlight" Value="{StaticResource  Brushes.MaterialDesign.Blue}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type b:SymbolButton}">
+                    <Border x:Name="PART_Border" Background="{TemplateBinding Background}">
+                        <Path x:Name="PART_Icon"
+                              Data="{TemplateBinding Symbol}"
+                              Width="72"
+                              Height="72"
+                              Stretch="Uniform"
+                              Stroke="{TemplateBinding Foreground}"
+                              StrokeThickness="1"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Stroke"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}"
+                                    TargetName="PART_Icon" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Stroke"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}"
+                                    TargetName="PART_Icon" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value=".5" TargetName="PART_Border" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

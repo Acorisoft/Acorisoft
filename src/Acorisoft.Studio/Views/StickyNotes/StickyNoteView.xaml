@@ -14,7 +14,18 @@
            mc:Ignorable="d"
            d:DesignHeight="300" d:DesignWidth="300"
            d:DataContext="{d:DesignInstance Type={x:Type appViewModels:StickyNoteViewModel},IsDesignTimeCreatable =True}">
+    <UserControl.InputBindings>
+        <KeyBinding Command="{Binding SaveCommand}" Key="S" Modifiers="Control"/>
+    </UserControl.InputBindings>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="64"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
         
+        <TextBox Grid.Row="0"
+                 FontSize="24"
+                 FontWeight="Bold"
+                 Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </w:SpaPage>

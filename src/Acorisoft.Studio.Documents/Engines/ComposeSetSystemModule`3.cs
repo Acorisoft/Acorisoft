@@ -119,7 +119,7 @@ namespace Acorisoft.Studio.Engines
 
         #region NewAsync
 
-        private void NewAsyncImpl(INewItemInfo<TComposition> info)
+        private void NewAsyncImpl(INewItemInfo<TComposition, TIndex,TComposition> info)
         {
             //
             // 检测是否已经加载创作集。
@@ -167,7 +167,7 @@ namespace Acorisoft.Studio.Engines
         /// 在一个异步操作中创建一个新的项目。
         /// </summary>
         /// <param name="info">指定要创建的操作。</param>
-        protected virtual void NewCore(INewItemInfo<TComposition> info)
+        protected virtual void NewCore(INewItemInfo<TComposition, TIndex,TComposition> info)
         {
             //
             // 进入创建逻辑
@@ -179,7 +179,7 @@ namespace Acorisoft.Studio.Engines
             //
             // 设置同样的唯一标识符。
             index.Id = document.Id = info.Id;
-            
+
             //
             // 设置名称
             document.Name = index.Name = info.Name;
@@ -188,6 +188,11 @@ namespace Acorisoft.Studio.Engines
             // 抽取关键字到索引当中
             ExtractIndex(index, document);
 
+            //
+            // 返回
+            info.FeedBackValue1 = index;
+            info.FeedBackValue2 = document;
+            
             //
             // 插入
             IndexCollection.Insert(index);
@@ -203,7 +208,7 @@ namespace Acorisoft.Studio.Engines
         /// </summary>
         /// <param name="info">指定要创建的操作。</param>
         /// <returns>返回此次操作的 <see cref="Task"/> 实例</returns>
-        public Task NewAsync(INewItemInfo<TComposition> info)
+        public Task NewAsync(INewItemInfo<TComposition, TIndex, TComposition> info)
         {
             return Task.Run(() => NewAsyncImpl(info));
         }

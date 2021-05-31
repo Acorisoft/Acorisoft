@@ -1,6 +1,8 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using Acorisoft.Extensions.Platforms.Windows.Views;
 using Acorisoft.Studio.ViewModels;
+using ReactiveUI;
 
 namespace Acorisoft.Studio.Views
 {
@@ -9,6 +11,11 @@ namespace Acorisoft.Studio.Views
         public HomeView()
         {
             InitializeComponent();
+        }
+
+        protected override void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            this.OneWayBind(ViewModel, vm => vm.IsOpen, v => v.RootView.HasContentState);
         }
     }
 }

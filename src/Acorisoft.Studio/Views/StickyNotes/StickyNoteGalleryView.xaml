@@ -1,5 +1,5 @@
 <w:SpaPage x:Class="Acorisoft.Studio.Views.StickyNoteGalleryView"
-           x:TypeArguments="appViewModels:StickyNoteGalleryViewModel"
+           x:TypeArguments="appViewModels:StickyNoteGallery"
            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -15,7 +15,7 @@
            xmlns:engines="clr-namespace:Acorisoft.Studio.Engines;assembly=Acorisoft.Studio.Documents"
            mc:Ignorable="d"
            d:DesignHeight="300" d:DesignWidth="300"
-           d:DataContext="{d:DesignInstance Type={x:Type appViewModels:StickyNoteGalleryViewModel},IsDesignTimeCreatable =True}">
+           d:DataContext="{d:DesignInstance Type={x:Type appViewModels:StickyNoteGallery},IsDesignTimeCreatable =True}">
     <UserControl.Resources>
         <w:BindingProxy x:Key="ThisViewModel" Data="{Binding}" />
         <appConverters:GalleryTitleConverter x:Key="Title" />
@@ -70,30 +70,31 @@
                 <ComboBox Height="32"
                           MinWidth="128" 
                           Margin="8 0" 
+                          SelectedIndex="0"
                           SelectedValuePath="Tag" 
                           SelectedValue="{Binding Sorter,Mode=TwoWay}">
-                    <ComboBoxItem Content="{w:Language StickyNoteGalleryViewModel_Sort_Default}" 
+                    <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Default}" 
                                   Tag="{x:Static engines:StickyNoteEngine.Normal}"/>
                     <!-- 按名字升序 -->
-                    <ComboBoxItem Content="{w:Language StickyNoteGalleryViewModel_Sort_Ascending_Name}" 
+                    <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Ascending_Name}" 
                                   Tag="{x:Static engines:StickyNoteEngine.AscendingByName}"/>
                     <!-- 按创建时间升序 -->
-                    <ComboBoxItem Content="{w:Language StickyNoteGalleryViewModel_Sort_Ascending_CreationTimestamp}" 
+                    <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Ascending_CreationTimestamp}" 
                                   Tag="{x:Static engines:StickyNoteEngine.AscendingByCreationTimestamp}"/>
                     <!-- 按修改时间升序 -->
-                    <ComboBoxItem Content="{w:Language StickyNoteGalleryViewModel_Sort_Ascending_LastAccessTimestamp}" 
+                    <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Ascending_LastAccessTimestamp}" 
                                   Tag="{x:Static engines:StickyNoteEngine.AscendingByLastAccessTimestamp}"/>
                     
                     <!-- 按名字降序 -->
-                    <ComboBoxItem Content="{w:Language StickyNoteGalleryViewModel_Sort_Descending_Name}" 
+                    <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Descending_Name}" 
                                   Tag="{x:Static engines:StickyNoteEngine.DescendingByName}"/>
                     
                     <!-- 按创建时间降序 -->
-                    <ComboBoxItem Content="{w:Language StickyNoteGalleryViewModel_Sort_Descending_CreationTimestamp}"
+                    <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Descending_CreationTimestamp}"
                                   Tag="{x:Static engines:StickyNoteEngine.DescendingByCreationTimestamp}"/>
                     
                     <!-- 按修改时间降序 -->
-                    <ComboBoxItem Content="{w:Language StickyNoteGalleryViewModel_Sort_Descending_LastAccessTimestamp}" 
+                    <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Descending_LastAccessTimestamp}" 
                                   Tag="{x:Static engines:StickyNoteEngine.DescendingByLastAccessTimestamp}"/>
                 </ComboBox>
             </StackPanel>

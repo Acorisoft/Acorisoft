@@ -120,30 +120,39 @@
   <data name="Home.NewProject" xml:space="preserve">
     <value>新建项目</value>
   </data>
-  <data name="StickyNoteGalleryViewModel_EmptyDocumentName" xml:space="preserve">
+  <data name="StickyNoteGallery_EmptyDocumentName" xml:space="preserve">
         <value>未命名</value>
     </data>
 
-  <data name="StickyNoteGalleryViewModel_Sort_Default" xml:space="preserve">
+  <data name="StickyNoteGallery_Sort_Default" xml:space="preserve">
     <value>无</value>
   </data>
-  <data name="StickyNoteGalleryViewModel_Sort_Descending_Name" xml:space="preserve">
+  <data name="StickyNoteGallery_Sort_Descending_Name" xml:space="preserve">
     <value>按名字降序</value>
   </data>
-  <data name="StickyNoteGalleryViewModel_Sort_Descending_CreationTimestamp" xml:space="preserve">
+  <data name="StickyNoteGallery_Sort_Descending_CreationTimestamp" xml:space="preserve">
     <value>按创建时间降序</value>
   </data>
-  <data name="StickyNoteGalleryViewModel_Sort_Descending_LastAccessTimestamp" xml:space="preserve">
+  <data name="StickyNoteGallery_Sort_Descending_LastAccessTimestamp" xml:space="preserve">
     <value>按修改时间降序</value>
   </data>
 
-  <data name="StickyNoteGalleryViewModel_Sort_Ascending_Name" xml:space="preserve">
+  <data name="StickyNoteGallery_Sort_Ascending_Name" xml:space="preserve">
     <value>按名字升序</value>
   </data>
-  <data name="StickyNoteGalleryViewModel_Sort_Ascending_CreationTimestamp" xml:space="preserve">
+  <data name="StickyNoteGallery_Sort_Ascending_CreationTimestamp" xml:space="preserve">
     <value>按创建时间升序</value>
   </data>
-  <data name="StickyNoteGalleryViewModel_Sort_Ascending_LastAccessTimestamp" xml:space="preserve">
+  <data name="StickyNoteGallery_Sort_Ascending_LastAccessTimestamp" xml:space="preserve">
     <value>按最后修改时间升序</value>
+  </data>
+  <data name="StickyNoteGallery_Ascending_CreationTimestamp" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Home_EmptyState_Title" xml:space="preserve">
+    <value>您还未打开任何项目</value>
+  </data>
+  <data name="Home_EmptyState_Subtitle" xml:space="preserve">
+    <value>打开一个项目之后您即可体验此应用，您可以通过以下几种方式来打开一个项目</value>
   </data>
 </root>

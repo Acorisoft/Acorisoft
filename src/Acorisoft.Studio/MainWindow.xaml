@@ -12,7 +12,7 @@
              Color="{StaticResource Brushes.MaterialDesign.Blue}"
              Style="{StaticResource Windows}"
              DataContext="{x:Static app:ViewModelLocator.AppViewModel}"
-             MinWidth="1366" MinHeight="768" Width="1920" Height="1080"
+             MinWidth="1366" MinHeight="768" Width="1366" Height="768"
              WindowStartupLocation="CenterScreen"
              d:DataContext="{d:DesignInstance Type={x:Type appViewModel:AppViewModel}}">
     <w:SpaWindow.TitleBar>
@@ -43,13 +43,8 @@
     </Window.CommandBindings>
     <Window.InputBindings>
         <!-- 新建项目，Ctrl+Shift+N -->
-        <KeyBinding Command="{x:Static appCommands:StudioCommands.NewProject}" Key="LeftCtrl,LeftShift,N"/>
-        <KeyBinding Command="{x:Static appCommands:StudioCommands.NewProject}" Key="RightCtrl,RightShift,N"/>
-        
-        
-        <!-- 保存项目，Ctrl+S -->
-        <KeyBinding Command="{x:Static appCommands:StudioCommands.Save}" Key="LeftCtrl,S"/>
-        <KeyBinding Command="{x:Static appCommands:StudioCommands.Save}" Key="RightCtrl,S"/>
+        <KeyBinding Command="{x:Static appCommands:StudioCommands.NewProject}" Gesture="Ctrl+Shift+N"/>
+        <KeyBinding Command="{x:Static appCommands:StudioCommands.OpenProject}" Gesture="Ctrl+Shift+O"/>
     </Window.InputBindings>
     <Grid>
         <w:ActivityIndicator x:Name="Indicator">

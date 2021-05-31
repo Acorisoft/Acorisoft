@@ -77,4 +77,30 @@
     </GeometryGroup>
 
     <Geometry x:Key="Icon.Check">F1 M24,24z M0,0z M20,6L20,6 9,17 4,12</Geometry>
+    <Geometry x:Key="Icon.Github">F1 M24,24z M0,0z M9,19C4,20.5,4,16.5,2,16 M16,22L16,18.13A3.37,3.37,0,0,0,15.06,15.52C18.2,15.17,21.5,13.98,21.5,8.52A5.44,5.44,0,0,0,20,4.77A5.07,5.07,0,0,0,19.91,1C19.91,1,18.73,0.65,16,2.48A13.38,13.38,0,0,0,9,2.48C6.27,0.65,5.09,1,5.09,1A5.07,5.07,0,0,0,5,4.77A5.44,5.44,0,0,0,3.5,8.55C3.5,13.97,6.8,15.16,9.94,15.55A3.37,3.37,0,0,0,9,18.13L9,22</Geometry>
+    <Geometry x:Key="Icon.Folder">F1 M24,24z M0,0z M22,19A2,2,0,0,1,20,21L4,21A2,2,0,0,1,2,19L2,5A2,2,0,0,1,4,3L9,3 11,6 20,6A2,2,0,0,1,22,8z</Geometry>
+
+    <GeometryGroup x:Key="Icon.Folder.Plus">
+        <GeometryGroup.Children>
+            <Geometry>F1 M24,24z M0,0z M22,19A2,2,0,0,1,20,21L4,21A2,2,0,0,1,2,19L2,5A2,2,0,0,1,4,3L9,3 11,6 20,6A2,2,0,0,1,22,8z</Geometry>
+            <LineGeometry StartPoint="12,11" EndPoint="12,17" />
+            <LineGeometry StartPoint="9,14" EndPoint="15,14" />
+        </GeometryGroup.Children>
+    </GeometryGroup>
+
+    <GeometryGroup x:Key="Icon.Folder.Minus">
+        <GeometryGroup.Children>
+            <Geometry>F1 M24,24z M0,0z M22,19A2,2,0,0,1,20,21L4,21A2,2,0,0,1,2,19L2,5A2,2,0,0,1,4,3L9,3 11,6 20,6A2,2,0,0,1,22,8z</Geometry>
+            <LineGeometry StartPoint="9,14" EndPoint="15,14" />
+        </GeometryGroup.Children>
+    </GeometryGroup>
+    
+    <GeometryGroup x:Key="Icon.File.Plus">
+        <GeometryGroup.Children>
+            <Geometry>F1 M24,24z M0,0z M14,2L6,2A2,2,0,0,0,4,4L4,20A2,2,0,0,0,6,22L18,22A2,2,0,0,0,20,20L20,8z</Geometry>
+            <Geometry>F1 M24,24z M0,0z M14,2L14,2 14,8 20,8</Geometry>
+            <LineGeometry StartPoint="12,18" EndPoint="12,12" />
+            <LineGeometry StartPoint="9,15" EndPoint="15,15" />
+        </GeometryGroup.Children>
+    </GeometryGroup>
 </ResourceDictionary>
