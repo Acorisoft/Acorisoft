@@ -12,6 +12,11 @@ namespace Acorisoft.Studio
         public Guid Id { get; set; }
         
         /// <summary>
+        /// 获取文档名
+        /// </summary>
+        public string Name { get; set; }
+        
+        /// <summary>
         /// 最后一次修改时间
         /// </summary>
         public DateTime LastAccessTimestamp { get; set; }

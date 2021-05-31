@@ -83,7 +83,7 @@ namespace Acorisoft.Studio.ViewModels
         {
             var newInfo = new NewItemInfo<StickyNoteDocument>(new StickyNoteDocument())
             {
-                Name = SR.StickyNoteGalleryViewModel_EmptyDocumentName
+                Name = DateTime.Now.ToLongTimeString()
             };
 
             //

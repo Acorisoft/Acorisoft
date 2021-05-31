@@ -179,6 +179,10 @@ namespace Acorisoft.Studio.Engines
             //
             // 设置同样的唯一标识符。
             index.Id = document.Id = info.Id;
+            
+            //
+            // 设置名称
+            document.Name = index.Name = info.Name;
 
             //
             // 抽取关键字到索引当中
@@ -637,8 +641,8 @@ namespace Acorisoft.Studio.Engines
         {
             //
             // 保证页面的数量处于正常的范围内
-            pageIndex = Math.Min(Math.Clamp(pageIndex, 1, ushort.MaxValue), CountField);
-            perPageItemCount = Math.Min(Math.Clamp(perPageItemCount, 1, byte.MaxValue), CountField);
+            pageIndex = Math.Clamp(pageIndex, 1, ushort.MaxValue);
+            perPageItemCount = Math.Clamp(perPageItemCount, 1, byte.MaxValue);
 
             //
             // 所有内容的数量

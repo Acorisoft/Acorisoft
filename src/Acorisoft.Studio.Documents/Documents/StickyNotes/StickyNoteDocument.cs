@@ -5,10 +5,6 @@ namespace Acorisoft.Studio.Documents.StickyNotes
     /// </summary>
     public class StickyNoteDocument : Acorisoft.Studio.Document
     {
-        /// <summary>
-        /// 获取或设置当前 <see cref="StickyNoteDocument"/> 的名称。
-        /// </summary>
-        public string Name { get; set; }
         
         /// <summary>
         /// 获取或设置当前 <see cref="StickyNoteDocument"/> 的纯文本内容。
