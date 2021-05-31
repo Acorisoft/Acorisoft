@@ -758,6 +758,7 @@ namespace Acorisoft.Studio.Engines
             RequestQueue.Set();
             OnComposeSetOpening(instruction);
             RequestQueue.Unset();
+            IsOpenField = true;
         }
 
         private void HandleComposeSetClose(ComposeSetCloseInstruction instruction)
@@ -765,6 +766,7 @@ namespace Acorisoft.Studio.Engines
             RequestQueue.Set();
             OnComposeSetClosing(instruction);
             RequestQueue.Unset();
+            IsOpenField = false;
         }
 
         private void HandleComposeSetSave(ComposeSetSaveInstruction instruction)

@@ -33,6 +33,11 @@ namespace Acorisoft.Studio
             container.Register<IViewFor<TViewModel>, TView>();
             container.Register<TViewModel>();
         }
+        
+        public static void RegisterCommonViewModelAndViews(this IContainer container)
+        {
+            container.RegisterViewModelAndDialog<PageItemCountViewModel,PageItemCountView>();
+        }
 
         public static void RegisterStickyNote(this IContainer container)
         {

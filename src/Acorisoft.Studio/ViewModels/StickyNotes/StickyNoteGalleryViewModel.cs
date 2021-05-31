@@ -34,12 +34,23 @@ namespace Acorisoft.Studio.ViewModels
 
             //
             // 按创建时间排序 按修改时间排序 
+            ChoosePerPageCountCommand = ReactiveCommand.Create(OnChoosePerPageCount, _css.IsOpen);
             NewCommand = ReactiveCommand.Create(OnNewItem, _css.IsOpen);
             DeleteThisCommand = ReactiveCommand.Create<StickyNoteIndexWrapper>(OnDeleteThis, _css.IsOpen);
             DeleteAllCommand = ReactiveCommand.Create(OnDeleteAll, _css.IsOpen);
             DeleteThisPageCommand = ReactiveCommand.Create(OnDeleteThisPage, _css.IsOpen);
             OpenThisCommand = ReactiveCommand.Create<StickyNoteIndexWrapper>(OnOpenItem, _css.IsOpen);
         }
+        
+        public async Task OnChoosePerPageCount()
+        {
+            var session = await ViewAware.ShowDialog<PageItemCountViewModel>();
+            if (session.IsCompleted)
+            {
+                _engine.PerPageItemCount = (session.Result as PageItemCountViewModel)?.SelectedItemCount ?? 10;
+            }
+        }
+
 
         public async Task SearchAsync(string keyword)
         {
@@ -129,6 +140,8 @@ namespace Acorisoft.Studio.ViewModels
         }
 
         public int Count => _countProperty.Value;
+        
+        public ICommand ChoosePerPageCountCommand { get; }
 
         /// <summary>
         /// 

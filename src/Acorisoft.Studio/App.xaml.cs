@@ -38,9 +38,9 @@ namespace Acorisoft.Studio
             //
             // HomeViews
 
+            container.RegisterStickyNote();
+            container.RegisterCommonViewModelAndViews();
             RegisterViewAndViewModel<HomeView,HomeViewModel>();
-            RegisterViewAndViewModel<StickyNoteGalleryView,StickyNoteGalleryViewModel>();
-            RegisterViewAndViewModel<StickyNoteView,StickyNoteViewModel>();
             RegisterViewAndViewModel<HomeContextView,HomeContextViewModel>();
             RegisterDialogAndViewModel<NewProjectDialog,NewProjectDialogViewModel>();
         }

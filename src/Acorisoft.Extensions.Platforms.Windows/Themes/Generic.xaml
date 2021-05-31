@@ -989,16 +989,18 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <ContentPresenter Grid.Row="0" ContentSource="Title"/>
+                        <ContentPresenter Grid.Row="0" ContentSource="Title"
+                                           Margin="{TemplateBinding Padding}"/>
                         <ContentPresenter Grid.Row="1" ContentSource="Subtitle"
-                                          Margin="0 10"
                                           HorizontalAlignment="Left"
-                                          VerticalAlignment="Top"/>
+                                          VerticalAlignment="Top"
+                                           Margin="{TemplateBinding Padding}"/>
                         <ContentPresenter Grid.Row="1"
                                           ContentSource="ToolBar"
                                           HorizontalAlignment="Right"
-                                          VerticalAlignment="Top"/>
-                        <ContentPresenter Grid.Row="2" ContentSource="Content" />
+                                          VerticalAlignment="Top"
+                                           Margin="{TemplateBinding Padding}"/>
+                        <ContentPresenter Grid.Row="2" ContentSource="Content" Margin="{TemplateBinding Padding}"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
