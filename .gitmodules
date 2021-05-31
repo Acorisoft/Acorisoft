@@ -1,0 +1,9 @@
+[submodule "markdig"]
+	path = markdig
+	url = https://github.com/Acorisoft/markdig.git
+[submodule "AvalonEdit"]
+	path = AvalonEdit
+	url = https://github.com/Acorisoft/AvalonEdit.git
+[submodule "markdig.wpf"]
+	path = markdig.wpf
+	url = https://github.com/Acorisoft/markdig.wpf.git
