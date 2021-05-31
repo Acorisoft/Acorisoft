@@ -202,6 +202,10 @@ namespace Acorisoft.Extensions.Platforms.Windows
         private void OnWindowRestore(object sender, ExecutedRoutedEventArgs e)
         {
             WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+            if (WindowState == WindowState.Maximized)
+            {
+                Height = SystemParameters.PrimaryScreenHeight;
+            }
         }
 
 

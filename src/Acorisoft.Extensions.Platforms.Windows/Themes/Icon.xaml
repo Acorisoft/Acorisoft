@@ -80,6 +80,41 @@
     <Geometry x:Key="Icon.Github">F1 M24,24z M0,0z M9,19C4,20.5,4,16.5,2,16 M16,22L16,18.13A3.37,3.37,0,0,0,15.06,15.52C18.2,15.17,21.5,13.98,21.5,8.52A5.44,5.44,0,0,0,20,4.77A5.07,5.07,0,0,0,19.91,1C19.91,1,18.73,0.65,16,2.48A13.38,13.38,0,0,0,9,2.48C6.27,0.65,5.09,1,5.09,1A5.07,5.07,0,0,0,5,4.77A5.44,5.44,0,0,0,3.5,8.55C3.5,13.97,6.8,15.16,9.94,15.55A3.37,3.37,0,0,0,9,18.13L9,22</Geometry>
     <Geometry x:Key="Icon.Folder">F1 M24,24z M0,0z M22,19A2,2,0,0,1,20,21L4,21A2,2,0,0,1,2,19L2,5A2,2,0,0,1,4,3L9,3 11,6 20,6A2,2,0,0,1,22,8z</Geometry>
 
+    <Geometry x:Key="Icon.Activity">F1 M24,24z M0,0z M22,12L22,12 18,12 15,21 9,3 6,12 2,12</Geometry>
+    <GeometryGroup x:Key="Icon.Setting">
+        <GeometryGroup.Children>
+            <EllipseGeometry RadiusX="3" RadiusY="3" Center="12,12" />
+            <Geometry>F1 M24,24z M0,0z M19.4,15A1.65,1.65,0,0,0,19.73,16.82L19.79,16.88A2,2,0,0,1,19.79,19.71A2,2,0,0,1,16.96,19.71L16.9,19.65A1.65,1.65,0,0,0,15.08,19.32A1.65,1.65,0,0,0,14.08,20.83L14.08,21A2,2,0,0,1,12.08,23A2,2,0,0,1,10.08,21L10.08,20.91A1.65,1.65,0,0,0,9,19.4A1.65,1.65,0,0,0,7.18,19.73L7.12,19.79A2,2,0,0,1,4.29,19.79A2,2,0,0,1,4.29,16.96L4.35,16.9A1.65,1.65,0,0,0,4.68,15.08A1.65,1.65,0,0,0,3.17,14.08L3,14.08A2,2,0,0,1,1,12.08A2,2,0,0,1,3,10.08L3.09,10.08A1.65,1.65,0,0,0,4.6,9A1.65,1.65,0,0,0,4.27,7.18L4.21,7.12A2,2,0,0,1,4.21,4.29A2,2,0,0,1,7.04,4.29L7.1,4.35A1.65,1.65,0,0,0,8.92,4.68L9,4.68A1.65,1.65,0,0,0,10,3.17L10,3A2,2,0,0,1,12,1A2,2,0,0,1,14,3L14,3.09A1.65,1.65,0,0,0,15,4.6A1.65,1.65,0,0,0,16.82,4.27L16.88,4.21A2,2,0,0,1,19.71,4.21A2,2,0,0,1,19.71,7.04L19.65,7.1A1.65,1.65,0,0,0,19.32,8.92L19.32,9A1.65,1.65,0,0,0,20.83,10L21,10A2,2,0,0,1,23,12A2,2,0,0,1,21,14L20.91,14A1.65,1.65,0,0,0,19.4,15z</Geometry>
+        </GeometryGroup.Children>
+    </GeometryGroup>
+    <GeometryGroup x:Key="Icon.Alert">
+        <GeometryGroup.Children>
+            <LineGeometry StartPoint="12,16" EndPoint="12.01,16" />
+            <EllipseGeometry RadiusX="10" RadiusY="10" Center="12,12" />
+            <LineGeometry StartPoint="12,8" EndPoint="12,12" />
+        </GeometryGroup.Children>
+    </GeometryGroup>
+    <Geometry x:Key="Icon.Tool">F1 M24,24z M0,0z M14.7,6.3A1,1,0,0,0,14.7,7.7L16.3,9.3A1,1,0,0,0,17.7,9.3L21.47,5.53A6,6,0,0,1,13.53,13.47L6.62,20.38A2.12,2.12,0,0,1,3.62,17.38L10.53,10.47A6,6,0,0,1,18.47,2.53L14.71,6.29z</Geometry>
+    <GeometryGroup x:Key="Icon.Clipboard">
+        <GeometryGroup.Children>
+            <Geometry>F1 M24,24z M0,0z M16,4L18,4A2,2,0,0,1,20,6L20,20A2,2,0,0,1,18,22L6,22A2,2,0,0,1,4,20L4,6A2,2,0,0,1,6,4L8,4</Geometry>
+            <EllipseGeometry RadiusX="10" RadiusY="10" Center="12,12" />
+            <LineGeometry StartPoint="12,8" EndPoint="12,12" />
+        </GeometryGroup.Children>
+    </GeometryGroup>
+    <GeometryGroup x:Key="Icon.Award">
+        <GeometryGroup.Children>
+            <Geometry>F1 M24,24z M0,0z M8.21,13.89L8.21,13.89 7,23 12,20 17,23 15.79,13.88</Geometry>
+            <EllipseGeometry RadiusX="10" RadiusY="10" Center="12,12" />
+            <LineGeometry StartPoint="12,8" EndPoint="12,12" />
+        </GeometryGroup.Children>
+    </GeometryGroup>
+    <GeometryGroup x:Key="Icon.User">
+        <GeometryGroup.Children>
+            <Geometry>F1 M24,24z M0,0z M20,21L20,19A4,4,0,0,0,16,15L8,15A4,4,0,0,0,4,19L4,21</Geometry>
+            <EllipseGeometry RadiusX="4" RadiusY="4" Center="12,7" />
+        </GeometryGroup.Children>
+    </GeometryGroup>
     <GeometryGroup x:Key="Icon.Folder.Plus">
         <GeometryGroup.Children>
             <Geometry>F1 M24,24z M0,0z M22,19A2,2,0,0,1,20,21L4,21A2,2,0,0,1,2,19L2,5A2,2,0,0,1,4,3L9,3 11,6 20,6A2,2,0,0,1,22,8z</Geometry>

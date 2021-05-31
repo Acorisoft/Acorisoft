@@ -21,7 +21,9 @@ using Acorisoft.Extensions.Platforms.Windows.Commands;
 using Acorisoft.Extensions.Platforms.Windows.Controls;
 using Acorisoft.Extensions.Platforms.Windows.Services;
 using Acorisoft.Studio.ProjectSystem;
+using Acorisoft.Studio.ProjectSystems;
 using Acorisoft.Studio.ViewModels;
+using ReactiveUI;
 
 namespace Acorisoft.Studio
 {
@@ -53,14 +55,49 @@ namespace Acorisoft.Studio
         private async void OnExecuted_NewProjectCommand(object sender, ExecutedRoutedEventArgs e)
         {
             var service = ServiceLocator.ViewService;
-            var csm = ServiceLocator.CompositionSetManager;
+            var css = ServiceLocator.ComposeSetSystem;
             
             var session = await ViewAware.ShowDialog<NewProjectDialogViewModel>();
-            if (session.IsCompleted && session.Result is INewProjectInfo projectInfo)
+            if (!session.IsCompleted || session.Result is not INewItemInfo<IComposeSetProperty> projectInfo)
             {
-                await csm.NewProject(projectInfo);
+                return;
             }
+            await css.NewAsync(projectInfo);
+                
+            ViewModelLocator.AppViewModel.Setting.RecentProject = new ComposeProject
+            {
+                Path = projectInfo.Path,
+                Name = projectInfo.Name,
+                Album = projectInfo.Item.Album,
+                    
+            };
         }
+
+        #endregion
+
+        #region OpenProject
+
+        private void CanExecute_OpenProjectCommand(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+            e.Handled = true;
+        }
+
+        private async void OnExecuted_OpenProjectCommand(object sender, ExecutedRoutedEventArgs e)
+        {
+            var service = ServiceLocator.ViewService;
+            var css = ServiceLocator.ComposeSetSystem;
+            
+            var session = await ViewAware.ShowDialog<OpenProjectDialogViewModel>();
+            if (!session.IsCompleted || session.Result is not INewItemInfo<ComposeProject> projectInfo)
+            {
+                return;
+            }
+            
+            await css.OpenAsync(projectInfo.Item);
+            ViewModelLocator.AppViewModel.Setting.RecentProject = projectInfo.Item;
+        }
+
 
         #endregion
         

@@ -16,8 +16,8 @@
         <w:EmptyStateView.EmptyState>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0"
                         Background="{StaticResource Brushes.MaterialDesign.Blue}">
@@ -65,5 +65,35 @@
                 </Grid>
             </Grid>
         </w:EmptyStateView.EmptyState>
+
+        <Grid Margin="32 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="64" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Height="48" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <w:SearchBox Grid.Column="1"
+                             MinWidth="384" 
+                             Height="36"
+                             Padding="16 0"/>
+                
+                <StackPanel Grid.Column="2"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                    <w:SymbolButton Symbol="{StaticResource Icon.User}"
+                                    Command="{x:Static appCommands:StudioCommands.NewProject}"
+                                    Margin="8 0"/>
+                    <w:SymbolButton Symbol="{StaticResource Icon.Setting}"
+                                    Command="{x:Static appCommands:StudioCommands.OpenProject}" 
+                                    Margin="8 0"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
     </w:EmptyStateView>
 </w:SpaPage>

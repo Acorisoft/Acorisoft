@@ -165,6 +165,7 @@
         @ 用来给用户制造烦躁感的指示器。
     -->
     <Style TargetType="{x:Type c:EmptyStateView}">
+        <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -1255,7 +1256,8 @@
         <Setter Property="Background" Value="{StaticResource Brushes.White}"/>
         <Setter Property="BorderBrush" Value="Gray"/>
         <Setter Property="BorderThickness" Value="1"/>
-         <Setter Property="Template">
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type c:SearchBox}">
                     <Border x:Name="PART_Border" 

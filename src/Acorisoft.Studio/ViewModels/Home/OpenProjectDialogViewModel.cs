@@ -1,27 +1,20 @@
-﻿using Acorisoft.Extensions.Platforms.Windows.ViewModels;
-using Acorisoft.Studio.Properties;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ReactiveUI.Validation.Extensions;
-using ReactiveUI;
-using Acorisoft.Studio.ProjectSystem;
+﻿using System;
+using Acorisoft.Extensions.Platforms.Windows.ViewModels;
 using Acorisoft.Studio.ProjectSystems;
+using Acorisoft.Studio.Properties;
+using ReactiveUI;
 
 namespace Acorisoft.Studio.ViewModels
 {
-    public class NewProjectDialogViewModel : DialogViewModelBase, INewProjectInfo, INewItemInfo<IComposeSetProperty>
+    public class OpenProjectDialogViewModel : DialogViewModelBase, INewItemInfo<ComposeProject>
     {
         private string _name;
         private string _path;
 
-        public NewProjectDialogViewModel() : base()
+        public OpenProjectDialogViewModel() : base()
         {
             // var observable = this.WhenAnyValue(x => x.Name, (name) => !string.IsNullOrEmpty(name));
-            Item = new ComposeSetProperty();
+            Item = new ComposeProject();
         }
 
         public sealed override bool CanCancel()
@@ -47,11 +40,11 @@ namespace Acorisoft.Studio.ViewModels
             set
             {
                 Item.Name = value;
-                Set(ref _name, value);  
-            } 
+                Set(ref _name, value);
+            }
         }
 
-        public IComposeSetProperty Item { get; set; }
+        public ComposeProject Item { get; set; }
 
         /// <summary>
         /// 获取或设置新的项目存放路径。
@@ -62,8 +55,8 @@ namespace Acorisoft.Studio.ViewModels
             set
             {
                 Item.Path = value;
-                Set(ref _path, value);  
-            } 
+                Set(ref _path, value);
+            }
         }
     }
 }

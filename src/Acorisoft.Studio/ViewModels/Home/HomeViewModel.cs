@@ -20,10 +20,11 @@ namespace Acorisoft.Studio.ViewModels
     {
         private readonly IComposeSetSystem _system;
         private readonly ObservableAsPropertyHelper<bool> _isOpen;
+        
         public HomeViewModel(IComposeSetSystem system)
         {
             _system = system;
-            _system.IsOpen.ToProperty(this, nameof(IsOpen));
+            _isOpen =_system.IsOpen.ToProperty(this, nameof(IsOpen));
         }
 
         public bool IsOpen => _isOpen.Value;

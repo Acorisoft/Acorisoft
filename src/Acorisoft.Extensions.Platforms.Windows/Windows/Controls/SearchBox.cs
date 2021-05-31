@@ -17,6 +17,18 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
         private SymbolButton PART_Clear;
         private TextBox PART_Text;
 
+        public SearchBox()
+        {
+            this.Unloaded += OnUnloaded; 
+        }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            PART_Text.KeyUp -= OnKeyUp;
+            PART_Text.TextChanged -= OnTextChanged;
+            PART_Serach.Click -= OnSearchClick;
+            PART_Clear.Click -= OnClearClick;
+        }
 
         public override void OnApplyTemplate()
         {

@@ -27,10 +27,43 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type c:FolderFormField}">
                     <DockPanel LastChildFill="True">
-                        <b:SymbolButton Symbol="{StaticResource Icon.Folder}"
-                                        DockPanel.Dock="Right"
-                                        Width="32"/>
-                        <TextBox x:Name="PART_Text" DockPanel.Dock="Left"/>
+                        <ContentPresenter ContentSource="Title"
+                                          Margin="0 4"
+                                          DockPanel.Dock="Top"/>
+                        
+                        <DockPanel LastChildFill="True"
+                                   Margin="0 4"
+                                   DockPanel.Dock="Bottom">
+                            <b:SymbolButton x:Name="PART_Open"
+                                            Symbol="{StaticResource Icon.Folder}"
+                                            DockPanel.Dock="Right"
+                                            Width="32"/>
+                            <TextBox x:Name="PART_Text"
+                                     Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Folder,Mode=TwoWay}"
+                                     FontSize="15"
+                                     VerticalContentAlignment="Center"
+                                     DockPanel.Dock="Left"/>
+                        </DockPanel>
+                    </DockPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style TargetType="{x:Type c:TextFormField}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type c:TextFormField}">
+                    <DockPanel LastChildFill="True">
+                        <ContentPresenter ContentSource="Title"
+                                          Margin="0 4"
+                                          DockPanel.Dock="Top"/>
+                        
+                        <TextBox x:Name="PART_Text"
+                                 Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Text,Mode=TwoWay}"
+                                 FontSize="15"
+                                 VerticalContentAlignment="Center"
+                                 DockPanel.Dock="Bottom"/>
                     </DockPanel>
                 </ControlTemplate>
             </Setter.Value>

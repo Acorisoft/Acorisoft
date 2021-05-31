@@ -39,6 +39,7 @@
     </w:SpaWindow.TitleBar>
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static appCommands:StudioCommands.NewProject}" CanExecute="CanExecute_NewProjectCommand" Executed="OnExecuted_NewProjectCommand"/>
+        <CommandBinding Command="{x:Static appCommands:StudioCommands.OpenProject}" CanExecute="CanExecute_OpenProjectCommand" Executed="OnExecuted_OpenProjectCommand"/>
         <CommandBinding Command="{x:Static appCommands:StudioCommands.Save}" CanExecute="CanExecute_SaveCommand" Executed="OnExecuted_SaveCommand"/>
     </Window.CommandBindings>
     <Window.InputBindings>

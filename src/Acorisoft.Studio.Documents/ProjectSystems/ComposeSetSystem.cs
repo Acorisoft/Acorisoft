@@ -242,12 +242,17 @@ namespace Acorisoft.Studio.ProjectSystems
             {
                 Directory.CreateDirectory(info.Path);
             }
+
+            if (File.Exists(GetDatabaseFileNameFromPath(info.Path)))
+            {
+                throw new InvalidOperationException("无法在已存在的项目文件夹中创建新的项目");
+            }
             
             //
             // 创建 compose
             var compose = new ComposeSet(info.Path)
             {
-                MainDatabase = GetDatabaseFromPath(GetDatabaseFileNameFromPath(info.Path)),
+                MainDatabase = GetDatabaseFromPath(info.Path),
             };
 
             await OpenAsync(compose);

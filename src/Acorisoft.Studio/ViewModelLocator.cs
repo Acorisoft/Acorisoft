@@ -56,6 +56,7 @@ namespace Acorisoft.Studio
             RegisterViewModelAndView<HomeViewModel, HomeView>(container);
             RegisterViewModelAndQuick<HomeContextViewModel, HomeContextView>(container);
             RegisterViewModelAndDialog<NewProjectDialogViewModel, NewProjectDialog>(container);
+            RegisterViewModelAndDialog<OpenProjectDialogViewModel, OpenProjectDialog>(container);
         }
 
         public static void RegisterStickyNote(this IContainer container)
