@@ -757,9 +757,8 @@ namespace Acorisoft.Studio.Engines
         {
             RequestQueue.Set();
             OnComposeSetOpening(instruction);
-            IsOpenField = true;
-            IsOpenStream.OnNext(IsOpenField);
             RequestQueue.Unset();
+            IsOpenField = true;
         }
 
         private void HandleComposeSetClose(ComposeSetCloseInstruction instruction)
@@ -768,16 +767,6 @@ namespace Acorisoft.Studio.Engines
             OnComposeSetClosing(instruction);
             RequestQueue.Unset();
             IsOpenField = false;
-            try
-            {
-                //
-                // 这里发生线程切换。Subject的赋值会出现错误。
-                CurrentThreadScheduler.Instance.Schedule(() => IsOpenStream.OnNext(IsOpenField));
-            }
-            finally
-            {
-                
-            }
         }
 
         private void HandleComposeSetSave(ComposeSetSaveInstruction instruction)

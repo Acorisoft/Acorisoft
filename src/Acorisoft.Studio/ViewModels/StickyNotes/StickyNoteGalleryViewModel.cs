@@ -34,12 +34,23 @@ namespace Acorisoft.Studio.ViewModels
 
             //
             // 按创建时间排序 按修改时间排序 
-            NewCommand = ReactiveCommand.Create(OnNewItem, _engine.IsOpen);
-            DeleteThisCommand = ReactiveCommand.Create<StickyNoteIndexWrapper>(OnDeleteThis, _engine.IsOpen);
-            DeleteAllCommand = ReactiveCommand.Create(OnDeleteAll, _engine.IsOpen);
-            DeleteThisPageCommand = ReactiveCommand.Create(OnDeleteThisPage, _engine.IsOpen);
-            OpenThisCommand = ReactiveCommand.Create<StickyNoteIndexWrapper>(OnOpenItem, _engine.IsOpen);
+            ChoosePerPageCountCommand = ReactiveCommand.Create(OnChoosePerPageCount, _css.IsOpen);
+            NewCommand = ReactiveCommand.Create(OnNewItem, _css.IsOpen);
+            DeleteThisCommand = ReactiveCommand.Create<StickyNoteIndexWrapper>(OnDeleteThis, _css.IsOpen);
+            DeleteAllCommand = ReactiveCommand.Create(OnDeleteAll, _css.IsOpen);
+            DeleteThisPageCommand = ReactiveCommand.Create(OnDeleteThisPage, _css.IsOpen);
+            OpenThisCommand = ReactiveCommand.Create<StickyNoteIndexWrapper>(OnOpenItem, _css.IsOpen);
         }
+        
+        public async Task OnChoosePerPageCount()
+        {
+            var session = await ViewAware.ShowDialog<PageItemCountViewModel>();
+            if (session.IsCompleted)
+            {
+                _engine.PerPageItemCount = (session.Result as PageItemCountViewModel)?.SelectedItemCount ?? 10;
+            }
+        }
+
 
         public async Task SearchAsync(string keyword)
         {
@@ -84,12 +95,22 @@ namespace Acorisoft.Studio.ViewModels
 
         protected async void OnDeleteThisPage()
         {
-            await _engine.DeleteThisPageAsync();
+            if (await ViewAware.AwaitDelete("是否全部删除", "删除操作将会清空所有内容") == true)
+            {
+                //
+                // 等待创建
+                await _engine.DeleteThisPageAsync();
+            }
         }
 
         protected async void OnDeleteThis(StickyNoteIndexWrapper item)
         {
-            await _engine.DeleteThisAsync(item.Source);
+            if (await ViewAware.AwaitDelete("是否全部删除", "删除操作将会清空所有内容") == true)
+            {
+                //
+                // 等待创建
+                await _engine.DeleteThisAsync(item.Source);
+            }
 
             //
             // 跳转
@@ -119,6 +140,8 @@ namespace Acorisoft.Studio.ViewModels
         }
 
         public int Count => _countProperty.Value;
+        
+        public ICommand ChoosePerPageCountCommand { get; }
 
         /// <summary>
         /// 

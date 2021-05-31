@@ -17,6 +17,7 @@
            d:DataContext="{d:DesignInstance Type={x:Type appViewModels:StickyNoteGalleryViewModel},IsDesignTimeCreatable =True}">
     <UserControl.Resources>
         <w:BindingProxy x:Key="ThisViewModel" Data="{Binding}" />
+        <appConverters:GalleryTitleConverter x:Key="Title"/>
     </UserControl.Resources>
     <UserControl.InputBindings>
         <KeyBinding Command="{Binding NewCommand}" Key="LeftCtrl,N" />
@@ -29,76 +30,92 @@
         </Grid.RowDefinitions>
 
         <!-- 搜索栏 -->
-        <w:SearchBox x:Name="SearchBox"
-                     Grid.Row="0"
-                     Width="960"
-                     Padding="16 0"
-                     HorizontalAlignment="Center"
-                     VerticalContentAlignment="Center"
-                     Height="32" FontSize="16" />
+        <Grid Grid.Row="0"
+              Background="{StaticResource Brushes.White}">
+            <Grid.Effect>
+                <DropShadowEffect BlurRadius="8" Color="{StaticResource Colors.Black}" Direction="270" ShadowDepth="0" />
+            </Grid.Effect>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <w:SearchBox x:Name="SearchBox"
+                         Grid.Column="1"
+                         MinWidth="384"
+                         Padding="16 0"
+                         HorizontalAlignment="Center"
+                         VerticalContentAlignment="Center"
+                         Height="32" FontSize="16" />
+
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <w:SymbolButton Symbol="{StaticResource Icon.Add}"
+                                Content="新建"
+                                Margin="8 0"
+                                Command="{Binding NewCommand}" />
+                <w:SymbolButton Symbol="{StaticResource Icon.Trash}"
+                                Content="删除本页"
+                                Margin="8 0"
+                                Command="{Binding DeleteThisPageCommand}" />
+                <w:SymbolButton Symbol="{StaticResource Icon.Trash2}"
+                                Content="删除全部"
+                                Margin="8 0"
+                                Command="{Binding DeleteAllCommand}" />
+                <w:SymbolButton Symbol="{StaticResource Icon.Sliders}"
+                                Content="设置"
+                                Margin="8 0"
+                                Command="{Binding ChoosePerPageCountCommand}" />
+                <ComboBox Height="32" MinWidth="128" Margin="8 0" />
+            </StackPanel>
+        </Grid>
 
         <w:Headline1HeaderToolbar Grid.Row="1"
-                                  Title="{Binding Count,Mode=OneWay}"
-                                  TitleStringFormat="{}'当前画廊存在{0}个项目'"
+                                  Background="{StaticResource Brushes.White}"
+                                  Padding="16"
+                                  Title="{Binding Count,Mode=OneWay,Converter={StaticResource Title}}"
                                   Subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                                  Margin="32 0">
-            <w:Headline1HeaderToolbar.ToolBar>
-                <StackPanel Orientation="Horizontal">
-                    <w:SymbolContentButton Symbol="{StaticResource Icon.Add}"
-                                           Content="新建"
-                                           Margin="8 0"
-                                           Command="{Binding NewCommand}" />
-                    <w:SymbolContentButton Symbol="{StaticResource Icon.Trash}"
-                                           Content="删除本页"
-                                           Margin="8 0" />
-                    <w:SymbolContentButton Symbol="{StaticResource Icon.Trash2}"
-                                           Content="删除全部"
-                                           Margin="8 0"
-                                           Command="{Binding DeleteAllCommand}" />
-                    <w:SymbolContentButton Symbol="{StaticResource Icon.Sliders}"
-                                           Content="设置"
-                                           Margin="8 0"/>
-                    <ComboBox Height="32" MinWidth="128" Margin="8 0" />
-                </StackPanel>
-            </w:Headline1HeaderToolbar.ToolBar>
-            <ItemsControl x:Name="Items"
-                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="{x:Type index:StickyNoteIndexWrapper}">
-                        <w:OverlayContentControl Background="#FFAB12" Padding="16" Margin="4" Width="256" Height="144">
-                            <w:OverlayContentControl.Overlay>
-                                <StackPanel Orientation="Horizontal"
-                                            HorizontalAlignment="Center">
-                                    <w:SymbolButton Symbol="{StaticResource Icon.Edit}" 
-                                                    Command="{Binding Source={StaticResource ThisViewModel},Path=Data.OpenThisCommand}"
-                                                    CommandParameter="{Binding}"
-                                                    Margin="8"/>
-                                    <w:SymbolButton Symbol="{StaticResource Icon.Trash}" 
-                                                    Command="{Binding Source={StaticResource ThisViewModel},Path=Data.DeleteThisCommand}"
-                                                    CommandParameter="{Binding}"
-                                                    Margin="8"/>
-                                </StackPanel>
-                            </w:OverlayContentControl.Overlay>
-                            <Border CornerRadius="3"
-                                    Padding="4">
-                                <DockPanel>
-                                    <TextBlock Text="{Binding Name}"
-                                               Foreground="{StaticResource App.Text.Primary}"
-                                               FontSize="24" FontWeight="Bold" DockPanel.Dock="Top" Margin="2"/>
-                                    <TextBlock Text="{Binding Summary}"
-                                               Foreground="{StaticResource App.Text.Secondary}"
-                                               FontSize="15" DockPanel.Dock="Bottom" Margin="2"/>
-                                </DockPanel>
-                            </Border>
-                        </w:OverlayContentControl>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel IsItemsHost="True"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
+                                  Margin="32 8">
+            <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ItemsControl x:Name="Items">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type index:StickyNoteIndexWrapper}">
+                            <w:OverlayContentControl Background="#FFAB12" Padding="16" Margin="4" Width="256"
+                                                     Height="144">
+                                <w:OverlayContentControl.Overlay>
+                                    <StackPanel Orientation="Horizontal"
+                                                HorizontalAlignment="Center">
+                                        <w:SymbolButton Symbol="{StaticResource Icon.Edit}"
+                                                        Command="{Binding Source={StaticResource ThisViewModel},Path=Data.OpenThisCommand}"
+                                                        CommandParameter="{Binding}"
+                                                        Margin="8" />
+                                        <w:SymbolButton Symbol="{StaticResource Icon.Trash}"
+                                                        Command="{Binding Source={StaticResource ThisViewModel},Path=Data.DeleteThisCommand}"
+                                                        CommandParameter="{Binding}"
+                                                        Margin="8" />
+                                    </StackPanel>
+                                </w:OverlayContentControl.Overlay>
+                                <Border CornerRadius="3"
+                                        Padding="4">
+                                    <DockPanel>
+                                        <TextBlock Text="{Binding Name}"
+                                                   Foreground="{StaticResource App.Text.Primary}"
+                                                   FontSize="24" FontWeight="Bold" DockPanel.Dock="Top" Margin="2" />
+                                        <TextBlock Text="{Binding Summary}"
+                                                   Foreground="{StaticResource App.Text.Secondary}"
+                                                   FontSize="15" DockPanel.Dock="Bottom" Margin="2" />
+                                    </DockPanel>
+                                </Border>
+                            </w:OverlayContentControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel IsItemsHost="True" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
         </w:Headline1HeaderToolbar>
     </Grid>
 </w:SpaPage>
