@@ -39,7 +39,7 @@ namespace Acorisoft.Extensions.Platforms {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Acorisoft.Extensions.Platforms.SR", typeof(SR).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Acorisoft.Extensions.Platforms.Properties.SR", typeof(SR).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -66,6 +66,24 @@ namespace Acorisoft.Extensions.Platforms {
         internal static string BusyIndicator_DefaultDescription {
             get {
                 return ResourceManager.GetString("BusyIndicator_DefaultDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 取消.
+        /// </summary>
+        internal static string Prompt_Cancel {
+            get {
+                return ResourceManager.GetString("Prompt.Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 确定.
+        /// </summary>
+        internal static string Prompt_Ok {
+            get {
+                return ResourceManager.GetString("Prompt.Ok", resourceCulture);
             }
         }
     }

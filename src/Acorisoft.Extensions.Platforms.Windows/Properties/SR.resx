@@ -21,4 +21,10 @@
     <data name="BusyIndicator_DefaultDescription" xml:space="preserve">
         <value>正在等待....</value>
     </data>
+    <data name="Prompt.Ok" xml:space="preserve">
+        <value>确定</value>
+    </data>
+    <data name="Prompt.Cancel" xml:space="preserve">
+        <value>取消</value>
+    </data>
 </root>

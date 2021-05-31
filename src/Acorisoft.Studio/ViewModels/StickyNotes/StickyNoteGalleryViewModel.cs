@@ -97,10 +97,12 @@ namespace Acorisoft.Studio.ViewModels
 
         protected async void OnDeleteAll()
         {
-            //
-            // 等待创建
-            await _engine.DeleteAllAsync();
-
+            if (await ViewAware.AwaitDelete("是否全部删除", "删除操作将会清空所有内容") == true)
+            {
+                //
+                // 等待创建
+                await _engine.DeleteAllAsync();
+            }
             //
             // 跳转
         }

@@ -458,8 +458,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type c:BannerDialogHost}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -699,6 +698,59 @@
                 <ControlTemplate TargetType="{x:Type b:SymbolContentButton}">
                     <Border x:Name="PART_Border" Background="{TemplateBinding Background}">
                         <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="48"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <ContentPresenter x:Name="PART_Content"
+                                               Grid.Column="1" 
+                                               ContentSource="Content"
+                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                               HorizontalAlignment="Left" />
+
+                            <Path Grid.Column="0" x:Name="PART_Icon"
+                                  Data="{TemplateBinding Symbol}"
+                                  Width="24"
+                                  Height="24"
+                                  Stroke="{TemplateBinding Foreground}"
+                                  StrokeThickness="1"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                       <Trigger Property="IsMouseOver" Value="True">
+                           <Setter Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}" TargetName="PART_Content"/>
+                           <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}" TargetName="PART_Icon"/>
+                       </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}" TargetName="PART_Content"/>
+                            <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}" TargetName="PART_Icon"/>
+                            <Setter Property="Background" Value="{StaticResource App.White.Darken.Mask}" TargetName="PART_Border"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value=".5" TargetName="PART_Border"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style x:Key="SymbolContentButton.Center" TargetType="{x:Type b:SymbolContentButton}">
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="MinWidth" Value="32" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Background" Value="{StaticResource Brushes.Commons.Background}" />
+        <Setter Property="Foreground" Value="{StaticResource Brushes.Commons.Foreground}" />
+        <Setter Property="Highlight" Value="{StaticResource  Brushes.MaterialDesign.Blue}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type b:SymbolContentButton}">
+                    <Border x:Name="PART_Border" Background="{TemplateBinding Background}">
+                        <Grid HorizontalAlignment="Center">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="48"/>
                                 <ColumnDefinition/>

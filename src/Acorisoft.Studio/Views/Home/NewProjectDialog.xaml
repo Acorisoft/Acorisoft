@@ -7,6 +7,7 @@
               xmlns:app="clr-namespace:Acorisoft.Studio.Views"
               xmlns:appViewModels="clr-namespace:Acorisoft.Studio.ViewModels"
               xmlns:appViews="clr-namespace:Acorisoft.Studio.Views"
+              xmlns:i="clr-namespace:Acorisoft.Extensions.Platforms.Internals;assembly=Acorisoft.Extensions.Platforms.Windows"
               xmlns:w="https://github.com/Acorisoft/Acorisoft/Windows"
               mc:Ignorable="d" 
               Background="{StaticResource Brushes.White}"
@@ -24,8 +25,14 @@
                          Subtitle="asdadasdadadadadadasd">
         <w:BannerDialogHost.Toolbar>
             <UniformGrid Columns="2">
-                <Button Content="Ok" Command="{x:Static w:WindowCommands.Completed}" />
-                <Button Content="Cancel" Command="{x:Static w:WindowCommands.Cancel}" />
+                <w:SymbolContentButton Symbol="{StaticResource Icon.Check}"
+                                       Content="{i:InternalLanguage Key=Prompt.Ok}" 
+                                       Command="{x:Static w:WindowCommands.Completed}"
+                                       Style="{StaticResource SymbolContentButton.Center}"/>
+                <w:SymbolContentButton Symbol="{StaticResource Icon.Clear}"
+                                       Content="{i:InternalLanguage Key=Prompt.Cancel}" 
+                                       Command="{x:Static w:WindowCommands.Cancel}"
+                                       Style="{StaticResource SymbolContentButton.Center}"/>
             </UniformGrid>
         </w:BannerDialogHost.Toolbar>
         <StackPanel Grid.Row="1">
