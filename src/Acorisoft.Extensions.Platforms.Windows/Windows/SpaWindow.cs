@@ -184,9 +184,14 @@ namespace Acorisoft.Extensions.Platforms.Windows
         #region SystemCommands
 
 
-        private void OnWindowClose(object sender, ExecutedRoutedEventArgs e)
+        private async void OnWindowClose(object sender, ExecutedRoutedEventArgs e)
         {
-            this.Close();
+            if (EnableQueryWindowClose && (await ViewAware.AwaitQueryWindowClose() != true))
+            {
+                return;
+            }
+          
+            this.Close();   
         }
 
         private void OnWindowMinimum(object sender, ExecutedRoutedEventArgs e)
@@ -201,6 +206,15 @@ namespace Acorisoft.Extensions.Platforms.Windows
 
 
         #endregion SystemCommands
+
+        public static readonly DependencyProperty EnableQueryWindowCloseProperty = DependencyProperty.Register(
+            "EnableQueryWindowClose", typeof(bool), typeof(SpaWindow), new PropertyMetadata(Xaml.True));
+
+        public bool EnableQueryWindowClose
+        {
+            get => (bool) GetValue(EnableQueryWindowCloseProperty);
+            set => SetValue(EnableQueryWindowCloseProperty, Xaml.Box(value));
+        }
 
         public Brush Color
         {

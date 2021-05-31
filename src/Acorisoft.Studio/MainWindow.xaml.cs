@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Text;
@@ -33,7 +34,7 @@ namespace Acorisoft.Studio
         {
             InitializeComponent();
         }
-
+        
         protected sealed override void OnContentRendered(EventArgs e)
         {
             ViewAware.NavigateTo<StickyNoteGalleryViewModel>();

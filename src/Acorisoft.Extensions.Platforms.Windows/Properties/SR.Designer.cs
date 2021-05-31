@@ -79,6 +79,42 @@ namespace Acorisoft.Extensions.Platforms {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 是否退出编辑？.
+        /// </summary>
+        internal static string Prompt_ClosePage_Subtitle {
+            get {
+                return ResourceManager.GetString("Prompt.ClosePage.Subtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 退出编辑.
+        /// </summary>
+        internal static string Prompt_ClosePage_Title {
+            get {
+                return ResourceManager.GetString("Prompt.ClosePage.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 是否退出应用？.
+        /// </summary>
+        internal static string Prompt_CloseWindow_Subtitle {
+            get {
+                return ResourceManager.GetString("Prompt.CloseWindow.Subtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 退出应用.
+        /// </summary>
+        internal static string Prompt_CloseWindow_Title {
+            get {
+                return ResourceManager.GetString("Prompt.CloseWindow.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 确定.
         /// </summary>
         internal static string Prompt_Ok {

@@ -32,7 +32,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.ViewModels
 
         public virtual bool VerifyAccess()
         {
-            return true;
+            return false;
         }
 
         public virtual bool CanCancel()

@@ -387,6 +387,19 @@ namespace Acorisoft.Extensions.Platforms.Windows
             return ServiceLocator.ViewService.ShowPrompt(vm);
         }
 
+        public static Task<bool?> AwaitQueryWindowClose()
+        {
+            var vm = Locator.Current.GetService<CloseWindowPromptViewModel>();
+            return ServiceLocator.ViewService.ShowPrompt(vm);
+        }
+
+        public static Task<bool?> AwaitQueryPageClose()
+        {
+            
+            var vm = Locator.Current.GetService<ClosePagePromptViewModel>();
+            return ServiceLocator.ViewService.ShowPrompt(vm);
+        }
+
         public static void Toast(string message)
         {
             ServiceLocator.ViewService.Toast(message);

@@ -12,9 +12,9 @@
              Color="{StaticResource Brushes.MaterialDesign.Blue}"
              Style="{StaticResource Windows}"
              DataContext="{x:Static app:ViewModelLocator.AppViewModel}"
-             d:DataContext="{d:DesignInstance Type={x:Type appViewModel:AppViewModel}}"
-             MinWidth="1366" MinHeight="768"
-             Width="1920" Height="1080">
+             MinWidth="1366" MinHeight="768" Width="1920" Height="1080"
+             WindowStartupLocation="CenterScreen"
+             d:DataContext="{d:DesignInstance Type={x:Type appViewModel:AppViewModel}}">
     <w:SpaWindow.TitleBar>
         <Grid WindowChrome.IsHitTestVisibleInChrome="False">
             <Grid.ColumnDefinitions>
