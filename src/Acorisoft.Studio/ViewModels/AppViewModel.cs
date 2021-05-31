@@ -51,7 +51,7 @@ namespace Acorisoft.Studio.ViewModels
             _disposable = new CompositeDisposable();
             _fileManager = fileManager;
             _css = composeSetSystem;
-            _isOpen = _css.IsOpen.ToProperty(this,nameof(IsOpen));
+            _isOpen = _css.IsOpen.ToProperty(this, nameof(IsOpen));
             
             
             _disposable.Add(_database);

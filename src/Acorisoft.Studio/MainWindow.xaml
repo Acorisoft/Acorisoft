@@ -9,10 +9,10 @@
              xmlns:appCommands="clr-namespace:Acorisoft.Studio.Commands"
              xmlns:rx="http://reactiveui.net"
              mc:Ignorable="d"
+             Color="{StaticResource Brushes.MaterialDesign.Blue}"
              Style="{StaticResource Windows}"
              DataContext="{x:Static app:ViewModelLocator.AppViewModel}"
              d:DataContext="{d:DesignInstance Type={x:Type appViewModel:AppViewModel}}"
-             Title="{Binding Title,TargetNullValue='首页',Mode=OneWay}"
              MinWidth="1366" MinHeight="768"
              Width="1920" Height="1080">
     <w:SpaWindow.TitleBar>
@@ -23,9 +23,18 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             
-            <w:WindowGoBackButton Grid.Column="0" Command="{x:Static w:WindowCommands.GoBack}"
+            <w:WindowGoBackButton Grid.Column="0"
+                                  Command="{x:Static w:WindowCommands.GoBack}"
                                   WindowChrome.IsHitTestVisibleInChrome="True"/>
-            <w:WindowGoBackButton Grid.Column="1" Command="{x:Static w:IxContentHostCommands.ToggleEnable}"/>
+            
+            <w:WindowGoBackButton Grid.Column="1"
+                                  Command="{x:Static w:IxContentHostCommands.ToggleEnable}"
+                                  WindowChrome.IsHitTestVisibleInChrome="True"/>
+            
+            <TextBlock Grid.Column="2"
+                       Text="{Binding Title,TargetNullValue='首页',Mode=OneWay}"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"/>
         </Grid>
     </w:SpaWindow.TitleBar>
     <Window.CommandBindings>
