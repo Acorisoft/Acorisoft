@@ -4,7 +4,7 @@ using System.Windows.Media;
 
 namespace Acorisoft.Extensions.Platforms.Windows.Controls.Buttons
 {
-    public class HighlightSymbolContentButton : HighlightSymbolButton
+    public class SymbolContentButton : SymbolButton
     {
  
     }

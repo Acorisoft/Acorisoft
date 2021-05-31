@@ -325,6 +325,19 @@ namespace Acorisoft.Extensions.Platforms.Windows
                 { Arg16, arg16 },
             });
         }
+        
+        public static void NavigateTo<TViewModel>(params object[] parameters) where TViewModel : PageViewModelBase, IPageViewModel
+        {
+            var hashtable = new Hashtable();
+            var n = 0;
+            foreach (var parameter in parameters)
+            {
+                hashtable.Add($"{Arg}{n:N}" ,parameter);
+                n++;
+            }
+
+            NavigateTo<TViewModel>(hashtable);
+        }
 
         #endregion
         
@@ -379,5 +392,6 @@ namespace Acorisoft.Extensions.Platforms.Windows
         public const string Arg14 = "arg14";
         public const string Arg15 = "arg15";
         public const string Arg16 = "arg16";
+        public const string Arg = "arg";
     }
 }

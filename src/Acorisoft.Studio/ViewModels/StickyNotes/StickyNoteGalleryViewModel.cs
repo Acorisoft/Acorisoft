@@ -24,6 +24,7 @@ namespace Acorisoft.Studio.ViewModels
         private readonly IComposeSetSystem _css;
 
         private readonly ObservableAsPropertyHelper<int> _countProperty;
+
         public StickyNoteGalleryViewModel(IComposeSetSystem css, StickyNoteEngine engine)
         {
             _disposable = new CompositeDisposable();
@@ -33,9 +34,11 @@ namespace Acorisoft.Studio.ViewModels
 
             //
             // 按创建时间排序 按修改时间排序 
-            NewCommand = ReactiveCommand.Create(OnNewItem, _css.IsOpen).DisposeWith(_disposable);
-            DeleteThisCommand = ReactiveCommand.Create<StickyNoteIndexWrapper>(OnDeleteThis, _engine.IsOpen).DisposeWith(_disposable);
-            DeleteAllCommand = ReactiveCommand.Create(OnDeleteAll, _css.IsOpen).DisposeWith(_disposable);
+            NewCommand = ReactiveCommand.Create(OnNewItem, _engine.IsOpen);
+            DeleteThisCommand = ReactiveCommand.Create<StickyNoteIndexWrapper>(OnDeleteThis, _engine.IsOpen);
+            DeleteAllCommand = ReactiveCommand.Create(OnDeleteAll, _engine.IsOpen);
+            DeleteThisPageCommand = ReactiveCommand.Create(OnDeleteThisPage, _engine.IsOpen);
+            OpenThisCommand = ReactiveCommand.Create<StickyNoteIndexWrapper>(OnOpenItem, _engine.IsOpen);
         }
 
         public async Task SearchAsync(string keyword)
@@ -78,7 +81,12 @@ namespace Acorisoft.Studio.ViewModels
             //
             // 跳转
         }
-        
+
+        protected async void OnDeleteThisPage()
+        {
+            await _engine.DeleteThisPageAsync();
+        }
+
         protected async void OnDeleteThis(StickyNoteIndexWrapper item)
         {
             await _engine.DeleteThisAsync(item.Source);
@@ -86,7 +94,7 @@ namespace Acorisoft.Studio.ViewModels
             //
             // 跳转
         }
-        
+
         protected async void OnDeleteAll()
         {
             //
@@ -97,8 +105,15 @@ namespace Acorisoft.Studio.ViewModels
             // 跳转
         }
 
-        protected async void OnOpenItem(StickyNoteIndexWrapper wrapper)
+        protected async void OnOpenItem(StickyNoteIndexWrapper item)
         {
+            //
+            // 打开文档
+            var document = await _engine.OpenAsync(item.Source);
+
+            //
+            // 跳转
+            ViewAware.NavigateTo<StickyNoteViewModel>(document);
         }
 
         public int Count => _countProperty.Value;

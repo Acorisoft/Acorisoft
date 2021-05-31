@@ -15,6 +15,19 @@
              Title="{Binding Title,TargetNullValue='首页',Mode=OneWay}"
              MinWidth="1366" MinHeight="768"
              Width="1920" Height="1080">
+    <w:SpaWindow.TitleBar>
+        <Grid WindowChrome.IsHitTestVisibleInChrome="False">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            
+            <w:WindowGoBackButton Grid.Column="0" Command="{x:Static w:WindowCommands.GoBack}"
+                                  WindowChrome.IsHitTestVisibleInChrome="True"/>
+            <w:WindowGoBackButton Grid.Column="1" Command="{x:Static w:IxContentHostCommands.ToggleEnable}"/>
+        </Grid>
+    </w:SpaWindow.TitleBar>
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static appCommands:StudioCommands.NewProject}" CanExecute="CanExecute_NewProjectCommand" Executed="OnExecuted_NewProjectCommand"/>
         <CommandBinding Command="{x:Static appCommands:StudioCommands.Save}" CanExecute="CanExecute_SaveCommand" Executed="OnExecuted_SaveCommand"/>

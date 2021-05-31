@@ -38,6 +38,7 @@ namespace Acorisoft.Extensions.Platforms.Windows
             CommandBindings.Add(new CommandBinding(WindowCommands.Last, OnDialogLast, CanDialogLast));
             CommandBindings.Add(new CommandBinding(WindowCommands.Next, OnDialogNextOrComplete, CanDialogNextOrComplete));
             CommandBindings.Add(new CommandBinding(WindowCommands.Skip, OnDialogIgnoreOrSkip, CanDialogIgnoreOrSkip));
+            CommandBindings.Add(new CommandBinding(WindowCommands.GoBack, OnGoBack, CanGoBack));
 
             CommandBindings.Add(new CommandBinding(SystemCommands.CloseWindowCommand, OnWindowClose));
             CommandBindings.Add(new CommandBinding(SystemCommands.MinimizeWindowCommand, OnWindowMinimum));
@@ -81,6 +82,11 @@ namespace Acorisoft.Extensions.Platforms.Windows
         {
             ServiceLocator.DialogService.Cancel();
         }
+        
+        private void OnGoBack(object sender, ExecutedRoutedEventArgs e)
+        {
+            ServiceLocator.ViewService.GoBack();
+        }
 
         private void OnDialogNextOrComplete(object sender, ExecutedRoutedEventArgs e)
         {
@@ -103,6 +109,12 @@ namespace Acorisoft.Extensions.Platforms.Windows
         private void CanDialogCancel(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = ServiceLocator.DialogService.CanCancel();
+            e.Handled = true;
+        }
+        
+        private void CanGoBack(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = ServiceLocator.ViewService.CanGoBack();
             e.Handled = true;
         }
 

@@ -19,6 +19,8 @@ namespace Acorisoft.Studio.Engines
         {
             return new StickyNoteIndex
             {
+                LastAccessTimestamp = DateTime.Now,
+                CreationTimestamp = DateTime.Now
             };
         }
 
@@ -37,6 +39,8 @@ namespace Acorisoft.Studio.Engines
         {
             return new StickyNoteDocument
             {
+                LastAccessTimestamp = DateTime.Now,
+                CreationTimestamp = DateTime.Now
             };
         }
 

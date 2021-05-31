@@ -11,5 +11,6 @@ namespace Acorisoft.Extensions.Platforms.Windows.Commands
         public static RoutedCommand Ignore { get; } = new RoutedUICommand("Ignore", "Ignore", typeof(WindowCommands));
         public static RoutedCommand Cancel { get; } = new RoutedUICommand("Cancel", "Cancel", typeof(WindowCommands));
         public static RoutedCommand Skip { get; } = new RoutedUICommand("Skip", "Skip", typeof(WindowCommands));
+        public static RoutedCommand GoBack { get; } = new RoutedUICommand("GoBack", "GoBack", typeof(WindowCommands));
     }   
 }

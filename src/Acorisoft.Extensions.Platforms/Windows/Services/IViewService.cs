@@ -130,6 +130,8 @@ namespace Acorisoft.Extensions.Platforms.Services
         void NavigateTo(IQuickViewModel quickView, IQuickViewModel toolView, IQuickViewModel contextView,
             IQuickViewModel extraView);
 
+        void GoBack();
+        bool CanGoBack();
         
         IObservable<IPageViewModel> Page { get; }
         IObservable<IQuickViewModel> QuickView { get; }

@@ -1,69 +1,103 @@
 <w:SpaPage x:Class="Acorisoft.Studio.Views.StickyNoteGalleryView"
-             x:TypeArguments="appViewModels:StickyNoteGalleryViewModel"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:w="https://github.com/Acorisoft/Acorisoft/Windows"
-             xmlns:app="clr-namespace:Acorisoft.Studio"
-             xmlns:appViews="clr-namespace:Acorisoft.Studio.Views"
-             xmlns:appViewModels="clr-namespace:Acorisoft.Studio.ViewModels"
-             xmlns:appCommands="clr-namespace:Acorisoft.Studio.Commands"
-             xmlns:appConverters="clr-namespace:Acorisoft.Studio.Converters"
-             xmlns:appBehaviors="clr-namespace:Acorisoft.Studio.Behaviors"
-             xmlns:index="clr-namespace:Acorisoft.Studio.Documents.StickyNotes;assembly=Acorisoft.Studio.Documents"
-             mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300"
-             d:DataContext="{d:DesignInstance Type={x:Type appViewModels:StickyNoteGalleryViewModel},IsDesignTimeCreatable =True}">
+           x:TypeArguments="appViewModels:StickyNoteGalleryViewModel"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:w="https://github.com/Acorisoft/Acorisoft/Windows"
+           xmlns:app="clr-namespace:Acorisoft.Studio"
+           xmlns:appViews="clr-namespace:Acorisoft.Studio.Views"
+           xmlns:appViewModels="clr-namespace:Acorisoft.Studio.ViewModels"
+           xmlns:appCommands="clr-namespace:Acorisoft.Studio.Commands"
+           xmlns:appConverters="clr-namespace:Acorisoft.Studio.Converters"
+           xmlns:appBehaviors="clr-namespace:Acorisoft.Studio.Behaviors"
+           xmlns:index="clr-namespace:Acorisoft.Studio.Documents.StickyNotes;assembly=Acorisoft.Studio.Documents"
+           mc:Ignorable="d"
+           d:DesignHeight="300" d:DesignWidth="300"
+           d:DataContext="{d:DesignInstance Type={x:Type appViewModels:StickyNoteGalleryViewModel},IsDesignTimeCreatable =True}">
+    <UserControl.Resources>
+        <w:BindingProxy x:Key="ThisViewModel" Data="{Binding}" />
+    </UserControl.Resources>
     <UserControl.InputBindings>
-        <KeyBinding Command="{Binding NewCommand}" Key="LeftCtrl,N"/>
-        <KeyBinding Command="{Binding NewCommand}" Key="RightCtrl,N"/>
+        <KeyBinding Command="{Binding NewCommand}" Key="LeftCtrl,N" />
+        <KeyBinding Command="{Binding NewCommand}" Key="RightCtrl,N" />
     </UserControl.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="92"/>
-            <RowDefinition/>
+            <RowDefinition Height="92" />
+            <RowDefinition />
         </Grid.RowDefinitions>
-        
+
         <!-- 搜索栏 -->
-        <w:SearchBox x:Name="SearchBox" 
+        <w:SearchBox x:Name="SearchBox"
                      Grid.Row="0"
-                     Width="960" 
+                     Width="960"
                      Padding="16 0"
                      HorizontalAlignment="Center"
                      VerticalContentAlignment="Center"
-                     Height="32" FontSize="16"/>
-        
+                     Height="32" FontSize="16" />
+
         <w:Headline1HeaderToolbar Grid.Row="1"
-                                  Title="{Binding Count,Mode=OneWay,StringFormat=当前画廊存在{0}个项目}"
+                                  Title="{Binding Count,Mode=OneWay}"
+                                  TitleStringFormat="{}'当前画廊存在{0}个项目'"
                                   Subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                                   Margin="32 0">
             <w:Headline1HeaderToolbar.ToolBar>
                 <StackPanel Orientation="Horizontal">
-                    <w:HighlightSymbolButton Symbol="{StaticResource Icon.Add}"
-                                             Content="新建" 
-                                             Margin="8 0" 
-                                             Command="{Binding NewCommand}"/>
-                    <w:HighlightSymbolButton Symbol="{StaticResource Icon.Trash}" 
-                                             Content="删除本页"
-                                             Margin="8 0"/>
-                    <w:HighlightSymbolButton Symbol="{StaticResource Icon.Trash2}"
-                                             Content="删除全部"
-                                             Margin="8 0"
-                                             Command="{Binding DeleteAllCommand}"/>
-                    <w:HighlightSymbolButton Symbol="{StaticResource Icon.Sliders}" Content="设置" Margin="8 0"/>
-                    <ComboBox Height="32" MinWidth="128" Margin="8 0"/>
+                    <w:SymbolContentButton Symbol="{StaticResource Icon.Add}"
+                                           Content="新建"
+                                           Margin="8 0"
+                                           Command="{Binding NewCommand}" />
+                    <w:SymbolContentButton Symbol="{StaticResource Icon.Trash}"
+                                           Content="删除本页"
+                                           Margin="8 0" />
+                    <w:SymbolContentButton Symbol="{StaticResource Icon.Trash2}"
+                                           Content="删除全部"
+                                           Margin="8 0"
+                                           Command="{Binding DeleteAllCommand}" />
+                    <w:SymbolContentButton Symbol="{StaticResource Icon.Sliders}"
+                                           Content="设置"
+                                           Margin="8 0"/>
+                    <ComboBox Height="32" MinWidth="128" Margin="8 0" />
                 </StackPanel>
             </w:Headline1HeaderToolbar.ToolBar>
-            <ItemsControl x:Name="Items">
+            <ItemsControl x:Name="Items"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type index:StickyNoteIndexWrapper}">
-                        <Border Background="#FFAB12" Padding="16" Margin="4">
-                            <TextBlock Text="{Binding Name,Mode=OneWay}"
-                                       Foreground="White"/>
-                        </Border>
+                        <w:OverlayContentControl Background="#FFAB12" Padding="16" Margin="4" Width="256" Height="144">
+                            <w:OverlayContentControl.Overlay>
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Center">
+                                    <w:SymbolButton Symbol="{StaticResource Icon.Edit}" 
+                                                    Command="{Binding Source={StaticResource ThisViewModel},Path=Data.OpenThisCommand}"
+                                                    CommandParameter="{Binding}"
+                                                    Margin="8"/>
+                                    <w:SymbolButton Symbol="{StaticResource Icon.Trash}" 
+                                                    Command="{Binding Source={StaticResource ThisViewModel},Path=Data.DeleteThisCommand}"
+                                                    CommandParameter="{Binding}"
+                                                    Margin="8"/>
+                                </StackPanel>
+                            </w:OverlayContentControl.Overlay>
+                            <Border CornerRadius="3"
+                                    Padding="4">
+                                <DockPanel>
+                                    <TextBlock Text="{Binding Name}"
+                                               Foreground="{StaticResource App.Text.Primary}"
+                                               FontSize="24" FontWeight="Bold" DockPanel.Dock="Top" Margin="2"/>
+                                    <TextBlock Text="{Binding Summary}"
+                                               Foreground="{StaticResource App.Text.Secondary}"
+                                               FontSize="15" DockPanel.Dock="Bottom" Margin="2"/>
+                                </DockPanel>
+                            </Border>
+                        </w:OverlayContentControl>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel IsItemsHost="True"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
             </ItemsControl>
         </w:Headline1HeaderToolbar>
     </Grid>

@@ -5,13 +5,13 @@ using System.Windows.Media;
 namespace Acorisoft.Extensions.Platforms.Windows.Controls
 {
     /// <summary>
-    /// <see cref="BannerContentHost"/>
+    /// <see cref="BannerDialogHost"/>
     /// </summary>
-    public class BannerContentHost : ContentControl
+    public class BannerDialogHost : ContentControl
     {
-        static BannerContentHost()
+        static BannerDialogHost()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(BannerContentHost), new FrameworkPropertyMetadata(typeof(BannerContentHost)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(BannerDialogHost), new FrameworkPropertyMetadata(typeof(BannerDialogHost)));
         }
 
         public double BannerHeight
@@ -132,112 +132,112 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
         public static readonly DependencyProperty SubtitleStringFormatProperty = DependencyProperty.Register(
             "SubtitleStringFormat",
             typeof(string),
-            typeof(BannerContentHost),
+            typeof(BannerDialogHost),
             new PropertyMetadata(null));
 
         public static readonly DependencyProperty SubtitleTemplateSelectorProperty = DependencyProperty.Register(
             "SubtitleTemplateSelector",
             typeof(DataTemplateSelector),
-            typeof(BannerContentHost),
+            typeof(BannerDialogHost),
             new PropertyMetadata(null));
 
         public static readonly DependencyProperty SubtitleTemplateProperty = DependencyProperty.Register(
             "SubtitleTemplate",
             typeof(DataTemplate),
-            typeof(BannerContentHost),
+            typeof(BannerDialogHost),
             new PropertyMetadata(null));
 
         public static readonly DependencyProperty SubtitleProperty = DependencyProperty.Register(
             "Subtitle",
             typeof(object),
-            typeof(BannerContentHost),
+            typeof(BannerDialogHost),
             new PropertyMetadata(null));
 
         public static readonly DependencyProperty TitleStringFormatProperty = DependencyProperty.Register(
             "TitleStringFormat",
             typeof(string),
-            typeof(BannerContentHost),
+            typeof(BannerDialogHost),
             new PropertyMetadata(null));
 
         public static readonly DependencyProperty TitleTemplateSelectorProperty = DependencyProperty.Register(
             "TitleTemplateSelector",
             typeof(DataTemplateSelector),
-            typeof(BannerContentHost),
+            typeof(BannerDialogHost),
             new PropertyMetadata(null));
 
         public static readonly DependencyProperty TitleTemplateProperty = DependencyProperty.Register(
             "TitleTemplate",
             typeof(DataTemplate),
-            typeof(BannerContentHost),
+            typeof(BannerDialogHost),
             new PropertyMetadata(null));
 
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(
             "Title",
             typeof(object),
-            typeof(BannerContentHost),
+            typeof(BannerDialogHost),
             new PropertyMetadata(null));
 
         public static readonly DependencyProperty BannerWidthProperty = DependencyProperty.Register(
-            "BannerWidth", typeof(double), typeof(BannerContentHost), new PropertyMetadata(default(double)));
+            "BannerWidth", typeof(double), typeof(BannerDialogHost), new PropertyMetadata(default(double)));
 
         
         public static readonly DependencyProperty BannerHeightProperty = DependencyProperty.Register(
-            "BannerHeight", typeof(double), typeof(BannerContentHost), new PropertyMetadata(default(double)));
+            "BannerHeight", typeof(double), typeof(BannerDialogHost), new PropertyMetadata(default(double)));
 
         
         public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(
             "Color",
             typeof(Brush),
-            typeof(BannerContentHost), 
+            typeof(BannerDialogHost), 
             new PropertyMetadata(null));
 
 
         public static readonly DependencyProperty BannerStringFormatProperty = DependencyProperty.Register(
             "BannerStringFormat",
             typeof(string),
-            typeof(BannerContentHost),
+            typeof(BannerDialogHost),
             new PropertyMetadata(null));
 
         public static readonly DependencyProperty BannerTemplateSelectorProperty = DependencyProperty.Register(
             "BannerTemplateSelector",
             typeof(DataTemplateSelector),
-            typeof(BannerContentHost),
+            typeof(BannerDialogHost),
             new PropertyMetadata(null));
 
         public static readonly DependencyProperty BannerTemplateProperty = DependencyProperty.Register(
             "BannerTemplate",
             typeof(DataTemplate),
-            typeof(BannerContentHost),
+            typeof(BannerDialogHost),
             new PropertyMetadata(null));
 
         public static readonly DependencyProperty BannerProperty = DependencyProperty.Register(
             "Banner",
             typeof(object),
-            typeof(BannerContentHost),
+            typeof(BannerDialogHost),
             new PropertyMetadata(null));
 
         public static readonly DependencyProperty ToolbarStringFormatProperty = DependencyProperty.Register(
             "ToolbarStringFormat",
             typeof(string),
-            typeof(BannerContentHost),
+            typeof(BannerDialogHost),
             new PropertyMetadata(null));
 
         public static readonly DependencyProperty ToolbarTemplateSelectorProperty = DependencyProperty.Register(
             "ToolbarTemplateSelector",
             typeof(DataTemplateSelector),
-            typeof(BannerContentHost),
+            typeof(BannerDialogHost),
             new PropertyMetadata(null));
 
         public static readonly DependencyProperty ToolbarTemplateProperty = DependencyProperty.Register(
             "ToolbarTemplate",
             typeof(DataTemplate),
-            typeof(BannerContentHost),
+            typeof(BannerDialogHost),
             new PropertyMetadata(null));
 
         public static readonly DependencyProperty ToolbarProperty = DependencyProperty.Register(
             "Toolbar",
             typeof(object),
-            typeof(BannerContentHost),
+            typeof(BannerDialogHost),
             new PropertyMetadata(null));
         
         

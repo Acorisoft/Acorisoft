@@ -50,6 +50,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.ViewModels
         {
             page?.Start(CurrentViewModel);
         }
+        
         private void SubscribePageChanged(IPageViewModel page)
         {
             if (page is null)

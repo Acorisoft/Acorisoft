@@ -512,16 +512,7 @@ namespace Acorisoft.Studio.Engines
             }
             
             DeleteAllCore();
-            
-            //
-            // 所有内容的数量
-            CountField = 0;
-            CountStream.OnNext(CountField);
-
-            //
-            // 所有页面数
-            PageCountField = 0;
-            PageCountStream.OnNext(PageCountField);
+            DemandRefreshDataSource();
         }
         
         /// <summary>
@@ -641,7 +632,6 @@ namespace Acorisoft.Studio.Engines
             if (IndexCollection.Count() == 0)
             {
                 PageIndexField = 0;
-                return;
             }
 
             if (PerPageItemCountField == 0)
