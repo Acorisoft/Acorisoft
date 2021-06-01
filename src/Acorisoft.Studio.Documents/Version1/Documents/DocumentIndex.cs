@@ -3,7 +3,7 @@ using LiteDB;
 
 namespace Acorisoft.Studio.Documents
 {
-    public class DocumentIndex
+    public class DocumentIndexVersion1
     {
         [BsonId]
         public Guid Id { get; set; }

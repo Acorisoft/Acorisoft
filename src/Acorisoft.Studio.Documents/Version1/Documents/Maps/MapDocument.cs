@@ -1,6 +1,6 @@
 namespace Acorisoft.Studio.Documents.Maps
 {
-    public class MapDocument : Document
+    public class MapDocument : DocumentVersion1
     {
         
     }

@@ -3,7 +3,7 @@ namespace Acorisoft.Studio.Documents.StickyNotes
     /// <summary>
     /// <see cref="StickyNoteDocument"/> 类型表示一个便签文档。
     /// </summary>
-    public class StickyNoteDocument : Acorisoft.Studio.Document
+    public class StickyNoteDocument : Document
     {
         
         /// <summary>

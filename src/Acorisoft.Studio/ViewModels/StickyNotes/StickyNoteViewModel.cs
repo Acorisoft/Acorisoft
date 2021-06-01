@@ -36,7 +36,8 @@ namespace Acorisoft.Studio.ViewModels
 
         protected override void OnParameterReceiving(Hashtable parameters)
         {
-            if (parameters is StickyNoteParameter parameter)
+            if (parameters is GalleryViewModelParameter<StickyNoteIndex, StickyNoteIndexWrapper, StickyNoteDocument>
+                parameter)
             {
                 Parameter(parameter.Document, parameter.Index, parameter.Wrapper);
             }

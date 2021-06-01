@@ -8,7 +8,7 @@ namespace Acorisoft.Studio.Engines
     /// <summary>
     /// <see cref="InspirationEngine"/> 表示灵感集引擎。用于为应用程序提供灵感收集相关的操作。
     /// </summary>
-    public class InspirationEngine : ProjectSystemModule
+    public class InspirationEngineVersion1 : ProjectSystemModule
     {
         //-----------------------------------------------------------------------
         //
@@ -27,7 +27,7 @@ namespace Acorisoft.Studio.Engines
         private LiteCollection<InspirationDocument> _documents;
         
         
-        public InspirationEngine(ICompositionSetFileManager fileManager, ICompositionSetRequestQueue requestQueue) : base(requestQueue)
+        public InspirationEngineVersion1(ICompositionSetFileManager fileManager, ICompositionSetRequestQueue requestQueue) : base(requestQueue)
         {
             _fileManager = fileManager ?? throw new ArgumentNullException(nameof(fileManager));
         }

@@ -101,8 +101,20 @@ namespace Acorisoft.Studio.ProjectSystems
                 container.RegisterInstance<StickyNoteEngine>(stickyNoteEngine);
                 container.UseInstance<IStickyNoteEngine>(stickyNoteEngine);
                 RegisterComposeSetSystemModule(container, stickyNoteEngine);
+
+                RegisterInspiration(container, instance);
                 return instance;
             }
+        }
+
+        private static void RegisterInspiration(IContainer container, IComposeSetSystem instance)
+        {
+            
+            var inspirationEngine = new InspirationEngine(instance);
+                
+            container.RegisterInstance<InspirationEngine>(inspirationEngine);
+            container.UseInstance<IInspirationEngine>(inspirationEngine);
+            RegisterComposeSetSystemModule(container, inspirationEngine);
         }
         
         #region Methods

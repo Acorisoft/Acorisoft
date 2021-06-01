@@ -1,8 +1,28 @@
-﻿namespace Acorisoft.Studio
+﻿using System.Collections.Generic;
+
+namespace Acorisoft.Studio
 {
-    public class DocumentIndexWrapper<TIndex> : DocumentIndexWrapper
+    public class DocumentIndexWrapper<TIndex> : DocumentIndexWrapper where TIndex : DocumentIndex
     {
-        
+        public int CompareTo(DocumentIndexWrapper<TIndex> y)
+        {
+            var x = this.Source;
+            
+            if (x == null || y == null)
+            {
+                return 0;
+            }
+
+            var xTicks = x.CreationTimestamp.Ticks;
+            var yTicks = y.Source.CreationTimestamp.Ticks;
+
+            if (xTicks > yTicks)
+            {
+                return -1;
+            }
+
+            return xTicks < yTicks ? 1 : 0;
+        }
         protected DocumentIndexWrapper(TIndex index)
         {
             Source = index;

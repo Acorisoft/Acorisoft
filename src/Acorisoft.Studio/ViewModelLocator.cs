@@ -71,6 +71,7 @@ namespace Acorisoft.Studio
         private static void RegisterInspiration(this IContainer container)
         {
             container.RegisterViewModelAndView<InspirationGalleryViewModel, InspirationGalleryView>();
+            container.RegisterViewModelAndView<ConversationInspirationViewModel, ConversationInspirationView>();
         }
 
         private static void RegisterStickyNote(this IContainer container)

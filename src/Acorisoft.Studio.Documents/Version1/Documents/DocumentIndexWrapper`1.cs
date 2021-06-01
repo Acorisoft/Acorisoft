@@ -2,12 +2,12 @@
 
 namespace Acorisoft.Studio.Documents
 {
-    public class DocumentIndexWrapper<TIndex> : ObservableObject where TIndex : DocumentIndex
+    public class DocumentIndexWrapperVersion1<TIndex> : ObservableObject where TIndex : DocumentIndexVersion1
     {
         private bool _isLocked;
         private bool _isSelected;
 
-        protected DocumentIndexWrapper(TIndex index)
+        protected DocumentIndexWrapperVersion1(TIndex index)
         {
             Source = index;
         }

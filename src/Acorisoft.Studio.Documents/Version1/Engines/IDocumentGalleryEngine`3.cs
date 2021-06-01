@@ -14,9 +14,9 @@ namespace Acorisoft.Studio.Engines
     /// <typeparam name="TIndexWrapper"></typeparam>
     /// <typeparam name="TDocument"></typeparam>
     public interface IDocumentGalleryEngine<TIndex, TIndexWrapper, TDocument>
-        where TIndex : Acorisoft.Studio.Documents.DocumentIndex
-        where TIndexWrapper : Acorisoft.Studio.Documents.DocumentIndexWrapper<TIndex>
-        where TDocument : Acorisoft.Studio.Documents.Document
+        where TIndex : Acorisoft.Studio.Documents.DocumentIndexVersion1
+        where TIndexWrapper : Acorisoft.Studio.Documents.DocumentIndexWrapperVersion1<TIndex>
+        where TDocument : Acorisoft.Studio.Documents.DocumentVersion1
     {
         /// <summary>
         /// 更新

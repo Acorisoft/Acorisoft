@@ -617,7 +617,7 @@ namespace Acorisoft.Studio.Engines
         /// <summary>
         /// 刷新数据源
         /// </summary>
-        private void DemandRefreshDataSource()
+        protected void DemandRefreshDataSource()
         {
             if (IndexCollection == null)
             {

@@ -1,6 +1,6 @@
 namespace Acorisoft.Studio.Documents.Inspirations
 {
-    public class SloganInspiration : InspirationDocument
+    public class SloganInspiration : InspirationDocumentVersion1
     {
         /// <summary>
         /// 获取或设置当前口号。

@@ -9,8 +9,6 @@ using Acorisoft.Studio.Documents;
 using Acorisoft.Studio.ProjectSystem;
 using DynamicData;
 using LiteDB;
-using Document = Acorisoft.Studio.Documents.Document;
-using DocumentIndex = Acorisoft.Studio.Documents.DocumentIndex;
 namespace Acorisoft.Studio.Engines
 {
     /// <summary>
@@ -18,9 +16,9 @@ namespace Acorisoft.Studio.Engines
     /// </summary>
     public abstract class DocumentGalleryEngine<TIndex, TIndexWrapper, TDocument> : ProjectSystemModule,
         IDocumentGalleryEngine<TIndex, TIndexWrapper, TDocument>, IDisposable
-        where TIndex : Acorisoft.Studio.Documents.DocumentIndex
-        where TIndexWrapper : Acorisoft.Studio.Documents.DocumentIndexWrapper<TIndex>
-        where TDocument : Acorisoft.Studio.Documents.Document
+        where TIndex : Acorisoft.Studio.Documents.DocumentIndexVersion1
+        where TIndexWrapper : Acorisoft.Studio.Documents.DocumentIndexWrapperVersion1<TIndex>
+        where TDocument : Acorisoft.Studio.Documents.DocumentVersion1
     {
         //-----------------------------------------------------------------------
         //

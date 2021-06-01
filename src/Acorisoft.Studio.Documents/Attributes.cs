@@ -13,4 +13,12 @@ namespace Acorisoft.Studio
         {
         }
     }
+    
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface, AllowMultiple = true)]
+    public class PurposeAttribute : Attribute
+    {
+        public PurposeAttribute(Type instanceType)
+        {
+        }
+    }
 }

@@ -1,6 +1,6 @@
 namespace Acorisoft.Studio.Documents.Characters
 {
-    public class CharacterDocument : Document
+    public class CharacterDocument : DocumentVersion1
     {
         
     }

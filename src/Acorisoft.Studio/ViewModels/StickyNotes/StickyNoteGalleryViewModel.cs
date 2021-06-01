@@ -93,10 +93,10 @@ namespace Acorisoft.Studio.ViewModels
             //
             // 跳转
             ViewAware.NavigateTo<StickyNoteViewModel>(
-                new StickyNoteParameter(
-                    new StickyNoteIndexWrapper(newInfo.FeedBackValue1), 
-                        newInfo.FeedBackValue1,
-                        newInfo.FeedBackValue2));
+                new GalleryViewModelParameter<StickyNoteIndex, StickyNoteIndexWrapper, StickyNoteDocument>(
+                    new StickyNoteIndexWrapper(newInfo.FeedBackValue1),
+                    newInfo.FeedBackValue1,
+                    newInfo.FeedBackValue2));
         }
 
         protected async void OnDeleteThisPage()
@@ -143,8 +143,8 @@ namespace Acorisoft.Studio.ViewModels
             //
             // 跳转
             ViewAware.NavigateTo<StickyNoteViewModel>(
-                new StickyNoteParameter(
-                    item, 
+                new GalleryViewModelParameter<StickyNoteIndex, StickyNoteIndexWrapper, StickyNoteDocument>(
+                    item,
                     item.Source,
                     document));
         }

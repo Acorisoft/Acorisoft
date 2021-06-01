@@ -11,7 +11,7 @@
            xmlns:appCommands="clr-namespace:Acorisoft.Studio.Commands"
            xmlns:appConverters="clr-namespace:Acorisoft.Studio.Converters"
            xmlns:appBehaviors="clr-namespace:Acorisoft.Studio.Behaviors"
-           xmlns:index="clr-namespace:Acorisoft.Studio.Documents.StickyNotes;assembly=Acorisoft.Studio.Documents"
+           xmlns:index="clr-namespace:Acorisoft.Studio.Documents.Inspirations;assembly=Acorisoft.Studio.Documents"
            xmlns:engines="clr-namespace:Acorisoft.Studio.Engines;assembly=Acorisoft.Studio.Documents"
            mc:Ignorable="d"
            d:DesignHeight="300" d:DesignWidth="300"
@@ -33,9 +33,6 @@
         <!-- 搜索栏 -->
         <Grid Grid.Row="0"
               Background="{StaticResource Brushes.White}">
-            <Grid.Effect>
-                <DropShadowEffect BlurRadius="8" Color="{StaticResource Colors.Black}" Direction="270" ShadowDepth="0" />
-            </Grid.Effect>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -109,7 +106,7 @@
             <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ItemsControl x:Name="Items">
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="{x:Type index:StickyNoteIndexWrapper}">
+                        <DataTemplate DataType="{x:Type index:ConversationInspiration}">
                             <w:OverlayContentControl Background="#FFAB12" Padding="16" Margin="4" Width="256"
                                                      Height="144">
                                 <w:OverlayContentControl.Overlay>
