@@ -10,7 +10,7 @@ using ReactiveUI;
 
 namespace Acorisoft.Studio.Views
 {
-    public partial class StickyNoteGalleryView : SpaPage<StickyNoteGallery>
+    public partial class StickyNoteGalleryView : SpaPage<StickyNoteGalleryViewModel>
     {
         public StickyNoteGalleryView()
         {

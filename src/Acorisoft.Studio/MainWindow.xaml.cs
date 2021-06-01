@@ -20,6 +20,7 @@ using Acorisoft.Extensions.Platforms.Windows;
 using Acorisoft.Extensions.Platforms.Windows.Commands;
 using Acorisoft.Extensions.Platforms.Windows.Controls;
 using Acorisoft.Extensions.Platforms.Windows.Services;
+using Acorisoft.Studio.Models;
 using Acorisoft.Studio.ProjectSystem;
 using Acorisoft.Studio.ProjectSystems;
 using Acorisoft.Studio.ViewModels;
@@ -96,6 +97,27 @@ namespace Acorisoft.Studio
             
             await css.OpenAsync(projectInfo.Item);
             ViewModelLocator.AppViewModel.Setting.RecentProject = projectInfo.Item;
+        }
+
+
+        #endregion
+        
+        #region GotoFunction
+
+        private void CanExecute_GotoFunctionCommand(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = e.Parameter is StudioFunction;
+            e.Handled = true;
+        }
+
+        private async void OnExecuted_GotoFunctionCommand(object sender, ExecutedRoutedEventArgs e)
+        {
+            // ReSharper disable once InconsistentNaming
+            var targetVM = ( e.Parameter as StudioFunction)?.GotoFunction();
+            if (targetVM != null)
+            {
+                ViewAware.NavigateTo(targetVM);
+            }
         }
 
 

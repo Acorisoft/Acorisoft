@@ -105,8 +105,7 @@
     <GeometryGroup x:Key="Icon.Award">
         <GeometryGroup.Children>
             <Geometry>F1 M24,24z M0,0z M8.21,13.89L8.21,13.89 7,23 12,20 17,23 15.79,13.88</Geometry>
-            <EllipseGeometry RadiusX="10" RadiusY="10" Center="12,12" />
-            <LineGeometry StartPoint="12,8" EndPoint="12,12" />
+            <EllipseGeometry RadiusX="7" RadiusY="7" Center="12,8" />
         </GeometryGroup.Children>
     </GeometryGroup>
     <GeometryGroup x:Key="Icon.User">

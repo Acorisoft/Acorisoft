@@ -37,10 +37,7 @@ namespace Acorisoft.Studio
             container.Register<IViewFor<MockupDialogViewModel>,MockupView>();
             container.Register<AppViewModel>();
             container.RegisterInstance<ILanguageService>(new LanguageService(SR.ResourceManager));
-            
-            container.RegisterStickyNote();
-            container.RegisterCommonViewModelAndViews();
-            container.RegisterHome();
+            container.RegisterAllViewModelAndViews();
         }
 
         protected void RegisterViewAndViewModel<TView, TViewModel>() where TViewModel : ViewModelBase where TView : IViewFor<TViewModel>

@@ -24,7 +24,7 @@ namespace Acorisoft.Studio.ViewModels
 
         public sealed override bool VerifyAccess()
         {
-            return !string.IsNullOrEmpty(_name) && !string.IsNullOrEmpty(_path);
+            return !string.IsNullOrEmpty(_path);
         }
 
         public sealed override string UrlPathSegment => SR.Home_NewProject;

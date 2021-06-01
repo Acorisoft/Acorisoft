@@ -9,18 +9,19 @@
            xmlns:appViews="clr-namespace:Acorisoft.Studio.Views"
            xmlns:appViewModels="clr-namespace:Acorisoft.Studio.ViewModels"
            xmlns:appCommands="clr-namespace:Acorisoft.Studio.Commands"
+           xmlns:appModels="clr-namespace:Acorisoft.Studio.Models"
            mc:Ignorable="d"
            d:DesignHeight="300" d:DesignWidth="300"
            d:DataContext="{d:DesignInstance Type={x:Type appViewModels:HomeViewModel},IsDesignTimeCreatable =True}">
     <w:EmptyStateView x:Name="RootView">
         <w:EmptyStateView.EmptyState>
-            <Grid>
+            <Grid Background="{StaticResource Brushes.White}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0"
-                        Background="{StaticResource Brushes.MaterialDesign.Blue}">
+                        Background="{StaticResource Brushes.MaterialDesign.LightGreen}">
                     <Image Source="{StaticResource Banners.RunnerStart}" />
                 </Border>
 
@@ -78,21 +79,51 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
+
                 <w:SearchBox Grid.Column="1"
-                             MinWidth="384" 
+                             MinWidth="384"
                              Height="36"
-                             Padding="16 0"/>
-                
+                             Padding="16 0" />
+
                 <StackPanel Grid.Column="2"
                             Orientation="Horizontal"
                             HorizontalAlignment="Right">
                     <w:SymbolButton Symbol="{StaticResource Icon.User}"
                                     Command="{x:Static appCommands:StudioCommands.NewProject}"
-                                    Margin="8 0"/>
+                                    Margin="8 0" />
                     <w:SymbolButton Symbol="{StaticResource Icon.Setting}"
-                                    Command="{x:Static appCommands:StudioCommands.OpenProject}" 
-                                    Margin="8 0"/>
+                                    Command="{x:Static appCommands:StudioCommands.OpenProject}"
+                                    Margin="8 0" />
                 </StackPanel>
+            </Grid>
+
+            <!-- 主要内容部分-->
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <ItemsControl Grid.Row="2" 
+                              ItemsSource="{Binding Functions,Mode=OneWay}"
+                              IsTabStop="False">
+                    <ItemsControl.Resources>
+                        <DataTemplate DataType="{x:Type appModels:InspirationFunction}">
+                            <w:SymbolContentButton Content="灵感"
+                                                   Style="{StaticResource  SymbolContentButton.Vertical}"
+                                                   Symbol="{StaticResource Icon.Award}"
+                                                   Margin="0 16"
+                                                   Command="{x:Static appCommands:StudioCommands.GotoFunction}"
+                                                   CommandParameter="{Binding}"/>
+                        </DataTemplate>
+                    </ItemsControl.Resources>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel IsItemsHost="True" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
             </Grid>
         </Grid>
     </w:EmptyStateView>

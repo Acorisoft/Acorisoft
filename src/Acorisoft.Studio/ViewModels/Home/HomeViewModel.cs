@@ -10,6 +10,7 @@ using Acorisoft.Extensions.Platforms.Services;
 using Acorisoft.Extensions.Platforms.Windows;
 using Acorisoft.Extensions.Platforms.Windows.Services;
 using Acorisoft.Extensions.Platforms.Windows.ViewModels;
+using Acorisoft.Studio.Models;
 using Acorisoft.Studio.ProjectSystem;
 using Acorisoft.Studio.ProjectSystems;
 using ReactiveUI;
@@ -20,12 +21,20 @@ namespace Acorisoft.Studio.ViewModels
     {
         private readonly IComposeSetSystem _system;
         private readonly ObservableAsPropertyHelper<bool> _isOpen;
-        
+
         public HomeViewModel(IComposeSetSystem system)
         {
             _system = system;
-            _isOpen =_system.IsOpen.ToProperty(this, nameof(IsOpen));
+            _isOpen = _system.IsOpen.ToProperty(this, nameof(IsOpen));
+
+            Functions = new ObservableCollection<StudioFunction>
+            {
+                new InspirationFunction()
+            };
         }
+
+        public ObservableCollection<StudioFunction> Functions { get; }
+
 
         public bool IsOpen => _isOpen.Value;
     }

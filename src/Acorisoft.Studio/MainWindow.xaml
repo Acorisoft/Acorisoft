@@ -9,7 +9,7 @@
              xmlns:appCommands="clr-namespace:Acorisoft.Studio.Commands"
              xmlns:rx="http://reactiveui.net"
              mc:Ignorable="d"
-             Color="{StaticResource Brushes.MaterialDesign.Blue}"
+             Color="{StaticResource Brushes.MaterialDesign.LightGreen}"
              Style="{StaticResource Windows}"
              DataContext="{x:Static app:ViewModelLocator.AppViewModel}"
              MinWidth="1366" MinHeight="768" Width="1366" Height="768"
@@ -40,6 +40,7 @@
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static appCommands:StudioCommands.NewProject}" CanExecute="CanExecute_NewProjectCommand" Executed="OnExecuted_NewProjectCommand"/>
         <CommandBinding Command="{x:Static appCommands:StudioCommands.OpenProject}" CanExecute="CanExecute_OpenProjectCommand" Executed="OnExecuted_OpenProjectCommand"/>
+        <CommandBinding Command="{x:Static appCommands:StudioCommands.GotoFunction}" CanExecute="CanExecute_GotoFunctionCommand" Executed="OnExecuted_GotoFunctionCommand"/>
         <CommandBinding Command="{x:Static appCommands:StudioCommands.Save}" CanExecute="CanExecute_SaveCommand" Executed="OnExecuted_SaveCommand"/>
     </Window.CommandBindings>
     <Window.InputBindings>

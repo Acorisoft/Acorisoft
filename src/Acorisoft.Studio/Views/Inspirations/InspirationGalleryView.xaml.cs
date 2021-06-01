@@ -1,8 +1,10 @@
 using System.Windows.Controls;
+using Acorisoft.Extensions.Platforms.Windows.Views;
+using Acorisoft.Studio.ViewModels;
 
 namespace Acorisoft.Studio.Views
 {
-    public partial class InspirationGalleryView : UserControl
+    public partial class InspirationGalleryView : SpaPage<InspirationGalleryViewModel>
     {
         public InspirationGalleryView()
         {

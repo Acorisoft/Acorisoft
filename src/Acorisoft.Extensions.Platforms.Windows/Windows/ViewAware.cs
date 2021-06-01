@@ -65,6 +65,11 @@ namespace Acorisoft.Extensions.Platforms.Windows
 
         #region NavigateTo
 
+        public static void NavigateTo(IPageViewModel page)
+        {
+            ServiceLocator.ViewService.NavigateTo(page);
+        }
+        
         public static void NavigateTo<TViewModel>() where TViewModel : PageViewModelBase, IPageViewModel
         {
             var vm = Locator.Current.GetService<TViewModel>();

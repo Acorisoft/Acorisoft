@@ -20,7 +20,7 @@
         <ResourceDictionary
             Source="pack://application:,,,/Acorisoft.Extensions.Platforms.Windows;component/Windows/Controls/IxContentHost.xaml" />
         <ResourceDictionary
-            Source="pack://application:,,,/Acorisoft.Extensions.Platforms.Windows;component/Windows/Controls/FormFields.xaml"/>
+            Source="pack://application:,,,/Acorisoft.Extensions.Platforms.Windows;component/Windows/Controls/FormFields.xaml" />
         <ResourceDictionary
             Source="pack://application:,,,/Acorisoft.Extensions.Platforms.Windows;component/Themes/Banner.xaml" />
         <ResourceDictionary
@@ -35,7 +35,9 @@
     <SolidColorBrush x:Key="App.White.Darken.Mask">#90FFFFFF</SolidColorBrush>
     <SolidColorBrush x:Key="App.Text.Primary">#3c4858</SolidColorBrush>
     <SolidColorBrush x:Key="App.Text.Secondary">#8492a6</SolidColorBrush>
-    <converters:String2IntConverter x:Key="String2IntConverter"/>
+    <SolidColorBrush x:Key="App.Theme.Primary" Color="{StaticResource Colors.MaterialDesign.LightGreen}"/>
+    <SolidColorBrush x:Key="App.Theme.Secondary" Color="{StaticResource Colors.MaterialDesign.LightGreen.Dark}"/>
+    <converters:String2IntConverter x:Key="String2IntConverter" />
 
     <!-- 
         烦躁指示器
@@ -165,19 +167,32 @@
         @ 用来给用户制造烦躁感的指示器。
     -->
     <Style TargetType="{x:Type c:EmptyStateView}">
-        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="IsTabStop" Value="False" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type c:EmptyStateView}">
                     <p:TiledPanel>
-                        <ContentPresenter x:Name="PART_Content" ContentSource="Content" />
-                        <ContentPresenter x:Name="PART_EmptyState" ContentSource="EmptyState" />
+                        <ContentPresenter x:Name="PART_Content" ContentSource="Content" Visibility="Collapsed"/>
+                        <ContentPresenter x:Name="PART_EmptyState" ContentSource="EmptyState" Visibility="Collapsed"/>
                     </p:TiledPanel>
                     <ControlTemplate.Triggers>
                         <EventTrigger RoutedEvent="ContentOpening">
                             <BeginStoryboard>
                                 <Storyboard>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_EmptyState"
+                                                                   Storyboard.TargetProperty="(UIElement.Visibility)">
+                                        <DiscreteObjectKeyFrame KeyTime="0:0:0.500">
+                                            <DiscreteObjectKeyFrame.Value>
+                                                <Visibility>Collapsed</Visibility>
+                                            </DiscreteObjectKeyFrame.Value>
+                                        </DiscreteObjectKeyFrame>
+                                    </ObjectAnimationUsingKeyFrames>
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_EmptyState"
+                                                                   Storyboard.TargetProperty="(UIElement.Opacity)">
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.400" Value="0" />
+                                    </DoubleAnimationUsingKeyFrames>
                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_Content"
                                                                    Storyboard.TargetProperty="(UIElement.Visibility)">
                                         <DiscreteObjectKeyFrame KeyTime="0:0:0">
@@ -197,25 +212,6 @@
                         <EventTrigger RoutedEvent="ContentClosing">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_Content"
-                                                                   Storyboard.TargetProperty="(UIElement.Visibility)">
-                                        <DiscreteObjectKeyFrame KeyTime="0:0:0.500">
-                                            <DiscreteObjectKeyFrame.Value>
-                                                <Visibility>Collapsed</Visibility>
-                                            </DiscreteObjectKeyFrame.Value>
-                                        </DiscreteObjectKeyFrame>
-                                    </ObjectAnimationUsingKeyFrames>
-                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_Content"
-                                                                   Storyboard.TargetProperty="(UIElement.Opacity)">
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0.400" Value="0" />
-                                    </DoubleAnimationUsingKeyFrames>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="EmptyStateOpening">
-                            <BeginStoryboard>
-                                <Storyboard>
                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_EmptyState"
                                                                    Storyboard.TargetProperty="(UIElement.Visibility)">
                                         <DiscreteObjectKeyFrame KeyTime="0:0:0">
@@ -229,13 +225,7 @@
                                         <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
                                         <EasingDoubleKeyFrame KeyTime="0:0:0.400" Value="1" />
                                     </DoubleAnimationUsingKeyFrames>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="EmptyStateClosing">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_EmptyState"
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_Content"
                                                                    Storyboard.TargetProperty="(UIElement.Visibility)">
                                         <DiscreteObjectKeyFrame KeyTime="0:0:0.500">
                                             <DiscreteObjectKeyFrame.Value>
@@ -243,7 +233,7 @@
                                             </DiscreteObjectKeyFrame.Value>
                                         </DiscreteObjectKeyFrame>
                                     </ObjectAnimationUsingKeyFrames>
-                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_EmptyState"
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_Content"
                                                                    Storyboard.TargetProperty="(UIElement.Opacity)">
                                         <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
                                         <EasingDoubleKeyFrame KeyTime="0:0:0.400" Value="0" />
@@ -429,7 +419,7 @@
         @ 用来给用户制造烦躁感的指示器。
     -->
     <Style TargetType="{x:Type c:BannerDialogHost}">
-        <Setter Property="Color" Value="{StaticResource Brushes.MaterialDesign.Blue}" />
+        <Setter Property="Color" Value="{StaticResource App.Theme.Primary}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="BannerTemplate">
             <Setter.Value>
@@ -543,7 +533,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value=".5" TargetName="PART_Border"/>
+                            <Setter Property="Opacity" Value=".5" TargetName="PART_Border" />
                         </Trigger>
                         <EventTrigger RoutedEvent="MouseEnter">
                             <BeginStoryboard>
@@ -604,7 +594,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style TargetType="{x:Type c:OverlayContentControl}">
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
@@ -627,7 +617,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value=".5" TargetName="PART_Border"/>
+                            <Setter Property="Opacity" Value=".5" TargetName="PART_Border" />
                         </Trigger>
                         <EventTrigger RoutedEvent="MouseEnter">
                             <BeginStoryboard>
@@ -688,15 +678,15 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
-     <Style TargetType="{x:Type b:SymbolContentButton}">
+
+    <Style TargetType="{x:Type b:SymbolContentButton}">
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="MinWidth" Value="32" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Background" Value="{StaticResource Brushes.Commons.Background}" />
         <Setter Property="Foreground" Value="{StaticResource Brushes.Commons.Foreground}" />
-        <Setter Property="Highlight" Value="{StaticResource  Brushes.MaterialDesign.Blue}" />
+        <Setter Property="Highlight" Value="{StaticResource  App.Theme.Primary}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -704,14 +694,14 @@
                     <Border x:Name="PART_Border" Background="{TemplateBinding Background}">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="48"/>
-                                <ColumnDefinition/>
+                                <ColumnDefinition Width="48" />
+                                <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <ContentPresenter x:Name="PART_Content"
-                                               Grid.Column="1" 
-                                               ContentSource="Content"
-                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                               HorizontalAlignment="Left" />
+                                              Grid.Column="1"
+                                              ContentSource="Content"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              HorizontalAlignment="Left" />
 
                             <Path Grid.Column="0" x:Name="PART_Icon"
                                   Data="{TemplateBinding Symbol}"
@@ -720,21 +710,30 @@
                                   Stroke="{TemplateBinding Foreground}"
                                   StrokeThickness="1"
                                   VerticalAlignment="Center"
-                                  HorizontalAlignment="Center"/>
+                                  HorizontalAlignment="Center" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                       <Trigger Property="IsMouseOver" Value="True">
-                           <Setter Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}" TargetName="PART_Content"/>
-                           <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}" TargetName="PART_Icon"/>
-                       </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}" TargetName="PART_Content"/>
-                            <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}" TargetName="PART_Icon"/>
-                            <Setter Property="Background" Value="{StaticResource App.White.Darken.Mask}" TargetName="PART_Border"/>
+                            <Setter Property="TextElement.Foreground"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}"
+                                    TargetName="PART_Content" />
+                            <Setter Property="Stroke"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}"
+                                    TargetName="PART_Icon" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="TextElement.Foreground"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}"
+                                    TargetName="PART_Content" />
+                            <Setter Property="Stroke"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}"
+                                    TargetName="PART_Icon" />
+                            <Setter Property="Background" Value="{StaticResource App.White.Darken.Mask}"
+                                    TargetName="PART_Border" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value=".5" TargetName="PART_Border"/>
+                            <Setter Property="Opacity" Value=".5" TargetName="PART_Border" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -742,6 +741,60 @@
         </Setter>
     </Style>
     
+    <Style x:Key="SymbolContentButton.Vertical" TargetType="{x:Type b:SymbolContentButton}">
+        <Setter Property="Height" Value="96" />
+        <Setter Property="Width" Value="96" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Background" Value="{StaticResource App.Theme.Primary}" />
+        <Setter Property="Foreground" Value="{StaticResource  Brushes.White}" />
+        <Setter Property="Highlight" Value="{StaticResource  App.Theme.Primary}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Margin" Value="8"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type b:SymbolContentButton}">
+                    <Border x:Name="PART_Border" Background="{TemplateBinding Background}" Padding="4">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition MinHeight="32" Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <ContentPresenter x:Name="PART_Content"
+                                              Grid.Row="1"
+                                              Margin="0 8"
+                                              ContentSource="Content"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              HorizontalAlignment="Center" />
+
+                            <Path Grid.Row="0" x:Name="PART_Icon"
+                                  Data="{TemplateBinding Symbol}"
+                                  Width="36"
+                                  Height="36"
+                                  Stretch="Uniform"
+                                  Stroke="{TemplateBinding Foreground}"
+                                  StrokeThickness="1"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Center" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Effect" Value="{StaticResource Effect.Shadow3}" TargetName="PART_Border"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="{StaticResource  App.Theme.Secondary}" TargetName="PART_Border" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value=".5" TargetName="PART_Border" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="SymbolContentButton.Center" TargetType="{x:Type b:SymbolContentButton}">
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="MinWidth" Value="32" />
@@ -749,7 +802,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Background" Value="{StaticResource Brushes.Commons.Background}" />
         <Setter Property="Foreground" Value="{StaticResource Brushes.Commons.Foreground}" />
-        <Setter Property="Highlight" Value="{StaticResource  Brushes.MaterialDesign.Blue}" />
+        <Setter Property="Highlight" Value="{StaticResource  App.Theme.Primary}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -757,14 +810,14 @@
                     <Border x:Name="PART_Border" Background="{TemplateBinding Background}">
                         <Grid HorizontalAlignment="Center">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="48"/>
-                                <ColumnDefinition/>
+                                <ColumnDefinition Width="48" />
+                                <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <ContentPresenter x:Name="PART_Content"
-                                               Grid.Column="1" 
-                                               ContentSource="Content"
-                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                               HorizontalAlignment="Left" />
+                                              Grid.Column="1"
+                                              ContentSource="Content"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              HorizontalAlignment="Left" />
 
                             <Path Grid.Column="0" x:Name="PART_Icon"
                                   Data="{TemplateBinding Symbol}"
@@ -773,28 +826,37 @@
                                   Stroke="{TemplateBinding Foreground}"
                                   StrokeThickness="1"
                                   VerticalAlignment="Center"
-                                  HorizontalAlignment="Center"/>
+                                  HorizontalAlignment="Center" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                       <Trigger Property="IsMouseOver" Value="True">
-                           <Setter Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}" TargetName="PART_Content"/>
-                           <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}" TargetName="PART_Icon"/>
-                       </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}" TargetName="PART_Content"/>
-                            <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}" TargetName="PART_Icon"/>
-                            <Setter Property="Background" Value="{StaticResource App.White.Darken.Mask}" TargetName="PART_Border"/>
+                            <Setter Property="TextElement.Foreground"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}"
+                                    TargetName="PART_Content" />
+                            <Setter Property="Stroke"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}"
+                                    TargetName="PART_Icon" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="TextElement.Foreground"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}"
+                                    TargetName="PART_Content" />
+                            <Setter Property="Stroke"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}"
+                                    TargetName="PART_Icon" />
+                            <Setter Property="Background" Value="{StaticResource App.White.Darken.Mask}"
+                                    TargetName="PART_Border" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value=".5" TargetName="PART_Border"/>
+                            <Setter Property="Opacity" Value=".5" TargetName="PART_Border" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style TargetType="{x:Type b:SymbolButton}">
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="MinWidth" Value="32" />
@@ -802,7 +864,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Background" Value="{StaticResource Brushes.Commons.Background}" />
         <Setter Property="Foreground" Value="{StaticResource Brushes.Commons.Foreground}" />
-        <Setter Property="Highlight" Value="{StaticResource  Brushes.MaterialDesign.Blue}" />
+        <Setter Property="Highlight" Value="{StaticResource  App.Theme.Primary}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -815,32 +877,79 @@
                               Stroke="{TemplateBinding Foreground}"
                               StrokeThickness="1"
                               VerticalAlignment="Center"
-                              HorizontalAlignment="Center"/>
+                              HorizontalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
-                       <Trigger Property="IsMouseOver" Value="True">
-                           <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}" TargetName="PART_Icon"/>
-                       </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}" TargetName="PART_Icon"/>
+                            <Setter Property="Stroke"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}"
+                                    TargetName="PART_Icon" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Stroke"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}"
+                                    TargetName="PART_Icon" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value=".5" TargetName="PART_Border"/>
+                            <Setter Property="Opacity" Value=".5" TargetName="PART_Border" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
-        <Style x:Key="SymbolButton.VeryLarge" TargetType="{x:Type b:SymbolButton}">
+
+    <Style x:Key="SymbolButton.Large" TargetType="{x:Type b:SymbolButton}">
+        <Setter Property="Height" Value="96" />
+        <Setter Property="Width" Value="96" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Background" Value="{StaticResource Brushes.Commons.Background}" />
+        <Setter Property="Foreground" Value="{StaticResource Brushes.Commons.Foreground}" />
+        <Setter Property="Highlight" Value="{StaticResource  App.Theme.Primary}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type b:SymbolButton}">
+                    <Border x:Name="PART_Border" Background="{TemplateBinding Background}">
+                        <Path x:Name="PART_Icon"
+                              Data="{TemplateBinding Symbol}"
+                              Width="48"
+                              Height="48"
+                              Stretch="Uniform"
+                              Stroke="{TemplateBinding Foreground}"
+                              StrokeThickness="1"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Stroke"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}"
+                                    TargetName="PART_Icon" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Stroke"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}"
+                                    TargetName="PART_Icon" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value=".5" TargetName="PART_Border" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SymbolButton.VeryLarge" TargetType="{x:Type b:SymbolButton}">
         <Setter Property="Height" Value="128" />
         <Setter Property="Width" Value="128" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Background" Value="{StaticResource Brushes.Commons.Background}" />
         <Setter Property="Foreground" Value="{StaticResource Brushes.Commons.Foreground}" />
-        <Setter Property="Highlight" Value="{StaticResource  Brushes.MaterialDesign.Blue}" />
+        <Setter Property="Highlight" Value="{StaticResource  App.Theme.Primary}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -862,7 +971,7 @@
                                     Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}"
                                     TargetName="PART_Icon" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
+                        <Trigger Property="IsPressed" Value="True">
                             <Setter Property="Stroke"
                                     Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}"
                                     TargetName="PART_Icon" />
@@ -894,8 +1003,8 @@
                     <TextBlock Text="{Binding Mode=OneWay}"
                                FontSize="15"
                                FontWeight="Bold"
-                               Foreground="{StaticResource App.Text.Secondary}" 
-                               TextWrapping="Wrap"/>
+                               Foreground="{StaticResource App.Text.Secondary}"
+                               TextWrapping="Wrap" />
                 </DataTemplate>
             </Setter.Value>
         </Setter>
@@ -918,7 +1027,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style TargetType="{x:Type c:Headline2Control}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="TitleTemplate">
@@ -937,8 +1046,8 @@
                     <TextBlock Text="{Binding Mode=OneWay}"
                                FontSize="15"
                                FontWeight="Bold"
-                               Foreground="{StaticResource App.Text.Secondary}" 
-                               TextWrapping="Wrap"/>
+                               Foreground="{StaticResource App.Text.Secondary}"
+                               TextWrapping="Wrap" />
                 </DataTemplate>
             </Setter.Value>
         </Setter>
@@ -961,7 +1070,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style TargetType="{x:Type c:Headline3Control}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="TitleTemplate">
@@ -981,7 +1090,7 @@
                                FontSize="15"
                                FontWeight="Bold"
                                Foreground="{StaticResource App.Text.Secondary}"
-                               TextWrapping="Wrap"/>
+                               TextWrapping="Wrap" />
                 </DataTemplate>
             </Setter.Value>
         </Setter>
@@ -1004,7 +1113,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style TargetType="{x:Type c:Headline1HeaderToolbar}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="TitleTemplate">
@@ -1023,8 +1132,8 @@
                     <TextBlock Text="{Binding Mode=OneWay}"
                                FontSize="15"
                                FontWeight="Bold"
-                               Foreground="{StaticResource App.Text.Secondary}" 
-                               TextWrapping="Wrap"/>
+                               Foreground="{StaticResource App.Text.Secondary}"
+                               TextWrapping="Wrap" />
                 </DataTemplate>
             </Setter.Value>
         </Setter>
@@ -1038,23 +1147,23 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <ContentPresenter Grid.Row="0" ContentSource="Title"
-                                           Margin="{TemplateBinding Padding}"/>
+                                          Margin="{TemplateBinding Padding}" />
                         <ContentPresenter Grid.Row="1" ContentSource="Subtitle"
                                           HorizontalAlignment="Left"
                                           VerticalAlignment="Top"
-                                           Margin="{TemplateBinding Padding}"/>
+                                          Margin="{TemplateBinding Padding}" />
                         <ContentPresenter Grid.Row="1"
                                           ContentSource="ToolBar"
                                           HorizontalAlignment="Right"
                                           VerticalAlignment="Top"
-                                           Margin="{TemplateBinding Padding}"/>
-                        <ContentPresenter Grid.Row="2" ContentSource="Content" Margin="{TemplateBinding Padding}"/>
+                                          Margin="{TemplateBinding Padding}" />
+                        <ContentPresenter Grid.Row="2" ContentSource="Content" Margin="{TemplateBinding Padding}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style TargetType="{x:Type c:Headline2HeaderToolbar}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="TitleTemplate">
@@ -1073,8 +1182,8 @@
                     <TextBlock Text="{Binding Mode=OneWay}"
                                FontSize="15"
                                FontWeight="Bold"
-                               Foreground="{StaticResource App.Text.Secondary}" 
-                               TextWrapping="Wrap"/>
+                               Foreground="{StaticResource App.Text.Secondary}"
+                               TextWrapping="Wrap" />
                 </DataTemplate>
             </Setter.Value>
         </Setter>
@@ -1087,22 +1196,22 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <ContentPresenter Grid.Row="0" ContentSource="Title"/>
+                        <ContentPresenter Grid.Row="0" ContentSource="Title" />
                         <ContentPresenter Grid.Row="1" ContentSource="Subtitle"
                                           Margin="0 10"
                                           HorizontalAlignment="Left"
-                                          VerticalAlignment="Top"/>
+                                          VerticalAlignment="Top" />
                         <ContentPresenter Grid.Row="1"
                                           ContentSource="ToolBar"
                                           HorizontalAlignment="Right"
-                                          VerticalAlignment="Top"/>
+                                          VerticalAlignment="Top" />
                         <ContentPresenter Grid.Row="2" ContentSource="Content" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style TargetType="{x:Type c:Headline3HeaderToolbar}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="TitleTemplate">
@@ -1122,7 +1231,7 @@
                                FontSize="15"
                                FontWeight="Bold"
                                Foreground="{StaticResource App.Text.Secondary}"
-                               TextWrapping="Wrap"/>
+                               TextWrapping="Wrap" />
                 </DataTemplate>
             </Setter.Value>
         </Setter>
@@ -1135,132 +1244,142 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <ContentPresenter Grid.Row="0" ContentSource="Title"/>
+                        <ContentPresenter Grid.Row="0" ContentSource="Title" />
                         <ContentPresenter Grid.Row="1" ContentSource="Subtitle"
                                           Margin="0 10"
                                           HorizontalAlignment="Left"
-                                          VerticalAlignment="Top"/>
+                                          VerticalAlignment="Top" />
                         <ContentPresenter Grid.Row="1"
                                           ContentSource="ToolBar"
                                           HorizontalAlignment="Right"
-                                          VerticalAlignment="Top"/>
+                                          VerticalAlignment="Top" />
                         <ContentPresenter Grid.Row="2" ContentSource="Content" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style TargetType="{x:Type c:PaginationButton}">
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="MinWidth" Value="32" />
         <Setter Property="Background" Value="{StaticResource Brushes.White}" />
         <Setter Property="Foreground" Value="{StaticResource Brushes.Black}" />
-        <Setter Property="BorderBrush" Value="{StaticResource Brushes.Black}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Brushes.Black}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontSize" Value="14" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type c:PaginationButton}">
-                    <Border x:Name="PART_Border" 
+                    <Border x:Name="PART_Border"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="3">
                         <ContentPresenter Content="{TemplateBinding Page}"
                                           VerticalAlignment="Center"
-                                          HorizontalAlignment="Center"/>
+                                          HorizontalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="BorderBrush" Value="{StaticResource App.White.Lighten.Mask}" TargetName="PART_Border" />
+                            <Setter Property="BorderBrush" Value="{StaticResource App.White.Lighten.Mask}"
+                                    TargetName="PART_Border" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="BorderBrush" Value="{StaticResource App.White.Darken.Mask}" TargetName="PART_Border" />
+                            <Setter Property="BorderBrush" Value="{StaticResource App.White.Darken.Mask}"
+                                    TargetName="PART_Border" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style x:Key="PaginationButton.Content" TargetType="{x:Type c:PaginationButton}">
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="MinWidth" Value="32" />
         <Setter Property="Background" Value="{StaticResource Brushes.White}" />
         <Setter Property="Foreground" Value="{StaticResource Brushes.Black}" />
-        <Setter Property="BorderBrush" Value="{StaticResource Brushes.Black}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Brushes.Black}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontSize" Value="14" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type c:PaginationButton}">
-                    <Border x:Name="PART_Border" 
+                    <Border x:Name="PART_Border"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="3">
                         <ContentPresenter ContentSource="Content"
                                           VerticalAlignment="Center"
-                                          HorizontalAlignment="Center"/>
+                                          HorizontalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="BorderBrush" Value="{StaticResource App.White.Lighten.Mask}" TargetName="PART_Border" />
+                            <Setter Property="BorderBrush" Value="{StaticResource App.White.Lighten.Mask}"
+                                    TargetName="PART_Border" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="BorderBrush" Value="{StaticResource App.White.Darken.Mask}" TargetName="PART_Border" />
+                            <Setter Property="BorderBrush" Value="{StaticResource App.White.Darken.Mask}"
+                                    TargetName="PART_Border" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style TargetType="{x:Type c:Pagination}">
-        <Setter Property="Background" Value="{StaticResource Brushes.Transparent}"/>
-        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Background" Value="{StaticResource Brushes.Transparent}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type c:Pagination}">
                     <Grid Background="{TemplateBinding Background}">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <c:PaginationButton x:Name="PART_First" Grid.Column="0" Style="{StaticResource PaginationButton.Content}" Content="&lt;&lt;"/>
-                        <c:PaginationButton x:Name="PART_LastPage" Grid.Column="1" Style="{StaticResource PaginationButton.Content}" Content="&lt;"/>
-                        <c:PaginationButton x:Name="PART_Previous" Grid.Column="2" Style="{StaticResource PaginationButton.Content}" Content="&lt;"/>
-                        <StackPanel x:Name="PART_ItemsPanel" Grid.Column="3" Orientation="Horizontal"/>
-                        <c:PaginationButton x:Name="PART_Next" Grid.Column="4" Style="{StaticResource PaginationButton.Content}" Content="&lt;"/>
-                        <c:PaginationButton x:Name="PART_NextPage" Grid.Column="5" Style="{StaticResource PaginationButton.Content}" Content="&gt;"/>
-                        <c:PaginationButton x:Name="PART_Last" Grid.Column="6" Style="{StaticResource PaginationButton.Content}" Content="&gt;&gt;"/>
-                        <TextBlock Grid.Column="7" Text="跳转到:"/>
-                        <TextBox x:Name="PART_Goto" Grid.Column="8"/>
+                        <c:PaginationButton x:Name="PART_First" Grid.Column="0"
+                                            Style="{StaticResource PaginationButton.Content}" Content="&lt;&lt;" />
+                        <c:PaginationButton x:Name="PART_LastPage" Grid.Column="1"
+                                            Style="{StaticResource PaginationButton.Content}" Content="&lt;" />
+                        <c:PaginationButton x:Name="PART_Previous" Grid.Column="2"
+                                            Style="{StaticResource PaginationButton.Content}" Content="&lt;" />
+                        <StackPanel x:Name="PART_ItemsPanel" Grid.Column="3" Orientation="Horizontal" />
+                        <c:PaginationButton x:Name="PART_Next" Grid.Column="4"
+                                            Style="{StaticResource PaginationButton.Content}" Content="&lt;" />
+                        <c:PaginationButton x:Name="PART_NextPage" Grid.Column="5"
+                                            Style="{StaticResource PaginationButton.Content}" Content="&gt;" />
+                        <c:PaginationButton x:Name="PART_Last" Grid.Column="6"
+                                            Style="{StaticResource PaginationButton.Content}" Content="&gt;&gt;" />
+                        <TextBlock Grid.Column="7" Text="跳转到:" />
+                        <TextBox x:Name="PART_Goto" Grid.Column="8" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style TargetType="{x:Type c:SearchBox}">
-        <Setter Property="Background" Value="{StaticResource Brushes.White}"/>
-        <Setter Property="BorderBrush" Value="Gray"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Background" Value="{StaticResource Brushes.White}" />
+        <Setter Property="BorderBrush" Value="Gray" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type c:SearchBox}">
-                    <Border x:Name="PART_Border" 
+                    <Border x:Name="PART_Border"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
@@ -1268,29 +1387,33 @@
                             SnapsToDevicePixels="True">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="32"/>
-                                <ColumnDefinition Width="48"/>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="32" />
+                                <ColumnDefinition Width="48" />
                             </Grid.ColumnDefinitions>
-                            <TextBox x:Name="PART_Text" 
+                            <TextBox x:Name="PART_Text"
                                      Grid.Column="0"
                                      Background="{StaticResource Brushes.Transparent}"
                                      Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                      Padding="{TemplateBinding Padding}"
                                      BorderThickness="0" BorderBrush="{x:Null}"
                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                            <b:SymbolButton x:Name="PART_Clear" Symbol="{StaticResource Icon.Clear}" Grid.Column="1" Visibility="Collapsed"/>
-                            <b:SymbolButton x:Name="PART_Search" Symbol="{StaticResource Icon.Search}" Grid.Column="2" Margin="0 0 16 0"/>
+                                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            <b:SymbolButton x:Name="PART_Clear" Symbol="{StaticResource Icon.Clear}" Grid.Column="1"
+                                            Visibility="Collapsed" />
+                            <b:SymbolButton x:Name="PART_Search" Symbol="{StaticResource Icon.Search}" Grid.Column="2"
+                                            Margin="0 0 16 0" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="BorderBrush" Value="{StaticResource Brushes.MaterialDesign.Blue}" TargetName="PART_Border"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource App.Theme.Primary}"
+                                    TargetName="PART_Border" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused" Value="True" SourceName="PART_Text">
-                            <Setter Property="Effect" Value="{StaticResource Effect.Shadow2}" TargetName="PART_Border"/>
-                            <Setter Property="BorderBrush" Value="{StaticResource Brushes.MaterialDesign.Blue}" TargetName="PART_Border"/>
+                            <Setter Property="Effect" Value="{StaticResource Effect.Shadow2}" TargetName="PART_Border" />
+                            <Setter Property="BorderBrush" Value="{StaticResource App.Theme.Primary}"
+                                    TargetName="PART_Border" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

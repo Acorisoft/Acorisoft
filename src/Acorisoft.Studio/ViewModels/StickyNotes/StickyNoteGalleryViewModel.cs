@@ -18,7 +18,7 @@ using ReactiveUI;
 
 namespace Acorisoft.Studio.ViewModels
 {
-    public class StickyNoteGallery : PageViewModelBase, IGalleryViewModel<StickyNoteIndex>
+    public class StickyNoteGalleryViewModel : PageViewModelBase, IGalleryViewModel<StickyNoteIndex>
     {
         private readonly CompositeDisposable _disposable;
         private readonly StickyNoteEngine _engine;
@@ -26,7 +26,7 @@ namespace Acorisoft.Studio.ViewModels
         private IComparer<StickyNoteIndexWrapper> _Sorter;
         private readonly ObservableAsPropertyHelper<int> _countProperty;
 
-        public StickyNoteGallery(IComposeSetSystem css, StickyNoteEngine engine)
+        public StickyNoteGalleryViewModel(IComposeSetSystem css, StickyNoteEngine engine)
         {
             _disposable = new CompositeDisposable();
             _css = css;
