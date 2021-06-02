@@ -104,6 +104,7 @@ namespace Acorisoft.Editor
             PART_Document = GetTemplateChild(PART_DocumentName) as FlowDocumentScrollViewerExtended;
             PART_HBar = GetTemplateChild(PART_HBarName) as ScrollBar;
             PART_VBar = GetTemplateChild(PART_VBarName) as ScrollBar;
+            
             if (PART_Markdown != null)
             {
                 //
@@ -113,6 +114,7 @@ namespace Acorisoft.Editor
                         handler => PART_Markdown.TextChanged -= handler)
                     .Throttle(TimeSpan.FromMilliseconds(50), RxApp.MainThreadScheduler)
                     .Subscribe(x => { OnMarkdownTextChanged(PART_Markdown, (EventArgs) x.EventArgs); });
+                PART_Markdown.Text = MarkdownText;
             }
         }
 
@@ -160,6 +162,7 @@ namespace Acorisoft.Editor
                 var document = Markdown.ToDocument(PART_Markdown.Text);
                 MarkdownDocument = document;
                 FlowDocument = Markdown.ToFlowDocument(document);
+                SetCurrentValue(MarkdownTextProperty,PART_Markdown.Text);
             }
 
         }
