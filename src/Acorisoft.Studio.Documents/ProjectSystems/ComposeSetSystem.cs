@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Threading;
 using System.Threading.Tasks;
 using Acorisoft.Extensions.Platforms;
 using Acorisoft.Studio.Documents;
@@ -51,7 +53,6 @@ namespace Acorisoft.Studio.ProjectSystems
             RespondingStream = new BehaviorSubject<Unit>(Unit.Default);
             RequestingStream = new BehaviorSubject<Unit>(Unit.Default);
             MediatorField = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            
             //
             // 初始化组合可释放收集器
             Disposable = new CompositeDisposable
@@ -211,6 +212,8 @@ namespace Acorisoft.Studio.ProjectSystems
             //
             // 更新属性
             var property = await GetPropertyAsync();
+
+            CurrentComposite.Property = property;
             PropertyStream.OnNext(property);
 
             await MediatorField.Publish(new ComposeSetCloseInstruction());
@@ -275,7 +278,7 @@ namespace Acorisoft.Studio.ProjectSystems
 
         #region IComposeSetFileSystem Implementations
 
-        private Stream Open(string fileName)
+        private Stream OpenImpl(string fileName)
         {
             return new FileStream(fileName, FileMode.Open);
         }
@@ -308,10 +311,14 @@ namespace Acorisoft.Studio.ProjectSystems
         /// <returns>返回此次操作的 <see cref="Task"/> 实例</returns>
         public Task<Stream> OpenAsync(Resource resource, bool isCache)
         {
-            if (!IsOpenField || resource == null) throw new InvalidOperationException("创作集未打开");
+            if (!IsOpenField || resource == null)
+            {
+                throw new InvalidOperationException("创作集未打开");
+            }
+            
             try
             {
-                return Task.Run(()=> Open(resource.GetResourceFileName(CurrentComposite)));
+                return Task.Run(()=> OpenImpl(resource.GetResourceFileName(CurrentComposite)));
             }
             catch
             {
@@ -336,7 +343,7 @@ namespace Acorisoft.Studio.ProjectSystems
             }
             try
             {
-                return Task.Run(() => resource.GetResourceFileNames(CurrentComposite).Select(Open).ToArray());
+                return Task.Run(() => resource.GetResourceFileNames(CurrentComposite).Select(OpenImpl).ToArray());
             }
             catch
             {
@@ -345,6 +352,32 @@ namespace Acorisoft.Studio.ProjectSystems
             }
 
             throw new InvalidOperationException("创作集未打开");
+        }
+
+        public void OpenAsync(Resource resource, TaskCallback callback)
+        {
+            if (!IsOpenField || resource == null)
+            {
+                throw new InvalidOperationException("创作集未打开");
+            }
+
+            if (callback == null)
+            {
+                throw new ArgumentNullException(nameof(callback));
+            }
+
+            var stream = OpenImpl(resource.GetResourceFileName(CurrentComposite));
+            callback?.Invoke(stream);
+        }
+        
+        public Stream Open(Resource resource)
+        {
+            if (!IsOpenField || resource == null)
+            {
+                throw new InvalidOperationException("创作集未打开");
+            }
+
+            return OpenImpl(resource.GetResourceFileName(CurrentComposite));
         }
 
         /// <summary>
@@ -404,6 +437,8 @@ namespace Acorisoft.Studio.ProjectSystems
                 
             //
             // 更新属性
+            
+            CurrentComposite.Property = property;
             PropertyStream.OnNext(property);
         }
         
@@ -418,6 +453,7 @@ namespace Acorisoft.Studio.ProjectSystems
                 
             //
             // 更新属性
+            CurrentComposite.Property = property;
             PropertyStream.OnNext(property);
 
             return property;
