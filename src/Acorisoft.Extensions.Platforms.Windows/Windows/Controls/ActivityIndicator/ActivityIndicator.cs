@@ -50,7 +50,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator
         // ReSharper disable once InconsistentNaming
         public ActivityIndicator()
         {
-            this.Loaded += OnLoadedCore;
+            this.Loaded += OnLoadedImpl;
             this.Unloaded += OnUnloadedCore;
         }
         
@@ -58,7 +58,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator
         {
         }
 
-        private void OnLoadedCore(object sender, RoutedEventArgs e)
+        private void OnLoadedImpl(object sender, RoutedEventArgs e)
         {
             if (ServiceProvider.GetService(typeof(IViewService)) is IViewService viewService)
             {

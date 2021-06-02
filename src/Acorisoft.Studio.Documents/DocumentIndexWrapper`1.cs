@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Acorisoft.Studio
 {
@@ -14,7 +15,7 @@ namespace Acorisoft.Studio
             }
 
             var xTicks = x.CreationTimestamp.Ticks;
-            var yTicks = y.Source.CreationTimestamp.Ticks;
+            var yTicks = y.CreationTimestamp.Ticks;
 
             if (xTicks > yTicks)
             {
@@ -36,12 +37,29 @@ namespace Acorisoft.Studio
             RaiseUpdated(nameof(IsLocked));
         }
 
-        public string Name
+
+        /// <summary>
+        /// 最后一次修改时间
+        /// </summary>
+        public DateTime LastAccessTimestamp
         {
-            get => Source.Name;
+            get => Source.LastAccessTimestamp;
             set
             {
-                Source.Name = value;
+                Source.LastAccessTimestamp = value;
+                RaiseUpdated();
+            }
+        }
+
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public DateTime CreationTimestamp
+        {
+            get => Source.CreationTimestamp;
+            set
+            {
+                Source.CreationTimestamp = value;
                 RaiseUpdated();
             }
         }

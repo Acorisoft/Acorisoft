@@ -11,6 +11,20 @@ namespace Acorisoft.Studio.ProjectSystems
     public interface IComposeSetFileSystem : IDisposable
     {
         /// <summary>
+        /// 获得指定资源的文件流操作。
+        /// </summary>
+        /// <param name="resource"></param>
+        /// <returns></returns>
+        Stream Open(Resource resource);
+        
+        /// <summary>
+        /// 在一个异步请求中完成获得指定资源的文件流操作。
+        /// </summary>
+        /// <param name="resource"></param>
+        /// <param name="callback"></param>
+        void OpenAsync(Resource resource, TaskCallback callback);
+        
+        /// <summary>
         /// 在一个异步请求中完成获得指定资源的文件流操作。
         /// </summary>
         /// <param name="resource"></param>

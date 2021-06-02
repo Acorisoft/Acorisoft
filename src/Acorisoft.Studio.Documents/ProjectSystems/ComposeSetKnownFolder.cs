@@ -8,6 +8,6 @@
         File,
         Cache,
         Git,
-        
+        AutoSave,
     }
 }

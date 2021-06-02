@@ -32,13 +32,35 @@ namespace Acorisoft.Studio.ProjectSystems
         {
             return folder switch
             {
-                ComposeSetKnownFolder.Brush => GetDirectoryAndCreate(Path.Combine(_path, BrushFolder)),
-                ComposeSetKnownFolder.Cache => GetDirectoryAndCreate(Path.Combine(_path, CacheFolder)),
-                ComposeSetKnownFolder.File => GetDirectoryAndCreate(Path.Combine(_path, FileFolder)),
-                ComposeSetKnownFolder.Git => GetDirectoryAndCreate(Path.Combine(_path, GitFolder)),
-                ComposeSetKnownFolder.Video => GetDirectoryAndCreate(Path.Combine(_path, VideoFolder)),
-                _ => GetDirectoryAndCreate(Path.Combine(_path, ImageFolder)),
+                ComposeSetKnownFolder.Brush => GetBrushFolder(),
+                ComposeSetKnownFolder.Cache => GetCacheFolder(),
+                ComposeSetKnownFolder.File => GetFileFolder(),
+                ComposeSetKnownFolder.Git => GetGitFolder(),
+                ComposeSetKnownFolder.Video => GetVideoFolder(),
+                ComposeSetKnownFolder.AutoSave => GetAutoSaveFolder(),
+                _ => GetImageFolder(),
             };
+        }
+
+        protected internal string GetBrushFolder() => GetDirectoryAndCreate(Path.Combine(_path, BrushFolder));
+        protected internal string GetCacheFolder() => GetDirectoryAndCreate(Path.Combine(_path, CacheFolder));
+        protected internal string GetFileFolder() => GetDirectoryAndCreate(Path.Combine(_path, FileFolder));
+        protected internal string GetGitFolder() => GetDirectoryAndCreate(Path.Combine(_path, GitFolder));
+        protected internal string GetImageFolder() => GetDirectoryAndCreate(Path.Combine(_path, ImageFolder));
+        protected internal string GetVideoFolder() => GetDirectoryAndCreate(Path.Combine(_path, VideoFolder));
+        protected internal string GetAutoSaveFolder() => GetDirectoryAndCreate(Path.Combine(_path, BrushFolder));
+
+
+
+        public void MaintainDirectory()
+        {
+            GetBrushFolder();
+            GetCacheFolder();
+            GetFileFolder();
+            GetGitFolder();
+            GetImageFolder();
+            GetVideoFolder();
+            GetAutoSaveFolder();
         }
 
         private static string GetDirectoryAndCreate(string path)
@@ -51,6 +73,7 @@ namespace Acorisoft.Studio.ProjectSystems
             return path;
         }
 
+        public IComposeSetProperty Property { get; set; }
         public LiteDatabase MainDatabase { get; internal set; }
     }
 }

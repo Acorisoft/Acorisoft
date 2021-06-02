@@ -11,7 +11,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Views
 
         protected QuickPage()
         {
-            this.Loaded += OnLoadedCore;
+            this.Loaded += OnLoadedImpl;
             this.Unloaded += OnUnloadedCore;
             this.DataContextChanged+= OnDataContextChanged;
             this.WhenActivated(d => d(this.WhenAnyValue(x => x.ViewModel).Do(OnDataContextHasValue).BindTo(this, x => x.DataContext)));
@@ -39,14 +39,14 @@ namespace Acorisoft.Extensions.Platforms.Windows.Views
 
         private void OnUnloadedCore(object sender, RoutedEventArgs e)
         {
-            this.Loaded -= OnLoadedCore;
+            this.Loaded -= OnLoadedImpl;
             this.Unloaded -= OnUnloadedCore;
             this.DataContextChanged -= OnDataContextChanged;
             ViewModel?.Stop();
             OnUnloaded(sender, e);
         }
 
-        private void OnLoadedCore(object sender, RoutedEventArgs e)
+        private void OnLoadedImpl(object sender, RoutedEventArgs e)
         {
             ViewModel?.Start();
             OnLoaded(sender, e);

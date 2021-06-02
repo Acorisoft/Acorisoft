@@ -12,6 +12,7 @@ namespace Acorisoft.Studio.ProjectSystems
     public interface IComposeSetSystem : IDisposable, IComposeSetFileSystem, IComposeSetPropertySystem,
         IComposeSetRequestQueue
     {
+        
         /// <summary>
         /// 在一个异步请求中打开一个项目。
         /// </summary>

@@ -8,6 +8,7 @@ namespace Acorisoft.Studio.ProjectSystems
         string GetComposeSetPath();
 
         string GetComposeSetPath(ComposeSetKnownFolder folder);
+        IComposeSetProperty Property { get; set; }
     }
 
     interface IComposeSetDatabase
