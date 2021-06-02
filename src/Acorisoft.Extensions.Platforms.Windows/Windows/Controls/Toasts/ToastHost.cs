@@ -32,7 +32,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.Toasts
         {
             _queue = new Queue<IToastViewModel>();
             _sync = new object();
-            this.Loaded += OnLoadedCore;
+            this.Loaded += OnLoadedImpl;
             this.Unloaded += OnUnloadedCore;
         }
 
@@ -96,7 +96,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.Toasts
             ToastDispatcher.Tick -= Dispatching;
         }
 
-        private void OnLoadedCore(object sender, RoutedEventArgs e)
+        private void OnLoadedImpl(object sender, RoutedEventArgs e)
         {
             if (ServiceProvider.GetService(typeof(IViewService)) is IViewService viewService)
             {
@@ -121,7 +121,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.Toasts
         }
         public Toast()
         {
-            this.Loaded += OnLoadedCore;
+            this.Loaded += OnLoadedImpl;
             this.Unloaded += OnUnloadedCore;
         }
         
@@ -133,7 +133,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.Toasts
             });
         }
 
-        private void OnLoadedCore(object sender, RoutedEventArgs e)
+        private void OnLoadedImpl(object sender, RoutedEventArgs e)
         {
             RaiseEvent(new RoutedEventArgs
             {

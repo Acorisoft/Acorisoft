@@ -68,7 +68,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.Dialogs
         
         public DialogHost()
         {
-            this.Loaded += OnLoadedCore;
+            this.Loaded += OnLoadedImpl;
             this.Unloaded += OnUnloadedCore;
         }
         
@@ -85,7 +85,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.Dialogs
         {
         }
 
-        private void OnLoadedCore(object sender, RoutedEventArgs e)
+        private void OnLoadedImpl(object sender, RoutedEventArgs e)
         {
             if (ServiceProvider.GetService(typeof(IViewService)) is IViewService viewService)
             {

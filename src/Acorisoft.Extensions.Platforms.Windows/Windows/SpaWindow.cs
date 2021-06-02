@@ -45,7 +45,7 @@ namespace Acorisoft.Extensions.Platforms.Windows
             CommandBindings.Add(new CommandBinding(SystemCommands.MaximizeWindowCommand, OnWindowRestore));
             CommandBindings.Add(new CommandBinding(SystemCommands.RestoreWindowCommand, OnWindowRestore));
             CommandBindings.Add(new CommandBinding(IxContentHostCommands.ToggleEnable, ToggleEnable));
-            this.Loaded += OnLoadedCore;
+            this.Loaded += OnLoadedImpl;
             this.Closed += OnClosedCore;
             this.Unloaded += OnUnloadedCore;
         }
@@ -58,7 +58,7 @@ namespace Acorisoft.Extensions.Platforms.Windows
             }
         }
 
-        private void OnLoadedCore(object sender, RoutedEventArgs e)
+        private void OnLoadedImpl(object sender, RoutedEventArgs e)
         {
             if (DataContext is IViewModel vm)
             {

@@ -13,9 +13,9 @@
         <w:ActivityIndicator x:Name="Indicator">
             <w:ToastHost x:Name="Toast">
                 <w:DialogHost x:Name="Dialog" >
-                    <Grid>
-                        <Button Click="ButtonBase_OnClick"></Button>
-                    </Grid>
+                    <DockPanel>
+                        
+                    </DockPanel>
                 </w:DialogHost>
             </w:ToastHost>
         </w:ActivityIndicator>
