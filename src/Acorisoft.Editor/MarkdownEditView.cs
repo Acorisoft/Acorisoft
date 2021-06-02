@@ -1,9 +1,12 @@
 using System;
+using System.Diagnostics;
 using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
 using ICSharpCode.AvalonEdit;
+using Markdig.Syntax;
 using Markdig.Wpf;
 using ReactiveUI;
 
@@ -24,57 +27,47 @@ namespace Acorisoft.Editor
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MarkdownEditView),
                 new FrameworkPropertyMetadata(typeof(MarkdownEditView)));
+            MarkdownDocumentPropertyKey = DependencyProperty.RegisterReadOnly(
+                "MarkdownDocument", typeof(MarkdownDocument), typeof(MarkdownEditView), new PropertyMetadata(default(MarkdownDocument)));
+            FlowDocumentPropertyKey = DependencyProperty.RegisterReadOnly("FlowDocument", typeof(FlowDocument),
+                typeof(MarkdownEditView), new PropertyMetadata(default(FlowDocument)));
+            MarkdownDocumentProperty = MarkdownDocumentPropertyKey.DependencyProperty;
+            FlowDocumentProperty = FlowDocumentPropertyKey.DependencyProperty;
+        }
+        
+        private static void OnMarkdownTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is MarkdownEditView view)
+            {
+                view.PART_Markdown.Text = e.NewValue.ToString();
+            }
         }
 
         public static readonly DependencyProperty ModeProperty = DependencyProperty.Register("Mode",
             typeof(MarkdownEditMode), typeof(MarkdownEditView), new PropertyMetadata(default(MarkdownEditMode)));
 
+        public static readonly DependencyPropertyKey MarkdownDocumentPropertyKey;
+        public static readonly DependencyProperty MarkdownDocumentProperty;
+
+        public static readonly DependencyProperty MarkdownTextProperty = DependencyProperty.Register(
+            "MarkdownText", typeof(string), typeof(MarkdownEditView), new PropertyMetadata(default(string), OnMarkdownTextChanged));
+
+        public static readonly DependencyPropertyKey FlowDocumentPropertyKey;
+        public static readonly DependencyProperty FlowDocumentProperty ;
+
+        
         private FlowDocumentScrollViewerExtended PART_Document;
         private TextEditor PART_Markdown;
         private ScrollBar PART_HBar;
         private ScrollBar PART_VBar;
         private IDisposable _markdownChangedDisposable;
 
-        private double _docHeight;
-        private double _docWidth;
-        private double _mdHeight;
-        private double _mdWidth;
+        private ScrollToAction _scrollToAction;
 
         public MarkdownEditView()
         {
-            this.SizeChanged += OnSizeChanged;
             this.Loaded += OnLoadedImpl;
             this.Unloaded += OnUnloadedImpl;
-        }
-
-        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            var mdScrollViewer = MarkdownScrollViewer;
-            var docScrollViewer = DocumentScrollViewer;
-            _docHeight = docScrollViewer.ViewportHeight +
-                         docScrollViewer.ExtentHeight;
-            _docWidth = docScrollViewer.ViewportWidth +
-                        docScrollViewer.ExtentWidth;
-            _mdHeight = mdScrollViewer.ViewportHeight +
-                        mdScrollViewer.ExtentHeight;
-            _mdWidth = mdScrollViewer.ViewportWidth +
-                       mdScrollViewer.ExtentWidth;
-
-            var docVRate = _docHeight / (docScrollViewer.ViewportHeight + 1);
-            var docHRate = _docWidth / (docScrollViewer.ViewportWidth + 1);
-
-            PART_HBar.Maximum = Math.Clamp(docHRate, 1, ushort.MaxValue);
-            PART_HBar.Minimum = 0.0;
-            PART_HBar.ViewportSize = 1;
-
-            PART_VBar.Maximum = Math.Clamp(docVRate, 1, ushort.MaxValue);
-            PART_VBar.Minimum = 0.0;
-            PART_VBar.ViewportSize = 1;
-
-            mdScrollViewer.ScrollToVerticalOffset(PART_VBar.Value * _mdHeight);
-            docScrollViewer.ScrollToVerticalOffset(PART_VBar.Value * _docHeight);
-            mdScrollViewer.ScrollToHorizontalOffset(PART_HBar.Value * _mdWidth);
-            docScrollViewer.ScrollToHorizontalOffset(PART_HBar.Value * _docWidth);
         }
 
         private void OnUnloadedImpl(object sender, RoutedEventArgs e)
@@ -88,25 +81,15 @@ namespace Acorisoft.Editor
             //
             if (PART_Markdown != null)
             {
-                PART_Markdown.ScrollViewer.ScrollChanged += OnScrollViewerScrollChanged;
+                PART_Markdown.ScrollViewer.ScrollChanged += OnMarkdownScrollViewerScrollChanged;
             }
 
             if (PART_Document != null)
             {
-                PART_Document.ScrollViewer.ScrollChanged += OnScrollViewerScrollChanged;
+                PART_Document.ScrollViewer.ScrollChanged += OnDocumentScrollViewerScrollChanged;
             }
 
-            if (PART_HBar != null)
-            {
-                PART_HBar.ValueChanged += OnHorizontalScrolling;
-            }
-
-            if (PART_VBar != null)
-            {
-                PART_VBar.ValueChanged += VerticalScrolling;
-            }
-
-            if (PART_HBar != null && PART_VBar != null)
+            if (PART_HBar != null && PART_VBar != null && Mode == MarkdownEditMode.Hybrid)
             {
                 PART_Document.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
                 PART_Document.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
@@ -128,139 +111,76 @@ namespace Acorisoft.Editor
                 _markdownChangedDisposable = Observable.FromEventPattern(
                         handler => PART_Markdown.TextChanged += handler,
                         handler => PART_Markdown.TextChanged -= handler)
-                    .Throttle(TimeSpan.FromMilliseconds(400), RxApp.MainThreadScheduler)
+                    .Throttle(TimeSpan.FromMilliseconds(50), RxApp.MainThreadScheduler)
                     .Subscribe(x => { OnMarkdownTextChanged(PART_Markdown, (EventArgs) x.EventArgs); });
             }
         }
 
         #region ScrollTo
 
-        private void ForceMarkdownScrollTo()
+        private enum ScrollToAction
         {
-            var h = PART_HBar.Value;
-            var v = PART_VBar.Value;
-            // PART_Markdown.ScrollViewer.HorizontalOffset = 
+            Idle,
+            ScrollingMarkdown,
+            ScrollingDocument,
         }
 
-
-        private void OnScrollViewerScrollChanged(object sender, ScrollChangedEventArgs e)
+        private void OnMarkdownScrollViewerScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            var mdScrollViewer = MarkdownScrollViewer;
-            var docScrollViewer = DocumentScrollViewer;
-            mdScrollViewer.ScrollToVerticalOffset(PART_VBar.Value * _mdHeight);
-            docScrollViewer.ScrollToVerticalOffset(PART_VBar.Value * _docHeight);
-            mdScrollViewer.ScrollToHorizontalOffset(PART_HBar.Value * _mdWidth);
-            docScrollViewer.ScrollToHorizontalOffset(PART_HBar.Value * _docWidth);
+            if (_scrollToAction != ScrollToAction.Idle)
+            {
+                _scrollToAction = ScrollToAction.Idle;
+                return;
+            }
+            _scrollToAction = ScrollToAction.ScrollingDocument;
+            var vRate = (DocumentScrollViewer.ExtentHeight + 1) / (MarkdownScrollViewer.ExtentHeight + 2);
+            var hRate = (DocumentScrollViewer.ExtentWidth + 1) / (MarkdownScrollViewer.ExtentWidth + 2);
+            DocumentScrollViewer.ScrollToVerticalOffset(DocumentScrollViewer.VerticalOffset + e.VerticalChange * vRate);
+            DocumentScrollViewer.ScrollToHorizontalOffset(DocumentScrollViewer.HorizontalOffset + e.HorizontalChange * hRate);
         }
-
-
-        private void VerticalScrolling(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void OnDocumentScrollViewerScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            var mdScrollViewer = MarkdownScrollViewer;
-            var docScrollViewer = DocumentScrollViewer;
-            mdScrollViewer.ScrollToVerticalOffset(PART_VBar.Value * _mdHeight);
-            docScrollViewer.ScrollToVerticalOffset(PART_VBar.Value * _docHeight);
+            if (_scrollToAction != ScrollToAction.Idle)
+            {
+                _scrollToAction = ScrollToAction.Idle;
+                return;
+            }
+            _scrollToAction = ScrollToAction.ScrollingMarkdown;
+            var vRate = (MarkdownScrollViewer.ExtentHeight + 1) / (DocumentScrollViewer.ExtentHeight + 2);
+            var hRate = (MarkdownScrollViewer.ExtentWidth + 1) / (DocumentScrollViewer.ExtentWidth + 2);
+            
+            MarkdownScrollViewer.ScrollToVerticalOffset(MarkdownScrollViewer.VerticalOffset + e.VerticalChange * vRate);
+            MarkdownScrollViewer.ScrollToHorizontalOffset(MarkdownScrollViewer.HorizontalOffset + e.HorizontalChange * hRate);
         }
-
-        private void OnHorizontalScrolling(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            var mdScrollViewer = MarkdownScrollViewer;
-            var docScrollViewer = DocumentScrollViewer;
-            mdScrollViewer.ScrollToHorizontalOffset(PART_HBar.Value * _mdWidth);
-            docScrollViewer.ScrollToHorizontalOffset(PART_HBar.Value * _docWidth);
-        }
-
 
         private void OnMarkdownTextChanged(object? sender, EventArgs e)
         {
             if (PART_Document != null)
             {
-                var markdownDocument = Markdown.ToDocument(PART_Markdown.Text);
-                var flowDocument = Markdown.ToFlowDocument(markdownDocument);
-
-                PART_Document.Document = flowDocument;
+                var document = Markdown.ToDocument(PART_Markdown.Text);
+                MarkdownDocument = document;
+                FlowDocument = Markdown.ToFlowDocument(document);
             }
 
-            // if (PART_Document != null && PART_Markdown != null)
-            // {
-            //     //
-            //     //
-            //     var mdScrollViewer = PART_Markdown.ScrollViewer;
-            //     var docScrollViewer = PART_Document.ScrollViewer;
-            //     //
-            //     // var mdActualWidth = mdScrollViewer.ExtentWidth + mdScrollViewer.ViewportWidth;
-            //     // var mdActualHeight = mdScrollViewer.ExtentHeight + mdScrollViewer.ViewportHeight;
-            //     //
-            //     // var docActualWidth = docScrollViewer.ExtentWidth + docScrollViewer.ViewportWidth;
-            //     // var docActualHeight = docScrollViewer.ExtentHeight + docScrollViewer.ViewportHeight;
-            //     //
-            //     // var minWidth = Math.Min(mdActualWidth, docActualWidth);
-            //     // var minHeight = Math.Min(mdActualHeight, docActualHeight);
-            //     // var maxWidth = Math.Max(mdActualWidth, docActualWidth);
-            //     // var maxHeight = Math.Max(mdActualHeight, docActualHeight);
-            //     // _horizontalScaleRate = Math.Min(mdActualWidth, docActualWidth) / Math.Max(mdActualWidth, docActualWidth);
-            //     // _vertialScaleRate = Math.Min(mdActualHeight, docActualHeight) / Math.Max(mdActualHeight, docActualHeight);
-            //     //
-            //     // _horizontalScaleRate = minWidth / maxWidth;
-            //     // _vertialScaleRate = minHeight / maxHeight;
-            //     //
-            //     // //
-            //     // // 设置最大值
-            //     // PART_HBar.Maximum = maxWidth;
-            //     // PART_HBar.ViewportSize = 1;
-            //     //
-            //     // PART_VBar.Maximum = maxHeight;
-            //     // PART_VBar.ViewportSize = 1;
-            //
-            //     _docHeight = docScrollViewer.ViewportHeight +
-            //                  docScrollViewer.ExtentHeight + 1;
-            //     _docWidth = docScrollViewer.ViewportWidth +
-            //                 docScrollViewer.ExtentWidth + 1;
-            //     _mdHeight = mdScrollViewer.ViewportHeight +
-            //                  mdScrollViewer.ExtentHeight + 1;
-            //     _mdWidth = mdScrollViewer.ViewportWidth +
-            //                 mdScrollViewer.ExtentWidth + 1;
-            //     
-            //     var docVRate = docScrollViewer.ViewportHeight / _docHeight;
-            //     var docHRate = docScrollViewer.ViewportWidth / _docWidth;
-            //     
-            //     PART_HBar.Maximum = docHRate;
-            //     PART_HBar.Minimum = 0.0;
-            //     
-            //     PART_VBar.Maximum = docVRate;
-            //     PART_VBar.Minimum = 0.0;
-            // }
-
-            var mdScrollViewer = MarkdownScrollViewer;
-            var docScrollViewer = DocumentScrollViewer;
-            _docHeight = docScrollViewer.ViewportHeight +
-                         docScrollViewer.ExtentHeight + 1;
-            _docWidth = docScrollViewer.ViewportWidth +
-                        docScrollViewer.ExtentWidth + 1;
-            _mdHeight = mdScrollViewer.ViewportHeight +
-                        mdScrollViewer.ExtentHeight + 1;
-            _mdWidth = mdScrollViewer.ViewportWidth +
-                       mdScrollViewer.ExtentWidth + 1;
-
-            var docVRate = docScrollViewer.ViewportHeight / _docHeight;
-            var docHRate = docScrollViewer.ViewportWidth / _docWidth;
-
-            PART_HBar.Maximum = docHRate;
-            PART_HBar.Minimum = 0.0;
-            PART_HBar.ViewportSize = 1;
-
-            PART_VBar.Maximum = docVRate;
-            PART_VBar.Minimum = 0.0;
-            PART_VBar.ViewportSize = 1;
-
-            docScrollViewer.ScrollToVerticalOffset(PART_VBar.Value * _docHeight - docScrollViewer.ViewportHeight);
-            docScrollViewer.ScrollToHorizontalOffset(PART_HBar.Value * _docWidth - docScrollViewer.ViewportWidth);
-            mdScrollViewer.ScrollToVerticalOffset(PART_VBar.Value * _mdHeight - mdScrollViewer.ViewportHeight);
-            mdScrollViewer.ScrollToHorizontalOffset(PART_HBar.Value * _mdWidth - mdScrollViewer.ViewportWidth);
         }
 
         #endregion
 
+        public FlowDocument FlowDocument
+        {
+            get => (FlowDocument) GetValue(FlowDocumentProperty);
+            private set => SetValue(FlowDocumentPropertyKey, value);
+        }
+        public string MarkdownText
+        {
+            get => (string) GetValue(MarkdownTextProperty);
+            set => SetValue(MarkdownTextProperty, value);
+        }
+        public MarkdownDocument MarkdownDocument
+        {
+            get => (MarkdownDocument) GetValue(MarkdownDocumentProperty);
+            private set => SetValue(MarkdownDocumentPropertyKey, value);
+        }
         public ScrollViewer MarkdownScrollViewer => PART_Markdown.ScrollViewer;
         public ScrollViewer DocumentScrollViewer => PART_Document.ScrollViewer;
 
@@ -276,8 +196,8 @@ namespace Acorisoft.Editor
 
         public MarkdownEditMode Mode
         {
-            get { return (MarkdownEditMode) GetValue(ModeProperty); }
-            set { SetValue(ModeProperty, value); }
+            get => (MarkdownEditMode) GetValue(ModeProperty);
+            set => SetValue(ModeProperty, value);
         }
     }
 }

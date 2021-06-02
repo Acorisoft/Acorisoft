@@ -24,5 +24,11 @@ namespace Acorisoft.Editor.Sample
         {
             InitializeComponent();
         }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            var mode = (MarkdownEditMode) ((Button) sender).Tag;
+            MarkdownEditView.Mode = mode;
+        }
     }
 }

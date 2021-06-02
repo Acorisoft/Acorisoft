@@ -20,11 +20,6 @@
                                                        FontSize="{TemplateBinding FontSize}"
                                                        SyntaxHighlighting="MarkDown"
                                                        WordWrap="True">
-                                    <avalonEdit:TextEditor.Options>
-                                        <avalonEdit:TextEditorOptions>
-                                            
-                                        </avalonEdit:TextEditorOptions>
-                                    </avalonEdit:TextEditor.Options>
                                 </avalonEdit:TextEditor>
                             </Border>
                         </ControlTemplate>
@@ -54,11 +49,6 @@
                                                            FontSize="{TemplateBinding FontSize}"
                                                            SyntaxHighlighting="MarkDown"
                                                            WordWrap="True">
-                                        <avalonEdit:TextEditor.Options>
-                                            <avalonEdit:TextEditorOptions>
-                                            
-                                            </avalonEdit:TextEditorOptions>
-                                        </avalonEdit:TextEditor.Options>
                                     </avalonEdit:TextEditor>
                                     
                                     <GridSplitter Grid.Column="0" Grid.Row="0"
@@ -68,15 +58,24 @@
                                     
                                     
                                     <mark:FlowDocumentScrollViewerExtended x:Name="PART_Document" 
-                                                                           Grid.Column="1" Grid.Row="0"/>
-                                    <ScrollBar x:Name="PART_VBar"
-                                               Grid.Row="0" Grid.RowSpan="2" Grid.Column="2"
-                                               Orientation="Vertical"/>
-                                    
-                                    <ScrollBar x:Name="PART_HBar"
-                                               Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
-                                               Orientation="Horizontal"/>
+                                                                           Grid.Column="1" Grid.Row="0"
+                                                                           Document="{TemplateBinding FlowDocument}"/>
                                 </Grid>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="Mode" Value="Presentation">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type app:MarkdownEditView}">
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderBrush}"
+                                    Padding="{TemplateBinding Padding}">
+                                <mark:FlowDocumentScrollViewerExtended x:Name="PART_Document"
+                                                                       Document="{TemplateBinding FlowDocument}"/>
                             </Border>
                         </ControlTemplate>
                     </Setter.Value>

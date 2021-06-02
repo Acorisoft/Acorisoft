@@ -8,7 +8,29 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <editor:MarkdownEditView>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <Button Content="Edit" Click="ButtonBase_OnClick">
+                <Button.Tag>
+                    <editor:MarkdownEditMode>Edit</editor:MarkdownEditMode>
+                </Button.Tag>
+            </Button>
+            <Button Content="Hybrid"  Click="ButtonBase_OnClick">
+                <Button.Tag>
+                    <editor:MarkdownEditMode>Hybrid</editor:MarkdownEditMode>
+                </Button.Tag>
+            </Button>
+            <Button Content="Presentation" Click="ButtonBase_OnClick">
+                <Button.Tag>
+                    <editor:MarkdownEditMode>Presentation</editor:MarkdownEditMode>
+                </Button.Tag>
+            </Button>
+        </StackPanel> 
+        <editor:MarkdownEditView Grid.Row="1" x:Name="MarkdownEditView">
             
         </editor:MarkdownEditView>
     </Grid>
