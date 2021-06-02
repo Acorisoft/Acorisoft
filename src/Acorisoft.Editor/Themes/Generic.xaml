@@ -33,18 +33,35 @@
                                     BorderThickness="{TemplateBinding BorderBrush}"
                                     Padding="{TemplateBinding Padding}">
                                 <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition MinWidth="384"/>
                                         <ColumnDefinition MinWidth="384"/>
+                                        <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <avalonEdit:TextEditor x:Name="PART_Markdown" Grid.Column="0"
+                                    <avalonEdit:TextEditor x:Name="PART_Markdown" 
+                                                           Grid.Column="0" Grid.Row="0"
                                                            FontSize="{TemplateBinding FontSize}"
                                                            SyntaxHighlighting="MarkDown"/>
-                                    <GridSplitter Grid.Column="0"
+                                    
+                                    <GridSplitter Grid.Column="0" Grid.Row="0"
                                                   Width="1"
                                                   Background="Black"
                                                   Margin="0 32"/>
-                                    <mark:FlowDocumentScrollViewerExtended x:Name="PART_Document" Grid.Column="1"/>
+                                    
+                                    
+                                    <mark:FlowDocumentScrollViewerExtended x:Name="PART_Document" 
+                                                                           Grid.Column="1" Grid.Row="0"/>
+                                    <ScrollBar x:Name="PART_VBar"
+                                               Grid.Row="0" Grid.RowSpan="2" Grid.Column="2"
+                                               Orientation="Vertical"/>
+                                    
+                                    <ScrollBar x:Name="PART_HBar"
+                                               Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+                                               Orientation="Horizontal"/>
                                 </Grid>
                             </Border>
                         </ControlTemplate>

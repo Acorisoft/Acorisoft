@@ -2,6 +2,7 @@ using System;
 using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using ICSharpCode.AvalonEdit;
 using Markdig.Wpf;
 using ReactiveUI;
@@ -10,10 +11,14 @@ namespace Acorisoft.Editor
 {
     [TemplatePart(Name = PART_MarkdownName, Type = typeof(FlowDocumentScrollViewerExtended))]
     [TemplatePart(Name = PART_DocumentName, Type = typeof(TextEditor))]
+    [TemplatePart(Name = PART_HBarName, Type = typeof(ScrollBar))]
+    [TemplatePart(Name = PART_VBarName, Type = typeof(ScrollBar))]
     public class MarkdownEditView : Control
     {
         private const string PART_MarkdownName = "PART_Markdown";
         private const string PART_DocumentName = "PART_Document";
+        private const string PART_HBarName = "PART_HBar";
+        private const string PART_VBarName = "PART_VBar";
         
         static MarkdownEditView()
         {
@@ -24,6 +29,9 @@ namespace Acorisoft.Editor
 
         private FlowDocumentScrollViewerExtended PART_Document;
         private TextEditor PART_Markdown;
+        private ScrollBar PART_HBar;
+        private ScrollBar PART_VBar;
+        private IDisposable _markdownChangedDisposable;
 
         public MarkdownEditView()
         {
@@ -33,7 +41,7 @@ namespace Acorisoft.Editor
 
         private void OnUnloadedImpl(object sender, RoutedEventArgs e)
         {
-            
+            _markdownChangedDisposable?.Dispose();
         }
 
         private void OnLoadedImpl(object sender, RoutedEventArgs e)
@@ -44,12 +52,17 @@ namespace Acorisoft.Editor
         {
             PART_Markdown = GetTemplateChild(PART_MarkdownName) as TextEditor;
             PART_Document = GetTemplateChild(PART_DocumentName) as FlowDocumentScrollViewerExtended;
+            PART_HBar = GetTemplateChild(PART_HBarName) as ScrollBar;
+            PART_VBar = GetTemplateChild(PART_VBarName) as ScrollBar;
+            
             
             //
             //
             if (PART_Markdown != null)
             {
-                var disposable = Observable.FromEventPattern(
+                //
+                // 呈现内容会在TextChanged事件触发时每400ms更新。
+                _markdownChangedDisposable = Observable.FromEventPattern(
                         handler => PART_Markdown.TextChanged += handler,
                         handler => PART_Markdown.TextChanged -= handler)
                     .Throttle(TimeSpan.FromMilliseconds(400), RxApp.MainThreadScheduler)
@@ -68,7 +81,17 @@ namespace Acorisoft.Editor
             {
                 var markdownDocument = Markdown.ToDocument(PART_Markdown.Text);
                 var flowDocument = Markdown.ToFlowDocument(markdownDocument);
+                
                 PART_Document.Document = flowDocument;
+                PART_Document.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
+                PART_Document.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
+                PART_Markdown.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
+                PART_Markdown.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
+                
+                //
+                //
+                
+                // PART_HBar.Maximum = Math.Max(PART_Document.ho)
             }
         }
 
