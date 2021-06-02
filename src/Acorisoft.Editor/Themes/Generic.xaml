@@ -18,7 +18,14 @@
                                     Padding="{TemplateBinding Padding}">
                                 <avalonEdit:TextEditor x:Name="PART_Markdown"
                                                        FontSize="{TemplateBinding FontSize}"
-                                                       SyntaxHighlighting="MarkDown"/>
+                                                       SyntaxHighlighting="MarkDown"
+                                                       WordWrap="True">
+                                    <avalonEdit:TextEditor.Options>
+                                        <avalonEdit:TextEditorOptions>
+                                            
+                                        </avalonEdit:TextEditorOptions>
+                                    </avalonEdit:TextEditor.Options>
+                                </avalonEdit:TextEditor>
                             </Border>
                         </ControlTemplate>
                     </Setter.Value>
@@ -45,7 +52,14 @@
                                     <avalonEdit:TextEditor x:Name="PART_Markdown" 
                                                            Grid.Column="0" Grid.Row="0"
                                                            FontSize="{TemplateBinding FontSize}"
-                                                           SyntaxHighlighting="MarkDown"/>
+                                                           SyntaxHighlighting="MarkDown"
+                                                           WordWrap="True">
+                                        <avalonEdit:TextEditor.Options>
+                                            <avalonEdit:TextEditorOptions>
+                                            
+                                            </avalonEdit:TextEditorOptions>
+                                        </avalonEdit:TextEditor.Options>
+                                    </avalonEdit:TextEditor>
                                     
                                     <GridSplitter Grid.Column="0" Grid.Row="0"
                                                   Width="1"
