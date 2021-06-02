@@ -9,8 +9,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Acorisoft.Extensions.Platforms.Windows;component/Themes/Generic.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
-            <Style TargetType="w:SpaWindow" BasedOn="{StaticResource Windows}"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
