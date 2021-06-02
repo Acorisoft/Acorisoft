@@ -81,7 +81,7 @@ namespace Acorisoft.Studio.ViewModels
 
         protected async void OnNewItem()
         {
-            var newInfo = new NewItemInfo<StickyNoteDocument, StickyNoteIndex, StickyNoteDocument>()
+            var newInfo = new NewItemInfo<StickyNoteDocument, StickyNoteIndex>()
             {
                 Name = DateTime.Now.ToLongTimeString()
             };
@@ -96,7 +96,7 @@ namespace Acorisoft.Studio.ViewModels
                 new GalleryViewModelParameter<StickyNoteIndex, StickyNoteIndexWrapper, StickyNoteDocument>(
                     new StickyNoteIndexWrapper(newInfo.FeedBackValue1),
                     newInfo.FeedBackValue1,
-                    newInfo.FeedBackValue2));
+                    newInfo.Item));
         }
 
         protected async void OnDeleteThisPage()

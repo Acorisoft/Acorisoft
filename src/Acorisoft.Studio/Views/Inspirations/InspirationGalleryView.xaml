@@ -5,6 +5,7 @@
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
            xmlns:w="https://github.com/Acorisoft/Acorisoft/Windows"
+           xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
            xmlns:app="clr-namespace:Acorisoft.Studio"
            xmlns:appViews="clr-namespace:Acorisoft.Studio.Views"
            xmlns:appViewModels="clr-namespace:Acorisoft.Studio.ViewModels"
@@ -14,15 +15,21 @@
            xmlns:index="clr-namespace:Acorisoft.Studio.Documents.Inspirations;assembly=Acorisoft.Studio.Documents"
            xmlns:engines="clr-namespace:Acorisoft.Studio.Engines;assembly=Acorisoft.Studio.Documents"
            mc:Ignorable="d"
+           Focusable="True"
            d:DesignHeight="300" d:DesignWidth="300"
            d:DataContext="{d:DesignInstance Type={x:Type appViewModels:InspirationGalleryViewModel},IsDesignTimeCreatable =True}">
     <UserControl.Resources>
         <w:BindingProxy x:Key="ThisViewModel" Data="{Binding}" />
         <appConverters:GalleryTitleConverter x:Key="Title" />
     </UserControl.Resources>
+    <UserControl.CommandBindings>
+        <CommandBinding Command="{x:Static appCommands:StudioCommands.NewInspirationFromClipboard}" 
+                        CanExecute="CanExecute_NewInspirationFromClipboardCommand" 
+                        Executed="Execute_NewInspirationFromClipboardCommand"/>
+    </UserControl.CommandBindings>
     <UserControl.InputBindings>
-        <KeyBinding Command="{Binding NewCommand}" Key="LeftCtrl,N" />
-        <KeyBinding Command="{Binding NewCommand}" Key="RightCtrl,N" />
+        <KeyBinding Command="{Binding NewCommand}" Key="N" Modifiers="Control"/>
+        <KeyBinding Command="{Binding NewInspirationFromClipboardCommand}" Key="V" Modifiers="Control"/>
     </UserControl.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -38,6 +45,13 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+            
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <w:SymbolButton Symbol="{StaticResource Icon.Clipboard}"
+                                Content="新建"
+                                Margin="8 0"
+                                Command="{Binding NewInspirationFromClipboardCommand}" />
+            </StackPanel>
 
             <w:SearchBox x:Name="SearchBox"
                          Grid.Column="1"
@@ -98,17 +112,21 @@
         </Grid>
 
         <w:Headline1HeaderToolbar Grid.Row="1"
+                                  Focusable="False"
                                   Background="{StaticResource Brushes.White}"
                                   Padding="16"
                                   Title="{Binding Count,Mode=OneWay,Converter={StaticResource Title}}"
                                   Subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                                   Margin="32 8">
-            <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                <ItemsControl x:Name="Items">
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto">
+                <ItemsControl x:Name="Items"
+                              Focusable="False">
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="{x:Type index:ConversationInspiration}">
+                        <DataTemplate DataType="{x:Type index:InspirationIndex}">
                             <w:OverlayContentControl Background="#FFAB12" Padding="16" Margin="4" Width="256"
-                                                     Height="144">
+                                                     Height="144" 
+                                                     Focusable="False">
                                 <w:OverlayContentControl.Overlay>
                                     <StackPanel Orientation="Horizontal"
                                                 HorizontalAlignment="Center">

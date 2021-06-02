@@ -27,9 +27,9 @@
                                   Command="{x:Static w:WindowCommands.GoBack}"
                                   WindowChrome.IsHitTestVisibleInChrome="True"/>
             
-            <w:WindowGoBackButton Grid.Column="1"
-                                  Command="{x:Static w:IxContentHostCommands.ToggleEnable}"
-                                  WindowChrome.IsHitTestVisibleInChrome="True"/>
+            <!-- <w:WindowGoBackButton Grid.Column="1" -->
+            <!--                       Command="{x:Static w:IxContentHostCommands.ToggleEnable}" -->
+            <!--                       WindowChrome.IsHitTestVisibleInChrome="True"/> -->
             
             <TextBlock Grid.Column="2"
                        Text="{Binding Title,TargetNullValue='首页',Mode=OneWay}"

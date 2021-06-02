@@ -22,7 +22,7 @@ namespace Acorisoft.Studio.Engines
 
         
 
-        protected sealed override void NewCore(INewItemInfo<InspirationDocument, InspirationIndex, InspirationDocument> info)
+        protected sealed override void NewCore(INewItemInfo<InspirationDocument, InspirationIndex> info)
         {
             //
             // 之前的设计中，NewAsync 传递 INewItemInfo<T1,T2,T3> 参数到 NewCore中完成创建实例。
@@ -31,8 +31,8 @@ namespace Acorisoft.Studio.Engines
             //base.NewCore(info);
 
             //
-            // 一定要确保FeedbackValue2 的内容不能为空
-            if (info.FeedBackValue2 == null)
+            // 一定要确保Item 的内容不能为空
+            if (info.Item == null)
             {
                 throw new ArgumentNullException(nameof(info));
             }
@@ -43,7 +43,7 @@ namespace Acorisoft.Studio.Engines
             
             //
             //
-            var document = info.FeedBackValue2;
+            var document = info.Item;
             
             //
             // 设置同样的唯一标识符。
@@ -109,9 +109,9 @@ namespace Acorisoft.Studio.Engines
         #region NewAsync
 
         public Task NewConversationAsync() => NewAsync(
-            new NewItemInfo<InspirationDocument, InspirationIndex, InspirationDocument>
+            new NewItemInfo<InspirationDocument, InspirationIndex>
             {
-                FeedBackValue2 = new ConversationInspiration()
+                Item = new ConversationInspiration()
             });
 
         #endregion

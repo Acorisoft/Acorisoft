@@ -9,7 +9,17 @@ namespace Acorisoft.Studio.ViewModels
         {
             10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80, 90, 100
         };
-        
+
+        public sealed override bool Accept<T>()
+        {
+            return typeof(T) == typeof(int);
+        }
+
+        public override object GetResult()
+        {
+            return SelectedItemCount;
+        }
+
         public override bool VerifyAccess()
         {
             return _selectedItemCount > 0 && _selectedItemCount < 100;

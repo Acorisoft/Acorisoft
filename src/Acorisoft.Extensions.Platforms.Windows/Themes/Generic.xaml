@@ -1003,6 +1003,7 @@
                     <TextBlock Text="{Binding Mode=OneWay}"
                                FontSize="15"
                                FontWeight="Bold"
+                               Padding="0 12"
                                Foreground="{StaticResource App.Text.Secondary}"
                                TextWrapping="Wrap" />
                 </DataTemplate>
@@ -1019,8 +1020,7 @@
                         </Grid.RowDefinitions>
                         <ContentPresenter Grid.Row="0" ContentSource="Title"
                                           Margin="0 24" />
-                        <ContentPresenter Grid.Row="1" ContentSource="Subtitle"
-                                          Margin="0 10" />
+                        <ContentPresenter Grid.Row="1" ContentSource="Subtitle"/>
                         <ContentPresenter Grid.Row="2" ContentSource="Content" />
                     </Grid>
                 </ControlTemplate>
@@ -1035,6 +1035,7 @@
                 <DataTemplate>
                     <TextBlock Text="{Binding Mode=OneWay}"
                                FontSize="24"
+                               Padding="0 12"
                                FontWeight="Bold"
                                Foreground="{StaticResource App.Text.Primary}" />
                 </DataTemplate>
@@ -1045,6 +1046,7 @@
                 <DataTemplate>
                     <TextBlock Text="{Binding Mode=OneWay}"
                                FontSize="15"
+                               Padding="0 12"
                                FontWeight="Bold"
                                Foreground="{StaticResource App.Text.Secondary}"
                                TextWrapping="Wrap" />
@@ -1062,8 +1064,7 @@
                         </Grid.RowDefinitions>
                         <ContentPresenter Grid.Row="0" ContentSource="Title"
                                           Margin="0 20" />
-                        <ContentPresenter Grid.Row="1" ContentSource="Subtitle"
-                                          Margin="0 10" />
+                        <ContentPresenter Grid.Row="1" ContentSource="Subtitle"/>
                         <ContentPresenter Grid.Row="2" ContentSource="Content" />
                     </Grid>
                 </ControlTemplate>
@@ -1079,6 +1080,7 @@
                     <TextBlock Text="{Binding Mode=OneWay}"
                                FontSize="18"
                                FontWeight="Bold"
+                               Padding="0 0 0 8"
                                Foreground="{StaticResource App.Text.Primary}" />
                 </DataTemplate>
             </Setter.Value>
@@ -1087,8 +1089,9 @@
             <Setter.Value>
                 <DataTemplate>
                     <TextBlock Text="{Binding Mode=OneWay}"
-                               FontSize="15"
-                               FontWeight="Bold"
+                               FontSize="14"
+                               FontWeight="Bold"                               
+                               Padding="0 0 0 8"
                                Foreground="{StaticResource App.Text.Secondary}"
                                TextWrapping="Wrap" />
                 </DataTemplate>
@@ -1103,10 +1106,8 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <ContentPresenter Grid.Row="0" ContentSource="Title"
-                                          Margin="0 16" />
-                        <ContentPresenter Grid.Row="1" ContentSource="Subtitle"
-                                          Margin="0 10" />
+                        <ContentPresenter Grid.Row="0" ContentSource="Title"/>
+                        <ContentPresenter Grid.Row="1" ContentSource="Subtitle"/>
                         <ContentPresenter Grid.Row="2" ContentSource="Content" />
                     </Grid>
                 </ControlTemplate>
@@ -1132,6 +1133,7 @@
                     <TextBlock Text="{Binding Mode=OneWay}"
                                FontSize="15"
                                FontWeight="Bold"
+                               Padding="0 12"
                                Foreground="{StaticResource App.Text.Secondary}"
                                TextWrapping="Wrap" />
                 </DataTemplate>
@@ -1146,12 +1148,10 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <ContentPresenter Grid.Row="0" ContentSource="Title"
-                                          Margin="{TemplateBinding Padding}" />
+                        <ContentPresenter Grid.Row="0" ContentSource="Title"/>
                         <ContentPresenter Grid.Row="1" ContentSource="Subtitle"
                                           HorizontalAlignment="Left"
-                                          VerticalAlignment="Top"
-                                          Margin="{TemplateBinding Padding}" />
+                                          VerticalAlignment="Top"/>
                         <ContentPresenter Grid.Row="1"
                                           ContentSource="ToolBar"
                                           HorizontalAlignment="Right"
@@ -1198,7 +1198,6 @@
                         </Grid.RowDefinitions>
                         <ContentPresenter Grid.Row="0" ContentSource="Title" />
                         <ContentPresenter Grid.Row="1" ContentSource="Subtitle"
-                                          Margin="0 10"
                                           HorizontalAlignment="Left"
                                           VerticalAlignment="Top" />
                         <ContentPresenter Grid.Row="1"
@@ -1220,6 +1219,7 @@
                     <TextBlock Text="{Binding Mode=OneWay}"
                                FontSize="18"
                                FontWeight="Bold"
+                               Padding="0 0 0 4"
                                Foreground="{StaticResource App.Text.Primary}" />
                 </DataTemplate>
             </Setter.Value>
@@ -1244,12 +1244,12 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <ContentPresenter Grid.Row="0" ContentSource="Title" />
+                        <ContentPresenter Grid.Row="0" ContentSource="Title"/>
                         <ContentPresenter Grid.Row="1" ContentSource="Subtitle"
-                                          Margin="0 10"
                                           HorizontalAlignment="Left"
-                                          VerticalAlignment="Top" />
-                        <ContentPresenter Grid.Row="1"
+                                          VerticalAlignment="Top" 
+                                          Margin="0 8"/>
+                        <ContentPresenter Grid.Row="0"
                                           ContentSource="ToolBar"
                                           HorizontalAlignment="Right"
                                           VerticalAlignment="Top" />

@@ -14,7 +14,7 @@
            xmlns:index="clr-namespace:Acorisoft.Studio.Documents.StickyNotes;assembly=Acorisoft.Studio.Documents"
            xmlns:engines="clr-namespace:Acorisoft.Studio.Engines;assembly=Acorisoft.Studio.Documents"
            mc:Ignorable="d"
-           d:DesignHeight="300" d:DesignWidth="300"
+           d:DesignHeight="1080" d:DesignWidth="1920"
            d:DataContext="{d:DesignInstance Type={x:Type appViewModels:ConversationInspirationViewModel},IsDesignTimeCreatable =True}">
     <UserControl.Resources>
         <w:BindingProxy x:Key="ThisViewModel" Data="{Binding}" />
@@ -27,16 +27,16 @@
     <DockPanel>
         <!-- 左边栏-->
         <DockPanel DockPanel.Dock="Left"
-                   Width="384">
-            <ScrollViewer>
+                   Width="384"
+                   Margin="16 16 12 0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
                     <w:Headline3HeaderToolbar DockPanel.Dock="Top"
-                                              Title="名字">
-                        <TextBox></TextBox>
-                    </w:Headline3HeaderToolbar>
-                    <w:Headline3HeaderToolbar DockPanel.Dock="Top"
                                               Title="摘要">
-                        <TextBox></TextBox>
+                        <TextBox AcceptsReturn="True"
+                                 AcceptsTab="True"
+                                 FontSize="15"
+                                 MinHeight="256"/>
                     </w:Headline3HeaderToolbar>
                 </StackPanel>
             </ScrollViewer>
@@ -44,7 +44,8 @@
         
         <!-- 右边栏-->
         <DockPanel DockPanel.Dock="Right"
-                   Width="384">
+                   Width="384"
+                   Margin="12 16 16 0">
             <w:Headline3HeaderToolbar DockPanel.Dock="Top"
                                       Title="视角">
                 
@@ -66,8 +67,14 @@
         </DockPanel>
         
         <!-- 内容栏-->
-        <DockPanel>
-            
+        <DockPanel Margin="12 16">
+            <w:Headline3Control DockPanel.Dock="Top"
+                                Title="名字">
+                <TextBox FontSize="24"/>
+            </w:Headline3Control>
+            <ItemsControl DockPanel.Dock="Bottom">
+                
+            </ItemsControl>
         </DockPanel>
     </DockPanel>
 </w:SpaPage>

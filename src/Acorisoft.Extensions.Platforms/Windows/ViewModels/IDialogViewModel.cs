@@ -2,6 +2,8 @@
 {
     public interface IDialogViewModel : IViewModel
     {
+        bool Accept<T>();
+        object GetResult();
         bool VerifyAccess();
         
         bool CanCancel();

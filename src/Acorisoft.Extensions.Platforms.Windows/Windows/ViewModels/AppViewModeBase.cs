@@ -33,11 +33,11 @@ namespace Acorisoft.Extensions.Platforms.Windows.ViewModels
             _contextView = viewService.ContextView.ToProperty(this, nameof(ContextView)).DisposeWith(_diposable);
             _titleStream = new Subject<string>().DisposeWith(_diposable);
             _title = _titleStream.ToProperty(this, nameof(Title));
-            viewService.Page.Subscribe(SubscribePageChanged).DisposeWith(_diposable);
-            viewService.QuickView.Subscribe(SubscribeQuickViewChanged).DisposeWith(_diposable);
-            viewService.ContextView.Subscribe(SubscribeQuickViewChanged).DisposeWith(_diposable);
-            viewService.ToolView.Subscribe(SubscribeQuickViewChanged).DisposeWith(_diposable);
-            viewService.ExtraView.Subscribe(SubscribeQuickViewChanged).DisposeWith(_diposable);
+            viewService.Page.ObserveOn(RxApp.MainThreadScheduler).Subscribe(SubscribePageChanged).DisposeWith(_diposable);
+            viewService.QuickView.ObserveOn(RxApp.MainThreadScheduler).Subscribe(SubscribeQuickViewChanged).DisposeWith(_diposable);
+            viewService.ContextView.ObserveOn(RxApp.MainThreadScheduler).Subscribe(SubscribeQuickViewChanged).DisposeWith(_diposable);
+            viewService.ToolView.ObserveOn(RxApp.MainThreadScheduler).Subscribe(SubscribeQuickViewChanged).DisposeWith(_diposable);
+            viewService.ExtraView.ObserveOn(RxApp.MainThreadScheduler).Subscribe(SubscribeQuickViewChanged).DisposeWith(_diposable);
             Router = new RoutingState();
         }
 

@@ -119,7 +119,7 @@ namespace Acorisoft.Studio.Engines
 
         #region NewAsync
 
-        private void NewAsyncImpl(INewItemInfo<TComposition, TIndex,TComposition> info)
+        private void NewAsyncImpl(INewItemInfo<TComposition, TIndex> info)
         {
             //
             // 检测是否已经加载创作集。
@@ -167,7 +167,7 @@ namespace Acorisoft.Studio.Engines
         /// 在一个异步操作中创建一个新的项目。
         /// </summary>
         /// <param name="info">指定要创建的操作。</param>
-        protected virtual void NewCore(INewItemInfo<TComposition, TIndex,TComposition> info)
+        protected virtual void NewCore(INewItemInfo<TComposition, TIndex> info)
         {
             //
             // 进入创建逻辑
@@ -191,7 +191,7 @@ namespace Acorisoft.Studio.Engines
             //
             // 返回
             info.FeedBackValue1 = index;
-            info.FeedBackValue2 = document;
+            info.Item = document;
             
             //
             // 插入
@@ -208,7 +208,7 @@ namespace Acorisoft.Studio.Engines
         /// </summary>
         /// <param name="info">指定要创建的操作。</param>
         /// <returns>返回此次操作的 <see cref="Task"/> 实例</returns>
-        public Task NewAsync(INewItemInfo<TComposition, TIndex, TComposition> info)
+        public Task NewAsync(INewItemInfo<TComposition, TIndex> info)
         {
             return Task.Run(() => NewAsyncImpl(info));
         }
@@ -608,11 +608,16 @@ namespace Acorisoft.Studio.Engines
 
         //-----------------------------------------------------------------------
         //
-        //  DemandRefreshDataSource
+        //  RefershAsync / DemandRefreshDataSource
         //
         //-----------------------------------------------------------------------
 
         #region DemandRefreshDataSource / OnRefreshDataSource
+
+        public Task RefershAsync()
+        {
+            return Task.Run(DemandRefreshDataSource);
+        }
 
         /// <summary>
         /// 刷新数据源

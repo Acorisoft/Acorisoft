@@ -98,8 +98,7 @@
     <GeometryGroup x:Key="Icon.Clipboard">
         <GeometryGroup.Children>
             <Geometry>F1 M24,24z M0,0z M16,4L18,4A2,2,0,0,1,20,6L20,20A2,2,0,0,1,18,22L6,22A2,2,0,0,1,4,20L4,6A2,2,0,0,1,6,4L8,4</Geometry>
-            <EllipseGeometry RadiusX="10" RadiusY="10" Center="12,12" />
-            <LineGeometry StartPoint="12,8" EndPoint="12,12" />
+            <RectangleGeometry RadiusX="1" RadiusY="1" Rect="8,2,8,4" />
         </GeometryGroup.Children>
     </GeometryGroup>
     <GeometryGroup x:Key="Icon.Award">

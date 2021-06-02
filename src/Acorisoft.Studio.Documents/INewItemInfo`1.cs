@@ -2,10 +2,9 @@
 
 namespace Acorisoft.Studio
 {
-    public interface INewItemInfo<TItem, TFeedBack1, TFeedBack2> : INewItemInfo<TItem>
+    public interface INewItemInfo<TItem, TFeedBack1> : INewItemInfo<TItem>
     {
         TFeedBack1 FeedBackValue1 { get; set; } 
-        TFeedBack2 FeedBackValue2 { get; set; }
     }
     
     public interface INewItemInfo<TItem>
@@ -70,9 +69,8 @@ namespace Acorisoft.Studio
         public string Path { get; set; }
     }
 
-    public class NewItemInfo<TItem, TFeedBack1, TFeedBack2> : NewItemInfo<TItem>, INewItemInfo<TItem, TFeedBack1, TFeedBack2>
+    public class NewItemInfo<TItem, TFeedBack1> : NewItemInfo<TItem>, INewItemInfo<TItem, TFeedBack1>
     {
         public TFeedBack1 FeedBackValue1 { get; set; } 
-        public TFeedBack2 FeedBackValue2 { get; set; }
     }
 }

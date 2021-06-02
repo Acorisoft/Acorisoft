@@ -62,16 +62,18 @@ namespace Acorisoft.Studio
 
         private static void RegisterHome(this IContainer container)
         {
-            RegisterViewModelAndView<HomeViewModel, HomeView>(container);
-            RegisterViewModelAndQuick<HomeContextViewModel, HomeContextView>(container);
-            RegisterViewModelAndDialog<NewProjectDialogViewModel, NewProjectDialog>(container);
-            RegisterViewModelAndDialog<OpenProjectDialogViewModel, OpenProjectDialog>(container);
+            container.RegisterViewModelAndView<HomeViewModel, HomeView>();
+            container.RegisterViewModelAndQuick<HomeContextViewModel, HomeContextView>();
+            container.RegisterViewModelAndDialog<NewProjectDialogViewModel, NewProjectDialog>();
+            container.RegisterViewModelAndDialog<OpenProjectDialogViewModel, OpenProjectDialog>();
         }
 
         private static void RegisterInspiration(this IContainer container)
         {
             container.RegisterViewModelAndView<InspirationGalleryViewModel, InspirationGalleryView>();
             container.RegisterViewModelAndView<ConversationInspirationViewModel, ConversationInspirationView>();
+            container.RegisterViewModelAndDialog<InspirationClipboardImageViewModel, InspirationClipboardImageView>();
+            container.RegisterViewModelAndDialog<InspirationClipboardTextViewModel, InspirationClipboardTextView>();
         }
 
         private static void RegisterStickyNote(this IContainer container)

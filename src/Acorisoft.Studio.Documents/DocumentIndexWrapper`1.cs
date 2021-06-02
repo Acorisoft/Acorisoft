@@ -35,6 +35,16 @@ namespace Acorisoft.Studio
             RaiseUpdated(nameof(IsSelected));
             RaiseUpdated(nameof(IsLocked));
         }
+
+        public string Name
+        {
+            get => Source.Name;
+            set
+            {
+                Source.Name = value;
+                RaiseUpdated();
+            }
+        }
         
         public TIndex Source { get; private set; }
     }

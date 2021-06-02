@@ -378,6 +378,11 @@ namespace Acorisoft.Extensions.Platforms.Windows
             var vm = Locator.Current.GetService<TViewModel>();
             return ServiceLocator.ViewService.ShowDialog(vm);
         }
+        
+        public static Task<IDialogSession> ShowDialog(IDialogViewModel dialog)
+        {
+            return ServiceLocator.ViewService.ShowDialog(dialog);
+        }
 
         public static Task<bool?> AwaitDelete(string title, string subtitle)
         {

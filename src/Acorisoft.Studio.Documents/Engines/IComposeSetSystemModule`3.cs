@@ -24,11 +24,17 @@ namespace Acorisoft.Studio.Engines
         Task ResetAsync();
 
         /// <summary>
+        /// 刷新
+        /// </summary>
+        /// <returns>返回此次操作的 <see cref="Task"/> 实例</returns>
+        Task RefershAsync();
+
+        /// <summary>
         /// 在一个异步操作中创建一个新的项目。
         /// </summary>
         /// <param name="info">指定要创建的操作。</param>
         /// <returns>返回此次操作的 <see cref="Task"/> 实例</returns>
-        Task NewAsync(INewItemInfo<TComposition, TIndex, TComposition> info);
+        Task NewAsync(INewItemInfo<TComposition, TIndex> info);
 
         /// <summary>
         /// 打开文档
