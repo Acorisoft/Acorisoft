@@ -7,7 +7,7 @@ namespace Acorisoft.Studio.Documents.Resources
 {
     public class CoverResource : ImageResource
     {
-        public override string GetResourceFileName(IComposeSet composeSet)
+        public sealed override string GetResourceFileName(IComposeSet composeSet)
         {
             if (composeSet != null)
             {
@@ -15,6 +15,11 @@ namespace Acorisoft.Studio.Documents.Resources
             }
             
             throw new InvalidOperationException("无法打开创作集");
+        }
+
+        public sealed override string GetResourceKey()
+        {
+            return Id.ToString("N");
         }
 
         /// <summary>

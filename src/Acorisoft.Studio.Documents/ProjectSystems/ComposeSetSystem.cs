@@ -139,6 +139,21 @@ namespace Acorisoft.Studio.ProjectSystems
             IsOpenField = false;
         }
 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        //-----------------------------------------------------------------------
+        //
+        //  IComposeSetSystem Implementations
+        //
+        //-----------------------------------------------------------------------
         #region IComposeSetSystem Implementations
 
         private static string GetDatabaseFileNameFromPath(string path)
@@ -275,15 +290,221 @@ namespace Acorisoft.Studio.ProjectSystems
         }
 
         #endregion
+        
+        
+        
+        
+        
+        
+        
+        //-----------------------------------------------------------------------
+        //
+        //  IComposeSetFileSystem Implementations
+        //
+        //-----------------------------------------------------------------------
+        
+        
+        
 
         #region IComposeSetFileSystem Implementations
 
-        private Stream OpenImpl(string fileName)
+        
+        //-----------------------------------------------------------------------
+        //
+        //  OpenAsync
+        //
+        //-----------------------------------------------------------------------
+        private Stream OpenImpl(Resource resource)
+        {
+            return resource.Mode == ResourceMode.Inside ? OpenStreamFromDatabase(resource.GetResourceKey()) : OpenStreamFromOutside(resource.GetResourceFileName(CurrentComposite));
+        }
+
+        private Stream OpenStreamFromDatabase(string key)
+        {
+            var fs = ((IComposeSetDatabase) CurrentComposite).MainDatabase.FileStorage;
+            return fs.OpenRead(key);
+        }
+        
+        private static Stream OpenStreamFromOutside(string fileName)
         {
             return new FileStream(fileName, FileMode.Open);
         }
 
-        private void UploadImpl(string sourceFileName, string targetFileName)
+        
+        /// <summary>
+        /// 在一个异步请求中完成获得指定资源的文件流操作。
+        /// </summary>
+        /// <param name="resource"></param>
+        /// <returns>返回此次操作的 <see cref="Task"/> 实例</returns>
+        public Task<Stream> OpenAsync(Resource resource)
+        {
+            if (!IsOpenField)
+            {
+                throw new InvalidOperationException("创作集未打开");
+            }
+
+            if (resource == null)
+            {
+                throw new InvalidOperationException("无法打开空的资源");
+            }
+
+            if (resource.GetType().IsAbstract)
+            {
+                throw new InvalidOperationException("无法打开抽象资源");
+            }
+            
+            return Task.Run(()=> OpenImpl(resource));
+        }
+
+        private Stream[] OpenAlbumFromDatabase(AlbumResource resource)
+        {
+            return resource.GetResourceFileNames(CurrentComposite).Select(OpenStreamFromDatabase).ToArray();
+        }
+        
+        private Stream[] OpenAlbumFromOutside(AlbumResource resource)
+        {
+            return resource.GetResourceKeys().Select(OpenStreamFromDatabase).ToArray();
+        }
+        
+        
+        /// <summary>
+        /// 在一个异步请求中完成获得指定资源的文件流操作。
+        /// </summary>
+        /// <param name="resource"></param>
+        /// <returns>返回此次操作的 <see cref="Task"/> 实例</returns>
+        public Task<Stream[]> OpenAsync(AlbumResource resource)
+        {
+            
+            if (!IsOpenField)
+            {
+                throw new InvalidOperationException("创作集未打开");
+            }
+
+            if (resource == null)
+            {
+                throw new InvalidOperationException("无法打开空的资源");
+            }
+
+            if (resource.GetType().IsAbstract)
+            {
+                throw new InvalidOperationException("无法打开抽象资源");
+            }
+
+            return Task.Run(() =>
+                resource.Mode == ResourceMode.Outside
+                    ? OpenAlbumFromDatabase(resource)
+                    : OpenAlbumFromOutside(resource));
+        }
+        
+        
+        public void OpenAsync(Resource resource, TaskCallback callback)
+        {
+            if (!IsOpenField)
+            {
+                throw new InvalidOperationException("创作集未打开");
+            }
+
+            if (resource == null)
+            {
+                throw new InvalidOperationException("无法打开空的资源");
+            }
+
+            if (resource.GetType().IsAbstract)
+            {
+                throw new InvalidOperationException("无法打开抽象资源");
+            }
+
+            if (callback == null)
+            {
+                throw new ArgumentNullException(nameof(callback));
+            }
+
+            var stream = OpenImpl(resource);
+            callback?.Invoke(stream);
+        }
+        
+        public Stream Open(Resource resource)
+        {
+            if (!IsOpenField)
+            {
+                throw new InvalidOperationException("创作集未打开");
+            }
+
+            if (resource == null)
+            {
+                throw new InvalidOperationException("无法打开空的资源");
+            }
+
+            if (resource.GetType().IsAbstract)
+            {
+                throw new InvalidOperationException("无法打开抽象资源");
+            }
+
+            return OpenImpl(resource);
+        }
+        
+        //-----------------------------------------------------------------------
+        //
+        //  VerifyResourceAccess
+        //
+        //-----------------------------------------------------------------------
+
+        private bool DetectOutside(string fileName)
+        {
+            return File.Exists(fileName);
+        }
+
+        private bool DetectInside(string key)
+        {
+            var fs = ((IComposeSetDatabase) CurrentComposite).MainDatabase.FileStorage;
+            return fs.Exists(key);
+        }
+        
+        public Task<bool> VerifyResourceAccessAsync(Resource resource)
+        {
+            return Task.Run(() => VerifyResourceAccess(resource));
+        }
+
+        public bool VerifyResourceAccess(Resource resource)
+        {
+            if (!IsOpenField)
+            {
+                throw new InvalidOperationException("创作集未打开");
+            }
+
+            if (resource == null)
+            {
+                throw new InvalidOperationException("无法打开空的资源");
+            }
+
+            if (resource.GetType().IsAbstract)
+            {
+                throw new InvalidOperationException("无法打开抽象资源");
+            }
+
+            return resource.Mode == ResourceMode.Outside ? DetectOutside(resource.GetResourceFileName(CurrentComposite)) : DetectInside(resource.GetResourceKey());
+        }
+
+
+        //-----------------------------------------------------------------------
+        //
+        //  UploadAsync
+        //
+        //-----------------------------------------------------------------------
+
+        private void UploadImpl(Resource resource, string sourceFileName)
+        {
+            if (resource.Mode == ResourceMode.Inside)
+            {
+                UploadFileToDatabase(sourceFileName, resource.GetResourceKey());
+            }
+            else
+            {
+                UploadFileToOutside(sourceFileName,resource.GetResourceFileName(CurrentComposite));
+            }
+        }
+        
+        private void UploadFileToOutside(string sourceFileName, string targetFileName)
         {
             if (!IsOpenField || string.IsNullOrEmpty(targetFileName))
             {
@@ -302,84 +523,13 @@ namespace Acorisoft.Studio.ProjectSystems
 
             throw new InvalidOperationException("创作集未打开");
         }
-        
-        /// <summary>
-        /// 在一个异步请求中完成获得指定资源的文件流操作。
-        /// </summary>
-        /// <param name="resource"></param>
-        /// <param name="isCache"></param>
-        /// <returns>返回此次操作的 <see cref="Task"/> 实例</returns>
-        public Task<Stream> OpenAsync(Resource resource, bool isCache)
-        {
-            if (!IsOpenField || resource == null)
-            {
-                throw new InvalidOperationException("创作集未打开");
-            }
-            
-            try
-            {
-                return Task.Run(()=> OpenImpl(resource.GetResourceFileName(CurrentComposite)));
-            }
-            catch
-            {
-                // rethrow
-                throw;
-            }
 
-            throw new InvalidOperationException("创作集未打开");
+        private void UploadFileToDatabase(string sourceFileName, string key)
+        {
+            var fs = ((IComposeSetDatabase) CurrentComposite).MainDatabase.FileStorage;
+            fs.Upload(key, sourceFileName);
         }
         
-        /// <summary>
-        /// 在一个异步请求中完成获得指定资源的文件流操作。
-        /// </summary>
-        /// <param name="resource"></param>
-        /// <param name="isCache"></param>
-        /// <returns>返回此次操作的 <see cref="Task"/> 实例</returns>
-        public Task<Stream[]> OpenAsync(AlbumResource resource, bool isCache)
-        {
-            if (!IsOpenField || resource == null)
-            {
-                throw new InvalidOperationException("创作集未打开");
-            }
-            try
-            {
-                return Task.Run(() => resource.GetResourceFileNames(CurrentComposite).Select(OpenImpl).ToArray());
-            }
-            catch
-            {
-                // rethrow
-                throw;
-            }
-
-            throw new InvalidOperationException("创作集未打开");
-        }
-
-        public void OpenAsync(Resource resource, TaskCallback callback)
-        {
-            if (!IsOpenField || resource == null)
-            {
-                throw new InvalidOperationException("创作集未打开");
-            }
-
-            if (callback == null)
-            {
-                throw new ArgumentNullException(nameof(callback));
-            }
-
-            var stream = OpenImpl(resource.GetResourceFileName(CurrentComposite));
-            callback?.Invoke(stream);
-        }
-        
-        public Stream Open(Resource resource)
-        {
-            if (!IsOpenField || resource == null)
-            {
-                throw new InvalidOperationException("创作集未打开");
-            }
-
-            return OpenImpl(resource.GetResourceFileName(CurrentComposite));
-        }
-
         /// <summary>
         /// 在一个异步请求中完成文件上传操作。
         /// </summary>
@@ -388,28 +538,85 @@ namespace Acorisoft.Studio.ProjectSystems
         /// <returns>返回此次操作的 <see cref="Task"/> 实例</returns>
         public Task UploadAsync(Resource resource, string sourceFileName)
         {
-            return Task.Run(()=> UploadImpl(resource.GetResourceFileName(CurrentComposite), sourceFileName));
+            return Task.Run(()=> UploadImpl(resource, sourceFileName));
         }
         
         /// <summary>
         /// 在一个异步请求中完成文件上传操作。
         /// </summary>
-        /// <param name="resource">指定要上传的资源类型。</param>
-        /// <param name="sourceFileNames">指定上传操作的原始文件路径。</param>
+        /// <param name="sourceResource">指定要上传的资源类型。</param>
+        /// <param name="targetResource">指定要合并的资源。</param>
         /// <returns>返回此次操作的 <see cref="Task"/> 实例</returns>
-        public Task UploadAsync(AlbumResource resource, IEnumerable<string> sourceFileNames)
+        public Task UploadAsync(AlbumResource sourceResource, CoverResource targetResource)
         {
+            if (sourceResource == null)
+            {
+                throw new ArgumentNullException(nameof(sourceResource));
+            }
+
+            if (targetResource == null)
+            {
+                throw new ArgumentNullException(nameof(targetResource));
+            }
+            
             return Task.Run(() =>
             {
-                var fileNames = sourceFileNames.ToArray();
-                var pathes = resource.GetResourceFileNames(CurrentComposite);
-                var count = Math.Min(fileNames.Length, pathes.Length);
-                for (var i = 0; i < count; i++)
+                if (VerifyResourceAccess(targetResource))
                 {
-                    UploadImpl(fileNames[i], pathes[i]);
+                    sourceResource.Add(targetResource.Id);
                 }
             });
         }
+        
+        /// <summary>
+        /// 在一个异步请求中完成文件上传操作。
+        /// </summary>
+        /// <param name="sourceResource">指定要上传的资源类型。</param>
+        /// <param name="targetResource">指定要合并的资源。</param>
+        /// <returns>返回此次操作的 <see cref="Task"/> 实例</returns>
+        public Task UploadAsync(AlbumResource sourceResource, AlbumResource targetResource)
+        {
+            if (sourceResource == null)
+            {
+                throw new ArgumentNullException(nameof(sourceResource));
+            }
+
+            if (targetResource == null)
+            {
+                throw new ArgumentNullException(nameof(targetResource));
+            }
+            
+            return Task.Run(() =>
+            {
+                if (targetResource.Mode == ResourceMode.Inside)
+                {
+                    foreach (var key in targetResource)
+                    {
+                        if (DetectInside(key.ToString("N")))
+                        {
+                            sourceResource.Add(key);
+                        }
+                    }
+                }
+                else
+                {
+                    var iterator = targetResource.GetResourceFileNames(CurrentComposite).GetEnumerator();
+                    foreach (var t in targetResource)
+                    {
+                        if (iterator.MoveNext() && DetectOutside(iterator.Current))
+                        {
+                            sourceResource.Add(t);
+                        }
+                    }
+                }
+            });
+        }
+        
+        //-----------------------------------------------------------------------
+        //
+        //  DownloadAsync
+        //
+        //-----------------------------------------------------------------------
 
         /// <summary>
         /// 在一个异步请求中完成文件下载操作。
@@ -423,6 +630,20 @@ namespace Acorisoft.Studio.ProjectSystems
         }
 
         #endregion
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        //-----------------------------------------------------------------------
+        //
+        //  IComposeSetPropertySystem Implementations
+        //
+        //-----------------------------------------------------------------------
 
         #region IComposeSetPropertySystem Implementations
         
@@ -513,6 +734,21 @@ namespace Acorisoft.Studio.ProjectSystems
 
         #endregion
 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        //-----------------------------------------------------------------------
+        //
+        //  IComposeSetRequestQueue Implementations
+        //
+        //-----------------------------------------------------------------------
         #region IComposeSetRequestQueue Implementations
 
         /// <summary>
@@ -552,6 +788,13 @@ namespace Acorisoft.Studio.ProjectSystems
         #endregion
 
         #endregion
+        
+        
+        //-----------------------------------------------------------------------
+        //
+        //  Properties
+        //
+        //-----------------------------------------------------------------------
 
         #region Properties
 

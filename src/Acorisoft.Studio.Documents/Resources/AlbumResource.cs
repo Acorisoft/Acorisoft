@@ -4,12 +4,13 @@ using Acorisoft.Studio.ProjectSystems;
 using LiteDB;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Acorisoft.Studio.ProjectSystems;
 
 namespace Acorisoft.Studio.Documents.Resources
 {
-    public class AlbumResource : ImageResource, ICollection<Guid>
+    public class AlbumResource : ImageResource, ICollection<Guid>, IReadOnlyList<Guid>
     {
         private readonly List<Guid> _guids;
 
@@ -38,7 +39,8 @@ namespace Acorisoft.Studio.Documents.Resources
             throw new InvalidOperationException("无法打开创作集");
         }
         
-        public string[] GetResourceFileNames(IComposeSet composeSet)
+        [return: NotNull]
+        public IEnumerable<string> GetResourceFileNames(IComposeSet composeSet)
         {
             if (composeSet != null && _guids.Count > 0)
             {
@@ -46,6 +48,16 @@ namespace Acorisoft.Studio.Documents.Resources
             }
             
             throw new InvalidOperationException("无法打开创作集");
+        }
+        
+        public sealed override string GetResourceKey()
+        {
+            return _guids.FirstOrDefault().ToString("N");
+        }
+
+        public IEnumerable<string> GetResourceKeys()
+        {
+            return _guids.Select(x => x.ToString("N"));
         }
 
         public IEnumerator<Guid> GetEnumerator() => _guids.GetEnumerator();
@@ -64,5 +76,7 @@ namespace Acorisoft.Studio.Documents.Resources
 
         public int Count => _guids.Count;
         public bool IsReadOnly => false;
+
+        public Guid this[int index] => _guids[index];
     }
 }
