@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Acorisoft.Studio.Documents;
 using Acorisoft.Studio.Documents.Inspirations;
@@ -114,6 +115,162 @@ namespace Acorisoft.Studio.Engines
                 Item = new ConversationInspiration()
             });
 
+        #endregion
+
+        //-----------------------------------------------------------------------
+        //
+        //  Sorter Classes And Static Sorter Instance
+        //
+        //-----------------------------------------------------------------------
+
+        #region Sorter
+
+        //-----------------------------------------------------------------------
+        //
+        //  排序工具专门用于为数据引擎提供排序支持，排序工具主要分为升序排序（Ascending）和降序排序（Descending）
+        //
+        //  1) 升序， 从小到大排列
+        //  2) 降序, 从大到小排列
+        //
+        //  *) Compare 方法, x > y = 1  x < y = -1 x == y = 1  
+        //
+        //-----------------------------------------------------------------------
+
+        #region Ascending Sorter
+
+        public class AscendingByCreatedTimeSorter : IComparer<InspirationIndexWrapper>
+        {
+            public int Compare(InspirationIndexWrapper? x, InspirationIndexWrapper? y)
+            {
+                if (x == null || y == null)
+                {
+                    return 0;
+                }
+
+                var xTicks = x.CreationTimestamp.Ticks;
+                var yTicks = y.CreationTimestamp.Ticks;
+
+                if (xTicks > yTicks)
+                {
+                    return 1;
+                }
+
+                return xTicks < yTicks ? -1 : 0;
+            }
+        }
+
+        public class AscendingByLastAccessTimeSorter : IComparer<InspirationIndexWrapper>
+        {
+            public int Compare(InspirationIndexWrapper? x, InspirationIndexWrapper? y)
+            {
+                if (x == null || y == null)
+                {
+                    return 0;
+                }
+
+                var xTicks = x.LastAccessTimestamp.Ticks;
+                var yTicks = y.LastAccessTimestamp.Ticks;
+
+                if (xTicks > yTicks)
+                {
+                    return 1;
+                }
+
+                return xTicks < yTicks ? -1 : 0;
+            }
+        }
+
+        public class AscendingByNameSorter : IComparer<InspirationIndexWrapper>
+        {
+            public int Compare(InspirationIndexWrapper? x, InspirationIndexWrapper? y)
+            {
+                if (x == null || y == null)
+                {
+                    return 0;
+                }
+
+                var xName = x.Name;
+                var yName = y.Name;
+
+                return string.Compare(xName, yName, StringComparison.Ordinal);
+            }
+        }
+
+        #endregion
+
+        #region Descending Sorter
+
+        public class DescendingByCreatedTimeSorter : IComparer<InspirationIndexWrapper>
+        {
+            public int Compare(InspirationIndexWrapper? x, InspirationIndexWrapper? y)
+            {
+                if (x == null || y == null)
+                {
+                    return 0;
+                }
+
+                var xTicks = x.CreationTimestamp.Ticks;
+                var yTicks = y.CreationTimestamp.Ticks;
+
+                if (xTicks > yTicks)
+                {
+                    return -1;
+                }
+
+                return xTicks < yTicks ? 1 : 0;
+            }
+        }
+
+        public class DescendingByLastAccessTimeSorter : IComparer<InspirationIndexWrapper>
+        {
+            public int Compare(InspirationIndexWrapper? x, InspirationIndexWrapper? y)
+            {
+                if (x == null || y == null)
+                {
+                    return 0;
+                }
+
+                var xTicks = x.LastAccessTimestamp.Ticks;
+                var yTicks = y.LastAccessTimestamp.Ticks;
+
+                if (xTicks > yTicks)
+                {
+                    return -1;
+                }
+
+                return xTicks < yTicks ? 1 : 0;
+            }
+        }
+
+        public class DescendingByNameSorter : IComparer<InspirationIndexWrapper>
+        {
+            public int Compare(InspirationIndexWrapper? x, InspirationIndexWrapper? y)
+            {
+                if (x == null || y == null)
+                {
+                    return 0;
+                }
+
+                var xName = x.Name;
+                var yName = y.Name;
+
+                return string.Compare(yName, xName, StringComparison.Ordinal);
+            }
+        }
+        #endregion
+
+        public static IComparer<InspirationIndexWrapper> Normal { get; } = Comparer<InspirationIndexWrapper>.Default;
+        public static IComparer<InspirationIndexWrapper> AscendingByCreationTimestamp { get; } = new AscendingByCreatedTimeSorter();
+        public static IComparer<InspirationIndexWrapper> AscendingByName { get; } = new AscendingByNameSorter();
+
+        public static IComparer<InspirationIndexWrapper> AscendingByLastAccessTimestamp { get; } =
+            new AscendingByLastAccessTimeSorter();
+
+        public static IComparer<InspirationIndexWrapper> DescendingByCreationTimestamp { get; } = new DescendingByCreatedTimeSorter();
+        public static IComparer<InspirationIndexWrapper> DescendingByName { get; } = new DescendingByNameSorter();
+
+        public static IComparer<InspirationIndexWrapper> DescendingByLastAccessTimestamp { get; } =
+            new DescendingByLastAccessTimeSorter();
         #endregion
     }
 }

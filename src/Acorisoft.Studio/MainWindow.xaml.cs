@@ -138,5 +138,16 @@ namespace Acorisoft.Studio
         }
 
         #endregion
+
+        public void CanExecute_NewInspirationFromClipboardCommand(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+            e.Handled = true;
+        }
+
+        public void Execute_NewInspirationFromClipboardCommand(object sender, ExecutedRoutedEventArgs e)
+        {
+            
+        }
     }
 }

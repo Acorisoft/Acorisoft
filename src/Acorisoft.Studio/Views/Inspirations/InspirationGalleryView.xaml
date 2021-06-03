@@ -23,11 +23,6 @@
         <w:BindingProxy x:Key="ThisViewModel" Data="{Binding}" />
         <appConverters:GalleryTitleConverter x:Key="Title" />
     </UserControl.Resources>
-    <UserControl.CommandBindings>
-        <CommandBinding Command="{x:Static appCommands:StudioCommands.NewInspirationFromClipboard}" 
-                        CanExecute="CanExecute_NewInspirationFromClipboardCommand" 
-                        Executed="Execute_NewInspirationFromClipboardCommand"/>
-    </UserControl.CommandBindings>
     <UserControl.InputBindings>
         <KeyBinding Command="{Binding NewCommand}" Key="N" Modifiers="Control"/>
         <KeyBinding Command="{Binding NewInspirationFromClipboardCommand}" Key="V" Modifiers="Control"/>
@@ -85,36 +80,34 @@
                                 Content="设置"
                                 Margin="8 0"
                                 Command="{Binding ChoosePerPageCountCommand}" />
-                <ComboBox Height="32"
-                          MinWidth="128" 
-                          Margin="8 0" 
-                          SelectedIndex="0"
-                          SelectedValuePath="Tag" 
-                          SelectedValue="{Binding Sorter,Mode=TwoWay}">
+                <w:FilterOptionComboBox Height="32"
+                                        SelectedIndex="0"
+                                        SelectedValuePath="Tag" 
+                                        SelectedValue="{Binding Sorter,Mode=TwoWay}">
                     <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Default}" 
-                                  Tag="{x:Static engines:StickyNoteEngine.Normal}"/>
+                                  Tag="{x:Static engines:InspirationEngine.Normal}"/>
                     <!-- 按名字升序 -->
                     <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Ascending_Name}" 
-                                  Tag="{x:Static engines:StickyNoteEngine.AscendingByName}"/>
+                                  Tag="{x:Static engines:InspirationEngine.AscendingByName}"/>
                     <!-- 按创建时间升序 -->
                     <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Ascending_CreationTimestamp}" 
-                                  Tag="{x:Static engines:StickyNoteEngine.AscendingByCreationTimestamp}"/>
+                                  Tag="{x:Static engines:InspirationEngine.AscendingByCreationTimestamp}"/>
                     <!-- 按修改时间升序 -->
                     <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Ascending_LastAccessTimestamp}" 
-                                  Tag="{x:Static engines:StickyNoteEngine.AscendingByLastAccessTimestamp}"/>
+                                  Tag="{x:Static engines:InspirationEngine.AscendingByLastAccessTimestamp}"/>
                     
                     <!-- 按名字降序 -->
                     <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Descending_Name}" 
-                                  Tag="{x:Static engines:StickyNoteEngine.DescendingByName}"/>
+                                  Tag="{x:Static engines:InspirationEngine.DescendingByName}"/>
                     
                     <!-- 按创建时间降序 -->
                     <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Descending_CreationTimestamp}"
-                                  Tag="{x:Static engines:StickyNoteEngine.DescendingByCreationTimestamp}"/>
+                                  Tag="{x:Static engines:InspirationEngine.DescendingByCreationTimestamp}"/>
                     
                     <!-- 按修改时间降序 -->
                     <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Descending_LastAccessTimestamp}" 
-                                  Tag="{x:Static engines:StickyNoteEngine.DescendingByLastAccessTimestamp}"/>
-                </ComboBox>
+                                  Tag="{x:Static engines:InspirationEngine.DescendingByLastAccessTimestamp}"/>
+                </w:FilterOptionComboBox>
             </StackPanel>
         </Grid>
 

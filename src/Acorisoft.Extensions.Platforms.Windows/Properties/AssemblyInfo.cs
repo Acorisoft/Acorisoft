@@ -1,5 +1,6 @@
 ﻿using System.Windows.Markup;
 
+[assembly: System.Windows.ThemeInfo(System.Windows.ResourceDictionaryLocation.None, System.Windows.ResourceDictionaryLocation.SourceAssembly)]
 [assembly: XmlnsDefinition("https://github.com/Acorisoft/Acorisoft/Windows", "Acorisoft.Extensions.Platforms.Windows")]
 [assembly: XmlnsDefinition("https://github.com/Acorisoft/Acorisoft/Windows", "Acorisoft.Extensions.Platforms.Windows.Controls")]
 [assembly: XmlnsDefinition("https://github.com/Acorisoft/Acorisoft/Windows", "Acorisoft.Extensions.Platforms.Windows.Controls.ActivityIndicator")]

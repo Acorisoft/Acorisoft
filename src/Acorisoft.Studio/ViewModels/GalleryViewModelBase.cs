@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Acorisoft.Extensions.Platforms.Windows;
@@ -16,6 +17,8 @@ namespace Acorisoft.Studio.ViewModels
         where TComposition : Document
     {
         private protected readonly ObservableAsPropertyHelper<int> CountProperty;
+        private IComparer<TWrapper> _Sorter;
+
         protected GalleryViewModelBase(IComposeSetSystem system, TEngine engine)
         {
             Engine = engine;
@@ -50,12 +53,32 @@ namespace Acorisoft.Studio.ViewModels
                 Engine.PerPageItemCount = result;
             }
         }
-        
+
+        /// <summary>
+        /// 刷新命令
+        /// </summary>
+
         protected IComposeSetSystem System { get; }
+
+        /// <summary>
+        /// 刷新命令
+        /// </summary>
         protected TEngine Engine { get; }
-        
+
+        /// <summary>
+        /// 刷新命令
+        /// </summary>
+
         public ICommand PerPageItemCountOptionCommand { get; }
+
+        /// <summary>
+        /// 刷新命令
+        /// </summary>
         public ICommand DeleteThisPageCommand { get; }
+
+        /// <summary>
+        /// 刷新命令
+        /// </summary>
         public ICommand DeleteAllCommand { get; }
         
         /// <summary>
@@ -68,6 +91,23 @@ namespace Acorisoft.Studio.ViewModels
         /// </summary>
         public ReadOnlyObservableCollection<TWrapper> Collection => Engine.Collection;
 
+        /// <summary>
+        /// 排序工具
+        /// </summary>
+        public IComparer<TWrapper> Sorter
+        {
+            get => _Sorter;
+            set
+            {
+                if (Set(ref _Sorter, value))
+                {
+                    Engine.Sorter = value;
+                }
+            }
+        }
+        /// <summary>
+        /// 刷新命令
+        /// </summary>
         public int Count => CountProperty.Value;
     }
 }

@@ -16,12 +16,7 @@ namespace Acorisoft.Studio.Views
         public InspirationGalleryView()
         {
             InitializeComponent();
-        }
-
-        protected override void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            Focus();
-            base.OnLoaded(sender, e);
+            
         }
 
         protected override void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -35,22 +30,6 @@ namespace Acorisoft.Studio.Views
             // 
             BindingOperations.EnableCollectionSynchronization(ViewModel.Collection, new object());
             this.OneWayBind(ViewModel, vm => vm.Collection, v => v.Items.ItemsSource);
-        }
-
-        public void CanExecute_NewInspirationFromClipboardCommand(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = true;
-            e.Handled = true;
-        }
-
-        public async void Execute_NewInspirationFromClipboardCommand(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (ViewModel == null)
-            {
-                return;
-            }
-
-            
         }
     }
 }
