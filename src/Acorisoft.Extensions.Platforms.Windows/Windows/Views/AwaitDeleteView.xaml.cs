@@ -4,9 +4,9 @@ using Acorisoft.Extensions.Platforms.Windows.Views;
 
 namespace Acorisoft.Extensions.Platforms.Windows.Views
 {
-    public partial class DeletePromptDialog : DialogPage<DeletePromptViewModel>
+    public partial class AwaitDeleteView : DialogPage<AwaitDeleteViewModel>
     {
-        public DeletePromptDialog()
+        public AwaitDeleteView()
         {
             InitializeComponent();
         }

@@ -17,9 +17,9 @@ namespace Acorisoft.Extensions.Platforms.Windows.Services
             container.UseInstance<IViewService>(viewService, IfAlreadyRegistered.AppendNewImplementation);
             container.UseInstance<IDialogService>(viewService, IfAlreadyRegistered.AppendNewImplementation);
             container.UseDryIocDependencyResolver();
-            container.RegisterViewModelAndDialog<DeletePromptViewModel, DeletePromptDialog>();
-            container.RegisterViewModelAndDialog<ClosePagePromptViewModel, ClosePagePromptDialog>();
-            container.RegisterViewModelAndDialog<CloseWindowPromptViewModel, CloseWindowPromptDialog>();
+            container.RegisterViewModelAndDialog<AwaitDeleteViewModel, AwaitDeleteView>();
+            container.RegisterViewModelAndDialog<AwaitClosePageViewModel, AwaitClosePageView>();
+            container.RegisterViewModelAndDialog<AwaitCloseWindowViewModel, AwaitCloseWindowView>();
             ServiceProvider.SetServiceProvider(container);
             return container;
         }

@@ -4,9 +4,9 @@ using Acorisoft.Extensions.Platforms.Windows.Views;
 
 namespace Acorisoft.Extensions.Platforms.Windows.Views
 {
-    public partial class CloseWindowPromptDialog : DialogPage<CloseWindowPromptViewModel>
+    public partial class AwaitCloseWindowView : DialogPage<AwaitCloseWindowViewModel>
     {
-        public CloseWindowPromptDialog()
+        public AwaitCloseWindowView()
         {
             InitializeComponent();
         }

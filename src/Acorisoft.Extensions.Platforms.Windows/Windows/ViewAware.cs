@@ -386,7 +386,7 @@ namespace Acorisoft.Extensions.Platforms.Windows
 
         public static Task<bool?> AwaitDelete(string title, string subtitle)
         {
-            var vm = Locator.Current.GetService<DeletePromptViewModel>();
+            var vm = Locator.Current.GetService<AwaitDeleteViewModel>();
             if (vm == null)
             {
                 return Task.FromResult<bool?>(false);
@@ -399,14 +399,14 @@ namespace Acorisoft.Extensions.Platforms.Windows
 
         public static Task<bool?> AwaitQueryWindowClose()
         {
-            var vm = Locator.Current.GetService<CloseWindowPromptViewModel>();
+            var vm = Locator.Current.GetService<AwaitCloseWindowViewModel>();
             return ServiceLocator.ViewService.ShowPrompt(vm);
         }
 
         public static Task<bool?> AwaitQueryPageClose()
         {
             
-            var vm = Locator.Current.GetService<ClosePagePromptViewModel>();
+            var vm = Locator.Current.GetService<AwaitClosePageViewModel>();
             return ServiceLocator.ViewService.ShowPrompt(vm);
         }
 
