@@ -12,7 +12,9 @@ namespace Acorisoft.Studio.ViewModels
             StickyNote = new StickyNoteInspiration
             {
                 Name = DateTime.Now.ToShortDateString(),
-                Summary = DateTime.Now.ToShortDateString()
+                Summary = DateTime.Now.ToShortDateString(),
+                LastAccessTimestamp = DateTime.Now,
+                CreationTimestamp = DateTime.Now
             };
             
             Id = Guid.NewGuid();
