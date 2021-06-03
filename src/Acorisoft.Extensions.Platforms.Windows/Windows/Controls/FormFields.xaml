@@ -3,7 +3,7 @@
                     xmlns:c="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Controls"
                     xmlns:pb="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Controls.Primitives"
                     xmlns:d="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Controls.Dialogs"
-                    xmlns:bi="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator"
+                    xmlns:bi="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Controls.ActivityIndicator"
                     xmlns:p="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Controls.Panels"
                     xmlns:t="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Controls.Toasts"
                     xmlns:b="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Controls.Buttons"

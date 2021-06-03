@@ -1,4 +1,4 @@
-﻿using Acorisoft.Studio.Documents.Resources;
+﻿using Acorisoft.Studio.Resources;
 
 namespace Acorisoft.Studio.Documents.Inspirations
 {

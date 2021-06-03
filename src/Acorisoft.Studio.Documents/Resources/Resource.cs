@@ -2,7 +2,7 @@
 using Acorisoft.Studio.ProjectSystems;
 using LiteDB;
 
-namespace Acorisoft.Studio.Documents.Resources
+namespace Acorisoft.Studio.Resources
 {
     public abstract class Resource
     {

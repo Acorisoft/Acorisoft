@@ -2,7 +2,7 @@
 
 [assembly: XmlnsDefinition("https://github.com/Acorisoft/Acorisoft/Windows", "Acorisoft.Extensions.Platforms.Windows")]
 [assembly: XmlnsDefinition("https://github.com/Acorisoft/Acorisoft/Windows", "Acorisoft.Extensions.Platforms.Windows.Controls")]
-[assembly: XmlnsDefinition("https://github.com/Acorisoft/Acorisoft/Windows", "Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator")]
+[assembly: XmlnsDefinition("https://github.com/Acorisoft/Acorisoft/Windows", "Acorisoft.Extensions.Platforms.Windows.Controls.ActivityIndicator")]
 [assembly: XmlnsDefinition("https://github.com/Acorisoft/Acorisoft/Windows", "Acorisoft.Extensions.Platforms.Windows.Controls.Buttons")]
 [assembly: XmlnsDefinition("https://github.com/Acorisoft/Acorisoft/Windows", "Acorisoft.Extensions.Platforms.Windows.Controls.Dialogs")]
 [assembly: XmlnsDefinition("https://github.com/Acorisoft/Acorisoft/Windows", "Acorisoft.Extensions.Platforms.Windows.Controls.Panels")]

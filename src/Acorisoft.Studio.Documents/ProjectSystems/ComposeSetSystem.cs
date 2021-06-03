@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Acorisoft.Extensions.Platforms;
 using Acorisoft.Studio.Documents;
-using Acorisoft.Studio.Documents.Resources;
+using Acorisoft.Studio.Resources;
 using Acorisoft.Studio.Engines;
 using DryIoc;
 using LiteDB;
@@ -358,12 +358,12 @@ namespace Acorisoft.Studio.ProjectSystems
 
         private Stream[] OpenAlbumFromDatabase(AlbumResource resource)
         {
-            return resource.GetResourceFileNames(CurrentComposite).Select(OpenStreamFromDatabase).ToArray();
+            return resource.GetResourceFileNames(CurrentComposite).Where(DetectInside).Select(OpenStreamFromDatabase).ToArray();
         }
         
         private Stream[] OpenAlbumFromOutside(AlbumResource resource)
         {
-            return resource.GetResourceKeys().Select(OpenStreamFromDatabase).ToArray();
+            return resource.GetResourceKeys().Where(DetectOutside).Select(OpenStreamFromDatabase).ToArray();
         }
         
         
@@ -390,10 +390,31 @@ namespace Acorisoft.Studio.ProjectSystems
                 throw new InvalidOperationException("无法打开抽象资源");
             }
 
-            return Task.Run(() =>
+            return Task.Run(() => Open(resource));
+        }
+        
+        public Stream[] Open(AlbumResource resource)
+        {
+            
+            if (!IsOpenField)
+            {
+                throw new InvalidOperationException("创作集未打开");
+            }
+
+            if (resource == null)
+            {
+                throw new InvalidOperationException("无法打开空的资源");
+            }
+
+            if (resource.GetType().IsAbstract)
+            {
+                throw new InvalidOperationException("无法打开抽象资源");
+            }
+
+            return 
                 resource.Mode == ResourceMode.Outside
                     ? OpenAlbumFromDatabase(resource)
-                    : OpenAlbumFromOutside(resource));
+                    : OpenAlbumFromOutside(resource);
         }
         
         
@@ -504,6 +525,20 @@ namespace Acorisoft.Studio.ProjectSystems
             }
         }
         
+        private void UploadImpl(Resource resource, Stream sourceStream)
+        {
+            var targetFileName = resource.GetResourceFileName(CurrentComposite);
+            
+            if (resource.Mode == ResourceMode.Inside)
+            {
+                UploadStreamToDatabase(sourceStream, resource.GetResourceKey());
+            }
+            else
+            {
+                UploadStreamToOutside(sourceStream, resource.GetResourceFileName(CurrentComposite));
+            }
+        }
+        
         private void UploadFileToOutside(string sourceFileName, string targetFileName)
         {
             if (!IsOpenField || string.IsNullOrEmpty(targetFileName))
@@ -529,6 +564,38 @@ namespace Acorisoft.Studio.ProjectSystems
             var fs = ((IComposeSetDatabase) CurrentComposite).MainDatabase.FileStorage;
             fs.Upload(key, sourceFileName);
         }
+
+        private void UploadStreamToOutside(Stream sourceStream, string targetFileName)
+        {
+            
+            if (!IsOpenField)
+            {
+                throw new InvalidOperationException("创作集未打开");
+            }
+
+            if (string.IsNullOrEmpty(targetFileName))
+            {
+                throw new InvalidOperationException("无法打开空的资源");
+            }
+            
+            try
+            {
+                using var targetStream = new FileStream(targetFileName, FileMode.Create);
+                sourceStream.CopyTo(targetStream);
+            }
+            catch
+            {
+                // rethrow
+                throw;
+            }
+
+        }
+        private void UploadStreamToDatabase(Stream stream, string key)
+        {
+            
+            var fs = ((IComposeSetDatabase) CurrentComposite).MainDatabase.FileStorage;
+            fs.Upload(key, key, stream);
+        }
         
         /// <summary>
         /// 在一个异步请求中完成文件上传操作。
@@ -539,6 +606,17 @@ namespace Acorisoft.Studio.ProjectSystems
         public Task UploadAsync(Resource resource, string sourceFileName)
         {
             return Task.Run(()=> UploadImpl(resource, sourceFileName));
+        }
+        
+        /// <summary>
+        /// 在一个异步请求中完成文件上传操作。
+        /// </summary>
+        /// <param name="resource">指定要上传的资源类型。</param>
+        /// <param name="sourceStream">指定上传操作的原始文件路径。</param>
+        /// <returns>返回此次操作的 <see cref="Task"/> 实例</returns>
+        public Task UploadAsync(Resource resource, Stream sourceStream)
+        {
+            return Task.Run(()=> UploadImpl(resource, sourceStream));
         }
         
         /// <summary>

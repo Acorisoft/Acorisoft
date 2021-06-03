@@ -37,6 +37,16 @@ namespace Acorisoft.Studio
             RaiseUpdated(nameof(IsLocked));
         }
 
+        public string Name
+        {
+            get => Source.Name;
+            set
+            {
+                Source.Name = value;
+                RaiseUpdated();
+            }
+        }
+
 
         /// <summary>
         /// 最后一次修改时间

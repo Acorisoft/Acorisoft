@@ -5,12 +5,12 @@ using Acorisoft.Studio.Documents.Inspirations;
 
 namespace Acorisoft.Studio.ViewModels
 {
-    public class InspirationClipboardImageViewModel: DialogViewModelBase, INewInspirationInfo
+    public class InspirationClipboardImageViewModel: DialogViewModelBase, INewStickyInfo
     {
-        public InspirationClipboardImageViewModel(ImageSource sourceText)
+        public InspirationClipboardImageViewModel(ImageSource source)
         {
-            Image = sourceText;
-            Item = new StickyNoteInspiration
+            Image = source;
+            StickyNote = new StickyNoteInspiration
             {
                 Name = DateTime.Now.ToShortDateString(),
                 Summary = DateTime.Now.ToShortDateString()
@@ -20,15 +20,15 @@ namespace Acorisoft.Studio.ViewModels
 
         public sealed override bool VerifyAccess()
         {
-            return false;
+            return true;
         }
         
         public sealed override bool Accept<T>()
         {
-            return typeof(T) == typeof(InspirationClipboardTextViewModel) || typeof(T) == typeof(INewInspirationInfo);
+            return typeof(T) == typeof(InspirationClipboardTextViewModel) || typeof(T) == typeof(INewStickyInfo);
         }
 
-        public sealed override object GetResult() => (INewInspirationInfo) this;
+        public sealed override object GetResult() => (INewStickyInfo) this;
 
         public ImageSource Image { get; }
         public Guid Id { get; set; }
@@ -42,7 +42,15 @@ namespace Acorisoft.Studio.ViewModels
                 RaiseUpdated(nameof(Name));
             }
         }
-        public InspirationDocument Item { get; set; }
+        public InspirationDocument Item
+        {
+            get => StickyNote;
+            set
+            {
+                
+            }
+        }
+        public StickyNoteInspiration StickyNote { get; set; }
         public string Path { get; set; }
         public InspirationIndex FeedBackValue1 { get; set; }
     }

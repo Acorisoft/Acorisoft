@@ -1,5 +1,5 @@
 <w:SpaPage x:Class="Acorisoft.Studio.Views.ConversationInspirationView"
-           x:TypeArguments="appViewModels:ConversationInspirationViewModel"
+           x:TypeArguments="appViewModels:ConversationViewModel"
            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -15,7 +15,7 @@
            xmlns:engines="clr-namespace:Acorisoft.Studio.Engines;assembly=Acorisoft.Studio.Documents"
            mc:Ignorable="d"
            d:DesignHeight="1080" d:DesignWidth="1920"
-           d:DataContext="{d:DesignInstance Type={x:Type appViewModels:ConversationInspirationViewModel},IsDesignTimeCreatable =True}">
+           d:DataContext="{d:DesignInstance Type={x:Type appViewModels:ConversationViewModel},IsDesignTimeCreatable =True}">
     <UserControl.Resources>
         <w:BindingProxy x:Key="ThisViewModel" Data="{Binding}" />
         <appConverters:GalleryTitleConverter x:Key="Title" />

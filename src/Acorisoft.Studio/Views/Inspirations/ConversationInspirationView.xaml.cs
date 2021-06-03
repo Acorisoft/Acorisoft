@@ -6,7 +6,7 @@ using ReactiveUI;
 
 namespace Acorisoft.Studio.Views
 {
-    public partial class ConversationInspirationView : SpaPage<ConversationInspirationViewModel>
+    public partial class ConversationInspirationView : SpaPage<ConversationViewModel>
     {
         public ConversationInspirationView()
         {

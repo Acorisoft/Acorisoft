@@ -1,5 +1,5 @@
 ﻿using System;
-using Acorisoft.Studio.Documents.Resources;
+using Acorisoft.Studio.Resources;
 
 namespace Acorisoft.Studio.ProjectSystems
 {

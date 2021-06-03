@@ -4,12 +4,12 @@ using Acorisoft.Studio.Documents.Inspirations;
 
 namespace Acorisoft.Studio.ViewModels
 {
-    public class InspirationClipboardTextViewModel : DialogViewModelBase, INewInspirationInfo
+    public class InspirationClipboardTextViewModel : DialogViewModelBase, INewStickyInfo
     {
         public InspirationClipboardTextViewModel(string sourceText)
         {
             Text = sourceText;
-            Item = new StickyNoteInspiration
+            StickyNote = new StickyNoteInspiration
             {
                 Name = DateTime.Now.ToShortDateString(),
                 Summary = DateTime.Now.ToShortDateString()
@@ -25,10 +25,10 @@ namespace Acorisoft.Studio.ViewModels
         
         public sealed override bool Accept<T>()
         {
-            return typeof(T) == typeof(InspirationClipboardTextViewModel) || typeof(T) == typeof(INewInspirationInfo);
+            return typeof(T) == typeof(InspirationClipboardTextViewModel) || typeof(T) == typeof(INewStickyInfo);
         }
 
-        public sealed override object GetResult() => (INewInspirationInfo) this;
+        public sealed override object GetResult() => (INewStickyInfo) this;
 
         public string Text { get; }
         public Guid Id { get; set; }
@@ -42,7 +42,8 @@ namespace Acorisoft.Studio.ViewModels
                 RaiseUpdated(nameof(Name));
             }
         }
-        public InspirationDocument Item { get; set; }
+        public StickyNoteInspiration StickyNote { get; set; }
+        public InspirationDocument Item { get=> StickyNote; set{} }
         public string Path { get; set; }
         public InspirationIndex FeedBackValue1 { get; set; }
     }

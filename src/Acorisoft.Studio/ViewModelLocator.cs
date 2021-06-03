@@ -71,15 +71,15 @@ namespace Acorisoft.Studio
         private static void RegisterInspiration(this IContainer container)
         {
             container.RegisterViewModelAndView<InspirationGalleryViewModel, InspirationGalleryView>();
-            container.RegisterViewModelAndView<ConversationInspirationViewModel, ConversationInspirationView>();
+            container.RegisterViewModelAndView<ConversationViewModel, ConversationInspirationView>();
             container.RegisterViewModelAndDialog<InspirationClipboardImageViewModel, InspirationClipboardImageView>();
             container.RegisterViewModelAndDialog<InspirationClipboardTextViewModel, InspirationClipboardTextView>();
+            container.RegisterViewModelAndView<StickyNoteViewModel, StickyNoteView>();
         }
 
         private static void RegisterStickyNote(this IContainer container)
         {
             container.RegisterViewModelAndView<StickyNoteGalleryViewModel, StickyNoteGalleryView>();
-            container.RegisterViewModelAndView<StickyNoteViewModel, StickyNoteView>();
         }
 
         public static AppViewModel AppViewModel => LazyInstance.Value;

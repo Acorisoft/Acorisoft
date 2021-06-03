@@ -4,7 +4,7 @@ using Acorisoft.Studio.Documents.Inspirations;
 
 namespace Acorisoft.Studio.ViewModels
 {
-    public class ConversationInspirationViewModel : PageViewModelBase
+    public class ConversationViewModel : PageViewModelBase
     {
         protected override void OnParameterReceiving(Hashtable parameters)
         {

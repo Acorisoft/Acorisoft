@@ -3,10 +3,15 @@ using System.IO;
 using Acorisoft.Studio.ProjectSystems;
 using LiteDB;
 
-namespace Acorisoft.Studio.Documents.Resources
+namespace Acorisoft.Studio.Resources
 {
     public class CoverResource : ImageResource
     {
+        public CoverResource()
+        {
+            Id = Guid.NewGuid();
+        }
+        
         public sealed override string GetResourceFileName(IComposeSet composeSet)
         {
             if (composeSet != null)

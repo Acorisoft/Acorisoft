@@ -1,9 +1,12 @@
-﻿using Acorisoft.Studio.Documents.StickyNotes;
+﻿using System;
+using Acorisoft.Studio.Documents.Inspirations;
+using Acorisoft.Studio.Documents.StickyNotes;
 using Acorisoft.Studio.ProjectSystems;
 
 namespace Acorisoft.Studio.Engines
 {
-    public interface IStickyNoteEngine : IComposeSetSystemModule<StickyNoteIndex, StickyNoteIndexWrapper, StickyNoteDocument>, IComposeSetSystemModule
+    [Obsolete]
+    public interface IStickyNoteEngine : IComposeSetSystemModule<InspirationIndex, InspirationIndexWrapper, StickyNoteInspiration>, IComposeSetSystemModule
     {
         
     }

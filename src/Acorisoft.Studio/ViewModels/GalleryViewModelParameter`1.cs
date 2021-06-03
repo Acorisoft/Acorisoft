@@ -1,15 +1,16 @@
 using System.Collections;
 using Acorisoft.Extensions.Platforms.Windows;
+using Acorisoft.Studio.Documents.Inspirations;
 using Acorisoft.Studio.Documents.StickyNotes;
 
 namespace Acorisoft.Studio.ViewModels
 {
-    public sealed class GalleryViewModelParameter<TIndex,TWrapper,TComposition> : Hashtable 
+    public sealed class GalleryViewModelParameter<TIndex, TWrapper, TComposition> : Hashtable
         where TIndex : DocumentIndex
         where TWrapper : DocumentIndexWrapper<TIndex>
         where TComposition : Document
     {
-        public GalleryViewModelParameter(TWrapper wrapper, TIndex index, TComposition document)
+        public GalleryViewModelParameter(TIndex index, TWrapper wrapper, TComposition document)
         {
             Add(ViewAware.Arg1, document);
             Add(ViewAware.Arg2, index);

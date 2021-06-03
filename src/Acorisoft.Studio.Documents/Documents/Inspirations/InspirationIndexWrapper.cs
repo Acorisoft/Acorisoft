@@ -14,6 +14,8 @@ namespace Acorisoft.Studio.Documents.Inspirations
             return CompareTo((DocumentIndexWrapper<InspirationIndex>)y);
         }
         
+        
+        
         public string Summary
         {
             get => Source.Summary;

@@ -16,7 +16,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
         string Description { get; set; }
     }
 
-    public interface IBusyIndicatorCore
+    public interface IActivityIndicatorCore
     {
         /// <summary>
         /// 订阅繁忙状态改变的事件流。

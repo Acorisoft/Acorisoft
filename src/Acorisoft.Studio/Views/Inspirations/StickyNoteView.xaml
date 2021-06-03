@@ -1,0 +1,73 @@
+<w:SpaPage x:Class="Acorisoft.Studio.Views.StickyNoteView"
+           x:TypeArguments="appViewModels:StickyNoteViewModel"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:w="https://github.com/Acorisoft/Acorisoft/Windows"
+           xmlns:app="clr-namespace:Acorisoft.Studio"
+           xmlns:appViews="clr-namespace:Acorisoft.Studio.Views"
+           xmlns:appViewModels="clr-namespace:Acorisoft.Studio.ViewModels"
+           xmlns:appCommands="clr-namespace:Acorisoft.Studio.Commands"
+           xmlns:appConverters="clr-namespace:Acorisoft.Studio.Converters"
+           xmlns:appBehaviors="clr-namespace:Acorisoft.Studio.Behaviors"
+           xmlns:res="clr-namespace:Acorisoft.Studio.Resources;assembly=Acorisoft.Studio.Documents"
+           xmlns:gu="https://github.com/JohanLarsson/Gu.Wpf.FlipView"
+           mc:Ignorable="d"
+           d:DesignHeight="300" d:DesignWidth="300"
+           d:DataContext="{d:DesignInstance Type={x:Type appViewModels:StickyNoteViewModel},IsDesignTimeCreatable =True}">
+    <UserControl.InputBindings>
+        <KeyBinding Command="{Binding SaveCommand}" Key="S" Modifiers="Control"/>
+    </UserControl.InputBindings>
+    <UserControl.Resources>
+        <w:BindingProxy x:Key="This" Data="{Binding}"></w:BindingProxy>
+        <appConverters:ComposeSetImageConverter x:Key="Image"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="420"/>
+            <ColumnDefinition MinWidth="420"/>
+        </Grid.ColumnDefinitions>
+        
+        
+        <!-- 左侧图片视图 -->
+        <ContentControl Grid.Column="0"
+                        Content="{Binding Album}">
+            <ContentControl.Resources>
+                <DataTemplate DataType="{x:Type res:CoverResource}">
+                    <w:OverlayContentControl>
+                        <Image Source="{Binding Converter={StaticResource Image}}"/>
+                    </w:OverlayContentControl>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type res:AlbumResource}">
+                    <gu:FlipView ItemsSource="{Binding Source={StaticResource This},Path=Data.Albums}"></gu:FlipView>
+                </DataTemplate>
+            </ContentControl.Resources>
+        </ContentControl>
+        
+        <!-- 网格分割器 -->
+        <GridSplitter Grid.Column="0"
+                      Width="1"
+                      Background="Gray"/>
+        <DockPanel Grid.Column="1" LastChildFill="True"
+                   Margin="16 0">
+            <HeaderedContentControl Header="名字"
+                                    DockPanel.Dock="Top"
+                                    MinHeight="96"
+                                    MaxHeight="256">
+                <TextBox FontSize="28"
+                         Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </HeaderedContentControl>
+            
+            <HeaderedContentControl Header="内容"
+                                    DockPanel.Dock="Bottom"
+                                    MinHeight="256">
+                <TextBox AcceptsReturn="True"
+                         AcceptsTab="True"
+                         FontSize="16"
+                         Text="{Binding Content,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </HeaderedContentControl>
+        </DockPanel>
+        
+    </Grid>
+</w:SpaPage>

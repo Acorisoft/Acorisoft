@@ -25,7 +25,7 @@ namespace Acorisoft.Studio.Views
                     {
                         return;
                     }
-                    await ViewModel.SearchAsync(x);
+                    // await ViewModel.SearchAsync(x);
                 });
         }
 
@@ -33,13 +33,13 @@ namespace Acorisoft.Studio.Views
         {
             //
             // 
-            BindingOperations.EnableCollectionSynchronization(ViewModel.Collection,new object());
-            Items.SetBinding(ItemsControl.ItemsSourceProperty,new Binding
-            {
-                Source = ViewModel,
-                Path = new PropertyPath("Collection"),
-                Mode = BindingMode.OneWay,
-            });
+            // BindingOperations.EnableCollectionSynchronization(ViewModel.Collection,new object());
+            // Items.SetBinding(ItemsControl.ItemsSourceProperty,new Binding
+            // {
+            //     Source = ViewModel,
+            //     Path = new PropertyPath("Collection"),
+            //     Mode = BindingMode.OneWay,
+            // });
             
         }
     }

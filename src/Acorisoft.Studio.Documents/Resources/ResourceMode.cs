@@ -1,4 +1,4 @@
-namespace Acorisoft.Studio.Documents.Resources
+namespace Acorisoft.Studio.Resources
 {
     public enum ResourceMode
     {

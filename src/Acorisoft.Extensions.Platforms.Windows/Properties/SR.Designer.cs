@@ -63,9 +63,9 @@ namespace Acorisoft.Extensions.Platforms {
         /// <summary>
         ///   Looks up a localized string similar to 正在等待.....
         /// </summary>
-        internal static string BusyIndicator_DefaultDescription {
+        internal static string ActivityIndicator_DefaultDescription {
             get {
-                return ResourceManager.GetString("BusyIndicator_DefaultDescription", resourceCulture);
+                return ResourceManager.GetString("ActivityIndicator_DefaultDescription", resourceCulture);
             }
         }
         

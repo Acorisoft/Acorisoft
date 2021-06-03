@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Acorisoft.Studio.ProjectSystems;
 
-namespace Acorisoft.Studio.Documents.Resources
+namespace Acorisoft.Studio.Resources
 {
     public class AlbumResource : ImageResource, ICollection<Guid>, IReadOnlyList<Guid>
     {

@@ -87,7 +87,7 @@ namespace Acorisoft.Extensions.Platforms.Services
             });
         }
 
-        public void SetBusyIndicator(IBusyIndicatorCore indicator)
+        public void SetActivityIndicator(IActivityIndicatorCore indicator)
         {
             if (indicator == null)
             {

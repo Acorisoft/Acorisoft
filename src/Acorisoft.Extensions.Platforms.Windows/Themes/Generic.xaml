@@ -3,7 +3,7 @@
                     xmlns:c="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Controls"
                     xmlns:pb="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Controls.Primitives"
                     xmlns:d="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Controls.Dialogs"
-                    xmlns:bi="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator"
+                    xmlns:bi="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Controls.ActivityIndicator"
                     xmlns:p="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Controls.Panels"
                     xmlns:t="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Controls.Toasts"
                     xmlns:b="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Controls.Buttons"
@@ -111,7 +111,7 @@
                                                FontSize="13"
                                                TextWrapping="Wrap" />
                                     <ProgressBar x:Name="PART_Indicator"
-                                                 IsIndeterminate="True"
+                                                 Visibility="Collapsed"
                                                  MinHeight="6" />
                                 </StackPanel>
                             </Border>
@@ -122,6 +122,14 @@
                             <BeginStoryboard>
                                 <Storyboard>
                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_Border"
+                                                                   Storyboard.TargetProperty="(UIElement.Visibility)">
+                                        <DiscreteObjectKeyFrame KeyTime="0:0:0">
+                                            <DiscreteObjectKeyFrame.Value>
+                                                <Visibility>Visible</Visibility>
+                                            </DiscreteObjectKeyFrame.Value>
+                                        </DiscreteObjectKeyFrame>
+                                    </ObjectAnimationUsingKeyFrames>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_Indicator"
                                                                    Storyboard.TargetProperty="(UIElement.Visibility)">
                                         <DiscreteObjectKeyFrame KeyTime="0:0:0">
                                             <DiscreteObjectKeyFrame.Value>
@@ -141,6 +149,14 @@
                             <BeginStoryboard>
                                 <Storyboard>
                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_Border"
+                                                                   Storyboard.TargetProperty="(UIElement.Visibility)">
+                                        <DiscreteObjectKeyFrame KeyTime="0:0:0.500">
+                                            <DiscreteObjectKeyFrame.Value>
+                                                <Visibility>Collapsed</Visibility>
+                                            </DiscreteObjectKeyFrame.Value>
+                                        </DiscreteObjectKeyFrame>
+                                    </ObjectAnimationUsingKeyFrames>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_Indicator"
                                                                    Storyboard.TargetProperty="(UIElement.Visibility)">
                                         <DiscreteObjectKeyFrame KeyTime="0:0:0.500">
                                             <DiscreteObjectKeyFrame.Value>
@@ -169,12 +185,13 @@
     <Style TargetType="{x:Type c:EmptyStateView}">
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="HasContentState" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type c:EmptyStateView}">
                     <p:TiledPanel>
                         <ContentPresenter x:Name="PART_Content" ContentSource="Content" Visibility="Collapsed"/>
-                        <ContentPresenter x:Name="PART_EmptyState" ContentSource="EmptyState" Visibility="Collapsed"/>
+                        <ContentPresenter x:Name="PART_EmptyState" ContentSource="EmptyState"/>
                     </p:TiledPanel>
                     <ControlTemplate.Triggers>
                         <EventTrigger RoutedEvent="ContentOpening">
@@ -182,7 +199,7 @@
                                 <Storyboard>
                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_EmptyState"
                                                                    Storyboard.TargetProperty="(UIElement.Visibility)">
-                                        <DiscreteObjectKeyFrame KeyTime="0:0:0.500">
+                                        <DiscreteObjectKeyFrame KeyTime="0:0:0.000">
                                             <DiscreteObjectKeyFrame.Value>
                                                 <Visibility>Collapsed</Visibility>
                                             </DiscreteObjectKeyFrame.Value>

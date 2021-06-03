@@ -12,9 +12,9 @@ using Acorisoft.Extensions.Platforms.Windows;
 using Acorisoft.Extensions.Platforms.Windows.Threadings;
 using ReactiveUI;
 
-namespace Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator
+namespace Acorisoft.Extensions.Platforms.Windows.Controls.ActivityIndicator
 {
-    public class ActivityIndicator : ContentControl, IActivityIndicator, IBusyIndicatorCore
+    public class ActivityIndicator : ContentControl, IActivityIndicator, IActivityIndicatorCore
     {
         static ActivityIndicator()
         {
@@ -25,8 +25,9 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator
         private static void OnIsBusyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var host = (ActivityIndicator) d;
-            
-            if ((bool) e.NewValue)
+            var result = (bool) e.NewValue;
+            host.PART_Indicator.IsIndeterminate = result;
+            if (result)
             {
                 host.RaiseEvent(new RoutedEventArgs
                 {
@@ -46,8 +47,10 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator
         public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(ActivityIndicator), new PropertyMetadata(string.Empty));
         public static readonly RoutedEvent DialogOpeningEvent = EventManager.RegisterRoutedEvent("DialogOpening",RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ActivityIndicator));
         public static readonly RoutedEvent DialogClosingEvent = EventManager.RegisterRoutedEvent("DialogClosing",RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ActivityIndicator));
-
+        
         // ReSharper disable once InconsistentNaming
+        private ProgressBar PART_Indicator;
+        
         public ActivityIndicator()
         {
             this.Loaded += OnLoadedImpl;
@@ -64,10 +67,15 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator
             {
                 //
                 // 设置默认的实现。
-                viewService.SetBusyIndicator(this);
+                viewService.SetActivityIndicator(this);
             }
         }
-        
+
+        public override void OnApplyTemplate()
+        {
+            PART_Indicator = GetTemplateChild("PART_Indicator") as ProgressBar;
+        }
+
 
         public string Description
         {
@@ -93,16 +101,16 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator
             remove => RemoveHandler(DialogClosingEvent, value);
         }
 
-        IDisposable IBusyIndicatorCore.SubscribeBusyStateChanged(IObservable<string> observable)
+        IDisposable IActivityIndicatorCore.SubscribeBusyStateChanged(IObservable<string> observable)
         {
             return observable?.ObserveOn(RxApp.MainThreadScheduler)
                              .Subscribe(x =>
                              {
-                                 Description = string.IsNullOrEmpty(x) ? SR.BusyIndicator_DefaultDescription : x;
+                                 Description = string.IsNullOrEmpty(x) ? SR.ActivityIndicator_DefaultDescription : x;
                              });
         }
 
-        IDisposable IBusyIndicatorCore.SubscribeBusyStateBegin(IObservable<Unit> observable)
+        IDisposable IActivityIndicatorCore.SubscribeBusyStateBegin(IObservable<Unit> observable)
         {
             return observable?.ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(x =>
@@ -111,7 +119,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.BusyIndicator
                 });
         }
 
-        IDisposable IBusyIndicatorCore.SubscribeBusyStateEnd(IObservable<Unit> observable) {
+        IDisposable IActivityIndicatorCore.SubscribeBusyStateEnd(IObservable<Unit> observable) {
             return observable?.ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(x =>
                 {

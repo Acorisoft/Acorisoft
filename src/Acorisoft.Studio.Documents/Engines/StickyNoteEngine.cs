@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using Acorisoft.Studio.Documents;
+using Acorisoft.Studio.Documents.Inspirations;
 using Acorisoft.Studio.Documents.StickyNotes;
 using Acorisoft.Studio.ProjectSystems;
 
 namespace Acorisoft.Studio.Engines
 {
-    public class StickyNoteEngine : ComposeSetSystemModule<StickyNoteIndex, StickyNoteIndexWrapper, StickyNoteDocument> , IStickyNoteEngine
+    [Obsolete]
+    public class StickyNoteEngine : ComposeSetSystemModule<InspirationIndex, InspirationIndexWrapper, StickyNoteInspiration> , IStickyNoteEngine
     {
         private const string CollectionName = "StickyNote";
         private const string IndexesName = "Note_Index";
@@ -15,16 +17,16 @@ namespace Acorisoft.Studio.Engines
         {
         }
 
-        protected override StickyNoteIndex CreateIndexInstance()
+        protected override InspirationIndex CreateIndexInstance()
         {
-            return new StickyNoteIndex
+            return new InspirationIndex
             {
                 LastAccessTimestamp = DateTime.Now,
                 CreationTimestamp = DateTime.Now
             };
         }
 
-        protected override void ExtractIndex(StickyNoteIndex index, StickyNoteDocument composition)
+        protected override void ExtractIndex(InspirationIndex index, StickyNoteInspiration composition)
         {
             index.Name = string.IsNullOrEmpty(composition.Name)
                 ? SR.StickyNoteEngine_EmptyDocumentName
@@ -35,18 +37,18 @@ namespace Acorisoft.Studio.Engines
                 : composition.Content.Substring(0, Math.Min(composition.Content.Length, 100));
         }
 
-        protected override StickyNoteDocument CreateCompositionInstance()
+        protected override StickyNoteInspiration CreateCompositionInstance()
         {
-            return new StickyNoteDocument
+            return new StickyNoteInspiration
             {
                 LastAccessTimestamp = DateTime.Now,
                 CreationTimestamp = DateTime.Now
             };
         }
 
-        private static StickyNoteIndexWrapper Transform(StickyNoteIndex index)
+        private static InspirationIndexWrapper Transform(InspirationIndex index)
         {
-            return new StickyNoteIndexWrapper(index);
+            return new InspirationIndexWrapper(index);
         }
 
         //-----------------------------------------------------------------------
