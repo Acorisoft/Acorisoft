@@ -16,6 +16,7 @@
            xmlns:engines="clr-namespace:Acorisoft.Studio.Engines;assembly=Acorisoft.Studio.Documents"
            mc:Ignorable="d"
            Focusable="True"
+           IsTabStop="False"
            d:DesignHeight="300" d:DesignWidth="300"
            d:DataContext="{d:DesignInstance Type={x:Type appViewModels:InspirationGalleryViewModel},IsDesignTimeCreatable =True}">
     <UserControl.Resources>
@@ -31,20 +32,26 @@
         <KeyBinding Command="{Binding NewCommand}" Key="N" Modifiers="Control"/>
         <KeyBinding Command="{Binding NewInspirationFromClipboardCommand}" Key="V" Modifiers="Control"/>
     </UserControl.InputBindings>
-    <Grid>
+    <Grid Focusable="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="92" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
         <!-- 搜索栏 -->
-        <Grid Grid.Row="0"
-              Background="{StaticResource Brushes.White}">
+        <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+
+            <Border Background="{StaticResource Brushes.MaterialDesign.LightGreen}"
+                    Grid.ColumnSpan="3">
+                <Image HorizontalAlignment="Left"
+                           Source="{StaticResource Banners.NoData}"
+                           Stretch="None"/>
+            </Border>
             
             <StackPanel Grid.Column="0" Orientation="Horizontal">
                 <w:SymbolButton Symbol="{StaticResource Icon.Clipboard}"
@@ -119,17 +126,24 @@
                                   Subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                                   Margin="32 8">
             <ScrollViewer HorizontalScrollBarVisibility="Disabled"
-                          VerticalScrollBarVisibility="Auto">
+                          VerticalScrollBarVisibility="Auto"
+                              Focusable="False"
+                              IsTabStop="False">
                 <ItemsControl x:Name="Items"
-                              Focusable="False">
+                              Focusable="False"
+                              IsTabStop="False">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type index:InspirationIndex}">
                             <w:OverlayContentControl Background="#FFAB12" Padding="16" Margin="4" Width="256"
                                                      Height="144" 
                                                      Focusable="False">
+                                <w:OverlayContentControl.Clip>
+                                    <Geometry>M0 0 L0 0 256 0  256 128 128 256 0 256Z</Geometry>
+                                </w:OverlayContentControl.Clip>
                                 <w:OverlayContentControl.Overlay>
                                     <StackPanel Orientation="Horizontal"
-                                                HorizontalAlignment="Center">
+                                                HorizontalAlignment="Stretch"
+                                                Background="{StaticResource App.Dark.Mask}">
                                         <w:SymbolButton Symbol="{StaticResource Icon.Edit}"
                                                         Command="{Binding Source={StaticResource ThisViewModel},Path=Data.OpenThisCommand}"
                                                         CommandParameter="{Binding}"

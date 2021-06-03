@@ -4,6 +4,8 @@
 
     <Style TargetType="{x:Type ix:IxContentHost}">
         <Setter Property="Background" Value="Transparent" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Focusable" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ix:IxContentHost}">

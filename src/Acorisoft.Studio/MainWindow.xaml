@@ -77,7 +77,8 @@
                                                   VerticalContentAlignment="Stretch"
                                                   Duration="0:0:00"/>
                         </w:IxContentHost.BottomSide>
-                        <rx:RoutedViewHost Router="{Binding Router,Mode=OneWay}" />
+                        <rx:RoutedViewHost Router="{Binding Router,Mode=OneWay}" 
+                                           IsTabStop="False"/>
                     </w:IxContentHost>
                 </w:DialogHost>
             </w:ToastHost>

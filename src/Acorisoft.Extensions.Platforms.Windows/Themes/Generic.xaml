@@ -90,6 +90,8 @@
 
     <Style TargetType="{x:Type bi:ActivityIndicator}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Focusable" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type bi:ActivityIndicator}">
@@ -270,6 +272,8 @@
     -->
     <Style TargetType="{x:Type d:DialogHost}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Focusable" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type d:DialogHost}">
@@ -340,6 +344,8 @@
         @ 用来给用户制造烦躁感的指示器。
     -->
     <Style TargetType="{x:Type t:ToastHost}">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Focusable" Value="False" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -703,7 +709,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Background" Value="{StaticResource Brushes.Commons.Background}" />
         <Setter Property="Foreground" Value="{StaticResource Brushes.Commons.Foreground}" />
-        <Setter Property="Highlight" Value="{StaticResource  App.Theme.Primary}" />
+        <Setter Property="Highlight" Value="{StaticResource  Brushes.White}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -765,7 +771,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Background" Value="{StaticResource App.Theme.Primary}" />
         <Setter Property="Foreground" Value="{StaticResource  Brushes.White}" />
-        <Setter Property="Highlight" Value="{StaticResource  App.Theme.Primary}" />
+        <Setter Property="Highlight" Value="{StaticResource  Brushes.White}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Margin" Value="8"/>
         <Setter Property="FontSize" Value="16"/>
@@ -819,7 +825,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Background" Value="{StaticResource Brushes.Commons.Background}" />
         <Setter Property="Foreground" Value="{StaticResource Brushes.Commons.Foreground}" />
-        <Setter Property="Highlight" Value="{StaticResource  App.Theme.Primary}" />
+        <Setter Property="Highlight" Value="{StaticResource  Brushes.White}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -881,7 +887,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Background" Value="{StaticResource Brushes.Commons.Background}" />
         <Setter Property="Foreground" Value="{StaticResource Brushes.Commons.Foreground}" />
-        <Setter Property="Highlight" Value="{StaticResource  App.Theme.Primary}" />
+        <Setter Property="Highlight" Value="{StaticResource  Brushes.White}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -923,7 +929,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Background" Value="{StaticResource Brushes.Commons.Background}" />
         <Setter Property="Foreground" Value="{StaticResource Brushes.Commons.Foreground}" />
-        <Setter Property="Highlight" Value="{StaticResource  App.Theme.Primary}" />
+        <Setter Property="Highlight" Value="{StaticResource  Brushes.White}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -966,7 +972,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Background" Value="{StaticResource Brushes.Commons.Background}" />
         <Setter Property="Foreground" Value="{StaticResource Brushes.Commons.Foreground}" />
-        <Setter Property="Highlight" Value="{StaticResource  App.Theme.Primary}" />
+        <Setter Property="Highlight" Value="{StaticResource  Brushes.White}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
