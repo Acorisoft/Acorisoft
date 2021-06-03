@@ -41,13 +41,23 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
             PART_Clear.Click += OnClearClick;
             base.OnApplyTemplate();
         }
+        
         private void OnSearchClick(object sender, RoutedEventArgs e)
         {
             SetValue(TextProperty, PART_Text.Text);
+            RaiseEvent(new RoutedEventArgs
+            {
+                RoutedEvent = TextCompletedEvent
+            });
         }
+        
         private void OnClearClick(object sender, RoutedEventArgs e)
         {
             SetValue(TextProperty, string.Empty);
+            RaiseEvent(new RoutedEventArgs
+            {
+                RoutedEvent = TextClearEvent
+            });
         }
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
@@ -63,6 +73,22 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
             }
             
             SetValue(TextProperty, PART_Text.Text);
+        }
+
+        public static readonly RoutedEvent TextClearEvent = EventManager.RegisterRoutedEvent("TextClear",
+            RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SearchBox));
+        public static readonly RoutedEvent TextCompletedEvent = EventManager.RegisterRoutedEvent("TextCompleted",
+            RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SearchBox));
+        
+        public event  RoutedEventHandler TextCompleted
+        {
+            add => AddHandler(TextCompletedEvent, value);
+            remove => RemoveHandler(TextCompletedEvent, value);
+        }
+        public event  RoutedEventHandler TextClear
+        {
+            add => AddHandler(TextClearEvent, value);
+            remove => RemoveHandler(TextClearEvent, value);
         }
     }
 }

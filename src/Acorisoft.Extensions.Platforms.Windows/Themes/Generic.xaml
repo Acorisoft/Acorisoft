@@ -710,7 +710,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Background" Value="{StaticResource Brushes.Commons.Background}" />
         <Setter Property="Foreground" Value="{StaticResource Brushes.Commons.Foreground}" />
-        <Setter Property="Highlight" Value="{StaticResource  Brushes.White}" />
+        <Setter Property="Highlight" Value="{StaticResource  App.Theme.Primary}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -772,7 +772,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Background" Value="{StaticResource App.Theme.Primary}" />
         <Setter Property="Foreground" Value="{StaticResource  Brushes.White}" />
-        <Setter Property="Highlight" Value="{StaticResource  Brushes.White}" />
+        <Setter Property="Highlight" Value="{StaticResource  App.Theme.Primary}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Margin" Value="8"/>
         <Setter Property="FontSize" Value="16"/>
@@ -826,7 +826,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Background" Value="{StaticResource Brushes.Commons.Background}" />
         <Setter Property="Foreground" Value="{StaticResource Brushes.Commons.Foreground}" />
-        <Setter Property="Highlight" Value="{StaticResource  Brushes.White}" />
+        <Setter Property="Highlight" Value="{StaticResource  App.Theme.Primary}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -888,6 +888,48 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Background" Value="{StaticResource Brushes.Commons.Background}" />
         <Setter Property="Foreground" Value="{StaticResource Brushes.Commons.Foreground}" />
+        <Setter Property="Highlight" Value="{StaticResource  App.Theme.Primary}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type b:SymbolButton}">
+                    <Border x:Name="PART_Border" Background="{TemplateBinding Background}">
+                        <Path Grid.Column="0" x:Name="PART_Icon"
+                              Data="{TemplateBinding Symbol}"
+                              Width="24"
+                              Height="24"
+                              Stroke="{TemplateBinding Foreground}"
+                              StrokeThickness="1"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Stroke"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}"
+                                    TargetName="PART_Icon" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Stroke"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Highlight}"
+                                    TargetName="PART_Icon" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value=".5" TargetName="PART_Border" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style x:Key="SymbolButton.GalleryButton" TargetType="{x:Type b:SymbolButton}">
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="MinWidth" Value="32" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Background" Value="{StaticResource Brushes.Commons.Background}" />
+        <Setter Property="Foreground" Value="{StaticResource Brushes.Commons.Foreground}" />
         <Setter Property="Highlight" Value="{StaticResource  Brushes.White}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -930,7 +972,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Background" Value="{StaticResource Brushes.Commons.Background}" />
         <Setter Property="Foreground" Value="{StaticResource Brushes.Commons.Foreground}" />
-        <Setter Property="Highlight" Value="{StaticResource  Brushes.White}" />
+        <Setter Property="Highlight" Value="{StaticResource  App.Theme.Primary}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -973,7 +1015,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Background" Value="{StaticResource Brushes.Commons.Background}" />
         <Setter Property="Foreground" Value="{StaticResource Brushes.Commons.Foreground}" />
-        <Setter Property="Highlight" Value="{StaticResource  Brushes.White}" />
+        <Setter Property="Highlight" Value="{StaticResource  App.Theme.Primary}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>

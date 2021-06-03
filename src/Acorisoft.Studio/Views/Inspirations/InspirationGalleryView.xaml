@@ -22,6 +22,11 @@
     <UserControl.Resources>
         <w:BindingProxy x:Key="ThisViewModel" Data="{Binding}" />
         <appConverters:GalleryTitleConverter x:Key="Title" />
+        <w:BrushGeneratorConverter x:Key="Generator">
+            <w:BrushGeneratorConverter.Generator>
+                <w:MacaronColorGenerator/>
+            </w:BrushGeneratorConverter.Generator>
+        </w:BrushGeneratorConverter>
     </UserControl.Resources>
     <UserControl.InputBindings>
         <KeyBinding Command="{Binding NewCommand}" Key="N" Modifiers="Control"/>
@@ -32,7 +37,6 @@
             <RowDefinition Height="92" />
             <RowDefinition />
         </Grid.RowDefinitions>
-
         <!-- 搜索栏 -->
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
@@ -41,16 +45,18 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Border Background="{StaticResource Brushes.MaterialDesign.LightGreen}"
-                    Grid.ColumnSpan="3">
+            
+            <Border Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="2"
+                    Background="{StaticResource Brushes.MaterialDesign.LightGreen}">
                 <Image HorizontalAlignment="Left"
-                           Source="{StaticResource Banners.NoData}"
-                           Stretch="None"/>
+                       Source="{StaticResource Banners.NoData}"
+                       Stretch="None"/>
             </Border>
             
             <StackPanel Grid.Column="0" Orientation="Horizontal">
                 <w:SymbolButton Symbol="{StaticResource Icon.Clipboard}"
                                 Content="新建"
+                                Style="{StaticResource SymbolButton.GalleryButton}"
                                 Margin="8 0"
                                 Command="{Binding NewInspirationFromClipboardCommand}" />
             </StackPanel>
@@ -64,22 +70,30 @@
                          Height="32" FontSize="16" />
 
             <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <w:SymbolButton Symbol="{StaticResource Icon.Refresh}"
+                                Content="新建"
+                                Style="{StaticResource SymbolButton.GalleryButton}"
+                                Margin="8 0"
+                                Command="{Binding .RefreshCommand}" />
                 <w:SymbolButton Symbol="{StaticResource Icon.Add}"
                                 Content="新建"
+                                Style="{StaticResource SymbolButton.GalleryButton}"
                                 Margin="8 0"
                                 Command="{Binding NewCommand}" />
                 <w:SymbolButton Symbol="{StaticResource Icon.Trash}"
                                 Content="删除本页"
+                                Style="{StaticResource SymbolButton.GalleryButton}"
                                 Margin="8 0"
                                 Command="{Binding DeleteThisPageCommand}" />
                 <w:SymbolButton Symbol="{StaticResource Icon.Trash2}"
                                 Content="删除全部"
+                                Style="{StaticResource SymbolButton.GalleryButton}"
                                 Margin="8 0"
                                 Command="{Binding DeleteAllCommand}" />
                 <w:SymbolButton Symbol="{StaticResource Icon.Sliders}"
-                                Content="设置"
                                 Margin="8 0"
-                                Command="{Binding ChoosePerPageCountCommand}" />
+                                Style="{StaticResource SymbolButton.GalleryButton}"
+                                Command="{Binding PerPageItemCountOptionCommand}" />
                 <w:FilterOptionComboBox Height="32"
                                         SelectedIndex="0"
                                         SelectedValuePath="Tag" 
@@ -112,9 +126,8 @@
         </Grid>
 
         <w:Headline1HeaderToolbar Grid.Row="1"
-                                  Focusable="False"
                                   Background="{StaticResource Brushes.White}"
-                                  Padding="16"
+                                  Focusable="False"
                                   Title="{Binding Count,Mode=OneWay,Converter={StaticResource Title}}"
                                   Subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                                   Margin="32 8">
@@ -127,34 +140,36 @@
                               IsTabStop="False">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type index:InspirationIndex}">
-                            <w:OverlayContentControl Background="#FFAB12" Padding="16" Margin="4" Width="256"
+                            <w:OverlayContentControl Background="{Binding Converter={StaticResource Generator}}"
+                                                     Padding="16" Margin="4" Width="256"
                                                      Height="144" 
                                                      Focusable="False">
                                 <w:OverlayContentControl.Clip>
                                     <Geometry>M0 0 L0 0 256 0  256 128 128 256 0 256Z</Geometry>
                                 </w:OverlayContentControl.Clip>
                                 <w:OverlayContentControl.Overlay>
-                                    <StackPanel Orientation="Horizontal"
-                                                HorizontalAlignment="Stretch"
-                                                Background="{StaticResource App.Dark.Mask}">
-                                        <w:SymbolButton Symbol="{StaticResource Icon.Edit}"
-                                                        Command="{Binding Source={StaticResource ThisViewModel},Path=Data.OpenThisCommand}"
-                                                        CommandParameter="{Binding}"
-                                                        Margin="8" />
-                                        <w:SymbolButton Symbol="{StaticResource Icon.Trash}"
-                                                        Command="{Binding Source={StaticResource ThisViewModel},Path=Data.DeleteThisCommand}"
-                                                        CommandParameter="{Binding}"
-                                                        Margin="8" />
-                                    </StackPanel>
+                                    <Border Background="{StaticResource App.Dark.Mask}">
+                                        <StackPanel Orientation="Horizontal"
+                                                    HorizontalAlignment="Center">
+                                            <w:SymbolButton Symbol="{StaticResource Icon.Edit}"
+                                                            Command="{Binding Source={StaticResource ThisViewModel},Path=Data.OpenThisCommand}"
+                                                            CommandParameter="{Binding}"
+                                                            Margin="8" />
+                                            <w:SymbolButton Symbol="{StaticResource Icon.Trash}"
+                                                            Command="{Binding Source={StaticResource ThisViewModel},Path=Data.DeleteThisCommand}"
+                                                            CommandParameter="{Binding}"
+                                                            Margin="8" />
+                                        </StackPanel>
+                                    </Border>
                                 </w:OverlayContentControl.Overlay>
                                 <Border CornerRadius="3"
                                         Padding="4">
                                     <DockPanel>
                                         <TextBlock Text="{Binding Name}"
-                                                   Foreground="{StaticResource App.Text.Primary}"
+                                                   Foreground="{StaticResource Brushes.Black}"
                                                    FontSize="24" FontWeight="Bold" DockPanel.Dock="Top" Margin="2" />
                                         <TextBlock Text="{Binding Summary}"
-                                                   Foreground="{StaticResource App.Text.Secondary}"
+                                                   Foreground="{StaticResource Brushes.Black}"
                                                    FontSize="15" DockPanel.Dock="Bottom" Margin="2" />
                                     </DockPanel>
                                 </Border>

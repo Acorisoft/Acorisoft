@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,13 +20,27 @@ namespace Acorisoft.Studio.Views
             
         }
 
-        protected override void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        protected async override void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (ViewModel == null)
             {
                 return;
             }
 
+            Observable.FromEventPattern<RoutedEventHandler, RoutedEventArgs>(
+                    handler => SearchBox.TextCompleted += handler, handler => SearchBox.TextCompleted -= handler)
+                .Subscribe(x =>
+                {
+                    ViewModel.SearchAsync(SearchBox.Text);
+                });
+            
+            Observable.FromEventPattern<RoutedEventHandler, RoutedEventArgs>(
+                    handler => SearchBox.TextClear += handler, handler => SearchBox.TextClear -= handler)
+                .Subscribe(x =>
+                {
+                    ViewModel.ResetAsync();
+                });
+            
             //
             // 
             BindingOperations.EnableCollectionSynchronization(ViewModel.Collection, new object());

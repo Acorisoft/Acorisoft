@@ -17,7 +17,7 @@ namespace Acorisoft.Studio.ViewModels
         where TComposition : Document
     {
         private protected readonly ObservableAsPropertyHelper<int> CountProperty;
-        private IComparer<TWrapper> _Sorter;
+        private IComparer<TWrapper> _sorter;
 
         protected GalleryViewModelBase(IComposeSetSystem system, TEngine engine)
         {
@@ -68,7 +68,6 @@ namespace Acorisoft.Studio.ViewModels
         /// <summary>
         /// 刷新命令
         /// </summary>
-
         public ICommand PerPageItemCountOptionCommand { get; }
 
         /// <summary>
@@ -96,10 +95,10 @@ namespace Acorisoft.Studio.ViewModels
         /// </summary>
         public IComparer<TWrapper> Sorter
         {
-            get => _Sorter;
+            get => _sorter;
             set
             {
-                if (Set(ref _Sorter, value))
+                if (Set(ref _sorter, value))
                 {
                     Engine.Sorter = value;
                 }

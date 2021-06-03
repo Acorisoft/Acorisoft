@@ -194,6 +194,11 @@ namespace Acorisoft.Studio.ViewModels
             }
         }
 
+        //-----------------------------------------------------------------------
+        //
+        //  NewAsync / OnNew
+        //
+        //-----------------------------------------------------------------------
         protected async void OnOpen(InspirationIndexWrapper wrapper)
         {
             //
@@ -219,6 +224,21 @@ namespace Acorisoft.Studio.ViewModels
             }
         }
 
+        //-----------------------------------------------------------------------
+        //
+        //  SearchAsync / ResetAsync
+        //
+        //-----------------------------------------------------------------------
+        public async void SearchAsync(string keyword)
+        {
+            await Engine.FindAsync(keyword);
+        }
+        
+        public async void ResetAsync()
+        {
+            await Engine.ResetAsync();
+        }
+        
         public ICommand NewCommand { get; }
         public ICommand OpenThisCommand { get; }
         public ICommand NewInspirationFromClipboardCommand { get; }
