@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Acorisoft.Extensions.Platforms.Windows;
 using Acorisoft.Extensions.Platforms.Windows.ViewModels;
+using Acorisoft.Studio.Documents.Inspirations;
 using Acorisoft.Studio.Engines;
 using Acorisoft.Studio.ProjectSystems;
 using ReactiveUI;
@@ -18,15 +19,24 @@ namespace Acorisoft.Studio.ViewModels
     {
         private protected readonly ObservableAsPropertyHelper<int> CountProperty;
         private protected readonly ObservableAsPropertyHelper<int> PageCountProperty;
+        private protected readonly ObservableAsPropertyHelper<bool> IsEmptyProperty;
         private IComparer<TWrapper> _sorter;
 
         protected GalleryViewModelBase(IComposeSetSystem system, TEngine engine)
         {
             Engine = engine;
             System = system;
+
+            //
+            // Create Property
+            IsEmptyProperty = Engine.IsEmpty.ToProperty(this, nameof(IsEmpty));
             CountProperty = Engine.Count.ToProperty(this, nameof(Count));
             PageCountProperty = Engine.PageCount.ToProperty(this, nameof(PageCount));
+            
+            //
+            // Create Command
             RefreshCommand = ReactiveCommand.Create(OnRefresh, System.IsOpen);
+            DeleteThisCommand = ReactiveCommand.Create<TWrapper>(OnDeleteThis, System.IsOpen);
             DeleteThisPageCommand = ReactiveCommand.Create(OnDeleteThisPage, System.IsOpen);
             DeleteAllCommand = ReactiveCommand.Create(OnDeleteAll, System.IsOpen);
             PerPageItemCountOptionCommand = ReactiveCommand.Create(OnChoosePerPageItemCountOption, System.IsOpen);
@@ -40,6 +50,11 @@ namespace Acorisoft.Studio.ViewModels
         protected async void OnDeleteAll()
         {
             await Engine.DeleteAllAsync();
+        }
+        
+        protected async void OnDeleteThis(TWrapper wrapper)
+        {
+            await Engine.DeleteThisAsync(wrapper.Source);
         }
         
         protected async void OnDeleteThisPage()
@@ -75,6 +90,10 @@ namespace Acorisoft.Studio.ViewModels
         /// <summary>
         /// 刷新命令
         /// </summary>
+        public ICommand DeleteThisCommand { get; }
+        /// <summary>
+        /// 刷新命令
+        /// </summary>
         public ICommand DeleteThisPageCommand { get; }
 
         /// <summary>
@@ -107,6 +126,9 @@ namespace Acorisoft.Studio.ViewModels
             }
         }
 
+        /// <summary>
+        /// 刷新命令
+        /// </summary>
         public int PageItemCount
         {
             get => Engine.PerPageItemCount;
@@ -117,6 +139,9 @@ namespace Acorisoft.Studio.ViewModels
             }
         }
 
+        /// <summary>
+        /// 刷新命令
+        /// </summary>
         public int PageIndex
         {
             get => Engine.PageIndex;
@@ -136,5 +161,10 @@ namespace Acorisoft.Studio.ViewModels
         /// 刷新命令
         /// </summary>
         public int Count => CountProperty.Value;
+
+        /// <summary>
+        /// 刷新命令
+        /// </summary>
+        public bool IsEmpty => IsEmptyProperty.Value;
     }
 }

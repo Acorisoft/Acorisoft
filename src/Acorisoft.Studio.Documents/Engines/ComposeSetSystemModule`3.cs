@@ -28,6 +28,7 @@ namespace Acorisoft.Studio.Engines
         //-----------------------------------------------------------------------
         protected readonly CompositeDisposable Disposable;
         protected readonly BehaviorSubject<bool> IsOpenStream;
+        protected readonly BehaviorSubject<bool> IsEmptyStream;
         protected readonly BehaviorSubject<int> PerPageItemCountStream;
         protected readonly BehaviorSubject<int> PageIndexStream;
         protected readonly BehaviorSubject<int> PageCountStream;
@@ -66,6 +67,7 @@ namespace Acorisoft.Studio.Engines
             DocumentCollectionName = documentName;
             RequestQueue = requestQueue ?? throw new ArgumentNullException(nameof(requestQueue));
             IsOpenStream = new BehaviorSubject<bool>(false);
+            IsEmptyStream = new BehaviorSubject<bool>(true);
             CountStream = new BehaviorSubject<int>(0);
             PerPageItemCountStream = new BehaviorSubject<int>(10);
             PageCountStream = new BehaviorSubject<int>(0);
@@ -89,6 +91,7 @@ namespace Acorisoft.Studio.Engines
                 disposable,
                 disposable1,
                 disposable2,
+                IsEmptyStream,
                 IsOpenStream,
                 PerPageItemCountStream,
                 PageCountStream,
@@ -629,10 +632,12 @@ namespace Acorisoft.Studio.Engines
                 return;
             }
 
-            if (IndexCollection.Count() == 0)
+            var index = IndexCollection.Count();
+            if (index == 0)
             {
                 PageIndexField = 0;
             }
+            IsEmptyStream.OnNext(index == 0);
 
             if (PerPageItemCountField == 0)
             {
@@ -851,6 +856,8 @@ namespace Acorisoft.Studio.Engines
 
         #region Properties
 
+        public IObservable<bool> IsEmpty => IsEmptyStream;
+        
         public IObservable<int> Count => CountStream;
 
         /// <summary>
