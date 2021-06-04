@@ -17,6 +17,7 @@ namespace Acorisoft.Studio.ViewModels
         where TComposition : Document
     {
         private protected readonly ObservableAsPropertyHelper<int> CountProperty;
+        private protected readonly ObservableAsPropertyHelper<int> PageCountProperty;
         private IComparer<TWrapper> _sorter;
 
         protected GalleryViewModelBase(IComposeSetSystem system, TEngine engine)
@@ -24,6 +25,7 @@ namespace Acorisoft.Studio.ViewModels
             Engine = engine;
             System = system;
             CountProperty = Engine.Count.ToProperty(this, nameof(Count));
+            PageCountProperty = Engine.PageCount.ToProperty(this, nameof(PageCount));
             RefreshCommand = ReactiveCommand.Create(OnRefresh, System.IsOpen);
             DeleteThisPageCommand = ReactiveCommand.Create(OnDeleteThisPage, System.IsOpen);
             DeleteAllCommand = ReactiveCommand.Create(OnDeleteAll, System.IsOpen);
@@ -50,7 +52,7 @@ namespace Acorisoft.Studio.ViewModels
             var session = await ShowDialog<PageItemCountViewModel>();
             if (session.IsCompleted && session.GetResult<int>() is var result)
             {
-                Engine.PerPageItemCount = result;
+                PageItemCount = result;
             }
         }
 
@@ -104,6 +106,32 @@ namespace Acorisoft.Studio.ViewModels
                 }
             }
         }
+
+        public int PageItemCount
+        {
+            get => Engine.PerPageItemCount;
+            set
+            {
+                Engine.PerPageItemCount = value;
+                RaiseUpdated();
+            }
+        }
+
+        public int PageIndex
+        {
+            get => Engine.PageIndex;
+            set
+            {
+                Engine.PageIndex = value;
+                RaiseUpdated();
+            }
+        }
+        
+        /// <summary>
+        /// 页面数量
+        /// </summary>
+        public int PageCount => PageCountProperty.Value;
+        
         /// <summary>
         /// 刷新命令
         /// </summary>

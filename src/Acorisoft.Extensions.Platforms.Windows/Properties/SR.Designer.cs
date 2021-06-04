@@ -70,6 +70,51 @@ namespace Acorisoft.Extensions.Platforms {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 跳转到.
+        /// </summary>
+        internal static string Pagination_Goto {
+            get {
+                return ResourceManager.GetString("Pagination_Goto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 首页.
+        /// </summary>
+        internal static string Pagination_Home {
+            get {
+                return ResourceManager.GetString("Pagination_Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 最后一页.
+        /// </summary>
+        internal static string Pagination_Last {
+            get {
+                return ResourceManager.GetString("Pagination_Last", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 下一页.
+        /// </summary>
+        internal static string Pagination_Next {
+            get {
+                return ResourceManager.GetString("Pagination_Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 上一页.
+        /// </summary>
+        internal static string Pagination_Previous {
+            get {
+                return ResourceManager.GetString("Pagination_Previous", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 取消.
         /// </summary>
         internal static string Prompt_Cancel {

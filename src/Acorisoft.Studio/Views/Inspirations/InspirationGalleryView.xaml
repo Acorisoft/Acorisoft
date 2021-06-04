@@ -24,13 +24,13 @@
         <appConverters:GalleryTitleConverter x:Key="Title" />
         <w:BrushGeneratorConverter x:Key="Generator">
             <w:BrushGeneratorConverter.Generator>
-                <w:MacaronColorGenerator/>
+                <w:MacaronColorGenerator />
             </w:BrushGeneratorConverter.Generator>
         </w:BrushGeneratorConverter>
     </UserControl.Resources>
     <UserControl.InputBindings>
-        <KeyBinding Command="{Binding NewCommand}" Key="N" Modifiers="Control"/>
-        <KeyBinding Command="{Binding NewInspirationFromClipboardCommand}" Key="V" Modifiers="Control"/>
+        <KeyBinding Command="{Binding NewCommand}" Key="N" Modifiers="Control" />
+        <KeyBinding Command="{Binding NewInspirationFromClipboardCommand}" Key="V" Modifiers="Control" />
     </UserControl.InputBindings>
     <Grid Focusable="False">
         <Grid.RowDefinitions>
@@ -45,14 +45,14 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            
+
             <Border Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="2"
                     Background="{StaticResource Brushes.MaterialDesign.LightGreen}">
                 <Image HorizontalAlignment="Left"
                        Source="{StaticResource Banners.NoData}"
-                       Stretch="None"/>
+                       Stretch="None" />
             </Border>
-            
+
             <StackPanel Grid.Column="0" Orientation="Horizontal">
                 <w:SymbolButton Symbol="{StaticResource Icon.Clipboard}"
                                 Content="新建"
@@ -96,31 +96,31 @@
                                 Command="{Binding PerPageItemCountOptionCommand}" />
                 <w:FilterOptionComboBox Height="32"
                                         SelectedIndex="0"
-                                        SelectedValuePath="Tag" 
+                                        SelectedValuePath="Tag"
                                         SelectedValue="{Binding Sorter,Mode=TwoWay}">
-                    <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Default}" 
-                                  Tag="{x:Static engines:InspirationEngine.Normal}"/>
+                    <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Default}"
+                                  Tag="{x:Static engines:InspirationEngine.Normal}" />
                     <!-- 按名字升序 -->
-                    <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Ascending_Name}" 
-                                  Tag="{x:Static engines:InspirationEngine.AscendingByName}"/>
+                    <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Ascending_Name}"
+                                  Tag="{x:Static engines:InspirationEngine.AscendingByName}" />
                     <!-- 按创建时间升序 -->
-                    <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Ascending_CreationTimestamp}" 
-                                  Tag="{x:Static engines:InspirationEngine.AscendingByCreationTimestamp}"/>
+                    <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Ascending_CreationTimestamp}"
+                                  Tag="{x:Static engines:InspirationEngine.AscendingByCreationTimestamp}" />
                     <!-- 按修改时间升序 -->
-                    <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Ascending_LastAccessTimestamp}" 
-                                  Tag="{x:Static engines:InspirationEngine.AscendingByLastAccessTimestamp}"/>
-                    
+                    <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Ascending_LastAccessTimestamp}"
+                                  Tag="{x:Static engines:InspirationEngine.AscendingByLastAccessTimestamp}" />
+
                     <!-- 按名字降序 -->
-                    <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Descending_Name}" 
-                                  Tag="{x:Static engines:InspirationEngine.DescendingByName}"/>
-                    
+                    <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Descending_Name}"
+                                  Tag="{x:Static engines:InspirationEngine.DescendingByName}" />
+
                     <!-- 按创建时间降序 -->
                     <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Descending_CreationTimestamp}"
-                                  Tag="{x:Static engines:InspirationEngine.DescendingByCreationTimestamp}"/>
-                    
+                                  Tag="{x:Static engines:InspirationEngine.DescendingByCreationTimestamp}" />
+
                     <!-- 按修改时间降序 -->
-                    <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Descending_LastAccessTimestamp}" 
-                                  Tag="{x:Static engines:InspirationEngine.DescendingByLastAccessTimestamp}"/>
+                    <ComboBoxItem Content="{w:Language StickyNoteGallery_Sort_Descending_LastAccessTimestamp}"
+                                  Tag="{x:Static engines:InspirationEngine.DescendingByLastAccessTimestamp}" />
                 </w:FilterOptionComboBox>
             </StackPanel>
         </Grid>
@@ -131,58 +131,67 @@
                                   Title="{Binding Count,Mode=OneWay,Converter={StaticResource Title}}"
                                   Subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                                   Margin="32 8">
-            <ScrollViewer HorizontalScrollBarVisibility="Disabled"
-                          VerticalScrollBarVisibility="Auto"
+            <DockPanel LastChildFill="True">
+                <!-- 分页器-->
+                <w:Pagination DockPanel.Dock="Bottom" 
+                              PageCount="{Binding PageCount,Mode=OneWay}"
+                              PageIndex="{Binding PageIndex,Mode=TwoWay}"
+                              PageItemCount="{Binding PageItemCount,Mode=OneWay}"/>
+                
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                              VerticalScrollBarVisibility="Auto"
                               Focusable="False"
-                              IsTabStop="False">
-                <ItemsControl x:Name="Items"
-                              Focusable="False"
-                              IsTabStop="False">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="{x:Type index:InspirationIndex}">
-                            <w:OverlayContentControl Background="{Binding Converter={StaticResource Generator}}"
-                                                     Padding="16" Margin="4" Width="256"
-                                                     Height="144" 
-                                                     Focusable="False">
-                                <w:OverlayContentControl.Clip>
-                                    <Geometry>M0 0 L0 0 256 0  256 128 128 256 0 256Z</Geometry>
-                                </w:OverlayContentControl.Clip>
-                                <w:OverlayContentControl.Overlay>
-                                    <Border Background="{StaticResource App.Dark.Mask}">
-                                        <StackPanel Orientation="Horizontal"
-                                                    HorizontalAlignment="Center">
-                                            <w:SymbolButton Symbol="{StaticResource Icon.Edit}"
-                                                            Command="{Binding Source={StaticResource ThisViewModel},Path=Data.OpenThisCommand}"
-                                                            CommandParameter="{Binding}"
-                                                            Margin="8" />
-                                            <w:SymbolButton Symbol="{StaticResource Icon.Trash}"
-                                                            Command="{Binding Source={StaticResource ThisViewModel},Path=Data.DeleteThisCommand}"
-                                                            CommandParameter="{Binding}"
-                                                            Margin="8" />
-                                        </StackPanel>
+                              IsTabStop="False"
+                              DockPanel.Dock="Top">
+                    <ItemsControl x:Name="Items"
+                                  Focusable="False"
+                                  IsTabStop="False">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type index:InspirationIndex}">
+                                <w:OverlayContentControl Background="{Binding Converter={StaticResource Generator}}"
+                                                         Padding="16" Margin="4" Width="256"
+                                                         Height="144"
+                                                         Focusable="False">
+                                    <w:OverlayContentControl.Clip>
+                                        <Geometry>M0 0 L0 0 256 0  256 128 128 256 0 256Z</Geometry>
+                                    </w:OverlayContentControl.Clip>
+                                    <w:OverlayContentControl.Overlay>
+                                        <Border Background="{StaticResource App.Dark.Mask}">
+                                            <StackPanel Orientation="Horizontal"
+                                                        HorizontalAlignment="Center">
+                                                <w:SymbolButton Symbol="{StaticResource Icon.Edit}"
+                                                                Command="{Binding Source={StaticResource ThisViewModel},Path=Data.OpenThisCommand}"
+                                                                CommandParameter="{Binding}"
+                                                                Margin="8" />
+                                                <w:SymbolButton Symbol="{StaticResource Icon.Trash}"
+                                                                Command="{Binding Source={StaticResource ThisViewModel},Path=Data.DeleteThisCommand}"
+                                                                CommandParameter="{Binding}"
+                                                                Margin="8" />
+                                            </StackPanel>
+                                        </Border>
+                                    </w:OverlayContentControl.Overlay>
+                                    <Border CornerRadius="3"
+                                            Padding="4">
+                                        <DockPanel>
+                                            <TextBlock Text="{Binding Name}"
+                                                       Foreground="{StaticResource Brushes.Black}"
+                                                       FontSize="24" FontWeight="Bold" DockPanel.Dock="Top" Margin="2" />
+                                            <TextBlock Text="{Binding Summary}"
+                                                       Foreground="{StaticResource Brushes.Black}"
+                                                       FontSize="15" DockPanel.Dock="Bottom" Margin="2" />
+                                        </DockPanel>
                                     </Border>
-                                </w:OverlayContentControl.Overlay>
-                                <Border CornerRadius="3"
-                                        Padding="4">
-                                    <DockPanel>
-                                        <TextBlock Text="{Binding Name}"
-                                                   Foreground="{StaticResource Brushes.Black}"
-                                                   FontSize="24" FontWeight="Bold" DockPanel.Dock="Top" Margin="2" />
-                                        <TextBlock Text="{Binding Summary}"
-                                                   Foreground="{StaticResource Brushes.Black}"
-                                                   FontSize="15" DockPanel.Dock="Bottom" Margin="2" />
-                                    </DockPanel>
-                                </Border>
-                            </w:OverlayContentControl>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel IsItemsHost="True" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
-            </ScrollViewer>
+                                </w:OverlayContentControl>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel IsItemsHost="True" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </ScrollViewer>
+            </DockPanel>
         </w:Headline1HeaderToolbar>
     </Grid>
 </w:SpaPage>

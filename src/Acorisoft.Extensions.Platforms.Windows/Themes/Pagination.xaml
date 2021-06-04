@@ -1,0 +1,160 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Controls"
+                    xmlns:pb="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Controls.Primitives"
+                    xmlns:d="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Controls.Dialogs"
+                    xmlns:bi="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Controls.ActivityIndicator"
+                    xmlns:p="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Controls.Panels"
+                    xmlns:t="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Controls.Toasts"
+                    xmlns:b="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Controls.Buttons"
+                    xmlns:w="clr-namespace:Acorisoft.Extensions.Platforms.Windows"
+                    xmlns:converters="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Converters"
+                    xmlns:cmds="clr-namespace:Acorisoft.Extensions.Platforms.Windows.Commands"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:rx="http://reactiveui.net"
+                    xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    xmlns:i="clr-namespace:Acorisoft.Extensions.Platforms.Internals">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Acorisoft.Extensions.Platforms.Windows;component/Themes/Colors.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
+    <Style TargetType="{x:Type c:PaginationButton}">
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="MinWidth" Value="32" />
+        <Setter Property="Background" Value="{StaticResource Brushes.Transparent}" />
+        <Setter Property="Foreground" Value="{StaticResource Brushes.Black}" />
+        <Setter Property="Margin" Value="4 0"/>
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type c:PaginationButton}">
+                    <Border x:Name="PART_Border"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="3">
+                        
+                        <ContentPresenter Content="{TemplateBinding Page}"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="TextElement.Foreground" 
+                                    Value="{StaticResource App.Theme.Primary}"
+                                    TargetName="PART_Border" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="TextElement.Foreground" 
+                                    Value="{StaticResource Brushes.White}"
+                                    TargetName="PART_Border" />
+                            <Setter Property="Background" 
+                                    Value="{StaticResource App.Theme.Primary}"
+                                    TargetName="PART_Border" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="PaginationButton.Content" TargetType="{x:Type Button}">
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="MinWidth" Value="32" />
+        <Setter Property="Background" Value="{StaticResource Brushes.Transparent}" />
+        <Setter Property="Foreground" Value="{StaticResource Brushes.Black}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Margin" Value="4 0"/>
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="PART_Border"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="3">
+                        <ContentPresenter ContentSource="Content"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="TextElement.Foreground" 
+                                    Value="{StaticResource App.Theme.Primary}"
+                                    TargetName="PART_Border" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="TextElement.Foreground" 
+                                    Value="{StaticResource Brushes.White}"
+                                    TargetName="PART_Border" />
+                            <Setter Property="Background" 
+                                    Value="{StaticResource App.Theme.Primary}"
+                                    TargetName="PART_Border" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type c:Pagination}">
+        <Setter Property="Background" Value="{StaticResource Brushes.Transparent}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type c:Pagination}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition MinWidth="32" Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        
+                        
+                        <!-- 首页 -->
+                        <Button x:Name="PART_Home" Grid.Column="0"
+                                Style="{StaticResource PaginationButton.Content}"
+                                Content="{i:InternalLanguage Key=Pagination_Home}" />
+                        
+                        
+                        <!-- 上一页 -->
+                        <Button x:Name="PART_Previous" Grid.Column="1"
+                                Style="{StaticResource PaginationButton.Content}" 
+                                Content="{i:InternalLanguage Key=Pagination_Previous}" />
+                        
+                        <!-- 按钮组 -->
+                        <StackPanel x:Name="PART_ItemsPanel"
+                                    Grid.Column="2" 
+                                    Orientation="Horizontal" />
+                        
+                        <!-- 下一页 -->
+                        <Button x:Name="PART_Next" Grid.Column="3"
+                                Style="{StaticResource PaginationButton.Content}" 
+                                Content="{i:InternalLanguage Key=Pagination_Next}" />
+                        
+                        <!-- 最后一页 -->
+                        <Button x:Name="PART_Last" Grid.Column="4"
+                                Style="{StaticResource PaginationButton.Content}" 
+                                Content="{i:InternalLanguage Key=Pagination_Last}" />
+                        <!-- 跳转到提示 -->
+                        <TextBlock Grid.Column="5" 
+                                   VerticalAlignment="Center"
+                                   Padding="8 0"
+                                   Text="{i:InternalLanguage Pagination_Goto}" />
+                        
+                        <!-- 跳转到文本框 -->
+                        <TextBox x:Name="PART_Goto"
+                                 BorderThickness="1"
+                                 Grid.Column="6" 
+                                 VerticalAlignment="Center"
+                                 VerticalContentAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

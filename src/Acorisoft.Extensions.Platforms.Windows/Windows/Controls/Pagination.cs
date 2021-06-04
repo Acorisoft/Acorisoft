@@ -19,356 +19,314 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
         }
     }
 
+    /// <summary>
+    /// <see cref="Pagination"/> 表示一个分页控件。
+    /// </summary>
     public class Pagination : Control, IPagination
     {
-        public const string PanelName = "PART_ItemsPanel";
-        public const string FirstButtonName = "PART_First";
-        public const string LastButtonName = "PART_Last";
-        public const string NextButtonName = "PART_Next";
-        public const string PreviousButtonName = "PART_Previous";
-        public const string NextPageButtonName = "PART_NextPage";
-        public const string LastPageButtonName = "PART_LastPage";
-        public const string GotoTextBoxName = "PART_Goto";
-
-        // ReSharper disable once InconsistentNaming
-        private StackPanel PART_ItemsPanel;
-
-        // ReSharper disable once InconsistentNaming
-        private PaginationButton PART_Next;
-
-        // ReSharper disable once InconsistentNaming
-        private PaginationButton PART_NextPage;
-
-        // ReSharper disable once InconsistentNaming
-        private PaginationButton PART_Previous;
-
-        // ReSharper disable once InconsistentNaming
-        private PaginationButton PART_LastPage;
-
-        // ReSharper disable once InconsistentNaming
-        private PaginationButton PART_First;
-
-        // ReSharper disable once InconsistentNaming
-        private PaginationButton PART_Last;
-
-        // ReSharper disable once InconsistentNaming
-        private TextBox PART_Goto;
-
-
-        private static void OnPageIndexChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static Pagination()
         {
-            if (d is not Pagination pagination ||
-                e.NewValue is not int value ||
-                value is <= 0 or >= int.MaxValue)
-            {
-                return;
-            }
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(Pagination),new FrameworkPropertyMetadata(typeof(Pagination)));
+            PageIndexProperty = DependencyProperty.Register("PageIndex",
+                typeof(int), 
+                typeof(Pagination), 
+                new PropertyMetadata(default(int),
+                    OnPageIndexChanged));
 
-            pagination.OnGeneratePaginationButton();
-
-            if (value == 1)
-            {
-                if (pagination.PART_Last == null)
-                {
-                    return;
-                }
-
-                pagination.PART_Previous.IsEnabled = false;
-                pagination.PART_LastPage.IsEnabled = false;
-            }
-            else
-            {
-                if (pagination.PART_Last == null)
-                {
-                    return;
-                }
-
-                pagination.PART_Previous.IsEnabled = true;
-                pagination.PART_LastPage.IsEnabled = true;
-            }
-
-            if (value == pagination.PageCount)
-            {
-                if (pagination.PART_Next == null)
-                {
-                    return;
-                }
-
-                pagination.PART_Next.IsEnabled = false;
-                pagination.PART_NextPage.IsEnabled = false;
-            }
-            else
-            {
-                if (pagination.PART_Last == null)
-                {
-                    return;
-                }
-
-                pagination.PART_Next.IsEnabled = true;
-                pagination.PART_NextPage.IsEnabled = true;
-            }
         }
+        
+        public static readonly DependencyProperty PageIndexProperty ;
+
+        public static readonly DependencyProperty PageItemCountProperty = DependencyProperty.Register(
+            "PageItemCount",       
+            typeof(int), 
+            typeof(Pagination),
+            new PropertyMetadata(
+                default(int),
+                OnPageItemCountChanged,
+                OnPageItemCountCoerceChanged));
+
+        public static readonly DependencyProperty PageCountProperty = DependencyProperty.Register("PageCount",
+            typeof(int), 
+            typeof(Pagination),
+            new PropertyMetadata(
+                default(int),
+                OnPageCountChanged,
+                OnPageCountCoerceChanged));
 
         private static void OnPageCountChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is not Pagination pagination ||
-                e.NewValue is not int value)
+            if(e.NewValue is int and (< 0 or > int.MaxValue))
             {
                 return;
             }
 
-            pagination.OnGeneratePaginationButton();
-
-            if (value < 2)
+            //
+            //
+            var pagination = (Pagination) d;
+            
+            pagination.PageIndex = 1;
+            //
+            // 刷新列表
+            pagination.GeneratePaginationButton((int) d.GetValue(PageIndexProperty));
+            pagination.CheckVisibilityState();
+        }
+        
+        private static void OnPageItemCountChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if(e.NewValue is int and (< 0 or > int.MaxValue))
             {
-                if (pagination.PART_Last == null)
-                {
-                    return;
-                }
-
-                pagination.PART_Previous.IsEnabled = false;
-                pagination.PART_LastPage.IsEnabled = false;
+                return;
             }
-            else
+            
+            
+            //
+            //
+            var pagination = (Pagination) d;
+            pagination.PageIndex = 1;
+            //
+            // 刷新列表
+            pagination.GeneratePaginationButton((int) d.GetValue(PageIndexProperty));
+            pagination.CheckVisibilityState();
+        }
+        
+        private static void OnPageIndexChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if(e.NewValue is int and (< 0 or > int.MaxValue))
             {
-                if (pagination.PART_Last == null)
-                {
-                    return;
-                }
-
-                pagination.PART_Previous.IsEnabled = true;
-                pagination.PART_LastPage.IsEnabled = true;
+                return;
             }
-
-            if (value == pagination.PageCount || value == 0)
-            {
-                if (pagination.PART_Next == null)
-                {
-                    return;
-                }
-
-                pagination.PART_Next.IsEnabled = false;
-                pagination.PART_NextPage.IsEnabled = false;
-            }
-            else
-            {
-                if (pagination.PART_Last == null)
-                {
-                    return;
-                }
-
-                pagination.PART_Next.IsEnabled = true;
-                pagination.PART_NextPage.IsEnabled = true;
-            }
+            
+            
+            //
+            //
+            var pagination = (Pagination) d;
+            
+            pagination.CheckVisibilityState();
         }
 
-        public static readonly DependencyProperty PageCountProperty = DependencyProperty.Register(
-            "PageCount", typeof(int), typeof(Pagination), new PropertyMetadata(default(int), OnPageCountChanged));
+        private static object OnPageCountCoerceChanged(DependencyObject d,object value)
+        {
+            return value is int and (< 0 or > int.MaxValue) ? 1 : value;
+        }
+        
+        private static object OnPageItemCountCoerceChanged(DependencyObject d,object value)
+        {
+            return value is int and (< 0 or > ushort.MaxValue) ? 1 : value;
+        }
 
-        public static readonly DependencyProperty PageIndexProperty = DependencyProperty.Register(
-            "PageIndex", typeof(int), typeof(Pagination), new PropertyMetadata(default(int), OnPageIndexChanged));
-
-
-        public static readonly DependencyProperty GenerateCountProperty = DependencyProperty.Register(
-            "GenerateCount", typeof(int), typeof(Pagination), new PropertyMetadata(default(int)));
-
-        public static readonly DependencyProperty ShowLastButtonProperty = DependencyProperty.Register(
-            "ShowLastButton", typeof(bool), typeof(Pagination), new PropertyMetadata(Xaml.False));
-
-        public static readonly DependencyProperty ShowFirstButtonProperty = DependencyProperty.Register(
-            "ShowFirstButton", typeof(bool), typeof(Pagination), new PropertyMetadata(Xaml.False));
-
-        public static readonly DependencyProperty ShowGotoButtonProperty = DependencyProperty.Register(
-            "ShowGotoButton", typeof(bool), typeof(Pagination), new PropertyMetadata(Xaml.False));
-
-        public static readonly DependencyProperty ShowNextPageButtonProperty = DependencyProperty.Register(
-            "ShowNextPageButton", typeof(bool), typeof(Pagination), new PropertyMetadata(Xaml.False));
-
-        public static readonly DependencyProperty ShowLastPageButtonProperty = DependencyProperty.Register(
-            "ShowLastPageButton", typeof(bool), typeof(Pagination), new PropertyMetadata(Xaml.False));
-
+        private const string PART_HomeName = "PART_Home";
+        private const string PART_PreviousName = "PART_Previous";
+        private const string PART_NextName = "PART_Next";
+        private const string PART_LastName = "PART_Last";
+        private const string PART_GotoName = "PART_Goto";
+        private const string PART_ItemsPanelName = "PART_ItemsPanel";
+        
+        private Button PART_Home;
+        private Button PART_Previous;
+        private Button PART_Next;
+        private Button PART_Last;
+        private TextBox PART_Goto;
+        private StackPanel PART_ItemsPanel;
 
         public override void OnApplyTemplate()
         {
-            PART_Last = (PaginationButton) GetTemplateChild(LastButtonName);
-            PART_LastPage = (PaginationButton) GetTemplateChild(LastPageButtonName);
-            PART_First = (PaginationButton) GetTemplateChild(FirstButtonName);
-            PART_Next = (PaginationButton) GetTemplateChild(NextButtonName);
-            PART_NextPage = (PaginationButton) GetTemplateChild(NextPageButtonName);
-            PART_Previous = (PaginationButton) GetTemplateChild(PreviousButtonName);
-            PART_ItemsPanel = (StackPanel) GetTemplateChild(PanelName);
-            PART_Goto = (TextBox) GetTemplateChild(GotoTextBoxName);
-
-            //
-            // 
-            PART_Last.Checked += OnLastClick;
-            PART_LastPage.Checked += OnLastPageClick;
-            PART_Next.Checked += OnNextClick;
-            PART_NextPage.Checked += OnNextPageClick;
-            PART_First.Checked += OnFirstClick;
-            PART_Previous.Checked += OnPreviousClick;
-            PART_Goto.KeyDown += OnGotoButtonKeyDown;
-
-            OnGeneratePaginationButton();
+            PART_Home = (Button) GetTemplateChild(PART_HomeName);
+            PART_Previous = (Button) GetTemplateChild(PART_PreviousName);
+            PART_Next = (Button) GetTemplateChild(PART_NextName);
+            PART_Last = (Button) GetTemplateChild(PART_LastName);
+            PART_Goto = (TextBox) GetTemplateChild(PART_GotoName);
+            PART_ItemsPanel = (StackPanel)GetTemplateChild(PART_ItemsPanelName);
+            PART_Home.Click += NavigateToHome;
+            PART_Last.Click += NavigateToLast;
+            PART_Next.Click += NextRange;
+            PART_Previous.Click += PreviousRange;
+            PART_Goto.KeyDown += OnGotoKeyDown;    
+            
+            base.OnApplyTemplate();
         }
 
-        #region EventHandlers
-
-        private void OnFirstClick(object sender, RoutedEventArgs e)
-        {
-            if (PageCount == 0)
-            {
-                return;
-            }
-
-            PageIndex = 1;
-        }
-
-        private void OnLastClick(object sender, RoutedEventArgs e)
-        {
-            if (PageCount == 0)
-            {
-                return;
-            }
-
-            PageIndex = PageCount;
-        }
-
-        private void OnLastPageClick(object sender, RoutedEventArgs e)
-        {
-            if (PageCount == 0)
-            {
-                return;
-            }
-
-            if (PageIndex == 1)
-            {
-                return;
-            }
-
-            PageIndex -= Math.Clamp(PageIndex - GenerateCount, 0, GenerateCount);
-        }
-
-        private void OnNextClick(object sender, RoutedEventArgs e)
-        {
-            if (PageCount == 0)
-            {
-                return;
-            }
-
-            if (PageIndex == PageCount)
-            {
-                return;
-            }
-
-            PageIndex += 1;
-        }
-
-        private void OnNextPageClick(object sender, RoutedEventArgs e)
-        {
-            if (PageCount == 0)
-            {
-                return;
-            }
-
-            if (PageIndex == 1)
-            {
-                return;
-            }
-
-            PageIndex += Math.Clamp(PageCount - PageIndex, 0, GenerateCount);
-        }
-
-        private void OnPreviousClick(object sender, RoutedEventArgs e)
-        {
-            if (PageCount == 0)
-            {
-                return;
-            }
-
-            if (PageIndex == 0)
-            {
-                return;
-            }
-
-            PageIndex -= 1;
-        }
-
-        private void OnGotoButtonKeyDown(object sender, KeyEventArgs e)
+        private void OnGotoKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key != Key.Enter && e.SystemKey != Key.Enter)
             {
                 return;
             }
 
-            var value = MathExtensions.GetNumber(((TextBox) sender).Text);
-            if (value == 0)
+            if (!int.TryParse(PART_Goto.Text, out var index))
+            {
+                return;
+            }
+            
+            if (PageCount == 0)
+            {
+                return;
+            }
+            
+            //
+            // 归一化
+            index = Math.Clamp(index, 1, PageCount);
+                
+            //
+            // 判断是否需要重新刷新
+            if (index >= PageIndex + PageCount)
+            {
+                
+                //
+                // index: 6  maxIndex : 10
+                // 
+                GeneratePaginationButton(index);
+                
+                
+            }
+
+            for (int i = 0; i < PART_ItemsPanel.Children.Count;i++)
+            {
+                PaginationButton button = (PaginationButton)PART_ItemsPanel.Children[i];
+                if (button.Page == index)
+                {
+                    button.IsChecked = true;
+                }
+            }
+        }
+
+        protected void NavigateToPage(object sender, RoutedEventArgs e)
+        {
+            if (sender is not PaginationButton button)
             {
                 return;
             }
 
-            PageIndex = value;
-        }
-
-        #endregion
-
-
-        public bool ShowLastPageButton
-        {
-            get => (bool) GetValue(ShowLastPageButtonProperty);
-            set => SetValue(ShowLastPageButtonProperty, value);
-        }
-
-        public bool ShowNextPageButton
-        {
-            get => (bool) GetValue(ShowNextPageButtonProperty);
-            set => SetValue(ShowNextPageButtonProperty, value);
-        }
-
-        public bool ShowGotoButton
-        {
-            get => (bool) GetValue(ShowGotoButtonProperty);
-            set => SetValue(ShowGotoButtonProperty, Xaml.Box(value));
-        }
-
-        public bool ShowFirstButton
-        {
-            get => (bool) GetValue(ShowFirstButtonProperty);
-            set => SetValue(ShowFirstButtonProperty, Xaml.Box(value));
-        }
-
-        public bool ShowLastButton
-        {
-            get => (bool) GetValue(ShowLastButtonProperty);
-            set => SetValue(ShowLastButtonProperty, Xaml.Box(value));
-        }
-
-        public int GenerateCount
-        {
-            get => (int) GetValue(GenerateCountProperty);
-            set => SetValue(GenerateCountProperty, value);
-        }
-
-        public int PageIndex
-        {
-            get => (int) GetValue(PageIndexProperty);
-            set => SetValue(PageIndexProperty, value);
-        }
-
-        public int PageCount
-        {
-            get => (int) GetValue(PageCountProperty);
-            set => SetValue(PageCountProperty, value);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        protected virtual void OnGeneratePaginationButton()
-        {
-            if (PART_ItemsPanel == null)
+            if (button.IsChecked != true)
             {
-                Debug.WriteLine("无法生成分页子项，面板为空");
+                return;
+            }
+            
+            if (PageCount == 0)
+            {
+                return;
+            }
+            
+            //
+            // 获取并设置指定的页面索引，并保证页面的索引号在[1,PageCount]之间
+            PageIndex = Math.Clamp(button.Page, 1, PageCount);
+            
+            //
+            // 判断是否翻页了
+            if (PageIndex % PageItemCount == 1 && PageIndex > 1)
+            {
+                GeneratePaginationButton(PageIndex);
+                CheckVisibilityState();
+            }
+        }
+
+        protected void GeneratePaginationButton(int pageIndex)
+        {
+            if (PageCount == 0)
+            {
+                return;
+            }
+
+            var count = PageCount;
+            
+            //
+            // analyzed:
+            //
+            // pageCount is 10, pageItemCount is 5, pageIndex is 6,
+            //
+            // it will generate 6 7 8 9 10
+            //
+            // pageCount is 10, pageItemCount is 5, pageIndex is 8,
+            //
+            // it will generate 8 9 10
+            var generateItemCount = Math.Clamp(count - pageIndex + 1, 1 , count);
+            
+            //
+            //
+            PART_ItemsPanel.Children.Clear();
+            
+            //
+            // 
+            for (int i = pageIndex, n = 0; n < generateItemCount; n++, i++)
+            {
+                var button = new PaginationButton
+                {
+                    Page = i
+                };
+
+                //
+                //
+                button.Checked += NavigateToPage;
+                
+                //
+                //
+                PART_ItemsPanel.Children.Add(button);
+
+            }
+        }
+        
+        protected void NextRange(object sender, RoutedEventArgs e)
+        {
+            if (sender is not PaginationButton)
+            {
+                return;
+            }
+            if (PageCount == 0)
+            {
+                return;
+            }
+
+            //
+            // 获取并设置指定的页面索引，并保证页面的索引号在[1,int.MaxValue]之间
+            var index = Math.Clamp(PageIndex + PageItemCount, 1, PageCount);
+            
+            //
+            // 生成按钮
+            GeneratePaginationButton(index);
+            
+            //
+            // 设置索引值
+            PageIndex = index;
+        }
+
+        protected void NavigateToHome(object sender, RoutedEventArgs e)
+        {
+            if (PageCount == 0)
+            {
+                return;
+            }
+            //
+            // 生成按钮
+            GeneratePaginationButton(1);
+            
+            //
+            // 设置索引值
+            PageIndex = 1;
+        }
+        
+        protected void NavigateToLast(object sender, RoutedEventArgs e)
+        {
+            if (PageCount == 0)
+            {
+                return;
+            }
+            //
+            // 获取并设置指定的页面索引，并保证页面的索引号在[1,int.MaxValue]之间
+            var index = Math.Clamp(PageCount - PageItemCount + 1, 1, PageCount);
+            
+            //
+            // 生成按钮
+            GeneratePaginationButton(index);
+            
+            //
+            // 设置索引值
+            PageIndex = index;
+        }
+
+        protected void PreviousRange(object sender, RoutedEventArgs e)
+        {
+            if (sender is not PaginationButton)
+            {
                 return;
             }
 
@@ -376,39 +334,56 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
             {
                 return;
             }
-
-            if (GenerateCount == 0)
-            {
-                return;
-            }
-
-            foreach (PaginationButton button in PART_ItemsPanel.Children)
-            {
-                button.Click -= OnPaginationButtonClick;
-            }
-
+            
             //
-            // 避免生成超出范围的值。
-            var actualGenerateCount = Math.Clamp(PageCount - PageIndex + 1, 0, GenerateCount);
-            Debug.WriteLine(actualGenerateCount);
+            // 获取并设置指定的页面索引，并保证页面的索引号在[1,int.MaxValue]之间
+            var index = Math.Clamp(PageIndex - PageItemCount, 1, PageCount);
+            
             //
-            // 清空所有子项
-            PART_ItemsPanel.Children.Clear();
-
-            for (int i = 0, n = PageIndex; i < actualGenerateCount; i++, n++)
-            {
-                var button = new PaginationButton {Page = n};
-                button.Click += OnPaginationButtonClick;
-                PART_ItemsPanel.Children.Add(button);
-            }
+            // 生成按钮
+            GeneratePaginationButton(index);
+            
+            //
+            // 设置索引值
+            PageIndex = index;
         }
 
-        private void OnPaginationButtonClick(object sender, RoutedEventArgs e)
+        protected void CheckVisibilityState()
         {
-            if (sender is PaginationButton button && PageCount > 0 && button.Page < PageCount)
+            var index = PageIndex;
+            var count = PageCount;
+            var itemCount = PageItemCount;
+
+            if (count == 0)
             {
-                PageIndex = button.Page;
+                PART_Home.Visibility=  Visibility.Collapsed;
+                PART_Previous.Visibility =  Visibility.Collapsed;
+                PART_Last.Visibility =  Visibility.Collapsed;
+                PART_Next.Visibility =  Visibility.Collapsed;
+                return;
             }
+            
+            PART_Home.Visibility = index == 1 ? Visibility.Collapsed : Visibility.Visible;
+            PART_Previous.Visibility = index == 1? Visibility.Collapsed : Visibility.Visible;
+            PART_Last.Visibility = count - index <= itemCount? Visibility.Collapsed : Visibility.Visible;
+            PART_Next.Visibility = count - index <= itemCount? Visibility.Collapsed : Visibility.Visible;
+        }
+        
+
+        public int PageCount
+        {
+            get => (int) GetValue(PageCountProperty);
+            set => SetValue(PageCountProperty, value);
+        }
+        public int PageItemCount
+        {
+            get => (int) GetValue(PageItemCountProperty);
+            set => SetValue(PageItemCountProperty, value);
+        }
+        public int PageIndex
+        {
+            get => (int) GetValue(PageIndexProperty);
+            set => SetValue(PageIndexProperty, value);
         }
     }
 }
