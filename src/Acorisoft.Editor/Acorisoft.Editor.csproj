@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <Import Project="../../rx.targets"/>
-    <Import Project="../../rxui.targets"/>
+    <Import Project="../../rx.targets" />
+    <Import Project="../../rxui.targets" />
     <PropertyGroup>
         <TargetFramework>net5.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>
@@ -10,6 +10,7 @@
       <ProjectReference Include="..\..\AvalonEdit\ICSharpCode.AvalonEdit\ICSharpCode.AvalonEdit.csproj" />
       <ProjectReference Include="..\..\markdig.wpf\src\Markdig.Wpf\Markdig.Wpf.csproj" />
       <ProjectReference Include="..\..\markdig\src\Markdig\Markdig.csproj" />
+      <ProjectReference Include="..\Acorisoft.Extensions.Platforms\Acorisoft.Extensions.Platforms.csproj" />
     </ItemGroup>
 
 </Project>

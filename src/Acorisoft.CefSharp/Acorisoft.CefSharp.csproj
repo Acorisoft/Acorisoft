@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    
+    <PropertyGroup>
+        <RuntimeIdentifier>win-x86</RuntimeIdentifier>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net5.0-windows</TargetFramework>
+        <UseWPF>true</UseWPF>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="CefSharp.Wpf.NETCore" Version="89.0.170" />
+    </ItemGroup>
+
+</Project>

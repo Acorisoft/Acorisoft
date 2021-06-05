@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Acorisoft.Editor.Sample
+namespace Acorisoft.CefSharp
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -23,13 +23,6 @@ namespace Acorisoft.Editor.Sample
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-        {
-            var mode = (MarkdownEditMode) ((Button) sender).Tag;
-            MarkdownEditView.Mode = mode;
-            MarkdownEditView.ToggleFormatCurrentLineAsMarkdownHeadline1();
         }
     }
 }

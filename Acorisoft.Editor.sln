@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Editor.Sample", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Editor", "src\Acorisoft.Editor\Acorisoft.Editor.csproj", "{FA4E8EB9-F6FB-4C52-BF41-9632A5E47695}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Extensions.Platforms", "src\Acorisoft.Extensions.Platforms\Acorisoft.Extensions.Platforms.csproj", "{3847AB11-A083-4DDC-90EF-6E2883666797}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{FA4E8EB9-F6FB-4C52-BF41-9632A5E47695}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA4E8EB9-F6FB-4C52-BF41-9632A5E47695}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA4E8EB9-F6FB-4C52-BF41-9632A5E47695}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3847AB11-A083-4DDC-90EF-6E2883666797}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3847AB11-A083-4DDC-90EF-6E2883666797}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3847AB11-A083-4DDC-90EF-6E2883666797}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3847AB11-A083-4DDC-90EF-6E2883666797}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
