@@ -10,6 +10,7 @@ using Acorisoft.Studio.ProjectSystems;
 
 namespace Acorisoft.Studio.Resources
 {
+    [Obsolete]
     public class AlbumResource : ImageResource, ICollection<Guid>, IReadOnlyList<Guid>
     {
         private readonly List<Guid> _guids;

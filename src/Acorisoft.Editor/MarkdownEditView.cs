@@ -6,6 +6,8 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using Acorisoft.Extensions.Platforms;
+using Acorisoft.Extensions.Platforms.Services;
+using Acorisoft.Studio.ProjectSystems;
 using ICSharpCode.AvalonEdit;
 using Markdig.Syntax;
 using Markdig.Wpf;
@@ -77,6 +79,8 @@ namespace Acorisoft.Editor
 
         private ScrollToAction _scrollToAction;
 
+        private IComposeSetFileSystem _fss;
+        
         //-----------------------------------------------------------------------
         //
         //  Public Methods
@@ -84,6 +88,11 @@ namespace Acorisoft.Editor
         //-----------------------------------------------------------------------
         public MarkdownEditView()
         {
+            //
+            // 获取文件系统支持。
+            _fss = (IComposeSetFileSystem)ServiceProvider.GetService(typeof(IComposeSetFileSystem));
+            
+            
             this.Loaded += OnLoadedImpl;
             this.Unloaded += OnUnloadedImpl;
         }
@@ -537,8 +546,10 @@ namespace Acorisoft.Editor
 
             markdownEditor?.Document.Replace(line, currentLineNewString.TrimStart());
         }
-
-
+        
+        /// <summary>
+        /// 将当前选择的内容包装为
+        /// </summary>
         public void IncreamentIndent()
         {
             //
@@ -561,6 +572,9 @@ namespace Acorisoft.Editor
             markdownEditor?.Document.Replace(line, currentLineNewString.TrimStart());
         }
         
+        /// <summary>
+        /// 将当前选择的内容包装为
+        /// </summary>
         public void DecreamentIndent()
         {
             //

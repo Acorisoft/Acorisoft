@@ -5,6 +5,7 @@ using LiteDB;
 
 namespace Acorisoft.Studio.Resources
 {
+    [Obsolete]
     public class CoverResource : ImageResource
     {
         public CoverResource()

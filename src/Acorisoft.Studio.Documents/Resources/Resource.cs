@@ -11,7 +11,10 @@ namespace Acorisoft.Studio.Resources
         /// </summary>
         public ResourceMode Mode { get; set; }
         
+        [Obsolete]
         public abstract string GetResourceFileName(IComposeSet composeSet);
+        
+        [Obsolete]
         public abstract string GetResourceKey();
     }
 }

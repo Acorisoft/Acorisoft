@@ -11,6 +11,7 @@
       <ProjectReference Include="..\..\markdig.wpf\src\Markdig.Wpf\Markdig.Wpf.csproj" />
       <ProjectReference Include="..\..\markdig\src\Markdig\Markdig.csproj" />
       <ProjectReference Include="..\Acorisoft.Extensions.Platforms\Acorisoft.Extensions.Platforms.csproj" />
+      <ProjectReference Include="..\Acorisoft.Studio.Documents\Acorisoft.Studio.Documents.csproj" />
     </ItemGroup>
 
 </Project>
