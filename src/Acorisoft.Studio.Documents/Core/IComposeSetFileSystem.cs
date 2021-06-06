@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Acorisoft.Studio.Resources;
 
-namespace Acorisoft.Studio.Systems
+namespace Acorisoft.Studio.Core
 {
     /// <summary>
     /// <see cref="IComposeSetFileSystem"/> 接口表示一个抽象的创作集文件系统接口，用于实现创作集文件访问和修改的支持。

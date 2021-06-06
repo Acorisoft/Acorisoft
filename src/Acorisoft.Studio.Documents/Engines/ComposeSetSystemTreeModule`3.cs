@@ -4,7 +4,7 @@ using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
 using Acorisoft.Studio.Documents;
-using Acorisoft.Studio.Systems;
+using Acorisoft.Studio.Core;
 namespace Acorisoft.Studio.Engines
 {
     public class ComposeSetSystemTreeModule<TIndex, TIndexWrapper, TComposition> : Extensions.Platforms.Disposable,

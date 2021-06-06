@@ -11,7 +11,7 @@ using Acorisoft.Extensions.Platforms.Windows;
 using Acorisoft.Extensions.Platforms.Windows.ViewModels;
 using Acorisoft.Studio.Models;
 using Acorisoft.Studio.ProjectSystem;
-using Acorisoft.Studio.Systems;
+using Acorisoft.Studio.Core;
 using LiteDB;
 using Newtonsoft.Json;
 using ReactiveUI;

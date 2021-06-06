@@ -15,11 +15,12 @@ using Acorisoft.Studio.Engines;
 using DryIoc;
 using LiteDB;
 using MediatR;
+using Newtonsoft.Json;
 using Disposable = Acorisoft.Extensions.Platforms.Disposable;
 using FileMode = System.IO.FileMode;
 using Unit = System.Reactive.Unit;
 
-namespace Acorisoft.Studio.Systems
+namespace Acorisoft.Studio.Core
 {
     /// <summary>
     /// <see cref="ComposeSetSystem"/> 类型表示一个创作集系统接口，用于为应用程序提供创作集新建、打开、关闭等支持。
@@ -51,6 +52,8 @@ namespace Acorisoft.Studio.Systems
         //
         //-----------------------------------------------------------------------
         private readonly ConcurrentQueue<Unit> _queue;
+        private readonly Dictionary<Type, Guid> _autosaveSessionDictionary;
+        private readonly List<ReadWriteVector> _vectorTable;
         
         
         #endregion
@@ -58,6 +61,8 @@ namespace Acorisoft.Studio.Systems
         private ComposeSetSystem(IMediator mediator)
         {
             _queue = new ConcurrentQueue<Unit>();
+            _autosaveSessionDictionary = new Dictionary<Type, Guid>();
+            _vectorTable = new List<ReadWriteVector>();
             
             IsOpenStream = new BehaviorSubject<bool>(false);
             ComposeSetStream = new BehaviorSubject<IComposeSet>(null);
@@ -206,7 +211,7 @@ namespace Acorisoft.Studio.Systems
 
         private static string GetDatabaseFileNameFromPath(string path)
         {
-            return Path.Combine(path, Systems.ComposeSet.MainDatabaseFileName);
+            return Path.Combine(path, Core.ComposeSet.MainDatabaseFileName);
         }
 
         private static LiteDatabase GetDatabaseFromPath(string path)
@@ -214,8 +219,8 @@ namespace Acorisoft.Studio.Systems
             return new LiteDatabase(new ConnectionString
             {
                 Filename = GetDatabaseFileNameFromPath(path),
-                InitialSize = ProjectSystems.ComposeSet.MainDatabaseSize,
-                CacheSize = ProjectSystems.ComposeSet.MainDatabaseCacheSize,
+                InitialSize = Core.ComposeSet.MainDatabaseSize,
+                CacheSize = Core.ComposeSet.MainDatabaseCacheSize,
                 Mode = LiteDB.FileMode.Exclusive
             });
         }
@@ -274,7 +279,6 @@ namespace Acorisoft.Studio.Systems
             
             //
             // 初始化自动保存系统
-            IsInitializeAutoSaveSystem = true;
             OpenAutoSaveManifest();
             
             //
@@ -302,7 +306,6 @@ namespace Acorisoft.Studio.Systems
             
             //
             // 关闭自动保存系统
-            IsInitializeAutoSaveSystem = false;
             CloseAutoSaveManifest();
             
             await Mediator.Publish(new ComposeSetCloseInstruction());
@@ -782,31 +785,54 @@ namespace Acorisoft.Studio.Systems
         
         #region IComposeSetFileSystem2 Implementations
 
-
-        /// <summary>
-        /// 初始化自动保存系统。
-        /// </summary>
-        /// <remarks>
-        /// 我建议在App.xaml.cs中使用，或者在 AppViewModel 中调用。
-        /// </remarks>
-        public void Initialize()
+        //
+        // Manifest 清单中包括了以下几个部分的内容:
+        //
+        // 1) Manifest 清单中关于 System.Type 与 System.Guid 之间的关联向量表。
+        //
+        // 2) 全局访问记录
+        protected internal class ReadWriteVector
+        {
+            [JsonProperty("id")]
+            public Guid DocumentIdentifier { get; set; }
+            
+            [JsonProperty("ctime")]
+            public DateTime CreationTimestamp { get; set; }
+            
+            [JsonProperty("mtime")]
+            public DateTime ModifiedTimestamp { get; set; }
+            
+            [JsonProperty("is_w")]
+            public bool IsWrite { get; set; }
+        }
+        
+        private void OpenAutoSaveManifest()
         {
             //
-            // 该选项不能在
+            // 确保创作集已经打开
             if (!IsOpenField)
             {
                 return;
             }
 
-            if (!IsInitializeAutoSaveSystem)
-            {
-                return;
-            }
-        }
+            //
+            // 获得Manifest的路径
+            var manifestFileName = CurrentComposite.AutoSaveManifestFileName;
 
-        private void OpenAutoSaveManifest()
-        {
+            //
+            // Json 内容
+            string manifestJson;
             
+            //
+            // 判断Manifest是否存在
+            if (File.Exists(manifestFileName))
+            {
+                manifestJson = File.ReadAllText(manifestFileName);
+            }
+            else
+            {
+                
+            }
         }
 
         private void CloseAutoSaveManifest()
@@ -870,7 +896,7 @@ namespace Acorisoft.Studio.Systems
             {
                 var key = typeof(TObject).FullName;
                 var database = ((IComposeSetDatabase) CurrentComposite).MainDatabase;
-                var collection = database.GetCollection(Acorisoft.Studio.Systems.ComposeSet.MetadataCollection);
+                var collection = database.GetCollection(Acorisoft.Studio.Core.ComposeSet.MetadataCollection);
                 if (collection.Exists(key))
                 {
                     return BsonMapper.Global.ToObject<TObject>(collection.FindById(key));
@@ -889,7 +915,7 @@ namespace Acorisoft.Studio.Systems
         {
             var key = instance.GetType().FullName;
             var database = ((IComposeSetDatabase) CurrentComposite).MainDatabase;
-            var collection = database.GetCollection(Acorisoft.Studio.Systems.ComposeSet.MetadataCollection);
+            var collection = database.GetCollection(Acorisoft.Studio.Core.ComposeSet.MetadataCollection);
             collection.Upsert(new BsonValue(key), BsonMapper.Global.ToDocument(instance));
             return instance;
         }
@@ -997,12 +1023,9 @@ namespace Acorisoft.Studio.Systems
         protected IComposeSet CurrentComposite { get; private set; }
         
         protected bool IsOpenField { get; private set; }
-        
-        
-        protected bool IsInitializeAutoSaveSystem { get; private set; }
-        
-        
-        
+
+
+
         //-----------------------------------------------------------------------
         //
         //  Properties

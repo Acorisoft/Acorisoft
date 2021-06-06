@@ -6,7 +6,7 @@ using Acorisoft.Extensions.Platforms.Windows;
 using Acorisoft.Extensions.Platforms.Windows.ViewModels;
 using Acorisoft.Studio.Documents.Inspirations;
 using Acorisoft.Studio.Engines;
-using Acorisoft.Studio.Systems;
+using Acorisoft.Studio.Core;
 using ReactiveUI;
 
 namespace Acorisoft.Studio.ViewModels

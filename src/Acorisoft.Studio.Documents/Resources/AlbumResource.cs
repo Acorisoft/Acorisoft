@@ -1,12 +1,12 @@
 ﻿using System;
 using System.IO;
-using Acorisoft.Studio.Systems;
+using Acorisoft.Studio.Core;
 using LiteDB;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Acorisoft.Studio.Systems;
+using Acorisoft.Studio.Core;
 
 namespace Acorisoft.Studio.Resources
 {

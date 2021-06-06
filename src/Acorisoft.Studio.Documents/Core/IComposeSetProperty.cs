@@ -1,6 +1,6 @@
 ﻿using Acorisoft.Studio.Resources;
 
-namespace Acorisoft.Studio.Systems
+namespace Acorisoft.Studio.Core
 {
     /// <summary>
     /// <see cref="IComposeSetProperty"/> 接口表示一个抽象的创作集属性。

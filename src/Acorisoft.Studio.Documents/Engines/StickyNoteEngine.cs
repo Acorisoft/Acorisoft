@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Acorisoft.Studio.Documents;
 using Acorisoft.Studio.Documents.Inspirations;
 using Acorisoft.Studio.Documents.StickyNotes;
-using Acorisoft.Studio.Systems;
+using Acorisoft.Studio.Core;
 
 namespace Acorisoft.Studio.Engines
 {

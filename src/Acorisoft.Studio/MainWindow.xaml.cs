@@ -22,7 +22,7 @@ using Acorisoft.Extensions.Platforms.Windows.Controls;
 using Acorisoft.Extensions.Platforms.Windows.Services;
 using Acorisoft.Studio.Models;
 using Acorisoft.Studio.ProjectSystem;
-using Acorisoft.Studio.Systems;
+using Acorisoft.Studio.Core;
 using Acorisoft.Studio.ViewModels;
 using ReactiveUI;
 

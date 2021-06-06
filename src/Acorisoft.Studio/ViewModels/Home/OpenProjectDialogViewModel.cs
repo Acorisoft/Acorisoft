@@ -1,6 +1,6 @@
 ﻿using System;
 using Acorisoft.Extensions.Platforms.Windows.ViewModels;
-using Acorisoft.Studio.Systems;
+using Acorisoft.Studio.Core;
 using Acorisoft.Studio.Properties;
 using ReactiveUI;
 

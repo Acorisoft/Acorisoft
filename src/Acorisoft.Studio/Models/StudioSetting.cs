@@ -1,7 +1,7 @@
 ﻿using System;
 using Acorisoft.Extensions.Platforms.ComponentModel;
 using Acorisoft.Extensions.Platforms.Windows.Models;
-using Acorisoft.Studio.Systems;
+using Acorisoft.Studio.Core;
 
 namespace Acorisoft.Studio.Models
 {

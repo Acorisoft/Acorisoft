@@ -2,7 +2,7 @@
 using Acorisoft.Extensions.Platforms;
 using LiteDB;
 
-namespace Acorisoft.Studio.Systems
+namespace Acorisoft.Studio.Core
 {
     public class ComposeSet : Disposable, IComposeSet, IComposeSetDatabase
     {

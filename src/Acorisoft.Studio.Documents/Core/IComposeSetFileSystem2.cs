@@ -4,7 +4,7 @@ using System.Reactive;
 using System.Threading.Tasks;
 using Acorisoft.Studio.Resources;
 
-namespace Acorisoft.Studio.Systems
+namespace Acorisoft.Studio.Core
 {
     /// <summary>
     /// <see cref="IComposeSetFileSystem2"/> 接口用于表示一个抽象的创作集文件系统接口，它是基础文件系统 <see cref="IComposeSetFileSystem"/> 的升级版。

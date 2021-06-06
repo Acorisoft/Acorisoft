@@ -2,7 +2,7 @@
 using Acorisoft.Studio.Resources;
 using LiteDB;
 
-namespace Acorisoft.Studio.Systems
+namespace Acorisoft.Studio.Core
 {
     public class ComposeProject : IComposeProject
     {

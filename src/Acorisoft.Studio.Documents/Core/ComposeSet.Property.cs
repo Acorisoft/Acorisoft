@@ -1,6 +1,6 @@
 ﻿using Acorisoft.Studio.Resources;
 
-namespace Acorisoft.Studio.Systems
+namespace Acorisoft.Studio.Core
 {
     public class ComposeSetProperty : IComposeSetProperty
     {
