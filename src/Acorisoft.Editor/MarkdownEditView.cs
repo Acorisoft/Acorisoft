@@ -7,7 +7,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using Acorisoft.Extensions.Platforms;
 using Acorisoft.Extensions.Platforms.Services;
-using Acorisoft.Studio.Systems;
+using Acorisoft.Studio.Core;
 using ICSharpCode.AvalonEdit;
 using Markdig.Syntax;
 using Markdig.Wpf;

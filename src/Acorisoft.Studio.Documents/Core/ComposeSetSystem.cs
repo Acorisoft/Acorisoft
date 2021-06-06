@@ -29,8 +29,6 @@ namespace Acorisoft.Studio.Core
     {
         #region Fields
 
-        
-        
         //-----------------------------------------------------------------------
         //
         //  Protected Readonly Fields
@@ -43,27 +41,22 @@ namespace Acorisoft.Studio.Core
         protected readonly BehaviorSubject<Unit> RequestingStream;
         protected readonly IMediator MediatorField;
         protected readonly CompositeDisposable Disposable;
-        
-        
-        
+
+
         //-----------------------------------------------------------------------
         //
         //  Private Readonly Fields
         //
         //-----------------------------------------------------------------------
         private readonly ConcurrentQueue<Unit> _queue;
-        private readonly Dictionary<Type, Guid> _autosaveSessionDictionary;
-        private readonly List<ReadWriteVector> _vectorTable;
-        
-        
+        private AutoSave _autoSave;
+
         #endregion
-        
+
         private ComposeSetSystem(IMediator mediator)
         {
             _queue = new ConcurrentQueue<Unit>();
-            _autosaveSessionDictionary = new Dictionary<Type, Guid>();
-            _vectorTable = new List<ReadWriteVector>();
-            
+
             IsOpenStream = new BehaviorSubject<bool>(false);
             ComposeSetStream = new BehaviorSubject<IComposeSet>(null);
             PropertyStream = new BehaviorSubject<IComposeSetProperty>(null);
@@ -80,30 +73,26 @@ namespace Acorisoft.Studio.Core
                 RespondingStream,
                 RequestingStream
             };
-
-
         }
 
-        
+
         //-----------------------------------------------------------------------
         //
         //  Ioc Registraction
         //
         //-----------------------------------------------------------------------
-        
-        
-        
+
+
         #region IocRegistraction
 
-        
-
-        private static void RegisterComposeSetSystemModule<TInstance>(IContainer container, TInstance instance) where TInstance : IComposeSetSystemModule
+        private static void RegisterComposeSetSystemModule<TInstance>(IContainer container, TInstance instance)
+            where TInstance : IComposeSetSystemModule
         {
             container.UseInstance<INotificationHandler<ComposeSetOpenInstruction>>(instance);
             container.UseInstance<INotificationHandler<ComposeSetSaveInstruction>>(instance);
             container.UseInstance<INotificationHandler<ComposeSetCloseInstruction>>(instance);
         }
-        
+
         public static IComposeSetSystem Create(IContainer container)
         {
             if (container.IsRegistered<IComposeSetSystem>())
@@ -114,7 +103,7 @@ namespace Acorisoft.Studio.Core
             {
                 var factory = new ServiceFactory(container.Resolve);
                 var mediator = new Mediator(factory);
-                
+
                 //
                 // 注册中介者
                 container.RegisterInstance<Mediator>(mediator);
@@ -128,7 +117,7 @@ namespace Acorisoft.Studio.Core
                 container.UseInstance<IComposeSetPropertySystem>(instance);
 
                 var stickyNoteEngine = new StickyNoteEngine(instance);
-                
+
                 container.RegisterInstance<StickyNoteEngine>(stickyNoteEngine);
                 container.UseInstance<IStickyNoteEngine>(stickyNoteEngine);
                 RegisterComposeSetSystemModule(container, stickyNoteEngine);
@@ -140,35 +129,31 @@ namespace Acorisoft.Studio.Core
 
         private static void RegisterInspiration(IContainer container, IComposeSetSystem instance)
         {
-            
             var inspirationEngine = new InspirationEngine(instance);
-                
+
             container.RegisterInstance<InspirationEngine>(inspirationEngine);
             container.UseInstance<IInspirationEngine>(inspirationEngine);
             RegisterComposeSetSystemModule(container, inspirationEngine);
         }
-        
-        
+
         #endregion
-        
-                
+
+
         //-----------------------------------------------------------------------
         //
         //  Methods
         //
         //-----------------------------------------------------------------------
-        
+
         #region Methods
 
-        
-                
         //-----------------------------------------------------------------------
         //
         //  Protected Methods
         //
         //-----------------------------------------------------------------------
-        
-        
+
+
         #region Protected Methods
 
         protected override void OnDisposeManagedCore()
@@ -177,10 +162,9 @@ namespace Acorisoft.Studio.Core
             {
                 return;
             }
-            
+
             Disposable.Dispose();
             IsOpenField = false;
-            
         }
 
         protected override void OnDisposeUnmanagedCore()
@@ -189,24 +173,15 @@ namespace Acorisoft.Studio.Core
             IsOpenField = false;
         }
 
-        
         #endregion
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
+
         //-----------------------------------------------------------------------
         //
         //  IComposeSetSystem Implementations
         //
         //-----------------------------------------------------------------------
+
         #region IComposeSetSystem Implementations
 
         private static string GetDatabaseFileNameFromPath(string path)
@@ -224,7 +199,7 @@ namespace Acorisoft.Studio.Core
                 Mode = LiteDB.FileMode.Exclusive
             });
         }
-        
+
         /// <summary>
         /// 在一个异步请求中打开一个项目。
         /// </summary>
@@ -236,11 +211,12 @@ namespace Acorisoft.Studio.Core
             {
                 return;
             }
-            
+
             if (string.IsNullOrEmpty(project.Path))
             {
                 throw new InvalidOperationException("path");
             }
+
             //
             // 创建 compose
             var compose = new ComposeSet(project.Path)
@@ -250,8 +226,8 @@ namespace Acorisoft.Studio.Core
 
             await OpenAsync(compose);
         }
-        
-        
+
+
         /// <summary>
         /// 在一个异步请求中打开一个项目。
         /// </summary>
@@ -270,17 +246,17 @@ namespace Acorisoft.Studio.Core
             // 设置创作集
             CurrentComposite = composeSet;
             ComposeSetStream.OnNext(composeSet);
-            
-            
+
+
             //
             // 设置打开状态
             IsOpenField = true;
             IsOpenStream.OnNext(IsOpenField);
-            
+
             //
             // 初始化自动保存系统
             OpenAutoSaveManifest();
-            
+
             //
             // 更新属性
             var property = await GetPropertyAsync();
@@ -298,16 +274,16 @@ namespace Acorisoft.Studio.Core
         public async Task CloseAsync()
         {
             CurrentComposite?.Dispose();
-            
+
             //
             // 关闭
             IsOpenField = false;
             IsOpenStream.OnNext(IsOpenField);
-            
+
             //
             // 关闭自动保存系统
             CloseAutoSaveManifest();
-            
+
             await Mediator.Publish(new ComposeSetCloseInstruction());
         }
 
@@ -327,7 +303,7 @@ namespace Acorisoft.Studio.Core
             {
                 info.Name = SR.ComposeSetSystem_EmptyName;
             }
-            
+
             if (string.IsNullOrEmpty(info.Path))
             {
                 throw new InvalidOperationException("path");
@@ -342,7 +318,7 @@ namespace Acorisoft.Studio.Core
             {
                 throw new InvalidOperationException("无法在已存在的项目文件夹中创建新的项目");
             }
-            
+
             //
             // 创建 compose
             var compose = new ComposeSet(info.Path)
@@ -355,25 +331,17 @@ namespace Acorisoft.Studio.Core
         }
 
         #endregion
-        
-        
-        
-        
-        
-        
-        
+
+
         //-----------------------------------------------------------------------
         //
         //  IComposeSetFileSystem Implementations
         //
         //-----------------------------------------------------------------------
-        
-        
-        
+
 
         #region IComposeSetFileSystem Implementations
 
-        
         //-----------------------------------------------------------------------
         //
         //  OpenAsync
@@ -381,7 +349,9 @@ namespace Acorisoft.Studio.Core
         //-----------------------------------------------------------------------
         private Stream OpenImpl(Resource resource)
         {
-            return resource.Mode == ResourceMode.Inside ? OpenStreamFromDatabase(resource.GetResourceKey()) : OpenStreamFromOutside(resource.GetResourceFileName(CurrentComposite));
+            return resource.Mode == ResourceMode.Inside
+                ? OpenStreamFromDatabase(resource.GetResourceKey())
+                : OpenStreamFromOutside(resource.GetResourceFileName(CurrentComposite));
         }
 
         private Stream OpenStreamFromDatabase(string key)
@@ -389,13 +359,13 @@ namespace Acorisoft.Studio.Core
             var fs = ((IComposeSetDatabase) CurrentComposite).MainDatabase.FileStorage;
             return fs.OpenRead(key);
         }
-        
+
         private static Stream OpenStreamFromOutside(string fileName)
         {
             return new FileStream(fileName, FileMode.Open);
         }
 
-        
+
         /// <summary>
         /// 在一个异步请求中完成获得指定资源的文件流操作。
         /// </summary>
@@ -417,21 +387,22 @@ namespace Acorisoft.Studio.Core
             {
                 throw new InvalidOperationException("无法打开抽象资源");
             }
-            
-            return Task.Run(()=> OpenImpl(resource));
+
+            return Task.Run(() => OpenImpl(resource));
         }
 
         private Stream[] OpenAlbumFromDatabase(AlbumResource resource)
         {
-            return resource.GetResourceFileNames(CurrentComposite).Where(DetectInside).Select(OpenStreamFromDatabase).ToArray();
+            return resource.GetResourceFileNames(CurrentComposite).Where(DetectInside).Select(OpenStreamFromDatabase)
+                .ToArray();
         }
-        
+
         private Stream[] OpenAlbumFromOutside(AlbumResource resource)
         {
             return resource.GetResourceKeys().Where(DetectOutside).Select(OpenStreamFromDatabase).ToArray();
         }
-        
-        
+
+
         /// <summary>
         /// 在一个异步请求中完成获得指定资源的文件流操作。
         /// </summary>
@@ -439,7 +410,6 @@ namespace Acorisoft.Studio.Core
         /// <returns>返回此次操作的 <see cref="Task"/> 实例</returns>
         public Task<Stream[]> OpenAsync(AlbumResource resource)
         {
-            
             if (!IsOpenField)
             {
                 throw new InvalidOperationException("创作集未打开");
@@ -457,10 +427,9 @@ namespace Acorisoft.Studio.Core
 
             return Task.Run(() => Open(resource));
         }
-        
+
         public Stream[] Open(AlbumResource resource)
         {
-            
             if (!IsOpenField)
             {
                 throw new InvalidOperationException("创作集未打开");
@@ -476,13 +445,13 @@ namespace Acorisoft.Studio.Core
                 throw new InvalidOperationException("无法打开抽象资源");
             }
 
-            return 
+            return
                 resource.Mode == ResourceMode.Outside
                     ? OpenAlbumFromDatabase(resource)
                     : OpenAlbumFromOutside(resource);
         }
-        
-        
+
+
         public void OpenAsync(Resource resource, TaskCallback callback)
         {
             if (!IsOpenField)
@@ -508,7 +477,7 @@ namespace Acorisoft.Studio.Core
             var stream = OpenImpl(resource);
             callback?.Invoke(stream);
         }
-        
+
         public Stream Open(Resource resource)
         {
             if (!IsOpenField)
@@ -528,7 +497,7 @@ namespace Acorisoft.Studio.Core
 
             return OpenImpl(resource);
         }
-        
+
         //-----------------------------------------------------------------------
         //
         //  VerifyResourceAccess
@@ -545,7 +514,7 @@ namespace Acorisoft.Studio.Core
             var fs = ((IComposeSetDatabase) CurrentComposite).MainDatabase.FileStorage;
             return fs.Exists(key);
         }
-        
+
         public Task<bool> VerifyResourceAccessAsync(Resource resource)
         {
             return Task.Run(() => VerifyResourceAccess(resource));
@@ -568,7 +537,9 @@ namespace Acorisoft.Studio.Core
                 throw new InvalidOperationException("无法打开抽象资源");
             }
 
-            return resource.Mode == ResourceMode.Outside ? DetectOutside(resource.GetResourceFileName(CurrentComposite)) : DetectInside(resource.GetResourceKey());
+            return resource.Mode == ResourceMode.Outside
+                ? DetectOutside(resource.GetResourceFileName(CurrentComposite))
+                : DetectInside(resource.GetResourceKey());
         }
 
 
@@ -586,14 +557,14 @@ namespace Acorisoft.Studio.Core
             }
             else
             {
-                UploadFileToOutside(sourceFileName,resource.GetResourceFileName(CurrentComposite));
+                UploadFileToOutside(sourceFileName, resource.GetResourceFileName(CurrentComposite));
             }
         }
-        
+
         private void UploadImpl(Resource resource, Stream sourceStream)
         {
             var targetFileName = resource.GetResourceFileName(CurrentComposite);
-            
+
             if (resource.Mode == ResourceMode.Inside)
             {
                 UploadStreamToDatabase(sourceStream, resource.GetResourceKey());
@@ -603,14 +574,14 @@ namespace Acorisoft.Studio.Core
                 UploadStreamToOutside(sourceStream, resource.GetResourceFileName(CurrentComposite));
             }
         }
-        
+
         private void UploadFileToOutside(string sourceFileName, string targetFileName)
         {
             if (!IsOpenField || string.IsNullOrEmpty(targetFileName))
             {
                 throw new InvalidOperationException("创作集未打开");
             }
-            
+
             try
             {
                 File.Move(sourceFileName, targetFileName);
@@ -632,7 +603,6 @@ namespace Acorisoft.Studio.Core
 
         private void UploadStreamToOutside(Stream sourceStream, string targetFileName)
         {
-            
             if (!IsOpenField)
             {
                 throw new InvalidOperationException("创作集未打开");
@@ -642,7 +612,7 @@ namespace Acorisoft.Studio.Core
             {
                 throw new InvalidOperationException("无法打开空的资源");
             }
-            
+
             try
             {
                 using var targetStream = new FileStream(targetFileName, FileMode.Create);
@@ -653,15 +623,14 @@ namespace Acorisoft.Studio.Core
                 // rethrow
                 throw;
             }
-
         }
+
         private void UploadStreamToDatabase(Stream stream, string key)
         {
-            
             var fs = ((IComposeSetDatabase) CurrentComposite).MainDatabase.FileStorage;
             fs.Upload(key, key, stream);
         }
-        
+
         /// <summary>
         /// 在一个异步请求中完成文件上传操作。
         /// </summary>
@@ -670,9 +639,9 @@ namespace Acorisoft.Studio.Core
         /// <returns>返回此次操作的 <see cref="Task"/> 实例</returns>
         public Task UploadAsync(Resource resource, string sourceFileName)
         {
-            return Task.Run(()=> UploadImpl(resource, sourceFileName));
+            return Task.Run(() => UploadImpl(resource, sourceFileName));
         }
-        
+
         /// <summary>
         /// 在一个异步请求中完成文件上传操作。
         /// </summary>
@@ -681,9 +650,9 @@ namespace Acorisoft.Studio.Core
         /// <returns>返回此次操作的 <see cref="Task"/> 实例</returns>
         public Task UploadAsync(Resource resource, Stream sourceStream)
         {
-            return Task.Run(()=> UploadImpl(resource, sourceStream));
+            return Task.Run(() => UploadImpl(resource, sourceStream));
         }
-        
+
         /// <summary>
         /// 在一个异步请求中完成文件上传操作。
         /// </summary>
@@ -701,7 +670,7 @@ namespace Acorisoft.Studio.Core
             {
                 throw new ArgumentNullException(nameof(targetResource));
             }
-            
+
             return Task.Run(() =>
             {
                 if (VerifyResourceAccess(targetResource))
@@ -710,7 +679,7 @@ namespace Acorisoft.Studio.Core
                 }
             });
         }
-        
+
         /// <summary>
         /// 在一个异步请求中完成文件上传操作。
         /// </summary>
@@ -728,7 +697,7 @@ namespace Acorisoft.Studio.Core
             {
                 throw new ArgumentNullException(nameof(targetResource));
             }
-            
+
             return Task.Run(() =>
             {
                 if (targetResource.Mode == ResourceMode.Inside)
@@ -754,7 +723,7 @@ namespace Acorisoft.Studio.Core
                 }
             });
         }
-        
+
         //-----------------------------------------------------------------------
         //
         //  DownloadAsync
@@ -773,16 +742,15 @@ namespace Acorisoft.Studio.Core
         }
 
         #endregion
-        
-        
-        
+
+
         //-----------------------------------------------------------------------
         //
         //  IComposeSetFileSystem2 Implementations
         //
         //-----------------------------------------------------------------------
 
-        
+
         #region IComposeSetFileSystem2 Implementations
 
         //
@@ -791,21 +759,25 @@ namespace Acorisoft.Studio.Core
         // 1) Manifest 清单中关于 System.Type 与 System.Guid 之间的关联向量表。
         //
         // 2) 全局访问记录
-        protected internal class ReadWriteVector
+
+        protected class AutoSave
         {
-            [JsonProperty("id")]
-            public Guid DocumentIdentifier { get; set; }
-            
-            [JsonProperty("ctime")]
-            public DateTime CreationTimestamp { get; set; }
-            
-            [JsonProperty("mtime")]
-            public DateTime ModifiedTimestamp { get; set; }
-            
-            [JsonProperty("is_w")]
-            public bool IsWrite { get; set; }
+            public Dictionary<Type, Guid> Association { get; set; }
+            public List<AutoSaveData> Datas { get; set; }
         }
-        
+
+
+        protected class AutoSaveData
+        {
+            public string Name { get; set; }
+            public Guid SessionIdentifier { get; set; }
+            public Guid DocumentIdentifier { get; set; }
+            public string FileName { get; set; }
+            public DateTime CreationTimestamp { get; set; }
+            public DateTime ModifiedTimestamp { get; set; }
+            public bool IsWrited { get; set; }
+        }
+
         private void OpenAutoSaveManifest()
         {
             //
@@ -822,30 +794,111 @@ namespace Acorisoft.Studio.Core
             //
             // Json 内容
             string manifestJson;
-            
+
             //
             // 判断Manifest是否存在
             if (File.Exists(manifestFileName))
             {
                 manifestJson = File.ReadAllText(manifestFileName);
+                _autoSave = JsonConvert.DeserializeObject<AutoSave>(manifestJson);
             }
             else
             {
-                
+                _autoSave = new AutoSave();
+                manifestJson = JsonConvert.SerializeObject(_autoSave);
+                File.WriteAllText(CurrentComposite.AutoSaveManifestFileName, manifestJson);
             }
+        }
+
+        public Guid CreateSession(Type type)
+        {
+            if (!_autoSave.Association.TryGetValue(type, out var sessionId))
+            {
+                sessionId = Guid.NewGuid();
+
+                if (!_autoSave.Association.TryAdd(type, sessionId))
+                {
+                    throw new InvalidOperationException("无效的操作");
+                }
+            }
+
+            //
+            // 创建Data
+
+            return sessionId;
+        }
+
+        public void CreateSessionData(Guid sessionId, Guid id, string name, string documentFileName)
+        {
+            var data = _autoSave.Datas.FirstOrDefault(x =>
+                x.SessionIdentifier == sessionId && x.DocumentIdentifier == id);
+
+            
+            
+            if (data == null)
+            {
+                data = new AutoSaveData
+                {
+                    SessionIdentifier = sessionId,
+                    DocumentIdentifier = id,
+                    Name = name,
+                    FileName = documentFileName,
+                    IsWrited = false,
+                    CreationTimestamp = DateTime.Now,
+                    ModifiedTimestamp = DateTime.Now
+                };
+                _autoSave.Datas.Add(data);
+            }
+            else
+            {
+                data.IsWrited = false;
+                data.ModifiedTimestamp = DateTime.Now;
+            }
+        }
+
+        public void CloseSession(Guid sessionId, Guid id)
+        {
+            var index = _autoSave.Datas.FindIndex(x =>
+                x.SessionIdentifier == sessionId && x.DocumentIdentifier == id);
+            if (index > -1)
+            {
+                _autoSave.Datas.RemoveAt(index);
+            }
+        }
+
+        public bool FindDumpFile(Guid session, out string fileName, out Guid documentId, out string name)
+        {
+            if (_autoSave.Datas.FirstOrDefault(x => x.SessionIdentifier == session && !x.IsWrited) is AutoSaveData data)
+            {
+                fileName = data.FileName;
+                name = data.Name;
+                documentId = data.DocumentIdentifier;
+                return true;
+            }
+
+            fileName = string.Empty;
+            documentId = Guid.Empty;
+            name = string.Empty;
+            return false;
         }
 
         private void CloseAutoSaveManifest()
         {
+            //
+            //
+            var manifestJson = JsonConvert.SerializeObject(_autoSave);
             
+            //
+            //
+            File.WriteAllText(CurrentComposite.AutoSaveManifestFileName, manifestJson);
+            //
+            //
+            _autoSave = null;
         }
 
         #endregion
-        
-        
-        
-        
-        
+
+
         //-----------------------------------------------------------------------
         //
         //  IComposeSetPropertySystem Implementations
@@ -853,39 +906,38 @@ namespace Acorisoft.Studio.Core
         //-----------------------------------------------------------------------
 
         #region IComposeSetPropertySystem Implementations
-        
+
         private void SetPropertyImpl(ComposeSetProperty property)
         {
             if (!IsOpenField || property == null)
             {
                 return;
             }
-            
+
             SetObject(property);
-                
+
             //
             // 更新属性
-            
+
             CurrentComposite.Property = property;
             PropertyStream.OnNext(property);
         }
-        
+
         private IComposeSetProperty GetPropertyImpl()
         {
             if (!IsOpenField)
             {
                 throw new InvalidOperationException("无法获取属性，因为创作集未打开。");
             }
-            
+
             var property = GetObject<ComposeSetProperty>();
-                
+
             //
             // 更新属性
             CurrentComposite.Property = property;
             PropertyStream.OnNext(property);
 
             return property;
-
         }
 
 
@@ -908,9 +960,8 @@ namespace Acorisoft.Studio.Core
             }
 
             throw new InvalidOperationException("无法获取属性，因为创作集未打开。");
-            
         }
-        
+
         protected TObject SetObject<TObject>(TObject instance)
         {
             var key = instance.GetType().FullName;
@@ -919,7 +970,7 @@ namespace Acorisoft.Studio.Core
             collection.Upsert(new BsonValue(key), BsonMapper.Global.ToDocument(instance));
             return instance;
         }
-        
+
         /// <summary>
         /// 在一个异步请求中开启对创作集属性的修改行为。
         /// </summary>
@@ -941,21 +992,13 @@ namespace Acorisoft.Studio.Core
 
         #endregion
 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
         //-----------------------------------------------------------------------
         //
         //  IComposeSetRequestQueue Implementations
         //
         //-----------------------------------------------------------------------
+
         #region IComposeSetRequestQueue Implementations
 
         /// <summary>
@@ -969,6 +1012,7 @@ namespace Acorisoft.Studio.Core
                 // 推送通知。
                 RequestingStream.OnNext(Unit.Default);
             }
+
             _queue.Enqueue(Unit.Default);
         }
 
@@ -993,19 +1037,10 @@ namespace Acorisoft.Studio.Core
         }
 
         #endregion
-        
-        
-        
-        
-        
-        
-        
-        
-        
 
         #endregion
-        
-        
+
+
         //-----------------------------------------------------------------------
         //
         //  Properties
@@ -1013,17 +1048,15 @@ namespace Acorisoft.Studio.Core
         //-----------------------------------------------------------------------
 
         #region Properties
-        
-                
+
         //-----------------------------------------------------------------------
         //
         //  Protected Fields
         //
         //-----------------------------------------------------------------------
         protected IComposeSet CurrentComposite { get; private set; }
-        
-        protected bool IsOpenField { get; private set; }
 
+        protected bool IsOpenField { get; private set; }
 
 
         //-----------------------------------------------------------------------
@@ -1050,22 +1083,14 @@ namespace Acorisoft.Studio.Core
         public IMediator Mediator => MediatorField;
 
         #endregion
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
+
         //-----------------------------------------------------------------------
         //
         //  Properties
         //
         //-----------------------------------------------------------------------
-        
-        
+
 
         #region IComposeSetPropertySystem Implementations
 
@@ -1075,17 +1100,8 @@ namespace Acorisoft.Studio.Core
         public IObservable<IComposeSetProperty> Property => PropertyStream;
 
         #endregion
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
+
         //-----------------------------------------------------------------------
         //
         //  Properties
