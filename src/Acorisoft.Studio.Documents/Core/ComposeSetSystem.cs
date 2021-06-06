@@ -19,7 +19,7 @@ using Disposable = Acorisoft.Extensions.Platforms.Disposable;
 using FileMode = System.IO.FileMode;
 using Unit = System.Reactive.Unit;
 
-namespace Acorisoft.Studio.ProjectSystems
+namespace Acorisoft.Studio.Systems
 {
     /// <summary>
     /// <see cref="ComposeSetSystem"/> 类型表示一个创作集系统接口，用于为应用程序提供创作集新建、打开、关闭等支持。
@@ -28,6 +28,13 @@ namespace Acorisoft.Studio.ProjectSystems
     {
         #region Fields
 
+        
+        
+        //-----------------------------------------------------------------------
+        //
+        //  Protected Readonly Fields
+        //
+        //-----------------------------------------------------------------------
         protected readonly BehaviorSubject<bool> IsOpenStream;
         protected readonly BehaviorSubject<IComposeSet> ComposeSetStream;
         protected readonly BehaviorSubject<IComposeSetProperty> PropertyStream;
@@ -36,10 +43,15 @@ namespace Acorisoft.Studio.ProjectSystems
         protected readonly IMediator MediatorField;
         protected readonly CompositeDisposable Disposable;
         
+        
+        
+        //-----------------------------------------------------------------------
+        //
+        //  Private Readonly Fields
+        //
+        //-----------------------------------------------------------------------
         private readonly ConcurrentQueue<Unit> _queue;
-
-        protected IComposeSet CurrentComposite;
-        protected bool IsOpenField;
+        
         
         #endregion
         
@@ -66,6 +78,19 @@ namespace Acorisoft.Studio.ProjectSystems
 
 
         }
+
+        
+        //-----------------------------------------------------------------------
+        //
+        //  Ioc Registraction
+        //
+        //-----------------------------------------------------------------------
+        
+        
+        
+        #region IocRegistraction
+
+        
 
         private static void RegisterComposeSetSystemModule<TInstance>(IContainer container, TInstance instance) where TInstance : IComposeSetSystemModule
         {
@@ -118,8 +143,28 @@ namespace Acorisoft.Studio.ProjectSystems
             RegisterComposeSetSystemModule(container, inspirationEngine);
         }
         
+        
+        #endregion
+        
+                
+        //-----------------------------------------------------------------------
+        //
+        //  Methods
+        //
+        //-----------------------------------------------------------------------
+        
         #region Methods
 
+        
+                
+        //-----------------------------------------------------------------------
+        //
+        //  Protected Methods
+        //
+        //-----------------------------------------------------------------------
+        
+        
+        #region Protected Methods
 
         protected override void OnDisposeManagedCore()
         {
@@ -140,6 +185,9 @@ namespace Acorisoft.Studio.ProjectSystems
         }
 
         
+        #endregion
+        
+        
         
         
         
@@ -158,7 +206,7 @@ namespace Acorisoft.Studio.ProjectSystems
 
         private static string GetDatabaseFileNameFromPath(string path)
         {
-            return Path.Combine(path, ProjectSystems.ComposeSet.MainDatabaseFileName);
+            return Path.Combine(path, Systems.ComposeSet.MainDatabaseFileName);
         }
 
         private static LiteDatabase GetDatabaseFromPath(string path)
@@ -225,9 +273,13 @@ namespace Acorisoft.Studio.ProjectSystems
             IsOpenStream.OnNext(IsOpenField);
             
             //
+            // 初始化自动保存系统
+            IsInitializeAutoSaveSystem = true;
+            OpenAutoSaveManifest();
+            
+            //
             // 更新属性
             var property = await GetPropertyAsync();
-
             CurrentComposite.Property = property;
             PropertyStream.OnNext(property);
 
@@ -241,8 +293,18 @@ namespace Acorisoft.Studio.ProjectSystems
         /// <returns>返回此次操作的 <see cref="Task"/> 实例</returns>
         public async Task CloseAsync()
         {
-            
             CurrentComposite?.Dispose();
+            
+            //
+            // 关闭
+            IsOpenField = false;
+            IsOpenStream.OnNext(IsOpenField);
+            
+            //
+            // 关闭自动保存系统
+            IsInitializeAutoSaveSystem = false;
+            CloseAutoSaveManifest();
+            
             await Mediator.Publish(new ComposeSetCloseInstruction());
         }
 
@@ -711,7 +773,48 @@ namespace Acorisoft.Studio.ProjectSystems
         
         
         
+        //-----------------------------------------------------------------------
+        //
+        //  IComposeSetFileSystem2 Implementations
+        //
+        //-----------------------------------------------------------------------
+
         
+        #region IComposeSetFileSystem2 Implementations
+
+
+        /// <summary>
+        /// 初始化自动保存系统。
+        /// </summary>
+        /// <remarks>
+        /// 我建议在App.xaml.cs中使用，或者在 AppViewModel 中调用。
+        /// </remarks>
+        public void Initialize()
+        {
+            //
+            // 该选项不能在
+            if (!IsOpenField)
+            {
+                return;
+            }
+
+            if (!IsInitializeAutoSaveSystem)
+            {
+                return;
+            }
+        }
+
+        private void OpenAutoSaveManifest()
+        {
+            
+        }
+
+        private void CloseAutoSaveManifest()
+        {
+            
+        }
+
+        #endregion
         
         
         
@@ -767,7 +870,7 @@ namespace Acorisoft.Studio.ProjectSystems
             {
                 var key = typeof(TObject).FullName;
                 var database = ((IComposeSetDatabase) CurrentComposite).MainDatabase;
-                var collection = database.GetCollection(Acorisoft.Studio.ProjectSystems.ComposeSet.MetadataCollection);
+                var collection = database.GetCollection(Acorisoft.Studio.Systems.ComposeSet.MetadataCollection);
                 if (collection.Exists(key))
                 {
                     return BsonMapper.Global.ToObject<TObject>(collection.FindById(key));
@@ -786,7 +889,7 @@ namespace Acorisoft.Studio.ProjectSystems
         {
             var key = instance.GetType().FullName;
             var database = ((IComposeSetDatabase) CurrentComposite).MainDatabase;
-            var collection = database.GetCollection(Acorisoft.Studio.ProjectSystems.ComposeSet.MetadataCollection);
+            var collection = database.GetCollection(Acorisoft.Studio.Systems.ComposeSet.MetadataCollection);
             collection.Upsert(new BsonValue(key), BsonMapper.Global.ToDocument(instance));
             return instance;
         }
@@ -864,6 +967,15 @@ namespace Acorisoft.Studio.ProjectSystems
         }
 
         #endregion
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
         #endregion
         
@@ -875,6 +987,27 @@ namespace Acorisoft.Studio.ProjectSystems
         //-----------------------------------------------------------------------
 
         #region Properties
+        
+                
+        //-----------------------------------------------------------------------
+        //
+        //  Protected Fields
+        //
+        //-----------------------------------------------------------------------
+        protected IComposeSet CurrentComposite { get; private set; }
+        
+        protected bool IsOpenField { get; private set; }
+        
+        
+        protected bool IsInitializeAutoSaveSystem { get; private set; }
+        
+        
+        
+        //-----------------------------------------------------------------------
+        //
+        //  Properties
+        //
+        //-----------------------------------------------------------------------
 
         #region IComposeSetSystem Implementations
 
@@ -894,6 +1027,22 @@ namespace Acorisoft.Studio.ProjectSystems
         public IMediator Mediator => MediatorField;
 
         #endregion
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        //-----------------------------------------------------------------------
+        //
+        //  Properties
+        //
+        //-----------------------------------------------------------------------
+        
+        
 
         #region IComposeSetPropertySystem Implementations
 
@@ -903,6 +1052,22 @@ namespace Acorisoft.Studio.ProjectSystems
         public IObservable<IComposeSetProperty> Property => PropertyStream;
 
         #endregion
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        //-----------------------------------------------------------------------
+        //
+        //  Properties
+        //
+        //-----------------------------------------------------------------------
 
         #region IComposeSetRequestQueue Implementations
 

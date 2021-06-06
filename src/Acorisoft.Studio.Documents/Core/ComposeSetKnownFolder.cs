@@ -1,4 +1,4 @@
-﻿namespace Acorisoft.Studio.ProjectSystems
+﻿namespace Acorisoft.Studio.Systems
 {
     public enum ComposeSetKnownFolder
     {

@@ -12,7 +12,7 @@ using Acorisoft.Extensions.Platforms.Windows.ViewModels;
 using Acorisoft.Studio.Documents.StickyNotes;
 using Acorisoft.Studio.Engines;
 using Acorisoft.Studio.ProjectSystem;
-using Acorisoft.Studio.ProjectSystems;
+using Acorisoft.Studio.Systems;
 using Acorisoft.Studio.Properties;
 using ReactiveUI;
 

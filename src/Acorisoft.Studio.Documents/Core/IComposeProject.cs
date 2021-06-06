@@ -1,7 +1,7 @@
 ﻿using System;
 using Acorisoft.Studio.Resources;
 
-namespace Acorisoft.Studio.ProjectSystems
+namespace Acorisoft.Studio.Systems
 {
     public interface IComposeProject
     {

@@ -3,12 +3,12 @@ using System.IO;
 using System.Threading.Tasks;
 using Acorisoft.Studio.Resources;
 
-namespace Acorisoft.Studio.ProjectSystems
+namespace Acorisoft.Studio.Systems
 {
     /// <summary>
     /// <see cref="IComposeSetFileSystem"/> 接口表示一个抽象的创作集文件系统接口，用于实现创作集文件访问和修改的支持。
     /// </summary>
-    public interface IComposeSetFileSystem : IDisposable
+    public interface IComposeSetFileSystem
     {
         /// <summary>
         /// 验证资源访问是否成功

@@ -4,13 +4,12 @@ using System.Threading.Tasks;
 using Acorisoft.Studio.ProjectSystem;
 using MediatR;
 
-namespace Acorisoft.Studio.ProjectSystems
+namespace Acorisoft.Studio.Systems
 {
     /// <summary>
     /// <see cref="IComposeSetSystem"/> 接口表示一个抽象的创作集系统接口，用于为应用程序提供创作集新建、打开、关闭等支持。
     /// </summary>
-    public interface IComposeSetSystem : IDisposable, IComposeSetFileSystem, IComposeSetPropertySystem,
-        IComposeSetRequestQueue
+    public interface IComposeSetSystem : IDisposable, IComposeSetFileSystem, IComposeSetPropertySystem, IComposeSetFileSystem2 , IAutoSaveSystem, IComposeSetRequestQueue
     {
         
         /// <summary>

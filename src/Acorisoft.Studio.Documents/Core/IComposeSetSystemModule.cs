@@ -1,7 +1,7 @@
 ﻿using System;
 using MediatR;
 
-namespace Acorisoft.Studio.ProjectSystems
+namespace Acorisoft.Studio.Systems
 {
     public interface IComposeSetSystemModule : INotificationHandler<ComposeSetCloseInstruction>,
         INotificationHandler<ComposeSetOpenInstruction>, INotificationHandler<ComposeSetSaveInstruction>

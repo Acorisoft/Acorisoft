@@ -2,7 +2,7 @@
 using Acorisoft.Extensions.Platforms;
 using LiteDB;
 
-namespace Acorisoft.Studio.ProjectSystems
+namespace Acorisoft.Studio.Systems
 {
     public class ComposeSet : Disposable, IComposeSet, IComposeSetDatabase
     {
@@ -18,6 +18,7 @@ namespace Acorisoft.Studio.ProjectSystems
         internal const string MainDatabaseFileName = MainDatabaseName + DatabaseVersion1Suffix;
         internal const int MainDatabaseSize = 32 * 1024 * 1024;
         internal const int MainDatabaseCacheSize = 32 * 1024 * 1024;
+        internal const string ManifestContentName = "Manifest.json";
 
         private readonly string _path;
 
@@ -25,8 +26,6 @@ namespace Acorisoft.Studio.ProjectSystems
         {
             _path = path;
         }
-        
-        public string GetComposeSetPath() => _path;
 
         public string GetComposeSetPath(ComposeSetKnownFolder folder)
         {
@@ -42,13 +41,13 @@ namespace Acorisoft.Studio.ProjectSystems
             };
         }
 
-        protected internal string GetBrushFolder() => GetDirectoryAndCreate(Path.Combine(_path, BrushFolder));
-        protected internal string GetCacheFolder() => GetDirectoryAndCreate(Path.Combine(_path, CacheFolder));
-        protected internal string GetFileFolder() => GetDirectoryAndCreate(Path.Combine(_path, FileFolder));
-        protected internal string GetGitFolder() => GetDirectoryAndCreate(Path.Combine(_path, GitFolder));
-        protected internal string GetImageFolder() => GetDirectoryAndCreate(Path.Combine(_path, ImageFolder));
-        protected internal string GetVideoFolder() => GetDirectoryAndCreate(Path.Combine(_path, VideoFolder));
-        protected internal string GetAutoSaveFolder() => GetDirectoryAndCreate(Path.Combine(_path, BrushFolder));
+        protected internal string GetBrushFolder() => GetDirectoryAndCreate(System.IO.Path.Combine(_path, BrushFolder));
+        protected internal string GetCacheFolder() => GetDirectoryAndCreate(System.IO.Path.Combine(_path, CacheFolder));
+        protected internal string GetFileFolder() => GetDirectoryAndCreate(System.IO.Path.Combine(_path, FileFolder));
+        protected internal string GetGitFolder() => GetDirectoryAndCreate(System.IO.Path.Combine(_path, GitFolder));
+        protected internal string GetImageFolder() => GetDirectoryAndCreate(System.IO.Path.Combine(_path, ImageFolder));
+        protected internal string GetVideoFolder() => GetDirectoryAndCreate(System.IO.Path.Combine(_path, VideoFolder));
+        protected internal string GetAutoSaveFolder() => GetDirectoryAndCreate(System.IO.Path.Combine(_path, BrushFolder));
 
 
 
@@ -73,7 +72,30 @@ namespace Acorisoft.Studio.ProjectSystems
             return path;
         }
 
+        /// <summary>
+        /// 获取当前创作集的路径。
+        /// </summary>
+        public string Path => _path;
+        
+        /// <summary>
+        /// 获取当前创作集的属性。
+        /// </summary>
         public IComposeSetProperty Property { get; set; }
+        
+        /// <summary>
+        /// 获取当前创作集的主数据库。
+        /// </summary>
         public LiteDatabase MainDatabase { get; internal set; }
+
+        /// <summary>
+        /// 获取清单列表。
+        /// </summary>
+        public string AutoSaveManifestFileName
+        {
+            get
+            {
+                return System.IO.Path.Combine(GetAutoSaveFolder(), ManifestContentName);
+            }
+        }
     }
 }

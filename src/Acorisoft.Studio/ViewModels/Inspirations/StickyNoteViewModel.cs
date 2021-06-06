@@ -12,7 +12,7 @@ using Acorisoft.Studio.Documents.Inspirations;
 using Acorisoft.Studio.Resources;
 using Acorisoft.Studio.Documents.StickyNotes;
 using Acorisoft.Studio.Engines;
-using Acorisoft.Studio.ProjectSystems;
+using Acorisoft.Studio.Systems;
 using Acorisoft.Studio.Properties;
 using ReactiveUI;
 

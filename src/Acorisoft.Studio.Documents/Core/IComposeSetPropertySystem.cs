@@ -2,7 +2,7 @@
 using System.Reactive;
 using System.Threading.Tasks;
 
-namespace Acorisoft.Studio.ProjectSystems
+namespace Acorisoft.Studio.Systems
 {
     /// <summary>
     /// <see cref="IComposeSetPropertySystem"/> 接口表示一个抽象的创作集属性系统接口，用于实现创作集属性设置的支持。

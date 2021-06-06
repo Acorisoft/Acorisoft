@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reactive;
 
-namespace Acorisoft.Studio.ProjectSystems
+namespace Acorisoft.Studio.Systems
 {
     /// <summary>
     /// <see cref="IComposeSetRequestQueue"/> 接口表示一个抽象的创作集请求队列接口，用于实现应用程序间操作同步支持。

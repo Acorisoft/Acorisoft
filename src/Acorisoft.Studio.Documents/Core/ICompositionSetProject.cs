@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Acorisoft.Studio.ProjectSystems
+namespace Acorisoft.Studio.Systems
 {
     public interface ICompositionSetProject
     {
