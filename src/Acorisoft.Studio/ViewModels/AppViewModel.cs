@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
-using Acorisoft.Extensions.Platforms.Services;
+using Acorisoft.Extensions.Platforms.Windows.Services;
 using Acorisoft.Extensions.Platforms.Windows;
 using Acorisoft.Extensions.Platforms.Windows.ViewModels;
 using Acorisoft.Studio.Models;
@@ -40,7 +40,7 @@ namespace Acorisoft.Studio.ViewModels
             string json;
             if (!File.Exists(SettingFileName))
             {
-                using (ViewAware.ForceBusyState("初始化应用设置"))
+                using (ViewAware.StartActivity("初始化应用设置"))
                 {
                     try
                     {
@@ -66,11 +66,11 @@ namespace Acorisoft.Studio.ViewModels
             
             var disposablePos = requestQueue.Requesting
                 .ObserveOn(RxApp.MainThreadScheduler)
-                .Subscribe(x => { service.ManualStartBusyState("正在项目数据"); });
+                .Subscribe(x => { service.ManualStartActivity("正在项目数据"); });
 
             var disposablePoe = requestQueue.Responding
                 .ObserveOn(RxApp.MainThreadScheduler)
-                .Subscribe(x => { service.ManualEndBusyState(); });
+                .Subscribe(x => { service.ManualEndActivity(); });
 
             _disposable = new CompositeDisposable();
             _fileManager = fileManager;
@@ -93,7 +93,7 @@ namespace Acorisoft.Studio.ViewModels
         {
             if (Setting.RecentProject != null)
             {
-                using (ViewAware.ForceBusyState("打开最近的项目"))
+                using (ViewAware.StartActivity("打开最近的项目"))
                 {
                     try
                     {

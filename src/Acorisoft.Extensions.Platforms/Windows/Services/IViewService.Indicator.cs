@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Acorisoft.Extensions.Platforms.Windows;
 using Acorisoft.Extensions.Platforms.Windows.Controls;
 
-namespace Acorisoft.Extensions.Platforms.Services
+namespace Acorisoft.Extensions.Platforms.Windows.Services
 {
     public partial class ViewService : IViewService
     {
@@ -18,21 +18,21 @@ namespace Acorisoft.Extensions.Platforms.Services
         private Subject<Unit> _busyStateEnd;
         private Subject<string> _busyStateChanged;
 
-        private void InitializeBusyState()
+        private void InitializeActivity()
         {
             _busyStateBegin = new Subject<Unit>();
             _busyStateChanged = new Subject<string>();
             _busyStateEnd = new Subject<Unit>();
         }
 
-        private void DisposeBusyState()
+        private void DisposeActivity()
         {
             _indicatorBsb?.Dispose();
             _indicatorBsc?.Dispose();
             _indicatorBse?.Dispose();
         }
         
-        public Task ForceBusyState(ObservableOperation operation)
+        public Task StartActivity(ObservableOperation operation)
         {
             if (operation is null)
             {
@@ -53,18 +53,18 @@ namespace Acorisoft.Extensions.Platforms.Services
             return SR.ViewService_ArgumentNull;
         }
 
-        public void ManualStartBusyState(string description)
+        public void ManualStartActivity(string description)
         {
             _busyStateBegin.OnNext(Unit.Default);
             _busyStateChanged.OnNext(description);
         }
         
-        public void ManualEndBusyState()
+        public void ManualEndActivity()
         {
             _busyStateEnd.OnNext(Unit.Default);
         }
         
-        public Task ForceBusyState(IEnumerable<ObservableOperation> operations)
+        public Task StartActivity(IEnumerable<ObservableOperation> operations)
         {
             if (operations is null)
             {
@@ -93,19 +93,19 @@ namespace Acorisoft.Extensions.Platforms.Services
             {
                 return;
             }
-            DisposeBusyState();
+            DisposeActivity();
             
             var newInstance = indicator ?? throw new ArgumentNullException(nameof(indicator));
             
             //
             //
-            _indicatorBsb = newInstance.SubscribeBusyStateBegin(_busyStateBegin);
-            _indicatorBsc = newInstance.SubscribeBusyStateChanged(_busyStateChanged); 
-            _indicatorBse = newInstance.SubscribeBusyStateEnd(_busyStateEnd);
+            _indicatorBsb = newInstance.SubscribeActivityBegin(_busyStateBegin);
+            _indicatorBsc = newInstance.SubscribeActivityChanged(_busyStateChanged); 
+            _indicatorBse = newInstance.SubscribeActivityEnd(_busyStateEnd);
         }
 
-        public IObservable<string> BusyStateChanged => _busyStateChanged;
-        public IObservable<Unit> BusyStateBegin => _busyStateBegin;
-        public IObservable<Unit> BusyStateEnd => _busyStateEnd;
+        public IObservable<string> ActivityChanged => _busyStateChanged;
+        public IObservable<Unit> ActivityBegin => _busyStateBegin;
+        public IObservable<Unit> ActivityEnd => _busyStateEnd;
     }
 }

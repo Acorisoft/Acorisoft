@@ -5,7 +5,7 @@ using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using Acorisoft.Extensions.Platforms.Services;
+using Acorisoft.Extensions.Platforms.Windows.Services;
 using Acorisoft.Extensions.Platforms.Windows.ViewModels;
 using Acorisoft.Extensions.Platforms.Windows.Threadings;
 using ReactiveUI;

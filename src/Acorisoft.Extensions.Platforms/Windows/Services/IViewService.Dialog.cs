@@ -10,7 +10,7 @@ using Acorisoft.Extensions.Platforms.Windows.Controls;
 using Acorisoft.Extensions.Platforms.Windows.Dialogs;
 using Acorisoft.Extensions.Platforms.Windows.ViewModels;
 
-namespace Acorisoft.Extensions.Platforms.Services
+namespace Acorisoft.Extensions.Platforms.Windows.Services
 {
     internal interface IDialogEventRaiser
     {

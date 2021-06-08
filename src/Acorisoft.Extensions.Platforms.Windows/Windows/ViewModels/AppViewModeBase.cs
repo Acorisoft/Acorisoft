@@ -5,7 +5,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Acorisoft.Extensions.Platforms.Services;
+using Acorisoft.Extensions.Platforms.Windows.Services;
 using ReactiveUI;
 using Splat;
 

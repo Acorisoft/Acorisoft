@@ -1,6 +1,6 @@
 ﻿using System;
 using Acorisoft.Extensions.Platforms.Languages;
-using Acorisoft.Extensions.Platforms.Services;
+using Acorisoft.Extensions.Platforms.Windows.Services;
 using Acorisoft.Studio.ProjectSystem;
 using Acorisoft.Studio.Core;
 using Splat;

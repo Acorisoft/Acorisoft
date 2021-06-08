@@ -21,16 +21,16 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls
         /// <summary>
         /// 订阅繁忙状态改变的事件流。
         /// </summary>
-        IDisposable SubscribeBusyStateChanged(IObservable<string> observable);
+        IDisposable SubscribeActivityChanged(IObservable<string> observable);
 
         /// <summary>
         /// 订阅繁忙状态开始的事件流。
         /// </summary>
-        IDisposable SubscribeBusyStateBegin(IObservable<Unit> observable);
+        IDisposable SubscribeActivityBegin(IObservable<Unit> observable);
 
         /// <summary>
         /// 订阅繁忙状态结束的事件流。
         /// </summary>
-        IDisposable SubscribeBusyStateEnd(IObservable<Unit> observable);
+        IDisposable SubscribeActivityEnd(IObservable<Unit> observable);
     }
 }

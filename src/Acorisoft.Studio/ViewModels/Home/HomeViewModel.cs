@@ -6,7 +6,7 @@ using System.Reactive.Linq;
 using System.Reactive.Joins;
 using ReactiveUI;
 using System.Reactive.Disposables;
-using Acorisoft.Extensions.Platforms.Services;
+using Acorisoft.Extensions.Platforms.Windows.Services;
 using Acorisoft.Extensions.Platforms.Windows;
 using Acorisoft.Extensions.Platforms.Windows.Services;
 using Acorisoft.Extensions.Platforms.Windows.ViewModels;

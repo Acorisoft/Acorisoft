@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reactive.Subjects;
 using Acorisoft.Extensions.Platforms.Windows.ViewModels;
 
-namespace Acorisoft.Extensions.Platforms.Services
+namespace Acorisoft.Extensions.Platforms.Windows.Services
 {
     public partial class ViewService
     {

@@ -359,16 +359,16 @@ namespace Acorisoft.Extensions.Platforms.Windows
         #endregion
 
 
-        private class ManualBusyState : IDisposable
+        private class ManualActivity : IDisposable
         {
-            public ManualBusyState(string description)
+            public ManualActivity(string description)
             {
-                ServiceLocator.ViewService.ManualStartBusyState(description);
+                ServiceLocator.ViewService.ManualStartActivity(description);
             }
 
             public void Dispose()
             {
-                ServiceLocator.ViewService.ManualEndBusyState();
+                ServiceLocator.ViewService.ManualEndActivity();
             }
         }
 
@@ -420,9 +420,9 @@ namespace Acorisoft.Extensions.Platforms.Windows
             ServiceLocator.ViewService.Toast(ex.Message);
         }
 
-        public static IDisposable ForceBusyState(string description)
+        public static IDisposable StartActivity(string description)
         {
-            return new ManualBusyState(description);
+            return new ManualActivity(description);
         }
 
         public const string Arg1 = "arg1";

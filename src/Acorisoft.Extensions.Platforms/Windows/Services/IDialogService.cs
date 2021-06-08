@@ -1,4 +1,4 @@
-﻿namespace Acorisoft.Extensions.Platforms.Services
+﻿namespace Acorisoft.Extensions.Platforms.Windows.Services
 {
     public interface IDialogService
     {

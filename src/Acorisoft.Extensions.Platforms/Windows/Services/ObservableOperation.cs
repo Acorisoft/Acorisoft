@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Acorisoft.Extensions.Platforms.Services
+namespace Acorisoft.Extensions.Platforms.Windows.Services
 {
-    public class ObservableOperation
+    public sealed class ObservableOperation
     {
         private readonly Action _operation;
         public ObservableOperation(Action operation, string description)

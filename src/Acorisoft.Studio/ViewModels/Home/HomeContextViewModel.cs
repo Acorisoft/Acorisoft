@@ -29,7 +29,7 @@ namespace Acorisoft.Studio.ViewModels
                 return;
             }
 
-            using (ViewAware.ForceBusyState("正在加载封面"))
+            using (ViewAware.StartActivity("正在加载封面"))
             {
                 
             }

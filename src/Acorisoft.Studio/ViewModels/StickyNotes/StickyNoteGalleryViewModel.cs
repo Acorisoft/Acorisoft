@@ -60,7 +60,7 @@ namespace Acorisoft.Studio.ViewModels
         //
         // protected override async void OnStart()
         // {
-        //     // using (ViewAware.ForceBusyState("打开项目"))
+        //     // using (ViewAware.StartActivity("打开项目"))
         //     // {
         //     //     var compositionSetManager = ServiceLocator.CompositionSetManager;
         //     //     try

@@ -1,5 +1,5 @@
 ﻿using System;
-using Acorisoft.Extensions.Platforms.Services;
+using Acorisoft.Extensions.Platforms.Windows.Services;
 using Acorisoft.Extensions.Platforms.Windows.ViewModels;
 
 namespace Acorisoft.Extensions.Platforms.Windows.Controls

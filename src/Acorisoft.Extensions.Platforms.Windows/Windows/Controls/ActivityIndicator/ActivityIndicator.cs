@@ -6,7 +6,7 @@ using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using Acorisoft.Extensions.Platforms.Services;
+using Acorisoft.Extensions.Platforms.Windows.Services;
 using Acorisoft.Extensions.Platforms.Windows.Controls;
 using Acorisoft.Extensions.Platforms.Windows;
 using Acorisoft.Extensions.Platforms.Windows.Threadings;
@@ -26,7 +26,6 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.ActivityIndicator
         {
             var host = (ActivityIndicator) d;
             var result = (bool) e.NewValue;
-            host.PART_Indicator.IsIndeterminate = result;
             if (result)
             {
                 host.RaiseEvent(new RoutedEventArgs
@@ -48,9 +47,6 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.ActivityIndicator
         public static readonly RoutedEvent DialogOpeningEvent = EventManager.RegisterRoutedEvent("DialogOpening",RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ActivityIndicator));
         public static readonly RoutedEvent DialogClosingEvent = EventManager.RegisterRoutedEvent("DialogClosing",RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ActivityIndicator));
         
-        // ReSharper disable once InconsistentNaming
-        private ProgressBar PART_Indicator;
-        
         public ActivityIndicator()
         {
             this.Loaded += OnLoadedImpl;
@@ -69,11 +65,6 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.ActivityIndicator
                 // 设置默认的实现。
                 viewService.SetActivityIndicator(this);
             }
-        }
-
-        public override void OnApplyTemplate()
-        {
-            PART_Indicator = GetTemplateChild("PART_Indicator") as ProgressBar;
         }
 
 
@@ -101,7 +92,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.ActivityIndicator
             remove => RemoveHandler(DialogClosingEvent, value);
         }
 
-        IDisposable IActivityIndicatorCore.SubscribeBusyStateChanged(IObservable<string> observable)
+        IDisposable IActivityIndicatorCore.SubscribeActivityChanged(IObservable<string> observable)
         {
             return observable?.ObserveOn(RxApp.MainThreadScheduler)
                              .Subscribe(x =>
@@ -110,7 +101,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.ActivityIndicator
                              });
         }
 
-        IDisposable IActivityIndicatorCore.SubscribeBusyStateBegin(IObservable<Unit> observable)
+        IDisposable IActivityIndicatorCore.SubscribeActivityBegin(IObservable<Unit> observable)
         {
             return observable?.ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(x =>
@@ -119,7 +110,7 @@ namespace Acorisoft.Extensions.Platforms.Windows.Controls.ActivityIndicator
                 });
         }
 
-        IDisposable IActivityIndicatorCore.SubscribeBusyStateEnd(IObservable<Unit> observable) {
+        IDisposable IActivityIndicatorCore.SubscribeActivityEnd(IObservable<Unit> observable) {
             return observable?.ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(x =>
                 {

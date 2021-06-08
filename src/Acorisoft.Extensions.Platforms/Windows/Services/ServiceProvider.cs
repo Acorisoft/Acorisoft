@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Acorisoft.Extensions.Platforms.Services
+namespace Acorisoft.Extensions.Platforms.Windows.Services
 {
     /// <summary>
     /// <see cref="ServiceProvider"/> 类型用于提供一个不依赖具体容器的服务提供者实现。

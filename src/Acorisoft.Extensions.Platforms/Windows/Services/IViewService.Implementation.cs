@@ -1,10 +1,10 @@
-﻿namespace Acorisoft.Extensions.Platforms.Services
+﻿namespace Acorisoft.Extensions.Platforms.Windows.Services
 {
     public partial class ViewService
     {
         public ViewService()
         {
-            InitializeBusyState();
+            InitializeActivity();
             InitializeDialog();
             InitializeToast();
             InitializeViewAware();

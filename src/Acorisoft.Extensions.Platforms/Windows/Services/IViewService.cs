@@ -7,11 +7,11 @@ using Acorisoft.Extensions.Platforms.Dialogs;
 using Acorisoft.Extensions.Platforms.Windows.Controls;
 using Acorisoft.Extensions.Platforms.Windows.ViewModels;
 
-namespace Acorisoft.Extensions.Platforms.Services
+namespace Acorisoft.Extensions.Platforms.Windows.Services
 {
     public interface IViewService
     {
-        #region ForceBusyState
+        #region StartActivity
 
         /// <summary>
         /// 强制程序进入繁忙状态。
@@ -24,7 +24,7 @@ namespace Acorisoft.Extensions.Platforms.Services
         /// <exception cref="ArgumentNullException">如果传入的参数为空时则将会引发该异常。</exception>
         /// <exception cref="InvalidOperationException"></exception>
         /// <returns>返回一个可等待的任务。</returns>
-        Task ForceBusyState(ObservableOperation operation);
+        Task StartActivity(ObservableOperation operation);
 
         /// <summary>
         /// 强制程序进入繁忙状态。
@@ -35,7 +35,7 @@ namespace Acorisoft.Extensions.Platforms.Services
         /// <para>这个操作如果被调用了多次，那么结束时间将会以最后一次为准。</para>
         /// </remarks>
         /// <returns>返回一个可等待的任务。</returns>
-        Task ForceBusyState(IEnumerable<ObservableOperation> operations);
+        Task StartActivity(IEnumerable<ObservableOperation> operations);
 
         /// <summary>
         /// 设置默认的繁忙状态指示器。
@@ -44,25 +44,25 @@ namespace Acorisoft.Extensions.Platforms.Services
         /// <exception cref="ArgumentNullException">传递的参数为空时引发该异常。</exception>
         void SetActivityIndicator(IActivityIndicatorCore indicator);
 
-        void ManualStartBusyState(string description);
+        void ManualStartActivity(string description);
 
-        void ManualEndBusyState();
+        void ManualEndActivity();
         
         /// <summary>
         /// 繁忙状态的流。
         /// </summary>
-        IObservable<string> BusyStateChanged { get; }
+        IObservable<string> ActivityChanged { get; }
         
         /// <summary>
         /// 控制繁忙状态开始的流。
         /// </summary>
-        IObservable<Unit> BusyStateBegin { get; }
+        IObservable<Unit> ActivityBegin { get; }
         
         
         /// <summary>
         /// 控制繁忙状态结束的流。
         /// </summary>
-        IObservable<Unit> BusyStateEnd { get; }
+        IObservable<Unit> ActivityEnd { get; }
 
         #endregion
 

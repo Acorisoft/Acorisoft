@@ -1,4 +1,4 @@
-﻿using Acorisoft.Extensions.Platforms.Services;
+﻿using Acorisoft.Extensions.Platforms.Windows.Services;
 using Acorisoft.Extensions.Platforms.Windows.ViewModels;
 using Acorisoft.Extensions.Platforms.Windows.Views;
 using DryIoc;
