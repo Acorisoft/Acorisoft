@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Extensions", "src\Acorisoft.Extensions\Acorisoft.Extensions.csproj", "{22A955BA-B0B6-4E52-A1E1-28AA434D38CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Extensions.WindowsPlatform", "src\Acorisoft.Extensions.WindowsPlatform\Acorisoft.Extensions.WindowsPlatform.csproj", "{21EEE4A0-A905-4EA9-9FC1-D409CC04F6D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Extensions.WindowsPlatform.Host", "src\Acorisoft.Extensions.WindowsPlatform.Host\Acorisoft.Extensions.WindowsPlatform.Host.csproj", "{2CE8E591-2A18-4C73-AF7A-D0A55D24E433}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{22A955BA-B0B6-4E52-A1E1-28AA434D38CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22A955BA-B0B6-4E52-A1E1-28AA434D38CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22A955BA-B0B6-4E52-A1E1-28AA434D38CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22A955BA-B0B6-4E52-A1E1-28AA434D38CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21EEE4A0-A905-4EA9-9FC1-D409CC04F6D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21EEE4A0-A905-4EA9-9FC1-D409CC04F6D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21EEE4A0-A905-4EA9-9FC1-D409CC04F6D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21EEE4A0-A905-4EA9-9FC1-D409CC04F6D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CE8E591-2A18-4C73-AF7A-D0A55D24E433}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CE8E591-2A18-4C73-AF7A-D0A55D24E433}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CE8E591-2A18-4C73-AF7A-D0A55D24E433}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CE8E591-2A18-4C73-AF7A-D0A55D24E433}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

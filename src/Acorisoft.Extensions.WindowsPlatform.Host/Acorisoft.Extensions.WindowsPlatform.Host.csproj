@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net5.0-windows</TargetFramework>
+        <UseWPF>true</UseWPF>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="DryIoc.dll" Version="4.8.0" />
+        <PackageReference Include="MediatR" Version="9.0.0" />
+        <PackageReference Include="Splat" Version="11.1.1" />
+        <PackageReference Include="Splat.DryIoc" Version="11.1.1" />
+        <PackageReference Include="Splat.NLog" Version="11.1.1" />
+        <PackageReference Include="ReactiveUI" Version="13.3.2" />
+        <PackageReference Include="ReactiveUI.WPF" Version="13.3.2" />
+        <PackageReference Include="System.Reactive" Version="5.0.0" />
+        <PackageReference Include="DynamicData" Version="7.1.17" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Acorisoft.Extensions.WindowsPlatform\Acorisoft.Extensions.WindowsPlatform.csproj" />
+      <ProjectReference Include="..\Acorisoft.Extensions\Acorisoft.Extensions.csproj" />
+    </ItemGroup>
+
+</Project>
