@@ -7,7 +7,11 @@ namespace Acorisoft.Extensions.Windows.Services
     /// <summary>
     /// 
     /// </summary>
-    public partial interface IViewService
+    public partial interface IViewService : IActivityService
+    {
+    }
+
+    public interface IActivityService
     {
         /// <summary>
         /// 开启一个活动

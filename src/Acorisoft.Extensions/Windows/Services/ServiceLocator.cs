@@ -38,6 +38,7 @@ namespace Acorisoft.Extensions.Windows.Services
             var vs = new ViewService(mediator);
             Container.RegisterInstance<ViewService>(vs);
             Container.UseInstance<IViewService>(vs);
+            Container.UseInstance<IActivityService>(vs);
         }
         
         /// <summary>
