@@ -1,6 +1,0 @@
-<Project>
-    <ItemGroup>
-        <PackageReference Include="System.Reactive" Version="5.0.0" />
-        <PackageReference Include="DynamicData" Version="7.1.17" />
-    </ItemGroup>
-</Project>
