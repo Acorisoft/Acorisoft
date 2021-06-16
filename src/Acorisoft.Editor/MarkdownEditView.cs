@@ -73,8 +73,8 @@ namespace Acorisoft.Editor
         //
         //-----------------------------------------------------------------------
         
-        private FlowDocumentScrollViewerExtended documentPresentation;
-        private TextEditor markdownEditor;
+        private FlowDocumentScrollViewerExtended _documentPresentation;
+        private TextEditor _markdownEditor;
         private IDisposable _markdownChangedDisposable;
 
         private ScrollToAction _scrollToAction;
@@ -109,36 +109,36 @@ namespace Acorisoft.Editor
         
         private void OnLoadedImpl(object sender, RoutedEventArgs e)
         {
-            if (markdownEditor != null)
+            if (_markdownEditor != null)
             {
-                markdownEditor.ScrollViewer.ScrollChanged += OnMarkdownScrollViewerScrollChanged;
+                _markdownEditor.ScrollViewer.ScrollChanged += OnMarkdownScrollViewerScrollChanged;
             }
             
-            if (documentPresentation != null)
+            if (_documentPresentation != null)
             {
-                documentPresentation.ScrollViewer.ScrollChanged += OnDocumentScrollViewerScrollChanged;
+                _documentPresentation.ScrollViewer.ScrollChanged += OnDocumentScrollViewerScrollChanged;
             }
         }
         
         
         public override void OnApplyTemplate()
         {
-            markdownEditor = GetTemplateChild(PART_MarkdownName) as TextEditor;
-            documentPresentation = GetTemplateChild(PART_DocumentName) as FlowDocumentScrollViewerExtended;
+            _markdownEditor = GetTemplateChild(PART_MarkdownName) as TextEditor;
+            _documentPresentation = GetTemplateChild(PART_DocumentName) as FlowDocumentScrollViewerExtended;
             
-            if (markdownEditor != null)
+            if (_markdownEditor != null)
             {
                 //
                 // 呈现内容会在TextChanged事件触发时每50ms更新。
                 _markdownChangedDisposable = Observable.FromEventPattern(
-                        handler => markdownEditor.TextChanged += handler,
-                        handler => markdownEditor.TextChanged -= handler)
+                        handler => _markdownEditor.TextChanged += handler,
+                        handler => _markdownEditor.TextChanged -= handler)
                     .Throttle(TimeSpan.FromMilliseconds(50), RxApp.MainThreadScheduler)
-                    .Subscribe(x => { OnMarkdownTextChanged(markdownEditor, (EventArgs) x.EventArgs); });
+                    .Subscribe(x => { OnMarkdownTextChanged(_markdownEditor, (EventArgs) x.EventArgs); });
                 
                 //
                 //
-                markdownEditor.Text = (string)GetValue(MarkdownTextProperty);
+                _markdownEditor.Text = (string)GetValue(MarkdownTextProperty);
             }
         }
 
@@ -156,12 +156,12 @@ namespace Acorisoft.Editor
         /// <param name="markdown">Markdown文本</param>
         public void SetMarkdownText(string markdown)
         {
-            if (markdownEditor == null)
+            if (_markdownEditor == null)
             {
                 return;
             }
             
-            markdownEditor.Text = markdown;
+            _markdownEditor.Text = markdown;
             MarkdownText = markdown;
         }
 
@@ -174,11 +174,11 @@ namespace Acorisoft.Editor
         {
             //
             // 当前光标的位置
-            var line = markdownEditor?.Document.GetLineByOffset(markdownEditor.CaretOffset);
+            var line = _markdownEditor?.Document.GetLineByOffset(_markdownEditor.CaretOffset);
             
             //
             // 获取当前光标的位置的内容
-            return markdownEditor?.Document.GetText(line);
+            return _markdownEditor?.Document.GetText(line);
         }
 
         protected static int LastCharacterOf(string content, char character)
@@ -201,18 +201,18 @@ namespace Acorisoft.Editor
         {
             //
             // Avoid Null Reference Object Access
-            if (markdownEditor?.Document == null)
+            if (_markdownEditor?.Document == null)
             {
                 return;
             }
             
             //
             // 当前光标的位置
-            var line = markdownEditor?.Document.GetLineByOffset(markdownEditor.CaretOffset);
+            var line = _markdownEditor?.Document.GetLineByOffset(_markdownEditor.CaretOffset);
             
             //
             // 获取当前光标的位置的内容
-            var currentLineText = markdownEditor?.Document.GetText(line);
+            var currentLineText = _markdownEditor?.Document.GetText(line);
 
 
             string currentLineNewString;
@@ -230,7 +230,7 @@ namespace Acorisoft.Editor
                 currentLineNewString = "# " + currentLineText;
             }
 
-            markdownEditor?.Document.Replace(line, currentLineNewString.TrimStart());
+            _markdownEditor?.Document.Replace(line, currentLineNewString.TrimStart());
         }
         
         /// <summary>
@@ -240,18 +240,18 @@ namespace Acorisoft.Editor
         {
             //
             // Avoid Null Reference Object Access
-            if (markdownEditor?.Document == null)
+            if (_markdownEditor?.Document == null)
             {
                 return;
             }
             
             //
             // 当前光标的位置
-            var line = markdownEditor?.Document.GetLineByOffset(markdownEditor.CaretOffset);
+            var line = _markdownEditor?.Document.GetLineByOffset(_markdownEditor.CaretOffset);
             
             //
             // 获取当前光标的位置的内容
-            var currentLineText = markdownEditor?.Document.GetText(line);
+            var currentLineText = _markdownEditor?.Document.GetText(line);
 
 
             string currentLineNewString;
@@ -270,7 +270,7 @@ namespace Acorisoft.Editor
                 currentLineNewString = "## " + currentLineText;
             }
 
-            markdownEditor?.Document.Replace(line, currentLineNewString.TrimStart());
+            _markdownEditor?.Document.Replace(line, currentLineNewString.TrimStart());
         }
         
         /// <summary>
@@ -280,18 +280,18 @@ namespace Acorisoft.Editor
         {
             //
             // Avoid Null Reference Object Access
-            if (markdownEditor?.Document == null)
+            if (_markdownEditor?.Document == null)
             {
                 return;
             }
             
             //
             // 当前光标的位置
-            var line = markdownEditor?.Document.GetLineByOffset(markdownEditor.CaretOffset);
+            var line = _markdownEditor?.Document.GetLineByOffset(_markdownEditor.CaretOffset);
             
             //
             // 获取当前光标的位置的内容
-            var currentLineText = markdownEditor?.Document.GetText(line);
+            var currentLineText = _markdownEditor?.Document.GetText(line);
 
 
             string currentLineNewString;
@@ -309,7 +309,7 @@ namespace Acorisoft.Editor
                 currentLineNewString = "### " + currentLineText;
             }
 
-            markdownEditor?.Document.Replace(line, currentLineNewString.TrimStart());
+            _markdownEditor?.Document.Replace(line, currentLineNewString.TrimStart());
         }
         
         /// <summary>
@@ -319,18 +319,18 @@ namespace Acorisoft.Editor
         {
             //
             // Avoid Null Reference Object Access
-            if (markdownEditor?.Document == null)
+            if (_markdownEditor?.Document == null)
             {
                 return;
             }
             
             //
             // 当前光标的位置
-            var line = markdownEditor?.Document.GetLineByOffset(markdownEditor.CaretOffset);
+            var line = _markdownEditor?.Document.GetLineByOffset(_markdownEditor.CaretOffset);
             
             //
             // 获取当前光标的位置的内容
-            var currentLineText = markdownEditor?.Document.GetText(line);
+            var currentLineText = _markdownEditor?.Document.GetText(line);
 
 
             string currentLineNewString;
@@ -348,7 +348,7 @@ namespace Acorisoft.Editor
                 currentLineNewString = "#### " + currentLineText;
             }
 
-            markdownEditor?.Document.Replace(line, currentLineNewString.TrimStart());
+            _markdownEditor?.Document.Replace(line, currentLineNewString.TrimStart());
         }
         
         /// <summary>
@@ -358,18 +358,18 @@ namespace Acorisoft.Editor
         {
             //
             // Avoid Null Reference Object Access
-            if (markdownEditor?.Document == null)
+            if (_markdownEditor?.Document == null)
             {
                 return;
             }
             
             //
             // 当前光标的位置
-            var line = markdownEditor?.Document.GetLineByOffset(markdownEditor.CaretOffset);
+            var line = _markdownEditor?.Document.GetLineByOffset(_markdownEditor.CaretOffset);
             
             //
             // 获取当前光标的位置的内容
-            var currentLineText = markdownEditor?.Document.GetText(line);
+            var currentLineText = _markdownEditor?.Document.GetText(line);
 
 
             string currentLineNewString;
@@ -387,7 +387,7 @@ namespace Acorisoft.Editor
                 currentLineNewString = "##### " + currentLineText;
             }
 
-            markdownEditor?.Document.Replace(line, currentLineNewString.TrimStart());
+            _markdownEditor?.Document.Replace(line, currentLineNewString.TrimStart());
         }
         
         /// <summary>
@@ -397,18 +397,18 @@ namespace Acorisoft.Editor
         {
             //
             // Avoid Null Reference Object Access
-            if (markdownEditor?.Document == null)
+            if (_markdownEditor?.Document == null)
             {
                 return;
             }
             
             //
             // 当前光标的位置
-            var line = markdownEditor?.Document.GetLineByOffset(markdownEditor.CaretOffset);
+            var line = _markdownEditor?.Document.GetLineByOffset(_markdownEditor.CaretOffset);
             
             //
             // 获取当前光标的位置的内容
-            var currentLineText = markdownEditor?.Document.GetText(line);
+            var currentLineText = _markdownEditor?.Document.GetText(line);
 
 
             string currentLineNewString;
@@ -426,7 +426,7 @@ namespace Acorisoft.Editor
                 currentLineNewString = "###### " + currentLineText;
             }
 
-            markdownEditor?.Document.Replace(line, currentLineNewString.TrimStart());
+            _markdownEditor?.Document.Replace(line, currentLineNewString.TrimStart());
         }
         
         /// <summary>
@@ -436,18 +436,18 @@ namespace Acorisoft.Editor
         {
             //
             // Avoid Null Reference Object Access
-            if (markdownEditor?.Document == null)
+            if (_markdownEditor?.Document == null)
             {
                 return;
             }
             
             //
             // 当前光标的位置
-            var line = markdownEditor?.Document.GetLineByOffset(markdownEditor.CaretOffset);
+            var line = _markdownEditor?.Document.GetLineByOffset(_markdownEditor.CaretOffset);
             
             //
             // 获取当前光标的位置的内容
-            var currentLineText = markdownEditor?.Document.GetText(line);
+            var currentLineText = _markdownEditor?.Document.GetText(line);
 
 
             string currentLineNewString;
@@ -465,7 +465,7 @@ namespace Acorisoft.Editor
                 currentLineNewString = "####### " + currentLineText;
             }
 
-            markdownEditor?.Document.Replace(line, currentLineNewString.TrimStart());
+            _markdownEditor?.Document.Replace(line, currentLineNewString.TrimStart());
         }
 
         /// <summary>
@@ -475,18 +475,18 @@ namespace Acorisoft.Editor
         {
             //
             // Avoid Null Reference Object Access
-            if (markdownEditor?.Document == null)
+            if (_markdownEditor?.Document == null)
             {
                 return;
             }
             
             //
             // 当前光标的位置
-            var line = markdownEditor?.Document.GetLineByOffset(markdownEditor.CaretOffset);
+            var line = _markdownEditor?.Document.GetLineByOffset(_markdownEditor.CaretOffset);
             
             //
             // 获取当前光标的位置的内容
-            var currentLineText = markdownEditor?.Document.GetText(line);
+            var currentLineText = _markdownEditor?.Document.GetText(line);
 
 
             string currentLineNewString;
@@ -504,7 +504,7 @@ namespace Acorisoft.Editor
                 currentLineNewString = "> " + currentLineText;
             }
 
-            markdownEditor?.Document.Replace(line, currentLineNewString.TrimStart());
+            _markdownEditor?.Document.Replace(line, currentLineNewString.TrimStart());
         }
         
         /// <summary>
@@ -514,18 +514,18 @@ namespace Acorisoft.Editor
         {
             //
             // Avoid Null Reference Object Access
-            if (markdownEditor?.Document == null)
+            if (_markdownEditor?.Document == null)
             {
                 return;
             }
             
             //
             // 当前光标的位置
-            var line = markdownEditor?.Document.GetLineByOffset(markdownEditor.CaretOffset);
+            var line = _markdownEditor?.Document.GetLineByOffset(_markdownEditor.CaretOffset);
             
             //
             // 获取当前光标的位置的内容
-            var currentLineText = markdownEditor?.Document.GetText(line);
+            var currentLineText = _markdownEditor?.Document.GetText(line);
 
 
             string currentLineNewString;
@@ -544,7 +544,7 @@ namespace Acorisoft.Editor
                 currentLineNewString = $"`{currentLineText}`";
             }
 
-            markdownEditor?.Document.Replace(line, currentLineNewString.TrimStart());
+            _markdownEditor?.Document.Replace(line, currentLineNewString.TrimStart());
         }
         
         /// <summary>
@@ -554,22 +554,22 @@ namespace Acorisoft.Editor
         {
             //
             // Avoid Null Reference Object Access
-            if (markdownEditor?.Document == null)
+            if (_markdownEditor?.Document == null)
             {
                 return;
             }
             
             //
             // 当前光标的位置
-            var line = markdownEditor?.Document.GetLineByOffset(markdownEditor.CaretOffset);
+            var line = _markdownEditor?.Document.GetLineByOffset(_markdownEditor.CaretOffset);
             
             //
             // 获取当前光标的位置的内容
-            var currentLineText = markdownEditor?.Document.GetText(line);
+            var currentLineText = _markdownEditor?.Document.GetText(line);
             
             var currentLineNewString = $"\t{currentLineText}";
 
-            markdownEditor?.Document.Replace(line, currentLineNewString.TrimStart());
+            _markdownEditor?.Document.Replace(line, currentLineNewString.TrimStart());
         }
         
         /// <summary>
@@ -579,18 +579,18 @@ namespace Acorisoft.Editor
         {
             //
             // Avoid Null Reference Object Access
-            if (markdownEditor?.Document == null)
+            if (_markdownEditor?.Document == null)
             {
                 return;
             }
             
             //
             // 当前光标的位置
-            var line = markdownEditor?.Document.GetLineByOffset(markdownEditor.CaretOffset);
+            var line = _markdownEditor?.Document.GetLineByOffset(_markdownEditor.CaretOffset);
             
             //
             // 获取当前光标的位置的内容
-            var currentLineText = markdownEditor?.Document.GetText(line);
+            var currentLineText = _markdownEditor?.Document.GetText(line);
 
             if (!currentLineText.StartsWith("\t"))
             {
@@ -602,7 +602,7 @@ namespace Acorisoft.Editor
             var index = currentLineText.IndexOf('\t');
                 
             var currentLineNewString = currentLineText.Substring(index, Math.Clamp(currentLineText.Length - index, 0, currentLineText.Length));
-            markdownEditor?.Document.Replace(line, currentLineNewString.TrimStart());
+            _markdownEditor?.Document.Replace(line, currentLineNewString.TrimStart());
 
         }
         #endregion
@@ -663,20 +663,22 @@ namespace Acorisoft.Editor
             MarkdownScrollViewer.ScrollToHorizontalOffset(MarkdownScrollViewer.HorizontalOffset + e.HorizontalChange * hRate);
         }
 
+        #endregion
+
+        
+        
+
         private void OnMarkdownTextChanged(object? sender, EventArgs e)
         {
-            if (markdownEditor != null && documentPresentation != null)
+            if (_markdownEditor != null && _documentPresentation != null)
             {
-                var document = Markdown.ToDocument(markdownEditor.Text);
+                var document = Markdown.ToDocument(_markdownEditor.Text);
                 MarkdownDocument = document;
                 FlowDocument = Markdown.ToFlowDocument(document);
-                SetCurrentValue(MarkdownTextProperty,markdownEditor.Text);
+                SetCurrentValue(MarkdownTextProperty,_markdownEditor.Text);
             }
 
         }
-
-        #endregion
-
         
         //-----------------------------------------------------------------------
         //
@@ -714,22 +716,22 @@ namespace Acorisoft.Editor
         /// <summary>
         /// 
         /// </summary>
-        public ScrollViewer MarkdownScrollViewer => markdownEditor.ScrollViewer;
+        public ScrollViewer MarkdownScrollViewer => _markdownEditor.ScrollViewer;
         
         /// <summary>
         /// 
         /// </summary>
-        public ScrollViewer DocumentScrollViewer => documentPresentation.ScrollViewer;
+        public ScrollViewer DocumentScrollViewer => _documentPresentation.ScrollViewer;
 
         /// <summary>
         /// 
         /// </summary>
-        public TextEditor Editor => markdownEditor;
+        public TextEditor Editor => _markdownEditor;
 
         /// <summary>
         /// 
         /// </summary>
-        public FlowDocumentScrollViewerExtended Presentation => documentPresentation;
+        public FlowDocumentScrollViewerExtended Presentation => _documentPresentation;
 
         /// <summary>
         /// 
