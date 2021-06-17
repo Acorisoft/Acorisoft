@@ -4,13 +4,13 @@ using MediatR;
 
 namespace Acorisoft.Extensions.Windows.Services
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public partial interface IViewService : IActivityService
     {
     }
 
+    /// <summary>
+    /// <see cref="IActivityService"/> 接口表示一个抽象的活动服务接口，用于为用户提供活动准备支持。
+    /// </summary>
     public interface IActivityService
     {
         /// <summary>
@@ -60,9 +60,18 @@ namespace Acorisoft.Extensions.Windows.Services
         }
     }
 
+    
+    //--------------------------------------------------------------------------------------------------------------
+    //
+    // Request Members
+    //
+    //--------------------------------------------------------------------------------------------------------------
     #region Requests
 
-    public class StartActivityRequest : IStartActivityRequest
+    /// <summary>
+    /// <see cref="StartActivityRequest"/> 表示一个启动活动请求。
+    /// </summary>
+    internal class StartActivityRequest : IStartActivityRequest
     {
         public StartActivityRequest(string description)
         {
@@ -72,12 +81,20 @@ namespace Acorisoft.Extensions.Windows.Services
         public string Description { get; }
     }
     
-    public class EndActivityRequest : IEndActivityRequest
+    
+    /// <summary>
+    /// <see cref="EndActivityRequest"/> 表示一个结束活动请求。
+    /// </summary>
+    internal class EndActivityRequest : IEndActivityRequest
     {
         
     }
     
-    public class UpdateActivityRequest : IUpdateActivityRequest
+    
+    /// <summary>
+    /// <see cref="UpdateActivityRequest"/> 表示一个更新活动请求。
+    /// </summary>
+    internal class UpdateActivityRequest : IUpdateActivityRequest
     {
         public UpdateActivityRequest(string description)
         {
@@ -101,11 +118,29 @@ namespace Acorisoft.Extensions.Windows.Services
     }
     
     #endregion
+    
+    
+    //--------------------------------------------------------------------------------------------------------------
+    //
+    // IActivityIndicator
+    //
+    //--------------------------------------------------------------------------------------------------------------
 
     public interface IActivityIndicator : INotificationHandler<IStartActivityRequest>, INotificationHandler<IEndActivityRequest>,
         INotificationHandler<IUpdateActivityRequest>
     {
     }
+    
+    
+    //--------------------------------------------------------------------------------------------------------------
+    //
+    // IActivityAmbient / ActivityAmbient Implementations
+    //
+    //--------------------------------------------------------------------------------------------------------------
+
+    #region IActivityAmbient / ActivityAmbient Implementations
+
+    
 
     /// <summary>
     /// <see cref="IActivityAmbient"/> 表示一个抽象的活动环境。用于为应用程序提供更新、关闭活动通知支持。
@@ -119,6 +154,9 @@ namespace Acorisoft.Extensions.Windows.Services
         void Update(string description);
     }
 
+    /// <summary>
+    /// <see cref="ActivityAmbient"/> 表示一个活动环境实例。用于为应用程序提供更新、关闭活动通知支持。
+    /// </summary>
     public class ActivityAmbient : Disposable, IActivityAmbient
     {
         private readonly IViewService _service;
@@ -138,5 +176,8 @@ namespace Acorisoft.Extensions.Windows.Services
         {
             _service?.UpdateActivity(description);
         }
+        
+
     }
+    #endregion
 }

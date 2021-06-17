@@ -29,12 +29,10 @@ namespace Acorisoft.Extensions.WindowsPlatform.Host
 
         private void MainWindow_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ServiceLocator.ViewService.StartActivity("Hello");
-            Task.Run(async () =>
-            {
-                await Task.Delay(3000);
-                ServiceLocator.ViewService.EndActivity();
-            });
+            ServiceLocator.ToastService.Toast(MessageType.Info, "Notify");
+            ServiceLocator.ToastService.Toast(MessageType.Success, "Success");
+            ServiceLocator.ToastService.Toast(MessageType.Warning, "Warning");
+            ServiceLocator.ToastService.Toast(MessageType.Error, "Danger");
         }
     }
 }

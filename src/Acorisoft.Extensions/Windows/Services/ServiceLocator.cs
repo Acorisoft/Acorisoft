@@ -16,7 +16,12 @@ namespace Acorisoft.Extensions.Windows.Services
             Container.UseDryIocDependencyResolver();
             
         }
+        
+        
         private static readonly Lazy<IViewService> ReadOnlyViewService = new Lazy<IViewService>(LocateViewService);
+        
+        
+        
         private static IViewService LocateViewService() => Locator.Current.GetService<IViewService>();
 
         /// <summary>
@@ -45,5 +50,16 @@ namespace Acorisoft.Extensions.Windows.Services
         /// 获取当前应用程序注册的视图服务。
         /// </summary>
         public static IViewService ViewService => ReadOnlyViewService.Value;
+        
+        /// <summary>
+        /// 获取当前应用程序注册的活动服务。
+        /// </summary>
+        public static IActivityService ActivityService => ReadOnlyViewService.Value;
+        
+        
+        /// <summary>
+        /// 获取当前应用程序注册的消息服务。
+        /// </summary>
+        public static IToastService ToastService => ReadOnlyViewService.Value;
     }
 }

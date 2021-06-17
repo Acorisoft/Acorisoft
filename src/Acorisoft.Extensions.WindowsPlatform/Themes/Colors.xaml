@@ -46,6 +46,46 @@
     <Color x:Key="Colors.MaterialDesign.Orange.Dark">#F57C00</Color>
     <Color x:Key="Colors.MaterialDesign.DeepOrange">#FF5722</Color>
     <Color x:Key="Colors.MaterialDesign.DeepOrange.Dark">#E64A19</Color>
+  <!-- Port from Bootstrap -->
+    <!-- 场景色 -->
+    <Color x:Key="Colors.Primary.Text">#004085</Color>
+    <Color x:Key="Colors.Primary.Background">#cce5ff</Color>
+    <Color x:Key="Colors.Primary.BorderBrush">#b8daff</Color>
+    <Color x:Key="Colors.Secondary.Text">#383d41</Color>
+    <Color x:Key="Colors.Secondary.Background">#e2e3e5</Color>
+    <Color x:Key="Colors.Secondary.BorderBrush">#d6d8db</Color>
+    <Color x:Key="Colors.Success.Text">#155724</Color>
+    <Color x:Key="Colors.Success.Background">#d4edda</Color>
+    <Color x:Key="Colors.Success.BorderBrush">#c3e6cb</Color>
+    <Color x:Key="Colors.Danger.Text">#721c24</Color>
+    <Color x:Key="Colors.Danger.Background">#f8d7da</Color>
+    <Color x:Key="Colors.Danger.BorderBrush">#f5c6cb</Color>
+    <Color x:Key="Colors.Warning.Text">#856404</Color>
+    <Color x:Key="Colors.Warning.Background">#fff3cd</Color>
+    <Color x:Key="Colors.Warning.BorderBrush">#ffeeba</Color>
+    <Color x:Key="Colors.Info.Text">#0c5460</Color>
+    <Color x:Key="Colors.Info.Background">#d1ecf1</Color>
+    <Color x:Key="Colors.Info.BorderBrush">#bee5eb</Color>
+
+    <!-- 场景画刷 -->
+    <SolidColorBrush x:Key="Brushes.Primary" Color="{StaticResource Colors.Primary.Background}"/>
+    <SolidColorBrush x:Key="Brushes.Primary.Text" Color="{StaticResource Colors.Primary.Text}"/>
+    <SolidColorBrush x:Key="Brushes.Primary.BorderBrush" Color="{StaticResource Colors.Primary.BorderBrush}"/>
+    <SolidColorBrush x:Key="Brushes.Secondary" Color="{StaticResource Colors.Secondary.Background}"/>
+    <SolidColorBrush x:Key="Brushes.Secondary.Text" Color="{StaticResource Colors.Secondary.Text}"/>
+    <SolidColorBrush x:Key="Brushes.Secondary.BorderBrush" Color="{StaticResource Colors.Secondary.BorderBrush}"/>
+    <SolidColorBrush x:Key="Brushes.Success" Color="{StaticResource Colors.Success.Background}"/>
+    <SolidColorBrush x:Key="Brushes.Success.Text" Color="{StaticResource Colors.Success.Text}"/>
+    <SolidColorBrush x:Key="Brushes.Success.BorderBrush" Color="{StaticResource Colors.Success.BorderBrush}"/>
+    <SolidColorBrush x:Key="Brushes.Danger" Color="{StaticResource Colors.Danger.Background}"/>
+    <SolidColorBrush x:Key="Brushes.Danger.Text" Color="{StaticResource Colors.Danger.Text}"/>
+    <SolidColorBrush x:Key="Brushes.Danger.BorderBrush" Color="{StaticResource Colors.Danger.BorderBrush}"/>
+    <SolidColorBrush x:Key="Brushes.Warning" Color="{StaticResource Colors.Warning.Background}"/>
+    <SolidColorBrush x:Key="Brushes.Warning.Text" Color="{StaticResource Colors.Warning.Text}"/>
+    <SolidColorBrush x:Key="Brushes.Warning.BorderBrush" Color="{StaticResource Colors.Warning.BorderBrush}"/>
+    <SolidColorBrush x:Key="Brushes.Info" Color="{StaticResource Colors.Info.Background}"/>
+    <SolidColorBrush x:Key="Brushes.Info.Text" Color="{StaticResource Colors.Info.Text}"/>
+    <SolidColorBrush x:Key="Brushes.Info.BorderBrush" Color="{StaticResource Colors.Info.BorderBrush}"/>
 
     <SolidColorBrush x:Key="Brushes.MaterialDesign.Red" Color="{StaticResource Colors.MaterialDesign.Red}"/>
     <SolidColorBrush x:Key="Brushes.MaterialDesign.Red.Dark" Color="{StaticResource Colors.MaterialDesign.Red.Dark}"/>

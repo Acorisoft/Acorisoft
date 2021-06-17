@@ -4,11 +4,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Acorisoft.Extensions.WindowsPlatform.Host"
+        xmlns:vm="clr-namespace:Acorisoft.Extensions.Windows.Services;assembly=Acorisoft.Extensions"
         xmlns:w="https://github.com/Acorisoft/Acorisoft"
         mc:Ignorable="d"
         MouseDoubleClick="MainWindow_OnMouseDoubleClick"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Acorisoft.Extensions.WindowsPlatform;component/Themes/Icon.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
-        <w:ActivityIndicator></w:ActivityIndicator>
+        <w:ActivityIndicator>
+            <w:ToastHost>
+            </w:ToastHost>
+        </w:ActivityIndicator>
     </Grid>
 </Window>
