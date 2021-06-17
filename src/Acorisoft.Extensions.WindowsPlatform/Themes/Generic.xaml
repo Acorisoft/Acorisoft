@@ -3,6 +3,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Acorisoft.Extensions.WindowsPlatform;component/Windows/Primitives/ActivityIndicator.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Acorisoft.Extensions.WindowsPlatform;component/Windows/Primitives/ToastHost.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Acorisoft.Extensions.WindowsPlatform;component/Windows/Primitives/DialogHost.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Acorisoft.Extensions.WindowsPlatform;component/Themes/Colors.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Acorisoft.Extensions.WindowsPlatform;component/Themes/Banner.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Acorisoft.Extensions.WindowsPlatform;component/Themes/Icon.xaml" />

@@ -44,6 +44,8 @@ namespace Acorisoft.Extensions.Windows.Services
             Container.RegisterInstance<ViewService>(vs);
             Container.UseInstance<IViewService>(vs);
             Container.UseInstance<IActivityService>(vs);
+            Container.UseInstance<IToastService>(vs);
+            Container.UseInstance<IDialogService>(vs);
         }
         
         /// <summary>
@@ -61,5 +63,10 @@ namespace Acorisoft.Extensions.Windows.Services
         /// 获取当前应用程序注册的消息服务。
         /// </summary>
         public static IToastService ToastService => ReadOnlyViewService.Value;
+        
+        /// <summary>
+        /// 获取当前应用程序注册的对话框服务。
+        /// </summary>
+        public static IDialogService DialogService => ReadOnlyViewService.Value;
     }
 }

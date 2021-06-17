@@ -20,6 +20,7 @@ namespace Acorisoft.Extensions.Windows.Services
             _mediator = mediator;
             _disposable = new CompositeDisposable();
             InitializeToastService();
+            InitializeDialogService();
         }
 
         protected override void OnDisposeManagedCore()
