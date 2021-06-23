@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <Configurations>Release;Build</Configurations>
+        <Platforms>x86</Platforms>
+    </PropertyGroup>
+
+</Project>

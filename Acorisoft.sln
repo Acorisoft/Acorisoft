@@ -3,7 +3,32 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31410.414
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Extensions", "src\Acorisoft.Extensions\Acorisoft.Extensions.csproj", "{BA1AEF94-9186-41BA-9B9F-59CC2A9BFECA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Platforms.Windows", "src\Acorisoft.Platforms.Windows\Acorisoft.Platforms.Windows.csproj", "{CEA02024-97C5-4F2C-8B3A-541E33F1018C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acorisoft.Platforms", "src\Acorisoft.Platforms\Acorisoft.Platforms.csproj", "{B758BBD8-19B7-4097-9530-814D258BC7C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Studio", "src\Acorisoft.Studio\Acorisoft.Studio.csproj", "{3C1BA9BF-CDB2-4AB5-BB3B-2CE7332254A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Platforms.Windows.Host", "src\Acorisoft.Platforms.Windows.Host\Acorisoft.Platforms.Windows.Host.csproj", "{F872E174-99A6-432F-A014-0B1223A377F3}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Build|x86 = Build|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BA1AEF94-9186-41BA-9B9F-59CC2A9BFECA}.Build|x86.ActiveCfg = Build|x86
+		{BA1AEF94-9186-41BA-9B9F-59CC2A9BFECA}.Build|x86.Build.0 = Build|x86
+		{CEA02024-97C5-4F2C-8B3A-541E33F1018C}.Build|x86.ActiveCfg = Build|x86
+		{CEA02024-97C5-4F2C-8B3A-541E33F1018C}.Build|x86.Build.0 = Build|x86
+		{B758BBD8-19B7-4097-9530-814D258BC7C8}.Build|x86.ActiveCfg = Build|x86
+		{B758BBD8-19B7-4097-9530-814D258BC7C8}.Build|x86.Build.0 = Build|x86
+		{3C1BA9BF-CDB2-4AB5-BB3B-2CE7332254A9}.Build|x86.ActiveCfg = Debug|Any CPU
+		{3C1BA9BF-CDB2-4AB5-BB3B-2CE7332254A9}.Build|x86.Build.0 = Debug|Any CPU
+		{F872E174-99A6-432F-A014-0B1223A377F3}.Build|x86.ActiveCfg = Debug|Any CPU
+		{F872E174-99A6-432F-A014-0B1223A377F3}.Build|x86.Build.0 = Debug|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
