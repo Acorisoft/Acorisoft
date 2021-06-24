@@ -1,4 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+    <FontFamily x:Key="App.FontFamily">pack://application:,,,/Acorisoft.Platforms.Windows;component/SourceHanSansSC-Normal.otf#思源黑体 Normal</FontFamily>
+    <FontFamily x:Key="App.FontFamily.Primary">pack://application:,,,/Acorisoft.Platforms.Windows;component/SourceHanSansSC-Normal.otf#Source Han Sans CN</FontFamily>
 </ResourceDictionary>

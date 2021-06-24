@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Studio", "src\Aco
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Platforms.Windows.Host", "src\Acorisoft.Platforms.Windows.Host\Acorisoft.Platforms.Windows.Host.csproj", "{F872E174-99A6-432F-A014-0B1223A377F3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acorisoft.Cef", "src\Acorisoft.Cef\Acorisoft.Cef.csproj", "{3FEF1314-232F-4673-B375-4065755A7A0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Build|x86 = Build|x86
@@ -28,6 +30,8 @@ Global
 		{3C1BA9BF-CDB2-4AB5-BB3B-2CE7332254A9}.Build|x86.Build.0 = Debug|Any CPU
 		{F872E174-99A6-432F-A014-0B1223A377F3}.Build|x86.ActiveCfg = Debug|Any CPU
 		{F872E174-99A6-432F-A014-0B1223A377F3}.Build|x86.Build.0 = Debug|Any CPU
+		{3FEF1314-232F-4673-B375-4065755A7A0D}.Build|x86.ActiveCfg = Debug|Any CPU
+		{3FEF1314-232F-4673-B375-4065755A7A0D}.Build|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net5.0-windows</TargetFramework>
@@ -6,5 +6,10 @@
         <Configurations>Release;Build</Configurations>
         <Platforms>x86</Platforms>
     </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="SourceHanSansSC-Normal.otf" />
+      <Resource Include="SourceHanSansSC-Normal.otf" />
+    </ItemGroup>
 
 </Project>

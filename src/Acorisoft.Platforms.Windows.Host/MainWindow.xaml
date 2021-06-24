@@ -4,9 +4,31 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Acorisoft.Platforms.Windows.Host"
+        xmlns:sys="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+    </Window.Resources>
     <Grid>
-
+        <StackPanel>
+            <TextBlock FontSize="32" Text="新版思源黑体来了，依旧免费商用（附下载地址） - 知乎 - Zhihu" Margin="8">
+            </TextBlock>
+            <TextBlock FontSize="32" Text="设置" Margin="8">
+                <TextBlock.FontFamily>
+                    <FontFamily>
+                        <FontFamily.FamilyNames>
+                            <sys:String x:Key="zh-CN">pack://application:,,,/Acorisoft.Platforms.Windows;component/SourceHanSansSC-Normal.otf#思源黑体 Normal</sys:String>
+                        </FontFamily.FamilyNames>
+                        <FontFamily.FamilyMaps>
+                            <FontFamilyMap
+                                Unicode="0000-052F, 1D00-1FFF, FB00-FB0F"
+                                Language="zh-Hans"
+                                Target="思源黑体 Normal"
+                                Scale="1.0" />
+                        </FontFamily.FamilyMaps>
+                    </FontFamily>
+                </TextBlock.FontFamily>
+            </TextBlock>
+        </StackPanel>
     </Grid>
 </Window>

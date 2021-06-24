@@ -6,4 +6,8 @@
         <UseWPF>true</UseWPF>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Acorisoft.Platforms.Windows\Acorisoft.Platforms.Windows.csproj" />
+    </ItemGroup>
+
 </Project>
